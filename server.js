@@ -259,11 +259,33 @@ app.get('/api/candidatos', async (_req, res, next) => {
         c.status,
         c.etapa,
         c.updated_at,
+        c.apresentacao_profissional,
+        c.personalidade_resumo,
+        c.personalidade_tags,
+        c.personalidade_updated_at,
         v.codigo AS vaga_codigo,
         COALESCE(v.titulo, c.vaga) AS vaga_nome,
-        v.status AS vaga_status
+        v.status AS vaga_status,
+        COALESCE(d.quantidade_documentos, 0)::INTEGER AS quantidade_documentos,
+        e.inicio AS entrevista_inicio,
+        e.fim AS entrevista_fim,
+        e.status AS entrevista_status,
+        e.meet_link AS entrevista_meet_link
       FROM candidatos c
       LEFT JOIN vagas v ON v.id = c.vaga_id
+      LEFT JOIN LATERAL (
+        SELECT COUNT(*) AS quantidade_documentos
+        FROM documentos
+        WHERE candidato_id = c.id
+      ) d ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT inicio, fim, status, meet_link
+        FROM entrevistas
+        WHERE candidato_id = c.id
+          AND status = 'AGENDADA'
+        ORDER BY created_at DESC
+        LIMIT 1
+      ) e ON TRUE
       ORDER BY c.updated_at DESC NULLS LAST, c.id DESC
     `);
 
@@ -295,6 +317,165 @@ app.get('/api/candidatos', async (_req, res, next) => {
     res.json({ sucesso: true, candidatos, resumo });
   } catch (error) {
     next(error);
+  }
+});
+
+app.get('/api/candidatos/:id/detalhes', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ sucesso: false, erro: 'ID de candidato inválido.' });
+    }
+
+    const candidatoResult = await pool.query(`
+      SELECT
+        c.*,
+        v.codigo AS vaga_codigo,
+        COALESCE(v.titulo, c.vaga) AS vaga_nome,
+        v.bairro AS vaga_bairro,
+        v.cidade AS vaga_cidade,
+        v.horario AS vaga_horario,
+        v.escala AS vaga_escala,
+        v.salario AS vaga_salario,
+        e.inicio AS entrevista_inicio,
+        e.fim AS entrevista_fim,
+        e.status AS entrevista_status,
+        e.meet_link AS entrevista_meet_link,
+        e.google_event_url AS entrevista_google_event_url
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      LEFT JOIN LATERAL (
+        SELECT *
+        FROM entrevistas
+        WHERE candidato_id = c.id
+        ORDER BY created_at DESC
+        LIMIT 1
+      ) e ON TRUE
+      WHERE c.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!candidatoResult.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Candidato não encontrado.' });
+    }
+
+    const documentosResult = await pool.query(`
+      SELECT
+        id,
+        tipo,
+        titulo,
+        COALESCE(nome_arquivo, arquivo, 'documento.pdf') AS nome_arquivo,
+        mime_type,
+        tamanho_bytes,
+        (conteudo IS NOT NULL) AS disponivel_download,
+        created_at
+      FROM documentos
+      WHERE candidato_id = $1
+      ORDER BY created_at DESC, id DESC
+    `, [id]);
+
+    const timelineResult = await pool.query(`
+      SELECT *
+      FROM (
+        SELECT
+          'MENSAGEM'::TEXT AS tipo,
+          CASE WHEN quem = 'USUARIO' THEN 'Mensagem do candidato' ELSE 'Mensagem da Evelyn' END AS titulo,
+          mensagem::TEXT AS descricao,
+          created_at
+        FROM mensagens
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'EVENTO'::TEXT AS tipo,
+          REPLACE(evento, '_', ' ') AS titulo,
+          descricao::TEXT,
+          created_at
+        FROM eventos
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'DOCUMENTO'::TEXT AS tipo,
+          COALESCE(titulo, tipo, 'Documento') AS titulo,
+          COALESCE(nome_arquivo, arquivo, 'Arquivo recebido') AS descricao,
+          created_at
+        FROM documentos
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'ENTREVISTA'::TEXT AS tipo,
+          'Entrevista ' || LOWER(status) AS titulo,
+          CONCAT(
+            'Início: ', TO_CHAR(inicio AT TIME ZONE 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+            CASE WHEN meet_link IS NOT NULL THEN ' | Google Meet disponível' ELSE '' END
+          ) AS descricao,
+          created_at
+        FROM entrevistas
+        WHERE candidato_id = $1
+      ) linha
+      ORDER BY created_at DESC
+      LIMIT 200
+    `, [id]);
+
+    res.json({
+      sucesso: true,
+      candidato: candidatoResult.rows[0],
+      documentos: documentosResult.rows,
+      timeline: timelineResult.rows,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/documentos/:id/download', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ sucesso: false, erro: 'ID de documento inválido.' });
+    }
+
+    const result = await pool.query(`
+      SELECT
+        COALESCE(nome_arquivo, arquivo, 'documento.pdf') AS nome_arquivo,
+        COALESCE(mime_type, 'application/pdf') AS mime_type,
+        conteudo
+      FROM documentos
+      WHERE id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Documento não encontrado.' });
+    }
+
+    const documento = result.rows[0];
+    if (!documento.conteudo) {
+      return res.status(404).json({
+        sucesso: false,
+        erro: 'Este documento é anterior à ativação do armazenamento para download.',
+      });
+    }
+
+    const nomeSeguro = String(documento.nome_arquivo || 'documento.pdf')
+      .replace(/[\r\n"]/g, '_')
+      .slice(0, 180);
+
+    res.setHeader('Content-Type', documento.mime_type || 'application/octet-stream');
+    res.setHeader('Content-Length', documento.conteudo.length);
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="${nomeSeguro}"; filename*=UTF-8''${encodeURIComponent(nomeSeguro)}`,
+    );
+    res.setHeader('Cache-Control', 'private, no-store');
+    return res.send(documento.conteudo);
+  } catch (error) {
+    return next(error);
   }
 });
 
