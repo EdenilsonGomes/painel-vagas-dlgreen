@@ -247,6 +247,57 @@ app.get('/api/empresas', async (_req, res, next) => {
   }
 });
 
+app.get('/api/candidatos', async (_req, res, next) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        c.id,
+        c.nome,
+        c.telefone,
+        c.vaga_id,
+        c.vaga AS vaga_legacy,
+        c.status,
+        c.etapa,
+        c.updated_at,
+        v.codigo AS vaga_codigo,
+        COALESCE(v.titulo, c.vaga) AS vaga_nome,
+        v.status AS vaga_status
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      ORDER BY c.updated_at DESC NULLS LAST, c.id DESC
+    `);
+
+    const candidatos = result.rows;
+    const resumo = candidatos.reduce((accumulator, candidato) => {
+      const status = String(candidato.status || '').toUpperCase();
+      accumulator.total += 1;
+
+      if (status === 'NOVO' || status === 'EM_PROCESSO') {
+        accumulator.em_processo += 1;
+      }
+
+      if (status === 'APROVADO' || status === 'CONTRATADO') {
+        accumulator.aprovados += 1;
+      }
+
+      if (status === 'REPROVADO') {
+        accumulator.reprovados += 1;
+      }
+
+      return accumulator;
+    }, {
+      total: 0,
+      em_processo: 0,
+      aprovados: 0,
+      reprovados: 0,
+    });
+
+    res.json({ sucesso: true, candidatos, resumo });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.get('/api/vagas', async (req, res, next) => {
   try {
     const status = String(req.query.status || '').trim().toUpperCase();
@@ -460,7 +511,7 @@ app.patch('/api/vagas/:id/status', async (req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public'), {
   extensions: ['html'],
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: process.env.NODE_ENV === 'production' ? '5m' : 0,
 }));
 
 app.use((req, res, next) => {
