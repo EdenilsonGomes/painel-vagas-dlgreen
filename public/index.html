@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Painel de cadastro e gerenciamento de vagas">
+  <title>Painel de Vagas | DL Green</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">DL GREEN TERCEIRIZAÇÃO</p>
+      <h1>Painel de Vagas</h1>
+      <p class="subtitle">Cadastre e mantenha as informações que a Evelyn utilizará no atendimento.</p>
+    </div>
+    <button id="newVacancyButton" class="button button-primary" type="button">+ Nova vaga</button>
+  </header>
+
+  <main class="container">
+    <section class="stats" aria-label="Resumo das vagas">
+      <article class="stat-card">
+        <span>Ativas</span>
+        <strong id="statActive">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Rascunhos</span>
+        <strong id="statDraft">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Pausadas</span>
+        <strong id="statPaused">0</strong>
+      </article>
+      <article class="stat-card">
+        <span>Encerradas</span>
+        <strong id="statClosed">0</strong>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="toolbar">
+        <div class="field field-grow">
+          <label for="searchInput">Buscar</label>
+          <input id="searchInput" type="search" placeholder="Código, cargo, cidade ou bairro">
+        </div>
+        <div class="field">
+          <label for="statusFilter">Status</label>
+          <select id="statusFilter">
+            <option value="TODAS">Todas</option>
+            <option value="ATIVA">Ativas</option>
+            <option value="RASCUNHO">Rascunhos</option>
+            <option value="PAUSADA">Pausadas</option>
+            <option value="ENCERRADA">Encerradas</option>
+          </select>
+        </div>
+        <button id="refreshButton" class="button button-secondary toolbar-button" type="button">Atualizar</button>
+      </div>
+
+      <div id="loadingState" class="state-box">Carregando vagas...</div>
+      <div id="emptyState" class="state-box hidden">
+        <strong>Nenhuma vaga encontrada.</strong>
+        <span>Cadastre a primeira vaga ou altere os filtros.</span>
+      </div>
+
+      <div id="tableWrapper" class="table-wrapper hidden">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Vaga</th>
+              <th>Local</th>
+              <th>Salário</th>
+              <th>Status</th>
+              <th>Atualização</th>
+              <th class="actions-column">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="vacanciesTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="vacancyDialog">
+    <form id="vacancyForm" method="dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">CADASTRO</p>
+          <h2 id="dialogTitle">Nova vaga</h2>
+        </div>
+        <button id="closeDialogButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+
+      <input id="vacancyId" name="id" type="hidden">
+
+      <div class="form-section">
+        <h3>Identificação</h3>
+        <div class="form-grid">
+          <div class="field field-span-2">
+            <label for="empresa_id">Empresa *</label>
+            <select id="empresa_id" name="empresa_id" required></select>
+          </div>
+          <div class="field">
+            <label for="codigo">Código da vaga *</label>
+            <input id="codigo" name="codigo" type="text" maxlength="50" placeholder="VAGA-001" required>
+          </div>
+          <div class="field">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="RASCUNHO">Rascunho</option>
+              <option value="ATIVA">Ativa</option>
+              <option value="PAUSADA">Pausada</option>
+              <option value="ENCERRADA">Encerrada</option>
+            </select>
+          </div>
+          <div class="field field-span-2">
+            <label for="titulo">Título da vaga *</label>
+            <input id="titulo" name="titulo" type="text" maxlength="150" placeholder="Auxiliar de Limpeza" required>
+          </div>
+          <div class="field field-span-2">
+            <label for="cargo">Cargo oficial *</label>
+            <input id="cargo" name="cargo" type="text" maxlength="150" placeholder="Auxiliar de Limpeza" required>
+          </div>
+          <div class="field field-span-full">
+            <label for="descricao">Descrição da vaga</label>
+            <textarea id="descricao" name="descricao" rows="4" placeholder="Explique as atividades e o contexto da vaga."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Local e jornada</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" type="text" maxlength="100" placeholder="São Paulo">
+          </div>
+          <div class="field field-small">
+            <label for="estado">UF</label>
+            <input id="estado" name="estado" type="text" maxlength="2" value="SP" placeholder="SP">
+          </div>
+          <div class="field">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" type="text" maxlength="100" placeholder="Jabaquara">
+          </div>
+          <div class="field field-span-full">
+            <label for="endereco_referencia">Endereço ou referência</label>
+            <input id="endereco_referencia" name="endereco_referencia" type="text" placeholder="Próximo ao metrô...">
+          </div>
+          <div class="field">
+            <label for="tipo_contrato">Tipo de contrato</label>
+            <input id="tipo_contrato" name="tipo_contrato" type="text" maxlength="50" placeholder="CLT">
+          </div>
+          <div class="field">
+            <label for="modalidade">Modalidade</label>
+            <select id="modalidade" name="modalidade">
+              <option value="Presencial">Presencial</option>
+              <option value="Híbrido">Híbrido</option>
+              <option value="Remoto">Remoto</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="escala">Escala</label>
+            <input id="escala" name="escala" type="text" maxlength="100" placeholder="6x1">
+          </div>
+          <div class="field">
+            <label for="horario">Horário</label>
+            <input id="horario" name="horario" type="text" maxlength="150" placeholder="13h40 às 22h">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Remuneração e requisitos</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="salario">Salário</label>
+            <input id="salario" name="salario" type="number" min="0" step="0.01" placeholder="1717.20">
+          </div>
+          <div class="field">
+            <label for="quantidade_vagas">Quantidade de vagas *</label>
+            <input id="quantidade_vagas" name="quantidade_vagas" type="number" min="1" value="1" required>
+          </div>
+          <div class="field field-span-full">
+            <label for="beneficios">Benefícios</label>
+            <textarea id="beneficios" name="beneficios" rows="3" placeholder="Vale-transporte, vale-refeição, cesta básica..."></textarea>
+          </div>
+          <div class="field">
+            <label for="escolaridade_minima">Escolaridade mínima</label>
+            <input id="escolaridade_minima" name="escolaridade_minima" type="text" maxlength="100" placeholder="Ensino fundamental">
+          </div>
+          <div class="field">
+            <label for="experiencia_minima_meses">Experiência mínima em meses</label>
+            <input id="experiencia_minima_meses" name="experiencia_minima_meses" type="number" min="0" value="0">
+          </div>
+          <div class="field field-span-full checkbox-field">
+            <input id="aceita_sem_experiencia" name="aceita_sem_experiencia" type="checkbox">
+            <label for="aceita_sem_experiencia">Aceita candidato sem experiência</label>
+          </div>
+          <div class="field field-span-full">
+            <label for="requisitos_obrigatorios">Requisitos obrigatórios</label>
+            <textarea id="requisitos_obrigatorios" name="requisitos_obrigatorios" rows="4" placeholder="Um requisito por linha."></textarea>
+          </div>
+          <div class="field field-span-full">
+            <label for="requisitos_desejaveis">Requisitos desejáveis</label>
+            <textarea id="requisitos_desejaveis" name="requisitos_desejaveis" rows="4" placeholder="Um requisito por linha."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Processo seletivo</h3>
+        <div class="form-grid">
+          <div class="field field-span-full">
+            <label for="formulario_url">Link do formulário do candidato</label>
+            <input id="formulario_url" name="formulario_url" type="url" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label for="data_inicio">Data prevista de início</label>
+            <input id="data_inicio" name="data_inicio" type="date">
+          </div>
+          <div class="field">
+            <label for="data_encerramento">Data de encerramento</label>
+            <input id="data_encerramento" name="data_encerramento" type="date">
+          </div>
+        </div>
+      </div>
+
+      <div id="formError" class="form-error hidden" role="alert"></div>
+
+      <div class="dialog-actions">
+        <button id="cancelButton" class="button button-secondary" type="button">Cancelar</button>
+        <button id="saveButton" class="button button-primary" type="submit">Salvar vaga</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
