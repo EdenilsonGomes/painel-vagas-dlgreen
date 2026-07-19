@@ -1,0 +1,21 @@
+{
+  "name": "painel-vagas-dlgreen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Painel simples para cadastro e gerenciamento de vagas integrado ao PostgreSQL.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch --env-file=.env server.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "express-rate-limit": "8.5.2",
+    "helmet": "8.1.0",
+    "pg": "8.22.0",
+    "zod": "4.4.3"
+  }
+}
