@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Painel de recrutamento, vagas e candidatos">
+  <title>Genesis IA | Recrutamento</title>
+  <link rel="stylesheet" href="/styles.css?v=6">
+  <script src="/app.js?v=6" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">GENESIS IA</p>
+      <h1 id="pageTitle">Gestão de Vagas</h1>
+      <p id="pageSubtitle" class="subtitle">Recrutamento inteligente, triagem por CTPS e entrevistas on-line em um só lugar.</p>
+    </div>
+    <div class="topbar-actions">
+      <button id="newVacancyButton" class="button button-primary" type="button">+ Nova vaga</button>
+      <button id="newCandidateButton" class="button button-primary hidden" type="button">+ Novo candidato</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="main-tabs" aria-label="Áreas do painel">
+      <button id="vacanciesTab" class="main-tab active" type="button" data-view="vacancies" aria-selected="true">
+        Vagas
+      </button>
+      <button id="candidatesTab" class="main-tab" type="button" data-view="candidates" aria-selected="false">
+        Candidatos
+      </button>
+    </nav>
+
+    <div id="vacanciesView" class="view">
+      <section class="stats" aria-label="Resumo das vagas">
+        <article class="stat-card">
+          <span>Ativas</span>
+          <strong id="statActive">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Rascunhos</span>
+          <strong id="statDraft">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Pausadas</span>
+          <strong id="statPaused">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Encerradas</span>
+          <strong id="statClosed">0</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="toolbar">
+          <div class="field field-grow">
+            <label for="searchInput">Buscar</label>
+            <input id="searchInput" type="search" placeholder="Código, cargo, cidade ou bairro">
+          </div>
+          <div class="field">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+              <option value="TODAS">Todas</option>
+              <option value="ATIVA">Ativas</option>
+              <option value="RASCUNHO">Rascunhos</option>
+              <option value="PAUSADA">Pausadas</option>
+              <option value="ENCERRADA">Encerradas</option>
+            </select>
+          </div>
+          <button id="refreshButton" class="button button-secondary toolbar-button" type="button">Atualizar</button>
+        </div>
+
+        <div id="loadingState" class="state-box">Carregando vagas...</div>
+        <div id="emptyState" class="state-box hidden">
+          <strong>Nenhuma vaga encontrada.</strong>
+          <span>Cadastre a primeira vaga ou altere os filtros.</span>
+        </div>
+
+        <div id="tableWrapper" class="table-wrapper hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Vaga</th>
+                <th>Local</th>
+                <th>Salário</th>
+                <th>Status</th>
+                <th>Atualização</th>
+                <th class="actions-column">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="vacanciesTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div id="candidatesView" class="view hidden">
+      <section class="stats" aria-label="Resumo dos candidatos">
+        <article class="stat-card stat-card-clickable" data-candidate-filter="TODOS" tabindex="0" role="button">
+          <span>Todos</span>
+          <strong id="statCandidatesTotal">0</strong>
+        </article>
+        <article class="stat-card stat-card-clickable" data-candidate-filter="EM_PROCESSO" tabindex="0" role="button">
+          <span>Em processo</span>
+          <strong id="statCandidatesInProcess">0</strong>
+        </article>
+        <article class="stat-card stat-card-clickable" data-candidate-filter="APROVADO" tabindex="0" role="button">
+          <span>Aprovados</span>
+          <strong id="statCandidatesApproved">0</strong>
+        </article>
+        <article class="stat-card stat-card-clickable" data-candidate-filter="REPROVADO" tabindex="0" role="button">
+          <span>Reprovados</span>
+          <strong id="statCandidatesRejected">0</strong>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="toolbar">
+          <div class="field field-grow">
+            <label for="candidateSearchInput">Buscar candidato</label>
+            <input id="candidateSearchInput" type="search" placeholder="Nome, telefone, vaga ou código">
+          </div>
+          <div class="field">
+            <label for="candidateStatusFilter">Resultado</label>
+            <select id="candidateStatusFilter">
+              <option value="TODOS">Todos</option>
+              <option value="EM_PROCESSO">Em processo</option>
+              <option value="APROVADO">Aprovados</option>
+              <option value="REPROVADO">Reprovados</option>
+              <option value="CONTRATADO">Contratados</option>
+              <option value="ENCERRADO">Encerrados</option>
+            </select>
+          </div>
+          <button id="refreshCandidatesButton" class="button button-secondary toolbar-button" type="button">Atualizar</button>
+        </div>
+
+        <div id="candidatesLoadingState" class="state-box hidden">Carregando candidatos...</div>
+        <div id="candidatesEmptyState" class="state-box hidden">
+          <strong>Nenhum candidato encontrado.</strong>
+          <span>Altere os filtros ou aguarde novos atendimentos.</span>
+        </div>
+
+        <div id="candidatesTableWrapper" class="table-wrapper hidden">
+          <table>
+            <thead>
+              <tr>
+                <th>Candidato</th>
+                <th>WhatsApp</th>
+                <th>CEP</th>
+                <th>Vaga</th>
+                <th>Resultado</th>
+                <th>Etapa atual</th>
+                <th>Triagem</th>
+                <th>Personalidade</th>
+                <th>Documentos</th>
+                <th>Entrevista</th>
+                <th>Atualização</th>
+                <th class="actions-column">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="candidatesTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+
+  <dialog id="candidateDialog" class="candidate-dialog">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">CANDIDATO</p>
+        <h2 id="candidateDialogTitle">Detalhes do candidato</h2>
+      </div>
+      <div class="dialog-header-actions">
+        <button id="deleteCandidateDetailsButton" class="button button-danger button-small" type="button">Remover</button>
+        <button id="closeCandidateDialogButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+    </div>
+
+    <div id="candidateDetailsLoading" class="state-box">Carregando detalhes...</div>
+
+    <div id="candidateDetailsContent" class="hidden">
+      <section class="candidate-detail-grid">
+        <article class="detail-card">
+          <span class="detail-label">Contato</span>
+          <strong id="detailCandidateName">—</strong>
+          <a id="detailCandidatePhone" class="phone-link" href="#" target="_blank" rel="noopener noreferrer">—</a>
+        </article>
+        <article class="detail-card">
+          <span class="detail-label">Vaga</span>
+          <strong id="detailCandidateVacancy">—</strong>
+          <span id="detailCandidateStage" class="muted">—</span>
+        </article>
+        <article class="detail-card">
+          <span class="detail-label">CEP</span>
+          <strong id="detailCandidateCep">Não informado</strong>
+          <span class="muted">Endereço de referência do candidato</span>
+        </article>
+        <article class="detail-card">
+          <span class="detail-label">Média nas empresas</span>
+          <strong id="detailCandidateAverageStay">Não calculada</strong>
+          <span id="detailCandidateValidJobs" class="muted">Nenhum vínculo analisado</span>
+        </article>
+        <article class="detail-card">
+          <span class="detail-label">Entrevista</span>
+          <strong id="detailCandidateInterview">Não agendada</strong>
+          <a id="detailCandidateMeet" class="hidden" href="#" target="_blank" rel="noopener noreferrer">Abrir Google Meet</a>
+        </article>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ANÁLISE DA CTPS</p>
+            <h3>Triagem e compatibilidade com a vaga</h3>
+          </div>
+        </div>
+        <p id="detailCandidateTriage" class="detail-text">Ainda não analisado.</p>
+        <p id="detailCandidateMissing" class="detail-note hidden"></p>
+        <div id="detailCandidateExperiences" class="experience-list"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">APRESENTAÇÃO</p>
+            <h3>Sobre a pessoa e experiências</h3>
+          </div>
+        </div>
+        <p id="detailCandidatePresentation" class="detail-text">Ainda não informado.</p>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">PERFIL PROFISSIONAL PERCEBIDO</p>
+            <h3>Personalidade</h3>
+          </div>
+        </div>
+        <p class="detail-note">Resumo baseado apenas na apresentação profissional enviada. Não deve ser usado isoladamente para aprovar ou reprovar candidatos.</p>
+        <p id="detailCandidatePersonality" class="detail-text">Ainda não analisado.</p>
+        <div id="detailCandidateTags" class="tag-list"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ARQUIVOS</p>
+            <h3>Documentos</h3>
+          </div>
+        </div>
+        <div id="candidateDocumentsEmpty" class="state-box hidden">Nenhum documento registrado.</div>
+        <div id="candidateDocumentsList" class="document-list"></div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">HISTÓRICO</p>
+            <h3>Linha do tempo</h3>
+          </div>
+        </div>
+        <div id="candidateTimelineEmpty" class="state-box hidden">Nenhum histórico encontrado.</div>
+        <div id="candidateTimeline" class="timeline"></div>
+      </section>
+    </div>
+  </dialog>
+
+
+  <dialog id="candidateCreateDialog">
+    <form id="candidateCreateForm" method="dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">TESTES E CADASTRO MANUAL</p>
+          <h2>Novo candidato</h2>
+        </div>
+        <button id="closeCandidateCreateButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+      </div>
+      <div class="form-section">
+        <div class="form-grid">
+          <div class="field field-span-2">
+            <label for="candidate_nome">Nome</label>
+            <input id="candidate_nome" name="nome" type="text" placeholder="Nome do candidato">
+          </div>
+          <div class="field field-span-2">
+            <label for="candidate_telefone">Telefone com DDI e DDD *</label>
+            <input id="candidate_telefone" name="telefone" type="text" placeholder="5511999999999" required>
+          </div>
+          <div class="field">
+            <label for="candidate_cep">CEP</label>
+            <input id="candidate_cep" name="cep" type="text" maxlength="9" placeholder="00000-000">
+          </div>
+          <div class="field">
+            <label for="candidate_vaga_id">Vaga</label>
+            <select id="candidate_vaga_id" name="vaga_id"><option value="">Sem vaga vinculada</option></select>
+          </div>
+          <div class="field">
+            <label for="candidate_status">Status</label>
+            <select id="candidate_status" name="status">
+              <option value="NOVO">Novo</option>
+              <option value="EM_PROCESSO">Em processo</option>
+              <option value="APROVADO">Aprovado</option>
+              <option value="REPROVADO">Reprovado</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="candidate_etapa">Etapa</label>
+            <select id="candidate_etapa" name="etapa">
+              <option value="PRIMEIRO_CONTATO">Primeiro contato</option>
+              <option value="ESCOLHENDO_VAGA">Escolhendo vaga</option>
+              <option value="AGUARDANDO_CTPS_CEP">Aguardando CTPS e CEP</option>
+              <option value="AGUARDANDO_APRESENTACAO">Aguardando apresentação</option>
+              <option value="ESCOLHENDO_HORARIO">Escolhendo horário</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div id="candidateCreateError" class="form-error hidden" role="alert"></div>
+      <div class="dialog-actions">
+        <button id="cancelCandidateCreateButton" class="button button-secondary" type="button">Cancelar</button>
+        <button id="saveCandidateButton" class="button button-primary" type="submit">Adicionar candidato</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="vacancyDialog">
+    <form id="vacancyForm" method="dialog">
+      <div class="dialog-header">
+        <div>
+          <p class="eyebrow">CADASTRO</p>
+          <h2 id="dialogTitle">Nova vaga</h2>
+        </div>
+        <div class="dialog-header-actions">
+          <button id="generateVacancyAiButton" class="button button-ai" type="button">
+            <span aria-hidden="true">✨</span>
+            Preencher com IA
+          </button>
+          <button id="closeDialogButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+        </div>
+      </div>
+
+      <input id="vacancyId" name="id" type="hidden">
+
+      <div class="form-section">
+        <h3>Identificação</h3>
+        <div class="form-grid">
+          <div class="field field-span-2">
+            <label for="empresa_id">Empresa *</label>
+            <select id="empresa_id" name="empresa_id" required></select>
+          </div>
+          <div class="field">
+            <label>Código interno</label>
+            <p class="field-help">
+              Gerado automaticamente ao salvar, evitando códigos duplicados.
+            </p>
+          </div>
+          <div class="field">
+            <label for="status">Status *</label>
+            <select id="status" name="status" required>
+              <option value="RASCUNHO">Rascunho</option>
+              <option value="ATIVA">Ativa</option>
+              <option value="PAUSADA">Pausada</option>
+              <option value="ENCERRADA">Encerrada</option>
+            </select>
+          </div>
+          <div class="field field-span-2">
+            <label for="titulo">Título da vaga *</label>
+            <input id="titulo" name="titulo" type="text" maxlength="150" placeholder="Auxiliar de Limpeza" required>
+          </div>
+          <div class="field field-span-2">
+            <label for="cargo">Cargo oficial *</label>
+            <input id="cargo" name="cargo" type="text" maxlength="150" placeholder="Auxiliar de Limpeza" required>
+          </div>
+          <div class="field field-span-full">
+            <div class="field-label-row">
+              <label for="descricao">Descrição da vaga</label>
+              <button class="ai-field-button" type="button" data-ai-action="GERAR_DESCRICAO" title="Gerar ou melhorar descrição com IA">✨ Gerar com IA</button>
+            </div>
+            <textarea id="descricao" name="descricao" rows="4" placeholder="Explique as atividades e o contexto da vaga."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Local e jornada</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="cidade">Cidade</label>
+            <input id="cidade" name="cidade" type="text" maxlength="100" placeholder="São Paulo">
+          </div>
+          <div class="field field-small">
+            <label for="estado">UF</label>
+            <input id="estado" name="estado" type="text" maxlength="2" value="SP" placeholder="SP">
+          </div>
+          <div class="field">
+            <label for="bairro">Bairro</label>
+            <input id="bairro" name="bairro" type="text" maxlength="100" placeholder="Jabaquara">
+          </div>
+          <div class="field field-span-full">
+            <label for="endereco_referencia">Endereço ou referência</label>
+            <input id="endereco_referencia" name="endereco_referencia" type="text" placeholder="Próximo ao metrô...">
+          </div>
+          <div class="field">
+            <label for="tipo_contrato">Tipo de contrato</label>
+            <input id="tipo_contrato" name="tipo_contrato" type="text" maxlength="50" placeholder="CLT">
+          </div>
+          <div class="field">
+            <label for="modalidade">Modalidade</label>
+            <select id="modalidade" name="modalidade">
+              <option value="Presencial">Presencial</option>
+              <option value="Híbrido">Híbrido</option>
+              <option value="Remoto">Remoto</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="escala">Escala</label>
+            <input id="escala" name="escala" type="text" maxlength="100" placeholder="6x1">
+          </div>
+          <div class="field">
+            <label for="horario">Horário</label>
+            <input id="horario" name="horario" type="text" maxlength="150" placeholder="13h40 às 22h">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Remuneração e requisitos</h3>
+        <div class="form-grid">
+          <div class="field">
+            <label for="salario">Salário</label>
+            <input id="salario" name="salario" type="number" min="0" step="0.01" placeholder="1717.20">
+          </div>
+          <div class="field">
+            <label for="quantidade_vagas">Quantidade de vagas *</label>
+            <input id="quantidade_vagas" name="quantidade_vagas" type="number" min="1" value="1" required>
+          </div>
+          <div class="field field-span-full">
+            <label for="beneficios">Benefícios</label>
+            <textarea id="beneficios" name="beneficios" rows="3" placeholder="Vale-transporte, vale-refeição, cesta básica..."></textarea>
+          </div>
+          <div class="field">
+            <label for="escolaridade_minima">Escolaridade mínima</label>
+            <input id="escolaridade_minima" name="escolaridade_minima" type="text" maxlength="100" placeholder="Ensino fundamental">
+          </div>
+          <div class="field">
+            <label for="experiencia_minima_meses">Experiência mínima em meses</label>
+            <input id="experiencia_minima_meses" name="experiencia_minima_meses" type="number" min="0" value="0">
+          </div>
+          <div class="field field-span-full checkbox-field">
+            <input id="aceita_sem_experiencia" name="aceita_sem_experiencia" type="checkbox">
+            <label for="aceita_sem_experiencia">Aceita candidato sem experiência</label>
+          </div>
+          <div class="field field-span-full checkbox-field">
+            <input id="exigir_experiencia_compativel" name="exigir_experiencia_compativel" type="checkbox" checked>
+            <label for="exigir_experiencia_compativel">Exigir experiência compatível com o cargo ou CBO da vaga</label>
+          </div>
+          <div class="field field-span-full">
+            <div class="field-label-row">
+              <label for="cargos_compativeis">Cargos compatíveis para análise da CTPS</label>
+              <button class="ai-field-button" type="button" data-ai-action="SUGERIR_CARGOS" title="Sugerir cargos compatíveis com IA">✨ Sugerir cargos</button>
+            </div>
+            <textarea id="cargos_compativeis" name="cargos_compativeis" rows="5" placeholder="Um cargo ou palavra-chave por linha. Ex.: Auxiliar de Limpeza, Serviços Gerais, Faxineiro."></textarea>
+            <span class="field-help">A aprovação considera somente vínculos que correspondam a estes cargos ou aos CBOs abaixo.</span>
+          </div>
+          <div class="field field-span-full">
+            <div class="field-label-row">
+              <label for="cbos_compativeis">CBOs compatíveis</label>
+              <button class="ai-field-button" type="button" data-ai-action="SUGERIR_CBOS" title="Sugerir CBOs compatíveis com IA">✨ Sugerir CBOs</button>
+            </div>
+            <textarea id="cbos_compativeis" name="cbos_compativeis" rows="3" placeholder="Um CBO por linha. Ex.: 5143-20"></textarea>
+            <span class="field-help">Também aceita família com 4 números, por exemplo 5143.</span>
+          </div>
+          <div class="field field-span-full">
+            <div class="field-label-row">
+              <label for="requisitos_obrigatorios">Requisitos obrigatórios</label>
+              <button class="ai-field-button" type="button" data-ai-action="GERAR_REQUISITOS_OBRIGATORIOS" title="Gerar requisitos obrigatórios com IA">✨ Gerar com IA</button>
+            </div>
+            <textarea id="requisitos_obrigatorios" name="requisitos_obrigatorios" rows="4" placeholder="Um requisito por linha."></textarea>
+          </div>
+          <div class="field field-span-full">
+            <div class="field-label-row">
+              <label for="requisitos_desejaveis">Requisitos desejáveis</label>
+              <button class="ai-field-button" type="button" data-ai-action="GERAR_REQUISITOS_DESEJAVEIS" title="Gerar requisitos desejáveis com IA">✨ Gerar com IA</button>
+            </div>
+            <textarea id="requisitos_desejaveis" name="requisitos_desejaveis" rows="4" placeholder="Um requisito por linha."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>Processo seletivo</h3>
+        <div class="form-grid">
+          <div class="field field-span-full">
+            <label for="formulario_url">Link do formulário do candidato</label>
+            <input id="formulario_url" name="formulario_url" type="url" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label for="data_inicio">Data prevista de início</label>
+            <input id="data_inicio" name="data_inicio" type="date">
+          </div>
+          <div class="field">
+            <label for="data_encerramento">Data de encerramento</label>
+            <input id="data_encerramento" name="data_encerramento" type="date">
+          </div>
+        </div>
+      </div>
+
+      <div id="formError" class="form-error hidden" role="alert"></div>
+
+      <div class="dialog-actions">
+        <button id="cancelButton" class="button button-secondary" type="button">Cancelar</button>
+        <button id="saveButton" class="button button-primary" type="submit">Salvar vaga</button>
+      </div>
+    </form>
+  </dialog>
+
+
+  <dialog id="aiVacancyDialog" class="ai-dialog">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">ASSISTENTE DE VAGAS</p>
+        <h2 id="aiVacancyDialogTitle">Sugestões da IA</h2>
+      </div>
+      <button id="closeAiVacancyDialogButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+    </div>
+
+    <div class="ai-dialog-body">
+      <div id="aiVacancyLoading" class="state-box compact">
+        <strong>Gerando sugestões...</strong>
+        <span>A IA está analisando os dados preenchidos na vaga.</span>
+      </div>
+
+      <div id="aiVacancyError" class="form-error hidden" role="alert"></div>
+
+      <div id="aiVacancyPreview" class="ai-preview hidden">
+        <div id="aiVacancyWarnings" class="ai-warning"></div>
+
+        <label class="ai-preview-card" data-ai-preview-field="descricao">
+          <span class="ai-preview-heading">
+            <input type="checkbox" data-ai-apply-field="descricao" checked>
+            <strong>Descrição da vaga</strong>
+          </span>
+          <textarea id="aiPreviewDescricao" rows="6"></textarea>
+        </label>
+
+        <label class="ai-preview-card" data-ai-preview-field="cargos_compativeis">
+          <span class="ai-preview-heading">
+            <input type="checkbox" data-ai-apply-field="cargos_compativeis" checked>
+            <strong>Cargos compatíveis para CTPS</strong>
+          </span>
+          <textarea id="aiPreviewCargos" rows="6"></textarea>
+        </label>
+
+        <label class="ai-preview-card" data-ai-preview-field="cbos_compativeis">
+          <span class="ai-preview-heading">
+            <input type="checkbox" data-ai-apply-field="cbos_compativeis" checked>
+            <strong>CBOs compatíveis</strong>
+          </span>
+          <textarea id="aiPreviewCbos" rows="4"></textarea>
+          <small>Os CBOs são sugestões da IA. Revise antes de salvar a vaga.</small>
+        </label>
+
+        <label class="ai-preview-card" data-ai-preview-field="requisitos_obrigatorios">
+          <span class="ai-preview-heading">
+            <input type="checkbox" data-ai-apply-field="requisitos_obrigatorios" checked>
+            <strong>Requisitos obrigatórios</strong>
+          </span>
+          <textarea id="aiPreviewObrigatorios" rows="5"></textarea>
+        </label>
+
+        <label class="ai-preview-card" data-ai-preview-field="requisitos_desejaveis">
+          <span class="ai-preview-heading">
+            <input type="checkbox" data-ai-apply-field="requisitos_desejaveis" checked>
+            <strong>Requisitos desejáveis</strong>
+          </span>
+          <textarea id="aiPreviewDesejaveis" rows="5"></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button id="cancelAiVacancyButton" class="button button-secondary" type="button">Cancelar</button>
+      <button id="applyAiVacancyButton" class="button button-primary hidden" type="button">Aplicar sugestões selecionadas</button>
+    </div>
+  </dialog>
+
+
+
+  <dialog id="promotionDialog" class="candidate-dialog promotion-dialog">
+    <div class="dialog-header">
+      <div>
+        <p class="eyebrow">DIVULGAÇÃO DA VAGA</p>
+        <h2 id="promotionDialogTitle">Gerar mensagem pronta</h2>
+      </div>
+      <button id="closePromotionDialogButton" class="icon-button" type="button" aria-label="Fechar">×</button>
+    </div>
+
+    <div id="promotionLoading" class="state-box">Gerando mensagem e arte da vaga...</div>
+
+    <div id="promotionContent" class="hidden">
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WHATSAPP</p>
+            <h3>Mensagem pronta para grupos e contatos</h3>
+          </div>
+        </div>
+        <textarea id="promotionWhatsappText" class="promotion-textarea" rows="7" readonly></textarea>
+        <div class="promotion-actions">
+          <button id="copyPromotionWhatsappButton" class="button button-primary button-small" type="button">Copiar texto do WhatsApp</button>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FACEBOOK</p>
+            <h3>Mensagem pronta para grupos e publicações</h3>
+          </div>
+        </div>
+        <textarea id="promotionFacebookText" class="promotion-textarea" rows="7" readonly></textarea>
+        <div class="promotion-actions">
+          <button id="copyPromotionFacebookButton" class="button button-secondary button-small" type="button">Copiar texto do Facebook</button>
+        </div>
+      </section>
+
+      <section class="detail-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ARTE AUTOMÁTICA</p>
+            <h3>Imagem pronta para divulgar a vaga</h3>
+          </div>
+        </div>
+        <div class="promotion-preview-wrapper">
+          <img id="promotionImagePreview" class="promotion-preview" alt="Prévia da arte de divulgação da vaga">
+        </div>
+        <div class="promotion-actions">
+          <button id="downloadPromotionImageButton" class="button button-primary button-small" type="button">Baixar imagem em PNG</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog-actions">
+      <button id="closePromotionFooterButton" class="button button-secondary" type="button">Fechar</button>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
