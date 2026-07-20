@@ -191,7 +191,29 @@ function formatDate(value) {
     timeStyle: 'short',
   }).format(date);
 }
+function formatFileSize(value) {
+  const bytes = Number(value);
 
+  if (!Number.isFinite(bytes) || bytes <= 0) {
+    return 'Tamanho não informado';
+  }
+
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+  const unitIndex = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1,
+  );
+
+  const size = bytes / (1024 ** unitIndex);
+
+  const formattedSize = new Intl.NumberFormat('pt-BR', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: unitIndex === 0 ? 0 : 1,
+  }).format(size);
+
+  return `${formattedSize} ${units[unitIndex]}`;
+}
 function formatPhone(value) {
   const digits = String(value || '').replace(/\D/g, '');
   if (digits.length === 13 && digits.startsWith('55')) {
