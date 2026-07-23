@@ -1,0 +1,200 @@
+{
+  "name": "04_GENESIS_IA_DIVULGACAO_GRUPO_WHATSAPP_V3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        300
+      ],
+      "id": "056ab092-4d83-47be-adf1-110fef6a2b2a",
+      "name": "Teste manual"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9,13,17 * * 1-6"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        200,
+        100
+      ],
+      "id": "b0749ec8-86c9-44a7-84b4-9c068c62a96e",
+      "name": "Horários automáticos"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e0d63b2e-2b50-4b06-b1d6-142f265512f8",
+              "name": "grupo_id",
+              "value": "COLE_AQUI_O_ID_DO_GRUPO@g.us",
+              "type": "string"
+            },
+            {
+              "id": "cc4b41a2-ad43-42a5-98ba-2945cccd3ece",
+              "name": "sessao_waha",
+              "value": "whats_junior",
+              "type": "string"
+            },
+            {
+              "id": "919ae760-d7eb-4f29-b826-a61c7bc06da9",
+              "name": "telefone_divulgacao",
+              "value": "11913022278",
+              "type": "string"
+            },
+            {
+              "id": "4f31b7fd-d392-4b54-a40c-e1f8ef733c7a",
+              "name": "maximo_vagas_por_mensagem",
+              "value": 5,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        440,
+        200
+      ],
+      "id": "b57d408b-d39e-4246-8148-0d4f76004990",
+      "name": "Configurar grupo"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  v.id,\n  v.codigo,\n  v.titulo,\n  v.cargo,\n  v.bairro,\n  v.cidade,\n  v.estado,\n  v.escala,\n  v.horario,\n  v.salario,\n  v.possui_insalubridade,\n  v.percentual_insalubridade,\n  v.observacao_insalubridade,\n  v.beneficios\nFROM vagas v\nWHERE v.status = 'ATIVA'\nORDER BY v.updated_at DESC, v.id DESC;"
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        680,
+        200
+      ],
+      "id": "cee09a67-8894-410d-8e21-f8df456fbecf",
+      "name": "Buscar vagas ativas",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "mode": "runOnceForAllItems",
+        "jsCode": "const config = $('Configurar grupo').first().json;\n\nconst grupoId = String(config.grupo_id || '').trim();\nconst sessao = String(config.sessao_waha || 'whats_junior').trim();\nconst telefone = String(config.telefone_divulgacao || '11913022278').replace(/\\D/g, '');\nconst maximo = Math.max(1, Number(config.maximo_vagas_por_mensagem || 5));\n\nif (!grupoId || !grupoId.endsWith('@g.us') || grupoId.startsWith('COLE_AQUI')) {\n  throw new Error('Abra o node \"Configurar grupo\" e informe o ID real do grupo, terminando em @g.us.');\n}\n\nconst contato = telefone.length === 11\n  ? `(${telefone.slice(0, 2)}) ${telefone.slice(2, 7)}-${telefone.slice(7)}`\n  : telefone;\n\nconst formatarSalario = (valor) => {\n  const numero = Number(valor);\n  if (!Number.isFinite(numero) || numero <= 0) return 'A combinar';\n  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(numero);\n};\n\nconst formatarPercentual = (valor) => {\n  const numero = Number(valor);\n  if (!Number.isFinite(numero)) return '';\n  return new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 2 }).format(numero) + '%';\n};\n\nconst beneficios = (valor) => {\n  const texto = String(valor || '').trim();\n  if (!texto) return 'Informados no processo seletivo';\n  return texto.split(/\\r?\\n|;|\\|/)\n    .map((item) => item.trim().replace(/^[-•*]\\s*/, ''))\n    .filter(Boolean)\n    .slice(0, 4)\n    .join(', ');\n};\n\nconst vagas = items.map((item) => item.json).filter((vaga) => vaga && (vaga.titulo || vaga.cargo));\nif (!vagas.length) return [];\n\nconst blocos = vagas.map((vaga, indice) => {\n  const titulo = String(vaga.titulo || vaga.cargo || 'Vaga disponível').trim();\n  const local = String(vaga.bairro || [vaga.cidade, vaga.estado].filter(Boolean).join(' - ') || 'Local a combinar').trim();\n  const escala = String(vaga.escala || 'A confirmar').trim();\n  const horario = String(vaga.horario || 'A confirmar').trim();\n  const insalubridade = vaga.possui_insalubridade === true || String(vaga.possui_insalubridade).toLowerCase() === 'true';\n  const percentual = formatarPercentual(vaga.percentual_insalubridade);\n  const salario = Number(vaga.salario);\n  const percentualNumero = Number(vaga.percentual_insalubridade);\n  const adicional = insalubridade && Number.isFinite(salario) && Number.isFinite(percentualNumero)\n    ? formatarSalario(salario * (percentualNumero / 100))\n    : '';\n\n  return [\n    `*${indice + 1}. ${titulo} | Início imediato*`,\n    `📍 Bairro: ${local}`,\n    `📅 Escala: ${escala}`,\n    `⏰ Horário: ${horario}`,\n    `💰 Salário: ${formatarSalario(vaga.salario)}`,\n    insalubridade ? `🧪 Insalubridade: ${percentual || 'percentual a confirmar'}${adicional ? ` — adicional aproximado de ${adicional}` : ''}` : '',\n    `🎁 Benefícios: ${beneficios(vaga.beneficios)}`,\n  ].filter(Boolean).join('\\n');\n});\n\nconst saidas = [];\nfor (let inicio = 0; inicio < blocos.length; inicio += maximo) {\n  const parte = blocos.slice(inicio, inicio + maximo);\n  const numeroParte = Math.floor(inicio / maximo) + 1;\n  const totalPartes = Math.ceil(blocos.length / maximo);\n  const cabecalho = totalPartes > 1\n    ? `📢 *VAGAS DISPONÍVEIS — PARTE ${numeroParte}/${totalPartes}*`\n    : '📢 *VAGAS DISPONÍVEIS*';\n  const texto = [cabecalho, '', ...parte.flatMap((bloco) => [bloco, '']), `📲 Para mais informações, chame no privado: ${contato}`].join('\\n').trim();\n  saidas.push({ json: { session: sessao, chatId: grupoId, text: texto } });\n}\nreturn saidas;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        920,
+        200
+      ],
+      "id": "e99a7758-ed38-4ecb-b09a-9f0a939304f8",
+      "name": "Montar publicação"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $json.session }}",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.text }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        1160,
+        200
+      ],
+      "id": "0ff855e6-a94c-43cf-aab1-b2b6a1ce59d5",
+      "name": "Enviar no grupo",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Teste manual": {
+      "main": [
+        [
+          {
+            "node": "Configurar grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horários automáticos": {
+      "main": [
+        [
+          {
+            "node": "Configurar grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurar grupo": {
+      "main": [
+        [
+          {
+            "node": "Buscar vagas ativas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar vagas ativas": {
+      "main": [
+        [
+          {
+            "node": "Montar publicação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar publicação": {
+      "main": [
+        [
+          {
+            "node": "Enviar no grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false,
+  "tags": []
+}

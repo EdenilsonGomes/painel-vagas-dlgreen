@@ -1,0 +1,154 @@
+{
+  "name": "01_GENESIS_IA_ASSISTENTE_VAGAS_CBO_REVISADO",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "genesis-vagas-ia-4e9264d6b0e14975",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        0
+      ],
+      "id": "7f952cc4-d468-4440-84f9-51f5baea995c",
+      "name": "Webhook do painel",
+      "webhookId": "7f952cc4-d468-4440-84f9-51f5baea995c"
+    },
+    {
+      "parameters": {
+        "jsCode": "const payload = $input.first().json?.body ?? $input.first().json ?? {};\nconst action = String(payload.acao ?? '').trim().toUpperCase();\nconst vaga = payload.vaga && typeof payload.vaga === 'object' ? payload.vaga : {};\n\nconst allowed = new Set([\n  'GERAR_TODOS',\n  'GERAR_DESCRICAO',\n  'SUGERIR_CARGOS',\n  'SUGERIR_CBOS',\n  'GERAR_REQUISITOS_OBRIGATORIOS',\n  'GERAR_REQUISITOS_DESEJAVEIS',\n]);\n\nif (!allowed.has(action)) {\n  throw new Error(`Ação inválida: ${action || 'não informada'}`);\n}\n\nconst titulo = String(vaga.titulo ?? '').trim();\nconst cargo = String(vaga.cargo ?? '').trim();\n\nif (!titulo && !cargo) {\n  throw new Error('Informe pelo menos o título ou o cargo da vaga.');\n}\n\nconst context = {\n  titulo,\n  cargo,\n  descricao_atual: String(vaga.descricao ?? '').trim(),\n  cidade: String(vaga.cidade ?? '').trim(),\n  estado: String(vaga.estado ?? '').trim(),\n  bairro: String(vaga.bairro ?? '').trim(),\n  tipo_contrato: String(vaga.tipo_contrato ?? '').trim(),\n  modalidade: String(vaga.modalidade ?? '').trim(),\n  escala: String(vaga.escala ?? '').trim(),\n  horario: String(vaga.horario ?? '').trim(),\n  salario: vaga.salario ?? null,\n  beneficios: String(vaga.beneficios ?? '').trim(),\n  escolaridade_minima: String(vaga.escolaridade_minima ?? '').trim(),\n  experiencia_minima_meses: Number(vaga.experiencia_minima_meses ?? 0),\n  aceita_sem_experiencia:\n    vaga.aceita_sem_experiencia === true\n    || vaga.aceita_sem_experiencia === 'true'\n    || vaga.aceita_sem_experiencia === 1,\n  exigir_experiencia_compativel:\n    vaga.exigir_experiencia_compativel !== false\n    && vaga.exigir_experiencia_compativel !== 'false'\n    && vaga.exigir_experiencia_compativel !== 0,\n  cargos_compativeis_atuais: String(vaga.cargos_compativeis ?? '').trim(),\n  cbos_compativeis_atuais: String(vaga.cbos_compativeis ?? '').trim(),\n  requisitos_obrigatorios_atuais: String(vaga.requisitos_obrigatorios ?? '').trim(),\n  requisitos_desejaveis_atuais: String(vaga.requisitos_desejaveis ?? '').trim(),\n};\n\nconst focus = {\n  GERAR_TODOS: 'Gere todos os cinco campos.',\n  GERAR_DESCRICAO: 'Gere somente descricao. Os demais campos devem ser listas vazias.',\n  SUGERIR_CARGOS: 'Gere somente cargos_compativeis. Os demais campos devem ficar vazios.',\n  SUGERIR_CBOS: 'Gere somente cbos_compativeis. Os demais campos devem ficar vazios.',\n  GERAR_REQUISITOS_OBRIGATORIOS: 'Gere somente requisitos_obrigatorios. Os demais campos devem ficar vazios.',\n  GERAR_REQUISITOS_DESEJAVEIS: 'Gere somente requisitos_desejaveis. Os demais campos devem ficar vazios.',\n}[action];\n\nconst prompt = `\nAÇÃO SOLICITADA:\n${action}\n\nFOCO:\n${focus}\n\nDADOS ATUAIS DA VAGA:\n${JSON.stringify(context, null, 2)}\n\nProduza sugestões profissionais e editáveis para o formulário.\nQuando já houver conteúdo no campo solicitado, melhore-o sem apagar informações úteis e sem inventar dados específicos que não estejam no contexto.\n`;\n\nreturn [{\n  json: {\n    acao: action,\n    vaga: context,\n    prompt,\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        0
+      ],
+      "id": "d1149ebe-8da5-45e9-81aa-8b584a033566",
+      "name": "Validar e preparar"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.prompt }}",
+        "options": {
+          "systemMessage": "=Você é um assistente especialista em descrição de vagas, recrutamento, famílias ocupacionais e leitura de CTPS no Brasil.\n\nSua resposta será revisada por uma pessoa antes de ser aplicada ao cadastro da vaga.\n\nRetorne somente um objeto JSON válido, sem markdown, comentários ou texto fora do JSON, exatamente com esta estrutura:\n\n{\n  \"descricao\": \"\",\n  \"cargos_compativeis\": [],\n  \"cbos_compativeis\": [],\n  \"cbo_detalhes\": [],\n  \"requisitos_obrigatorios\": [],\n  \"requisitos_desejaveis\": []\n}\n\nCada item de cbo_detalhes deve ter exatamente:\n\n{\n  \"codigo\": \"1234-56\",\n  \"titulo\": \"Título oficial ou conhecido da ocupação\",\n  \"confianca\": \"ALTA ou MEDIA\",\n  \"justificativa\": \"Relação objetiva entre as atividades da vaga e a ocupação\"\n}\n\nREGRAS GERAIS\n\n1. Não invente salário, benefício, local, jornada, contrato, escolaridade ou experiência mínima.\n2. Use somente os dados fornecidos.\n3. Escreva em português do Brasil.\n4. Não inclua atributos sensíveis ou requisitos discriminatórios.\n5. Não sugira requisitos sem relação direta com as atividades da vaga.\n6. As sugestões devem funcionar para qualquer setor: limpeza, facilities, segurança, indústria, logística, tecnologia, saúde, alimentação, administrativo, recursos humanos e outras áreas.\n7. Quando a ação solicitar somente um campo, deixe os demais vazios.\n8. Nunca inclua código interno da vaga.\n\nMÉTODO OBRIGATÓRIO PARA CARGOS E CBO\n\nAntes de responder, faça internamente estas verificações:\n\nA. Extraia da vaga as atividades concretas, ferramentas, ambiente, responsabilidade e nível ocupacional.\nB. Identifique a ocupação principal e, quando necessário, ocupações realmente equivalentes.\nC. Não escolha um CBO apenas por uma palavra genérica como auxiliar, assistente, operador, analista, serviços ou ajudante.\nD. Compare o conteúdo real do trabalho. Cargos com atividades diferentes não são compatíveis mesmo que tenham nomes parecidos.\nE. Não misture níveis: auxiliar, técnico, supervisor, especialista e gerente só podem ser compatíveis quando as atividades indicarem equivalência real.\nF. Para cada CBO, confirme internamente se o código e o título formam um par conhecido e coerente.\nG. Quando não tiver segurança, omita o código. Nunca complete ou invente números.\nH. Use confiança ALTA apenas quando código, título e atividades tiverem correspondência direta. Use MEDIA para equivalência próxima que exige revisão.\nI. Nunca retorne confiança BAIXA.\nJ. cbos_compativeis deve conter somente os códigos também presentes em cbo_detalhes.\n\nDESCRIÇÃO\n\n- Produza de um a três parágrafos curtos.\n- Explique missão e atividades principais.\n- Não invente condições ausentes.\n\nCARGOS COMPATÍVEIS PARA CTPS\n\n- Sugira de 2 a 8 nomes realmente equivalentes à experiência que deve ser aceita.\n- Considere sinônimos e nomenclaturas comuns de registro.\n- Evite ampliar demais a aceitação e aprovar experiências de outra área.\n- Não inclua automaticamente cargos hierarquicamente superiores ou inferiores.\n\nCBOS COMPATÍVEIS\n\n- Retorne no máximo 5 códigos.\n- Use formato 1234-56; família com 4 dígitos somente quando a vaga realmente aceitar toda a família.\n- Para cada código, preencha cbo_detalhes.\n- Se nenhum código puder ser sustentado com confiança, retorne listas vazias.\n- A revisão humana na consulta oficial do Ministério do Trabalho continua obrigatória.\n\nREQUISITOS OBRIGATÓRIOS\n\n- Inclua somente condições necessárias ao exercício da função.\n- Considere experiência mínima somente quando informada.\n- Retorne de 2 a 8 itens.\n\nREQUISITOS DESEJÁVEIS\n\n- Inclua diferenciais úteis e não eliminatórios.\n- Retorne de 2 a 8 itens sem repetir os obrigatórios.\n\nRetorne somente o JSON."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -224,
+        0
+      ],
+      "id": "ce0c74ec-3eac-4a0e-be8b-94f14595c7fe",
+      "name": "Gerar sugestões com IA"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {
+          "textFormat": {
+            "textOptions": {
+              "type": "text"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        240
+      ],
+      "id": "5e02d62c-7d9b-499d-9dae-69c52f346177",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGxdW1e4d63T5T9U",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const input = $input.first().json ?? {};\nconst raw = input.output ?? input.response ?? input.text ?? input;\n\nfunction parseObject(value) {\n  if (value && typeof value === 'object' && !Array.isArray(value)) {\n    if (value.output && typeof value.output === 'object') return value.output;\n    return value;\n  }\n\n  let text = String(value ?? '').trim()\n    .replace(/^```json\\s*/i, '')\n    .replace(/^```\\s*/i, '')\n    .replace(/\\s*```$/i, '')\n    .trim();\n\n  const start = text.indexOf('{');\n  const end = text.lastIndexOf('}');\n  if (start < 0 || end <= start) throw new Error('A IA não retornou um objeto JSON.');\n  return JSON.parse(text.slice(start, end + 1));\n}\n\nfunction text(value) {\n  return String(value ?? '').trim();\n}\n\nfunction list(value) {\n  const values = Array.isArray(value) ? value : String(value ?? '').split(/\\r?\\n|;|\\|/);\n  return [...new Set(values.map((item) => String(item ?? '').trim().replace(/^[-•*]\\s*/, '')).filter(Boolean))].slice(0, 20);\n}\n\nfunction cboDetails(value) {\n  if (!Array.isArray(value)) return [];\n  const result = [];\n\n  for (const item of value) {\n    if (!item || typeof item !== 'object') continue;\n    const codigo = String(item.codigo ?? '').match(/\\b\\d{4}(?:-\\d{2})?\\b/)?.[0] ?? '';\n    const titulo = text(item.titulo);\n    const confianca = text(item.confianca).toUpperCase();\n    const justificativa = text(item.justificativa);\n\n    if (!codigo || !titulo || !['ALTA', 'MEDIA'].includes(confianca)) continue;\n    if (result.some((entry) => entry.codigo === codigo)) continue;\n\n    result.push({ codigo, titulo, confianca, justificativa });\n  }\n\n  return result.slice(0, 5);\n}\n\nconst parsed = parseObject(raw);\nconst request = $('Validar e preparar').first().json;\nconst details = cboDetails(parsed.cbo_detalhes);\nconst explicitCodes = list(parsed.cbos_compativeis)\n  .map((item) => item.match(/\\b\\d{4}(?:-\\d{2})?\\b/)?.[0] ?? '')\n  .filter(Boolean);\nconst allowedCodes = details.map((item) => item.codigo);\nconst codes = [...new Set(explicitCodes.filter((codigo) => allowedCodes.includes(codigo)))].slice(0, 5);\n\nconst suggestions = {\n  descricao: text(parsed.descricao),\n  cargos_compativeis: list(parsed.cargos_compativeis).slice(0, 8),\n  cbos_compativeis: codes,\n  cbo_detalhes: details.filter((item) => codes.includes(item.codigo)),\n  requisitos_obrigatorios: list(parsed.requisitos_obrigatorios).slice(0, 8),\n  requisitos_desejaveis: list(parsed.requisitos_desejaveis).slice(0, 8),\n};\n\nconst actionFields = {\n  GERAR_TODOS: ['descricao', 'cargos_compativeis', 'cbos_compativeis', 'requisitos_obrigatorios', 'requisitos_desejaveis'],\n  GERAR_DESCRICAO: ['descricao'],\n  SUGERIR_CARGOS: ['cargos_compativeis'],\n  SUGERIR_CBOS: ['cbos_compativeis'],\n  GERAR_REQUISITOS_OBRIGATORIOS: ['requisitos_obrigatorios'],\n  GERAR_REQUISITOS_DESEJAVEIS: ['requisitos_desejaveis'],\n};\n\nconst expected = actionFields[request.acao] ?? actionFields.GERAR_TODOS;\nconst hasSuggestion = expected.some((field) => {\n  const value = suggestions[field];\n  return Array.isArray(value) ? value.length > 0 : Boolean(value);\n});\n\nif (!hasSuggestion) {\n  throw new Error('A IA não gerou uma sugestão utilizável com confiança suficiente para o campo solicitado.');\n}\n\nreturn [{\n  json: {\n    sucesso: true,\n    acao: request.acao,\n    sugestoes: suggestions,\n    avisos: [\n      'Revise todas as sugestões antes de aplicá-las.',\n      'CBOs de baixa confiança foram descartados. Confirme código e título na consulta oficial do MTE.',\n    ],\n  },\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        48,
+        0
+      ],
+      "id": "fccebcaa-d93e-4f93-a2d4-4c6f171a20aa",
+      "name": "Normalizar resposta"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook do painel": {
+      "main": [
+        [
+          {
+            "node": "Validar e preparar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar e preparar": {
+      "main": [
+        [
+          {
+            "node": "Gerar sugestões com IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Gerar sugestões com IA",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar sugestões com IA": {
+      "main": [
+        [
+          {
+            "node": "Normalizar resposta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9fe71573-5b76-4409-90d0-27f4cd06dc8e",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "49ffce05-d24a-4d96-ad5d-2b43a4fd2c43",
+  "tags": []
+}
