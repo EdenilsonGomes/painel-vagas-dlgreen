@@ -1,0 +1,85 @@
+{
+  "name": "05_GENESIS_IA_MONITORAMENTO_ERROS_V4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        220,
+        260
+      ],
+      "id": "6f9bcf56-fb9f-422c-952f-dbeb438eb940",
+      "name": "Erro do workflow"
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "mode": "runOnceForEachItem",
+        "jsCode": "const error = $json.execution?.error || $json.error || {};\nconst execution = $json.execution || {};\nconst workflow = $json.workflow || {};\nconst data = execution.data || {};\nconst runData = data.resultData?.runData || {};\nconst nodeNames = Object.keys(runData);\nconst lastNode = nodeNames[nodeNames.length - 1] || error.node?.name || '';\nconst payload = {\n  workflow_id: workflow.id || execution.workflowId || '',\n  workflow_nome: workflow.name || execution.workflowName || '',\n  execution_id: execution.id || '',\n  node_nome: error.node?.name || lastNode,\n  erro_tipo: error.name || error.type || 'Error',\n  erro_mensagem: error.message || execution.error?.message || 'Erro sem mensagem',\n  telefone: String(\n    execution.data?.resultData?.lastNodeExecutedPhone\n    || $json.telefone\n    || ''\n  ).replace(/\\D/g, ''),\n  candidato_id: Number($json.candidato_id || 0) || null,\n  payload: $json,\n};\nreturn { json: payload };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        260
+      ],
+      "id": "6bad1636-3083-439c-9d57-e8c9f27d4c45",
+      "name": "Normalizar erro"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO workflow_erros (\n  workflow_id, workflow_nome, execution_id, node_nome,\n  erro_tipo, erro_mensagem, telefone, candidato_id, payload\n) VALUES (\n  $1, $2, NULLIF($3, ''), NULLIF($4, ''),\n  NULLIF($5, ''), $6, NULLIF($7, ''), $8, $9::JSONB\n)\nON CONFLICT (execution_id, node_nome)\nDO UPDATE SET\n  erro_tipo = EXCLUDED.erro_tipo,\n  erro_mensagem = EXCLUDED.erro_mensagem,\n  telefone = COALESCE(EXCLUDED.telefone, workflow_erros.telefone),\n  candidato_id = COALESCE(EXCLUDED.candidato_id, workflow_erros.candidato_id),\n  payload = EXCLUDED.payload\nRETURNING id;",
+        "options": {
+          "queryReplacement": "={{ [\n  $json.workflow_id,\n  $json.workflow_nome,\n  $json.execution_id,\n  $json.node_nome,\n  $json.erro_tipo,\n  $json.erro_mensagem,\n  $json.telefone,\n  $json.candidato_id,\n  JSON.stringify($json.payload ?? {})\n] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        740,
+        260
+      ],
+      "id": "955bfb1d-e865-4999-9244-97fe8b15f154",
+      "name": "Salvar erro no PostgreSQL",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Erro do workflow": {
+      "main": [
+        [
+          {
+            "node": "Normalizar erro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar erro": {
+      "main": [
+        [
+          {
+            "node": "Salvar erro no PostgreSQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false,
+  "pinData": {},
+  "tags": []
+}

@@ -1,0 +1,183 @@
+{
+  "name": "06_GENESIS_IA_FOLLOWUP_LEVE_V4",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        140,
+        290
+      ],
+      "id": "190a6f84-cf41-48c4-a849-9f390416c2ae",
+      "name": "Teste manual"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 9,12,15,18 * * 1-6"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        100
+      ],
+      "id": "00840b5b-aeb0-46c8-9ca8-67334a72101c",
+      "name": "Horários leves"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH ultima_mensagem AS (\n  SELECT DISTINCT ON (m.candidato_id)\n    m.candidato_id, m.quem, m.mensagem, m.created_at\n  FROM mensagens m\n  ORDER BY m.candidato_id, m.created_at DESC, m.id DESC\n), tentativas AS (\n  SELECT candidato_id, etapa, MAX(tentativa) AS ultima_tentativa, MAX(enviado_em) AS ultimo_envio\n  FROM candidato_followups\n  WHERE status IN ('ENVIADO','PENDENTE')\n  GROUP BY candidato_id, etapa\n), elegiveis AS (\n  SELECT\n    c.id AS candidato_id, c.telefone, c.nome, c.etapa, c.status, c.vaga,\n    u.created_at AS ultima_mensagem_em,\n    COALESCE(t.ultima_tentativa, 0) AS ultima_tentativa,\n    t.ultimo_envio,\n    CASE WHEN COALESCE(t.ultima_tentativa,0)=0 THEN 1 ELSE 2 END AS tentativa\n  FROM candidatos c\n  JOIN ultima_mensagem u ON u.candidato_id=c.id\n  LEFT JOIN tentativas t ON t.candidato_id=c.id AND t.etapa=c.etapa\n  WHERE c.followup_bloqueado IS FALSE\n    AND c.followup_pausado_at IS NULL\n    AND c.status IN ('NOVO','EM_PROCESSO','APROVADO')\n    AND c.etapa IN ('PRIMEIRO_CONTATO','ESCOLHENDO_VAGA','PERGUNTANDO_EXPERIENCIA','AGUARDANDO_CTPS_CEP','AGUARDANDO_CTPS','AGUARDANDO_CEP','AGUARDANDO_APRESENTACAO','ESCOLHENDO_HORARIO','AGUARDANDO_ENTREVISTA')\n    AND UPPER(COALESCE(u.quem,''))='IA'\n    AND NOT EXISTS (SELECT 1 FROM entrevistas e WHERE e.candidato_id=c.id AND e.status='AGENDADA')\n    AND NOT EXISTS (\n      SELECT 1 FROM mensagens m2\n      WHERE m2.candidato_id=c.id AND UPPER(COALESCE(m2.quem,''))='USUARIO'\n        AND m2.mensagem ~* '(pare|não.*interesse|nao.*interesse|não.*chame|nao.*chame|remover.*contato|sair)'\n    )\n    AND COALESCE(t.ultima_tentativa,0) < 2\n    AND (\n      (COALESCE(t.ultima_tentativa,0)=0 AND u.created_at < NOW() - INTERVAL '18 hours')\n      OR\n      (COALESCE(t.ultima_tentativa,0)=1 AND t.ultimo_envio < NOW() - INTERVAL '72 hours')\n    )\n)\nSELECT * FROM elegiveis\nORDER BY COALESCE(ultimo_envio, ultima_mensagem_em) ASC\nLIMIT 10;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        420,
+        190
+      ],
+      "id": "4abcbf77-8fed-45b6-9bc3-8af61d529d35",
+      "name": "Buscar candidatos elegíveis",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "mode": "runOnceForAllItems",
+        "jsCode": "return items.map((item) => {\n  const c=item.json;\n  const first=String(c.nome||'').trim().split(/\\s+/)[0];\n  const hi=first ? `Oi, ${first}!` : 'Oi!';\n  const etapa=String(c.etapa||'');\n  const segunda=Number(c.tentativa)===2;\n  let body='';\n  if (etapa==='ESCOLHENDO_VAGA' || etapa==='PRIMEIRO_CONTATO') body='Vi que você iniciou o atendimento, mas não concluiu a escolha da vaga. Ainda deseja continuar?';\n  else if (etapa==='PERGUNTANDO_EXPERIENCIA') body='Para continuarmos, ainda falta confirmar sua experiência para a vaga escolhida. Podemos seguir?';\n  else if (etapa==='AGUARDANDO_CTPS_CEP') body='Para continuar, ainda faltam seu CEP e a CTPS Digital enviada como Documento PDF. O currículo é opcional, mas não substitui a CTPS.';\n  else if (etapa==='AGUARDANDO_CTPS') body='Seu processo está quase completo. Ainda falta enviar a CTPS Digital como Documento PDF.';\n  else if (etapa==='AGUARDANDO_CEP') body='Recebemos seu documento. Ainda falta informar seu CEP com 8 números para continuar.';\n  else if (etapa==='AGUARDANDO_APRESENTACAO') body='Você avançou na triagem. Ainda deseja continuar e enviar uma breve apresentação profissional?';\n  else body='Sua candidatura continua aguardando a escolha do horário da entrevista. Deseja ver as opções novamente?';\n  const ending=segunda ? '\\n\\nPara não incomodar, vou pausar os lembretes por enquanto. Quando quiser continuar, basta mandar uma mensagem por aqui.' : '';\n  return {json:{...c,session:'whats_junior',chatId:String(c.telefone||'').replace(/\\D/g,'')+'@c.us',text:`${hi} ${body}${ending}`}};\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        190
+      ],
+      "id": "16827095-f462-4926-9c21-8850a651dc8a",
+      "name": "Montar follow-up"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $json.session }}",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.text }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        980,
+        190
+      ],
+      "id": "d1548ef8-1f67-4d19-98d2-7fbae99df5b8",
+      "name": "Enviar follow-up",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH f AS (\n  INSERT INTO candidato_followups (\n    candidato_id, etapa, tentativa, mensagem, status, mensagem_waha_id, enviado_em, created_at, updated_at\n  ) VALUES ($1,$2,$3,$4,'ENVIADO',NULLIF($5::TEXT,''),NOW(),NOW(),NOW())\n  ON CONFLICT (candidato_id, etapa, tentativa)\n  DO UPDATE SET status='ENVIADO', mensagem=EXCLUDED.mensagem, mensagem_waha_id=EXCLUDED.mensagem_waha_id, enviado_em=NOW(), updated_at=NOW()\n  RETURNING id\n), m AS (\n  INSERT INTO mensagens (candidato_id, quem, mensagem, created_at)\n  VALUES ($1,'IA',$4,NOW()) RETURNING id\n), e AS (\n  INSERT INTO eventos (candidato_id, evento, descricao, created_at)\n  VALUES ($1, CASE WHEN $3=1 THEN 'FOLLOWUP_LEVE_1_ENVIADO' ELSE 'FOLLOWUP_LEVE_2_ENVIADO' END, $4, NOW()) RETURNING id\n)\nUPDATE candidatos\nSET followup_pausado_at = CASE WHEN $3=2 THEN NOW() ELSE followup_pausado_at END,\n    updated_at = updated_at\nWHERE id=$1\nRETURNING id;",
+        "options": {
+          "queryReplacement": "={{ [Number($('Montar follow-up').item.json.candidato_id), $('Montar follow-up').item.json.etapa, Number($('Montar follow-up').item.json.tentativa), $('Montar follow-up').item.json.text, String($json.id ?? $json.key?.id ?? '')] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1260,
+        190
+      ],
+      "id": "e04463f0-1e95-45d3-a93e-c15c72f0cf6f",
+      "name": "Registrar follow-up",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Teste manual": {
+      "main": [
+        [
+          {
+            "node": "Buscar candidatos elegíveis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Horários leves": {
+      "main": [
+        [
+          {
+            "node": "Buscar candidatos elegíveis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buscar candidatos elegíveis": {
+      "main": [
+        [
+          {
+            "node": "Montar follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar follow-up": {
+      "main": [
+        [
+          {
+            "node": "Enviar follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar follow-up": {
+      "main": [
+        [
+          {
+            "node": "Registrar follow-up",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Sao_Paulo"
+  },
+  "active": false,
+  "tags": []
+}

@@ -1,0 +1,369 @@
+{
+  "name": "[GENESIS IA] Reprovação pontual + convite do grupo V4.1",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -960,
+        -160
+      ],
+      "id": "a51d5641-5b62-44c4-ab5c-0db37cf2857b",
+      "name": "Quando chamado pelo chatbot"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "genesis-reprovacao-grupo-v4-1",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -960,
+        160
+      ],
+      "id": "3b2228d5-bb70-4856-b1b7-55d7a553f72d",
+      "name": "Webhook do painel",
+      "webhookId": "413eafb1-d787-49e0-8f5b-274426f65af3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json ?? {};\nconst viaWebhook = Boolean(raw.body && typeof raw.body === 'object');\nconst input = viaWebhook ? raw.body : raw;\n\n// Edite somente este token no workflow e use o mesmo valor em\n// REPROVACAO_WEBHOOK_TOKEN no EasyPanel.\nconst WEBHOOK_TOKEN = 'TROQUE_POR_UMA_CHAVE_LONGA';\nconst GRUPO_ID = 'COLE_O_ID_DO_GRUPO@g.us';\nconst SESSAO_WAHA = 'whats_junior';\n\nif (viaWebhook) {\n  if (!WEBHOOK_TOKEN || WEBHOOK_TOKEN === 'TROQUE_POR_UMA_CHAVE_LONGA') {\n    throw new Error('Configure WEBHOOK_TOKEN no node Normalizar entrada e configurar grupo.');\n  }\n  if (String(input.token || '') !== WEBHOOK_TOKEN) {\n    throw new Error('Token inválido para a reprovação enviada pelo painel.');\n  }\n}\n\nconst candidatoId = Number(input.candidato_id);\nif (!Number.isInteger(candidatoId) || candidatoId <= 0) {\n  throw new Error('candidato_id inválido.');\n}\nif (!GRUPO_ID || GRUPO_ID.startsWith('COLE_')) {\n  throw new Error('Configure o ID real do grupo no node Normalizar entrada e configurar grupo.');\n}\n\nconst origem = String(input.origem || 'TRIAGEM_AUTOMATICA').trim().toUpperCase();\nconst permitidas = ['TRIAGEM_EXPERIENCIA_DECLARADA','TRIAGEM_CTPS','TRIAGEM_AUTOMATICA','PAINEL_POS_ENTREVISTA'];\nif (!permitidas.includes(origem)) throw new Error(`Origem inválida: ${origem}`);\n\nreturn [{json:{\n  candidato_id:candidatoId,\n  origem,\n  mensagem_base:String(input.mensagem_base || '').trim(),\n  motivo:String(input.motivo || '').trim(),\n  observacao:String(input.observacao || '').trim(),\n  solicitado_por:String(input.solicitado_por || 'Sistema').trim(),\n  finalizar_buffer:Boolean(input.finalizar_buffer),\n  grupo_id:GRUPO_ID,\n  session:String(input.session || SESSAO_WAHA),\n  via_webhook:viaWebhook\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -704,
+        0
+      ],
+      "id": "d9b9c271-c167-4bec-83c2-e1e1fdab7f18",
+      "name": "Normalizar entrada e configurar grupo"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  c.id AS candidato_id,\n  c.nome,\n  c.telefone,\n  c.status,\n  c.etapa,\n  COALESCE(c.vaga, v.titulo, 'vaga atual') AS vaga_nome,\n  $2::TEXT AS origem,\n  $3::TEXT AS mensagem_base,\n  $4::TEXT AS motivo,\n  $5::TEXT AS observacao,\n  $6::TEXT AS solicitado_por,\n  $7::BOOLEAN AS finalizar_buffer,\n  $8::TEXT AS grupo_id,\n  $9::TEXT AS session,\n  EXISTS (\n    SELECT 1\n    FROM grupo_convites_envios g\n    WHERE g.candidato_id = c.id\n      AND g.grupo_id = $8\n      AND g.status = 'ENVIADO'\n  ) AS ja_convidado\nFROM candidatos c\nLEFT JOIN vagas v ON v.id = c.vaga_id\nWHERE c.id = $1\nLIMIT 1;",
+        "options": {
+          "queryReplacement": "={{ [$json.candidato_id,$json.origem,$json.mensagem_base,$json.motivo,$json.observacao,$json.solicitado_por,$json.finalizar_buffer,$json.grupo_id,$json.session] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -448,
+        0
+      ],
+      "id": "27c6c6bf-296d-4704-8a22-9a659fefdd02",
+      "name": "Carregar candidato e verificar convite",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$input.first().json;\nif (!c.candidato_id) throw new Error('Candidato não encontrado.');\nconst origem=String(c.origem||'').toUpperCase();\nconst etapa=String(c.etapa||'').toUpperCase();\nconst status=String(c.status||'').toUpperCase();\nif (origem==='PAINEL_POS_ENTREVISTA' && !(status==='REPROVADO' && etapa==='REPROVADO_POS_ENTREVISTA')) {\n  throw new Error('O candidato não está reprovado após entrevista no painel.');\n}\nif (origem!=='PAINEL_POS_ENTREVISTA' && !(status==='REPROVADO' && ['REPROVADO_PRE_TRIAGEM','REPROVADO_TRIAGEM'].includes(etapa))) {\n  throw new Error('O candidato não está em uma reprovação automática de triagem.');\n}\nreturn [{json:{...c,chatId:String(c.telefone||'').replace(/\\D/g,'')+'@c.us'}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -192,
+        0
+      ],
+      "id": "49bc33cc-bb11-4af4-bb82-18ddd9c998f3",
+      "name": "Validar origem da reprovação"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7f0a2b61-072f-496b-b439-104553e4c7dd",
+              "leftValue": "={{ $json.ja_convidado === false }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        0
+      ],
+      "id": "7f7f1df6-1b8b-44c0-b9bc-f4d34a3e0e5b",
+      "name": "Ainda precisa do link?"
+    },
+    {
+      "parameters": {
+        "resource": "Groups",
+        "operation": "Get Invite Code",
+        "session": "={{ $json.session }}",
+        "id": "={{ $json.grupo_id }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        320,
+        -96
+      ],
+      "id": "aa3c6530-c673-4a8a-a631-ee96977a7487",
+      "name": "Obter código atual do convite",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$('Validar origem da reprovação').first().json;\nconst raw=$input.first().json ?? {};\nlet code='';\nif (typeof raw==='string') code=raw;\nelse code=String(raw.inviteCode ?? raw.invite_code ?? raw.code ?? raw.value ?? raw.result ?? '').trim();\ncode=code.replace(/^https?:\\/\\/chat\\.whatsapp\\.com\\//i,'').trim();\nconst link=code?`https://chat.whatsapp.com/${code}`:'';\nconst first=String(c.nome||'').trim().split(/\\s+/)[0];\nconst hi=first?`Olá, ${first}.`:'Olá.';\nlet base=String(c.mensagem_base||'').trim();\nif (!base) {\n  if (c.origem==='PAINEL_POS_ENTREVISTA') base=`${hi}\\n\\nApós a etapa de entrevista, não será possível continuar nesta vaga específica.`;\n  else if (c.origem==='TRIAGEM_CTPS') base=`${hi}\\n\\nApós a análise da sua CTPS, seu perfil não atingiu o requisito desta vaga específica.`;\n  else base=`${hi}\\n\\nPara esta vaga específica, você não atende ao requisito mínimo informado.`;\n}\nconst complemento=link\n ? `\\n\\nIsso não impede sua participação em outras oportunidades. Divulgamos novas vagas, inclusive oportunidades com critérios diferentes, no grupo abaixo:\\n\\n${link}\\n\\nQuando encontrar uma vaga compatível, é só nos chamar novamente no privado.`\n : `\\n\\nIsso não impede sua participação em futuras oportunidades. Não consegui carregar o link do grupo agora, mas você poderá nos chamar novamente quando encontrar outra vaga.`;\nreturn [{json:{...c,codigo_convite:code,link_convite:link,convite_incluido:Boolean(link),text:(base+complemento).trim()}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        -96
+      ],
+      "id": "d30f39f9-12c8-4c05-8cbd-8fc6b9908f57",
+      "name": "Montar mensagem com convite"
+    },
+    {
+      "parameters": {
+        "jsCode": "const c=$input.first().json;\nconst first=String(c.nome||'').trim().split(/\\s+/)[0];\nconst hi=first?`Olá, ${first}.`:'Olá.';\nlet base=String(c.mensagem_base||'').trim();\nif (!base) {\n  base=c.origem==='PAINEL_POS_ENTREVISTA'\n    ? `${hi}\\n\\nApós a etapa de entrevista, não será possível continuar nesta vaga específica.`\n    : `${hi}\\n\\nNeste momento, não será possível continuar nesta vaga específica.`;\n}\nconst complemento='\\n\\nVocê continuará podendo participar de novas oportunidades. O link do nosso grupo de vagas já foi enviado anteriormente, por isso não vou repeti-lo nesta mensagem.';\nreturn [{json:{...c,codigo_convite:'',link_convite:'',convite_incluido:false,text:(base+complemento).trim()}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        320,
+        112
+      ],
+      "id": "27bbbc98-c021-47e2-8b62-333bc020f146",
+      "name": "Montar mensagem sem repetir link"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $json.session }}",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.text }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202502,
+      "position": [
+        832,
+        0
+      ],
+      "id": "9aa449f3-f403-40c8-a998-85d08aca1e11",
+      "name": "Enviar reprovação e grupo",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const sent=$input.first().json ?? {};\nlet source={};\ntry { source=$('Montar mensagem com convite').first().json; } catch { source=$('Montar mensagem sem repetir link').first().json; }\nreturn [{json:{...source,mensagem_waha_id:String(sent.id ?? sent.key?.id ?? '')}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        0
+      ],
+      "id": "5accba1f-b8cc-4ca1-a096-9d45e0961b41",
+      "name": "Preparar registro do envio"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH convite AS (\n  INSERT INTO grupo_convites_envios (\n    candidato_id, grupo_id, codigo_convite, link_convite, mensagem, status,\n    mensagem_waha_id, enviado_em, created_at, updated_at\n  )\n  SELECT $1,$2,NULLIF($3,''),NULLIF($4,''),$5,'ENVIADO',NULLIF($6,''),NOW(),NOW(),NOW()\n  WHERE NULLIF($4,'') IS NOT NULL\n  ON CONFLICT (candidato_id, grupo_id)\n  DO UPDATE SET\n    codigo_convite=EXCLUDED.codigo_convite,\n    link_convite=EXCLUDED.link_convite,\n    mensagem=EXCLUDED.mensagem,\n    status='ENVIADO',\n    mensagem_waha_id=EXCLUDED.mensagem_waha_id,\n    enviado_em=NOW(),\n    updated_at=NOW()\n  RETURNING id\n), mensagem AS (\n  INSERT INTO mensagens (candidato_id, quem, mensagem, created_at)\n  VALUES ($1,'IA',$5,NOW())\n  RETURNING id\n), evento_reprovacao AS (\n  INSERT INTO eventos (candidato_id, evento, descricao, created_at)\n  VALUES ($1,'REPROVACAO_NOTIFICADA',$5,NOW())\n  RETURNING id\n), evento_convite AS (\n  INSERT INTO eventos (candidato_id, evento, descricao, created_at)\n  SELECT $1,'CONVITE_GRUPO_VAGAS_ENVIADO',$4,NOW()\n  WHERE NULLIF($4,'') IS NOT NULL\n  RETURNING id\n), candidato AS (\n  UPDATE candidatos\n  SET reprovacao_notificada_at=NOW(), updated_at=NOW()\n  WHERE id=$1\n  RETURNING id\n)\nSELECT\n  TRUE AS enviado,\n  ($7::BOOLEAN) AS convite_incluido,\n  ($8::BOOLEAN) AS ja_convidado,\n  $9::TEXT AS origem,\n  $10::BOOLEAN AS finalizar_buffer,\n  $5::TEXT AS mensagem,\n  CASE\n    WHEN $7::BOOLEAN THEN NULL\n    WHEN $8::BOOLEAN THEN 'A reprovação foi enviada sem repetir o link porque o candidato já havia recebido o convite deste grupo.'\n    ELSE 'A reprovação foi enviada, mas o WAHA não retornou o link atual do grupo. Revise o grupo e tente novamente.'\n  END AS aviso;",
+        "options": {
+          "queryReplacement": "={{ [Number($json.candidato_id),$json.grupo_id,String($json.codigo_convite||''),String($json.link_convite||''),String($json.text||''),String($json.mensagem_waha_id||''),Boolean($json.convite_incluido),Boolean($json.ja_convidado),String($json.origem),Boolean($json.finalizar_buffer)] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1344,
+        0
+      ],
+      "id": "9e3ee13c-efea-45c2-aee4-e85296596fd6",
+      "name": "Registrar envio e responder",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Quando chamado pelo chatbot": {
+      "main": [
+        [
+          {
+            "node": "Normalizar entrada e configurar grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook do painel": {
+      "main": [
+        [
+          {
+            "node": "Normalizar entrada e configurar grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar entrada e configurar grupo": {
+      "main": [
+        [
+          {
+            "node": "Carregar candidato e verificar convite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar candidato e verificar convite": {
+      "main": [
+        [
+          {
+            "node": "Validar origem da reprovação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar origem da reprovação": {
+      "main": [
+        [
+          {
+            "node": "Ainda precisa do link?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ainda precisa do link?": {
+      "main": [
+        [
+          {
+            "node": "Obter código atual do convite",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Montar mensagem sem repetir link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Obter código atual do convite": {
+      "main": [
+        [
+          {
+            "node": "Montar mensagem com convite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar mensagem com convite": {
+      "main": [
+        [
+          {
+            "node": "Enviar reprovação e grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Montar mensagem sem repetir link": {
+      "main": [
+        [
+          {
+            "node": "Enviar reprovação e grupo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar reprovação e grupo": {
+      "main": [
+        [
+          {
+            "node": "Preparar registro do envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar registro do envio": {
+      "main": [
+        [
+          {
+            "node": "Registrar envio e responder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "38f5a29a-ba14-4cc9-95fe-cb598b344394",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "id": "",
+  "tags": []
+}
