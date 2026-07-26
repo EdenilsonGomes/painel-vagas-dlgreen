@@ -80,7 +80,7 @@ function normalizeApifyLead(item) {
   const lead = {
     empresa_nome: cleanText(firstValue(item, ['title', 'name', 'companyName', 'placeName'], 'Empresa sem nome'), 300),
     categoria: cleanText(firstValue(item, ['categoryName', 'category', 'subTitle'], categories[0]), 250),
-    categorias,
+    categorias: categories,
     telefone: phone,
     telefone_normalizado: digits(phone) || null,
     website,
@@ -482,7 +482,11 @@ function registerAdminV6({ app, pool, requireAdmin, currentUserName }) {
             quantidade_importada = $5,
             quantidade_duplicada = $6,
             retorno_json = $7::JSONB,
-            erro = COALESCE($8, erro),
+            erro = CASE
+              WHEN $2::VARCHAR IN ('FAILED','ABORTED','TIMED-OUT')
+                THEN COALESCE($8::TEXT, erro)
+              ELSE NULL
+            END,
             concluido_at = CASE WHEN $2::VARCHAR IN ('SUCCEEDED','FAILED','ABORTED','TIMED-OUT') THEN COALESCE(concluido_at, NOW()) ELSE concluido_at END,
             updated_at = NOW()
         WHERE id = $9
