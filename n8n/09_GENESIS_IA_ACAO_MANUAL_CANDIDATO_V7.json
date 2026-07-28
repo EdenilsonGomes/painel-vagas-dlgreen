@@ -1,0 +1,210 @@
+{
+  "name": "[GENESIS IA] Ação manual do recrutador V7",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "genesis-acao-manual-candidato-v7",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "21163126-e113-4312-a5dd-8a91a7560d07",
+      "name": "Webhook ação manual",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "genesis-acao-manual-candidato-v7"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Configure somente este token e use o mesmo valor em\n// ATENDIMENTO_MANUAL_WEBHOOK_TOKEN no serviço do painel.\nconst EXPECTED_TOKEN = 'COLE_O_MESMO_TOKEN_DO_PAINEL';\n\nconst payload = $json.body ?? $json;\nconst expected = String(EXPECTED_TOKEN || '').trim();\nconst received = String(payload.token || '').trim();\n\nif (!expected || expected === 'COLE_O_MESMO_TOKEN_DO_PAINEL') {\n  throw new Error('Configure EXPECTED_TOKEN neste node.');\n}\nif (!received || received !== expected) {\n  throw new Error('Token inválido para o webhook de atendimento manual.');\n}\n\nconst candidatoId = Number(payload.candidato_id);\nif (!Number.isInteger(candidatoId) || candidatoId <= 0) {\n  throw new Error('candidato_id inválido.');\n}\nconst mensagem = String(payload.mensagem || '').trim();\nif (!mensagem) throw new Error('A mensagem não pode ficar vazia.');\nif (mensagem.length > 4000) throw new Error('A mensagem excede 4.000 caracteres.');\n\nreturn [{json:{\n  candidato_id:candidatoId,\n  mensagem,\n  evento:String(payload.evento || 'MENSAGEM_MANUAL_ENVIADA').trim().slice(0,120),\n  solicitado_por:String(payload.solicitado_por || 'Recrutador').trim().slice(0,200),\n  session:String(payload.session || 'whats_junior').trim()\n}}];"
+      },
+      "id": "ebf0d39c-f332-412a-b814-ad54e83a2a2d",
+      "name": "Validar solicitação",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT\n  c.id AS candidato_id,\n  c.telefone,\n  c.nome,\n  c.ia_atendimento_ativo,\n  $2::TEXT AS mensagem,\n  $3::TEXT AS evento,\n  $4::TEXT AS solicitado_por,\n  $5::TEXT AS session\nFROM candidatos c\nWHERE c.id = $1\nLIMIT 1;",
+        "options": {
+          "queryReplacement": "={{ [Number($json.candidato_id), String($json.mensagem), String($json.evento), String($json.solicitado_por), String($json.session)] }}"
+        }
+      },
+      "id": "f3bb3bf3-cded-4cb2-ba35-6b79d0b6f0dc",
+      "name": "Carregar candidato",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        480,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const c = $input.first().json ?? {};\nif (!c.candidato_id) throw new Error('Candidato não encontrado.');\nconst telefone = String(c.telefone || '').replace(/\\D/g, '');\nif (!/^55\\d{10,11}$/.test(telefone)) throw new Error('Telefone do candidato inválido.');\nreturn [{json:{\n  ...c,\n  telefone,\n  chatId:`${telefone}@c.us`,\n  text:String(c.mensagem || '').trim()\n}}];"
+      },
+      "id": "8d0aceee-4459-4647-b9c2-11f9211e0f5b",
+      "name": "Preparar envio",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $json.session }}",
+        "chatId": "={{ $json.chatId }}",
+        "text": "={{ $json.text }}",
+        "requestOptions": {}
+      },
+      "id": "ffb867eb-f136-46d1-8a15-2141068e687d",
+      "name": "Enviar mensagem manual",
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        960,
+        0
+      ],
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH mensagem_salva AS (\n  INSERT INTO mensagens (candidato_id, quem, mensagem, created_at)\n  VALUES ($1, 'IA', $2, NOW())\n  RETURNING id\n), evento_salvo AS (\n  INSERT INTO eventos (candidato_id, evento, descricao, created_at)\n  VALUES ($1, $3, CONCAT('Mensagem enviada manualmente por ', $4, ': ', $2), NOW())\n  RETURNING id\n), candidato_atualizado AS (\n  UPDATE candidatos\n  SET\n    ia_ultima_acao_manual = $3,\n    ia_ultima_acao_manual_em = NOW(),\n    ia_ultima_acao_manual_por = $4,\n    ia_ultima_mensagem_manual = $2,\n    updated_at = NOW()\n  WHERE id = $1\n  RETURNING id\n)\nSELECT\n  TRUE AS enviado,\n  $1::BIGINT AS candidato_id,\n  $5::TEXT AS mensagem_waha_id;",
+        "options": {
+          "queryReplacement": "={{ [Number($('Preparar envio').first().json.candidato_id), String($('Preparar envio').first().json.text), String($('Preparar envio').first().json.evento), String($('Preparar envio').first().json.solicitado_por), String($json.id ?? $json.key?.id ?? '')] }}"
+        }
+      },
+      "id": "c54b2781-8eab-45e4-ba5c-6d0d8d738d12",
+      "name": "Registrar mensagem manual",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1200,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { sucesso: true, enviado: $json.enviado === true, candidato_id: $json.candidato_id } }}",
+        "options": {}
+      },
+      "id": "18fa8420-b560-4211-ae74-2227dee7b7d1",
+      "name": "Responder ao painel",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1440,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook ação manual": {
+      "main": [
+        [
+          {
+            "node": "Validar solicitação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar solicitação": {
+      "main": [
+        [
+          {
+            "node": "Carregar candidato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar candidato": {
+      "main": [
+        [
+          {
+            "node": "Preparar envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar envio": {
+      "main": [
+        [
+          {
+            "node": "Enviar mensagem manual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar mensagem manual": {
+      "main": [
+        [
+          {
+            "node": "Registrar mensagem manual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar mensagem manual": {
+      "main": [
+        [
+          {
+            "node": "Responder ao painel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f151f5f4-ff21-4204-be43-cd67bb507d65",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": []
+}
