@@ -1,0 +1,23 @@
+{
+  "name": "genesis-ia-recruiting-os",
+  "version": "10.2.0",
+  "private": true,
+  "description": "Genesis IA Recruiting OS — Nova Fase V1.2: perfis por função, ações administrativas e contraste integral.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch --env-file=.env server.js",
+    "test": "node scripts/validate.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "express-rate-limit": "8.5.2",
+    "helmet": "8.1.0",
+    "pg": "8.22.0",
+    "zod": "4.4.3",
+    "sharp": "0.35.3"
+  }
+}
