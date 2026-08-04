@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="title desc">
+  <title id="title">Imagem de comunidade</title>
+  <desc id="desc">Placeholder Genesis para grupos sem imagem disponível</desc>
+  <defs>
+    <linearGradient id="bg" x1="70" y1="34" x2="576" y2="382" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e8fbf5"/>
+      <stop offset="1" stop-color="#dceeff"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="230" y1="120" x2="410" y2="300" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11b88d"/>
+      <stop offset="1" stop-color="#2589ef"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" rx="28" fill="url(#bg)"/>
+  <circle cx="86" cy="72" r="92" fill="#fff" opacity=".42"/>
+  <circle cx="590" cy="350" r="126" fill="#fff" opacity=".35"/>
+  <circle cx="320" cy="154" r="52" fill="url(#accent)"/>
+  <circle cx="214" cy="190" r="38" fill="#76d8be"/>
+  <circle cx="426" cy="190" r="38" fill="#79bdf5"/>
+  <path d="M226 310c8-64 45-96 94-96s86 32 94 96" fill="url(#accent)"/>
+  <path d="M141 304c6-48 34-72 73-72 22 0 40 8 52 23-20 15-34 36-41 63h-84Z" fill="#76d8be"/>
+  <path d="M499 304c-6-48-34-72-73-72-22 0-40 8-52 23 20 15 34 36 41 63h84Z" fill="#79bdf5"/>
+  <rect x="272" y="326" width="96" height="10" rx="5" fill="#0c7e6d" opacity=".18"/>
+</svg>
