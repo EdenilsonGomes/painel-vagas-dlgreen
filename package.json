@@ -1,0 +1,25 @@
+{
+  "name": "genesis-ia-recruiting-os",
+  "version": "12.0.0",
+  "private": true,
+  "description": "Gênesis Recruiting OS integrado ao portal público, moderação de grupos, vagas externas e leads.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch --env-file=.env server.js",
+    "migrate:panel": "node scripts/migrate-panel.js",
+    "preflight": "node scripts/preflight.js",
+    "test": "node scripts/validate.js && node scripts/test-portal-moderation.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "express-rate-limit": "8.5.2",
+    "helmet": "8.1.0",
+    "pg": "8.22.0",
+    "zod": "4.4.3",
+    "sharp": "0.35.3"
+  }
+}
