@@ -1,0 +1,2267 @@
+{
+  "name": "Genesis IA - Chatbot Híbrido V13 - Áudio, perguntas por vaga e demos - Credenciais Preservadas",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "5c2ff67c-0a5e-4f44-ac86-1f8789409309",
+        "options": {
+          "responseCode": {
+            "values": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "97612cb8-5a7f-4385-ba38-12b82aa77967",
+      "name": "Webhook Chatbot Estático V1",
+      "webhookId": "5c2ff67c-0a5e-4f44-ac86-1f8789409309"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst root = $input.first().json ?? {};\nconst body = root.body && typeof root.body === 'object' ? root.body : root;\nconst payload = body.payload && typeof body.payload === 'object' ? body.payload : {};\nconst manual = body.manual_force_reply === true;\n\nfunction normalizePhone(value) {\n  const original = String(value ?? '').trim().replace(/:\\d+(?=@)/, '');\n  if (!original || /@lid$/i.test(original) || /@g\\.us$/i.test(original)) return '';\n  let digits = original.replace(/@.+$/, '').replace(/\\D/g, '');\n  if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;\n  if (!/^55\\d{10,11}$/.test(digits)) return '';\n  return digits;\n}\n\nconst candidates = [payload?._data?.Info?.SenderAlt, payload?.from, payload?._data?.Info?.Sender, payload?.participant];\nconst telefone = candidates.map(normalizePhone).find(Boolean) || '';\nconst rawFrom = String(payload?.from ?? payload?._data?.Info?.Chat ?? '');\nconst fromMe = payload?.fromMe === true || payload?._data?.Info?.IsFromMe === true;\nconst isGroup = /@g\\.us$/i.test(rawFrom);\nconst hasMedia = payload?.hasMedia === true || Boolean(payload?.media?.url);\nconst mime = String(payload?.media?.mimetype ?? payload?.media?.mimeType ?? '').toLowerCase();\nconst filename = String(payload?.media?.filename ?? payload?.media?.fileName ?? '');\nconst text = String(payload?.body ?? '').trim();\nconst session = String(body.session ?? payload?.session ?? 'whats_junior');\nconst demoSession = /^demo-/i.test(session);\nconst audioByMime = /^audio\\//i.test(mime);\nconst audioByName = /\\.(ogg|opus|mp3|m4a|mp4|mpeg|mpga|wav|webm|flac)$/i.test(filename);\nlet inputType = 'VAZIA';\nif (hasMedia && (audioByMime || audioByName)) inputType = 'AUDIO';\nelse if (hasMedia && !demoSession && (mime === 'application/pdf' || filename.toLowerCase().endsWith('.pdf'))) inputType = 'PDF';\nelse if (hasMedia) inputType = 'MIDIA_NAO_SUPORTADA';\nelse if (text) inputType = 'TEXTO';\n\nreturn [{ json: {\n  entrada_valida: manual || (!fromMe && !isGroup && Boolean(telefone)),\n  manual,\n  telefone,\n  mensagem: text,\n  mensagem_id: String(payload?.id ?? payload?._data?.Info?.ID ?? body.manual_message_id ?? ''),\n  session,\n  origem: inputType === 'AUDIO' ? 'AUDIO' : 'TEXTO',\n  tipo_entrada: manual ? 'MANUAL' : inputType,\n  mime_type: mime,\n  nome_arquivo: filename || (inputType === 'AUDIO' ? 'audio.ogg' : 'documento.pdf'),\n  media_url: String(payload?.media?.url ?? '').replace('http://localhost:3000', 'https://projeto-waha.d7lmap.easypanel.host'),\n  manual_action: String(body.manual_action ?? '').trim().toUpperCase(),\n  manual_candidate_id: Number(body.manual_candidate_id ?? 0),\n  manual_review_id: Number(body.manual_review_id ?? 0) || null,\n  manual_rescue_id: Number(body.manual_rescue_id ?? 0) || null,\n  manual_message: String(body.manual_message ?? '').trim(),\n  manual_origin: String(body.manual_origin ?? ''),\n  payload_bruto: payload\n}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "id": "cfcebb04-c00a-4029-90ec-3c245ccb9440",
+      "name": "Normalizar entrada"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6a477322-8b1b-48e5-821f-146c08658d98",
+              "leftValue": "={{ $json.entrada_valida === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        480,
+        0
+      ],
+      "id": "504513bd-d40d-490d-8fd3-7f3936416de8",
+      "name": "Entrada aceita?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "a3e546fe-a873-4d72-97fd-0133f6e4ff2c",
+              "leftValue": "={{ $json.manual === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        720,
+        0
+      ],
+      "id": "e5d3f57d-0f97-4a36-86c3-bd8ae7589379",
+      "name": "É ação manual?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_acao_manual($1,$2,$3,$4);",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.manual_candidate_id), String($json.manual_action || 'RESGATAR'), $json.manual_rescue_id, String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        960,
+        -220
+      ],
+      "id": "2c3de4c9-7371-4296-a7d8-1a210b51aef0",
+      "name": "Resolver ação manual",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d = $input.first().json ?? {};\nconst entrada = $('Normalizar entrada').first().json ?? {};\nconst manualMessage = String(entrada.manual_message ?? '').trim();\nreturn [{json:{\n  ...d,\n  session: String(d.session ?? entrada.session ?? 'whats_junior'),\n  action: String(d.action ?? entrada.manual_action ?? 'ENVIAR_MENSAGEM').toUpperCase(),\n  mensagem_whatsapp: manualMessage || String(d.mensagem_whatsapp ?? ''),\n  deve_enviar: (manualMessage || String(d.mensagem_whatsapp ?? '').trim()).length > 0,\n  resgate_id: d.resgate_id ?? entrada.manual_rescue_id ?? null,\n  origem_manual: entrada.manual_origin ?? ''\n}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1200,
+        -220
+      ],
+      "id": "35fff6ba-cdc1-4ed7-b70c-e4001f7aade6",
+      "name": "Normalizar ação manual"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6338c56f-90c1-4dcb-823c-a4a791cf49c9",
+              "leftValue": "={{ $json.action === 'REPROCESSAR_DOCUMENTO' && Boolean($json.arquivo_base64) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1440,
+        -220
+      ],
+      "id": "9bee4990-696b-468f-b1be-427d5a3ef04c",
+      "name": "Manual requer reprocessamento?"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json ?? {};\nconst b64=String(d.arquivo_base64 ?? '');\nif(!b64) throw new Error('PDF armazenado não encontrado para reprocessamento.');\nreturn [{json:{...d,nome_arquivo_documento:d.nome_arquivo||'ctps-reprocessamento.pdf',mime_type_documento:d.mime_type||'application/pdf'},binary:{ctps:{data:b64,mimeType:d.mime_type||'application/pdf',fileName:d.nome_arquivo||'ctps-reprocessamento.pdf'}}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        -340
+      ],
+      "id": "ee451afc-766f-469e-a49c-68854a357eb3",
+      "name": "Recriar PDF armazenado"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fa1306ec-8c39-4e3b-a469-197b6427bed1",
+              "leftValue": "={{ $json.tipo_entrada === 'PDF' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        960,
+        120
+      ],
+      "id": "59f406c1-b74a-437f-bbae-727a6a55eac2",
+      "name": "É PDF?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6e04ad4f-feac-44a6-af0b-e65dc945c354",
+              "leftValue": "={{ $json.tipo_entrada === 'TEXTO' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1440,
+        660
+      ],
+      "id": "a2303de5-8824-4984-b5f4-0a4df79e6e16",
+      "name": "É texto?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v13_processar_texto($1,$2,$3,$4,$5,$6::JSONB);",
+        "options": {
+          "queryReplacement": "={{ [\n  String($json.telefone || $('Preparar interpretação V13').first().json.telefone || ''),\n  String($json.mensagem || $('Preparar interpretação V13').first().json.mensagem || ''),\n  String($('Consumir última mensagem').first().json.mensagem_id || ''),\n  String($json.session || $('Preparar interpretação V13').first().json.session || 'whats_junior'),\n  String($json.origem || $('Preparar interpretação V13').first().json.origem || 'TEXTO'),\n  JSON.stringify($json.interpretacao || {})\n] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4560,
+        520
+      ],
+      "id": "400c4a4f-0adf-45f6-9bba-f41962255aea",
+      "name": "Processar conversa V13",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v13_midia_nao_suportada($1,$2,$3,$4);",
+        "options": {
+          "queryReplacement": "={{ [ $json.telefone, $json.mensagem_id, $json.tipo_entrada, $json.session ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1920,
+        760
+      ],
+      "id": "6eb96021-46bb-49ce-96df-65e8dc7be88a",
+      "name": "Responder mídia não suportada",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Normalizar entrada').first().json.media_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "=kcih311h4ymkn5p3j8mzxakaq0u0h95y"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "ctps"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1200,
+        40
+      ],
+      "id": "904c9870-a85a-4255-bbac-ff798e78cde2",
+      "name": "Baixar PDF do WAHA"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\n\nconst arquivo = item.binary?.ctps;\n\nif (!arquivo) {\n  throw new Error(\n    'O campo binário \"ctps\" não foi criado. O PDF não foi baixado corretamente.'\n  );\n}\n\nreturn [\n  {\n    json: {\n      download_ok: true,\n      campos_binarios: Object.keys(item.binary ?? {}),\n      nome_arquivo: arquivo.fileName ?? null,\n      mime_type: arquivo.mimeType ?? null,\n      tamanho: arquivo.fileSize ?? null\n    },\n    binary: item.binary\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        40
+      ],
+      "id": "066f0dc2-71c3-44ea-911a-818464d697e0",
+      "name": "Validar PDF baixado"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first();\nconst propriedadeBinaria = 'ctps';\nconst arquivo = item.binary?.[propriedadeBinaria];\n\nif (!arquivo) {\n  throw new Error(`O binário \"${propriedadeBinaria}\" não foi encontrado.`);\n}\n\nconst buffer = await this.helpers.getBinaryDataBuffer(0, propriedadeBinaria);\n\n// SHA-256 em JavaScript puro. Não usa require('crypto') e não exige\n// NODE_FUNCTION_ALLOW_BUILTIN no n8n.\nfunction sha256(bytes) {\n  const rightRotate = (value, amount) => (value >>> amount) | (value << (32 - amount));\n  const maxWord = 2 ** 32;\n  const words = [];\n  const hash = [];\n  const k = [];\n  const isComposite = {};\n  let primeCounter = 0;\n\n  for (let candidate = 2; primeCounter < 64; candidate += 1) {\n    if (!isComposite[candidate]) {\n      for (let multiple = candidate * candidate; multiple < 313; multiple += candidate) {\n        isComposite[multiple] = true;\n      }\n      hash[primeCounter] = (Math.sqrt(candidate) * maxWord) | 0;\n      k[primeCounter] = (Math.cbrt(candidate) * maxWord) | 0;\n      primeCounter += 1;\n    }\n  }\n\n  const message = Array.from(bytes);\n  const bitLength = message.length * 8;\n  message.push(0x80);\n  while ((message.length % 64) !== 56) message.push(0);\n\n  const high = Math.floor(bitLength / maxWord);\n  const low = bitLength >>> 0;\n  for (let shift = 24; shift >= 0; shift -= 8) message.push((high >>> shift) & 0xff);\n  for (let shift = 24; shift >= 0; shift -= 8) message.push((low >>> shift) & 0xff);\n\n  for (let offset = 0; offset < message.length; offset += 64) {\n    for (let index = 0; index < 16; index += 1) {\n      const start = offset + index * 4;\n      words[index] = ((message[start] << 24) | (message[start + 1] << 16) |\n        (message[start + 2] << 8) | message[start + 3]) | 0;\n    }\n    for (let index = 16; index < 64; index += 1) {\n      const w15 = words[index - 15];\n      const w2 = words[index - 2];\n      const s0 = rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3);\n      const s1 = rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10);\n      words[index] = (words[index - 16] + s0 + words[index - 7] + s1) | 0;\n    }\n\n    const oldHash = hash.slice(0, 8);\n    const working = oldHash.slice();\n    for (let index = 0; index < 64; index += 1) {\n      const e = working[4];\n      const a = working[0];\n      const sum1 = rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25);\n      const choose = (e & working[5]) ^ (~e & working[6]);\n      const temp1 = (working[7] + sum1 + choose + k[index] + words[index]) | 0;\n      const sum0 = rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22);\n      const majority = (a & working[1]) ^ (a & working[2]) ^ (working[1] & working[2]);\n      const temp2 = (sum0 + majority) | 0;\n      working.unshift((temp1 + temp2) | 0);\n      working[4] = (working[4] + temp1) | 0;\n      working.pop();\n    }\n    for (let index = 0; index < 8; index += 1) hash[index] = (hash[index] + working[index]) | 0;\n  }\n\n  return hash.slice(0, 8).map(value => (value >>> 0).toString(16).padStart(8, '0')).join('');\n}\n\nlet dadosEntrada = {};\ntry { dadosEntrada = $('Normalizar entrada').first().json ?? {}; } catch {}\n\nreturn [{\n  json: {\n    ...item.json,\n    arquivo_base64: buffer.toString('base64'),\n    hash_sha256: sha256(buffer),\n    nome_arquivo_documento: arquivo.fileName ?? dadosEntrada.nome_arquivo ?? 'documento.pdf',\n    mime_type_documento: arquivo.mimeType ?? dadosEntrada.mime_type ?? 'application/pdf',\n    tamanho_bytes_documento: buffer.length\n  },\n  binary: item.binary,\n  pairedItem: { item: 0 }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        40
+      ],
+      "id": "2f29cf01-3d6a-406b-9e0d-ef43a2ae50b9",
+      "name": "Preparar PDF bruto"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_registrar_pdf($1,$2,$3,$4,$5,$6,$7,$8);",
+        "options": {
+          "queryReplacement": "={{ [ $('Normalizar entrada').first().json.telefone, $('Normalizar entrada').first().json.mensagem_id, $json.nome_arquivo_documento, $json.mime_type_documento, $json.tamanho_bytes_documento, $json.arquivo_base64, $json.hash_sha256, $('Normalizar entrada').first().json.session ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1920,
+        40
+      ],
+      "id": "e10528f0-e3e0-4a89-a39e-a4d25bc9e2b0",
+      "name": "Armazenar PDF antes do OCR",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json ?? {};\nlet binary=$input.first().binary ?? {};\nlet meta={};\ntry { meta=$('Preparar PDF bruto').first().json ?? {}; if(!binary.ctps) binary=$('Preparar PDF bruto').first().binary ?? binary; } catch {}\nreturn [{json:{...d,\n  candidato_id:Number(d.candidato_id),documento_id:Number(d.documento_id),\n  telefone:String(d.telefone??''),session:String(d.session??'whats_junior'),\n  nome_arquivo_documento:String(d.nome_arquivo_documento??d.nome_arquivo??meta.nome_arquivo_documento??'documento.pdf'),\n  mime_type_documento:String(d.mime_type_documento??d.mime_type??meta.mime_type_documento??'application/pdf'),\n  hash_sha256:String(d.hash_sha256??meta.hash_sha256??''),resgate_id:d.resgate_id??null\n},binary}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2160,
+        40
+      ],
+      "id": "598d6672-eae0-4b6a-8305-3184b12a7ce3",
+      "name": "Contexto seguro do PDF"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/files",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer SpugstixtRA2cOCHCsxQZeTjZG8xkqBy"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "purpose",
+              "value": "ocr"
+            },
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "ctps"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2400,
+        40
+      ],
+      "id": "5568285e-75e8-4815-9f34-fa2ed8d718ed",
+      "name": "OCR - Enviar PDF",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.mistral.ai/v1/files/{{ $json.id }}/url",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "expiry",
+              "value": "24"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            },
+            {
+              "name": "Authorization",
+              "value": "=Bearer SpugstixtRA2cOCHCsxQZeTjZG8xkqBy"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2640,
+        40
+      ],
+      "id": "7e66153a-88a5-4e5d-8e52-105233b33bc0",
+      "name": "OCR - Gerar URL assinada",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.mistral.ai/v1/ocr",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer SpugstixtRA2cOCHCsxQZeTjZG8xkqBy"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"mistral-ocr-latest\",\n  \"document\": {\n    \"type\": \"document_url\",\n    \"document_url\": \"{{ $json.url }}\"\n  },\n  \"table_format\": \"html\",\n  \"include_image_base64\": true\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2880,
+        40
+      ],
+      "id": "52564054-f118-423e-99a9-1b769139a688",
+      "name": "OCR - Extrair texto",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst entrada=$input.first().json??{};\nconst paginas=Array.isArray(entrada.pages)?entrada.pages:[];\nconst textoOcr=paginas.map((p,i)=>`### Página ${i+1}\\n${String(p.markdown??p.text??'')}`).join('\\n\\n').trim();\nconst ctx=$('Contexto seguro do PDF').first().json??{};\nconst nomeArquivo=String(ctx.nome_arquivo_documento??'');\nfunction norm(v){return String(v??'').normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toLowerCase();}\nconst conteudo=norm(`${nomeArquivo}\\n${textoOcr}`);\nconst count=(terms)=>terms.reduce((t,x)=>t+(conteudo.includes(x)?1:0),0);\nconst ctpsStrong=['carteira de trabalho digital','contratos de trabalho','relacoes de trabalho','dados pessoais','registro de trabalho','vinculos empregaticios','remuneracoes'];\nconst ctpsCommon=['data de admissao','data admissao','data de desligamento','empregador','cnpj','cbo','salario contratual','ocupacao inicial','nome da mae','nacionalidade'];\nconst cvStrong=['curriculo','curriculum vitae','objetivo profissional','resumo profissional','perfil profissional','experiencia profissional','formacao academica'];\nconst cvCommon=['habilidades','competencias','cursos','qualificacoes','contato','email','telefone','linkedin','idiomas','escolaridade'];\nlet pontosCtps=count(ctpsStrong)*4+count(ctpsCommon), pontosCurriculo=count(cvStrong)*4+count(cvCommon);\nif(/ctps|carteira.*trabalho/i.test(nomeArquivo)) pontosCtps+=10;\nif(/curr[ií]culo|curriculum|(?:^|[._ -])cv(?:[._ -]|$)/i.test(nomeArquivo)) pontosCurriculo+=10;\nif((conteudo.match(/\\b\\d{2}[\\/.\\-]\\d{2}[\\/.\\-]\\d{4}\\b/g)||[]).length>=2 && /cnpj|cbo|admiss/.test(conteudo)) pontosCtps+=5;\nlet tipo='PENDENTE_REVISAO',confianca='BAIXA';\nif(textoOcr.length>=40 && pontosCtps>=7 && pontosCtps>=pontosCurriculo+2){tipo='CTPS';confianca=pontosCtps>=15?'ALTA':'MEDIA';}\nelse if(textoOcr.length>=40 && pontosCurriculo>=7 && pontosCurriculo>=pontosCtps+2){tipo='CURRICULO';confianca=pontosCurriculo>=15?'ALTA':'MEDIA';}\nreturn [{json:{...entrada,...ctx,tipo_documento:tipo,classificacao_confianca:confianca,texto_ocr:textoOcr,classificacao:{tipo,confianca,pontos_ctps:pontosCtps,pontos_curriculo:pontosCurriculo,nome_arquivo:nomeArquivo,tamanho_texto_ocr:textoOcr.length,hash_sha256:ctx.hash_sha256||'',ocr_com_erro:Boolean(entrada.error)}}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3120,
+        40
+      ],
+      "id": "649f8ad3-65b5-4fca-98ce-da531ce4f3b4",
+      "name": "Classificar PDF por regras"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "61d3789c-086b-4b57-8ae9-cc438cedd034",
+              "leftValue": "={{ $json.tipo_documento === 'CTPS' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3360,
+        40
+      ],
+      "id": "a6b13bc3-18f5-4596-aabb-9a7c9a766b2f",
+      "name": "Documento é CTPS?"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "6cac129a-8d3f-4c9a-bcb3-ed6a553c4e14",
+              "leftValue": "={{ $json.tipo_documento === 'CURRICULO' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3600,
+        180
+      ],
+      "id": "751e695a-a047-4935-b44b-8f4148e37740",
+      "name": "Documento é currículo?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT c.id AS candidato_id,c.telefone,c.vaga_id,c.etapa,c.status,\n  v.titulo,v.cargo,v.status AS vaga_status,v.experiencia_minima_meses,v.experiencia_revisao_minima_meses,\n  v.aceita_sem_experiencia,v.exigir_experiencia_compativel,v.cargos_compativeis,v.cbos_compativeis,\n  v.idade_minima,v.idade_maxima,$2::BIGINT AS documento_id,$3::TEXT AS session\nFROM candidatos c LEFT JOIN vagas v ON v.id=c.vaga_id WHERE c.id=$1 LIMIT 1;",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), Number($json.documento_id), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3600,
+        -80
+      ],
+      "id": "fe6e9d67-7462-4dc8-b081-501b6c37372a",
+      "name": "Carregar regras da vaga",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "65683b4a-ec22-4ab6-bdf2-23b5f1fecf91",
+              "leftValue": "={{ Number($json.vaga_id || 0) > 0 && String($json.vaga_status || '') === 'ATIVA' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3840,
+        -80
+      ],
+      "id": "11de5c52-ff3a-4978-9b5c-4ab9cc0e7014",
+      "name": "Há vaga vinculada?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH doc AS (\n UPDATE documentos SET tipo='CTPS',titulo='Carteira de Trabalho Digital',status_processamento='ARMAZENADO',\n resultado=COALESCE(resultado,'{}'::jsonb)||$3::jsonb WHERE id=$2 AND candidato_id=$1 RETURNING id\n), cand AS (\n UPDATE candidatos SET documento_processando=FALSE,processamento_bloqueado_ate=NULL,updated_at=NOW() WHERE id=$1 RETURNING *\n), msg AS (\n INSERT INTO mensagens(candidato_id,quem,mensagem,contexto_snapshot,created_at)\n SELECT id,'IA','Sua CTPS Digital foi recebida e armazenada. ✅\n\nAgora escolha uma vaga para que a análise seja aplicada aos requisitos corretos.\n\n'||genesis_chatbot_v1_listar_vagas(),\n JSONB_BUILD_OBJECT('fluxo','CHATBOT_ESTATICO_V1','documento','CTPS','analise_adiada','SEM_VAGA'),NOW() FROM cand RETURNING candidato_id,mensagem\n)\nSELECT c.id candidato_id,c.telefone,$4::text session,m.mensagem mensagem_whatsapp,'ENVIAR_MENSAGEM'::text action,NULL::integer opcao_numero,\n c.etapa,c.status,TRUE deve_enviar FROM cand c JOIN msg m ON m.candidato_id=c.id;",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), Number($json.documento_id), JSON.stringify($('Classificar PDF por regras').first().json.classificacao || {}), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4080,
+        40
+      ],
+      "id": "17f18e9d-2af7-404e-8262-978b72de9653",
+      "name": "Guardar CTPS até escolher vaga",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ String($('Classificar PDF por regras').first().json.texto_ocr ?? '') }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"nome\": {\n      \"type\": \"string\"\n    },\n    \"cpf\": {\n      \"type\": \"string\"\n    },\n    \"nome_mae\": {\n      \"type\": \"string\"\n    },\n    \"data_nascimento\": {\n      \"type\": \"string\"\n    },\n    \"experiencias\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"periodo\": {\n            \"type\": \"string\"\n          },\n          \"empregador\": {\n            \"type\": \"string\"\n          },\n          \"cargo\": {\n            \"type\": \"string\"\n          },\n          \"cbo\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"periodo\",\n          \"empregador\",\n          \"cargo\",\n          \"cbo\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"sexo\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"nome\",\n    \"cpf\",\n    \"nome_mae\",\n    \"sexo\",\n    \"data_nascimento\",\n    \"experiencias\"\n  ],\n  \"additionalProperties\": false\n}",
+        "options": {
+          "systemPromptTemplate": "Você é um extrator de dados da Carteira de Trabalho Digital (CTPS).\n\nAnalise TODAS as páginas, inclusive tabelas em Markdown/HTML, e retorne somente o JSON do schema.\nNão aprove, não reprove, não calcule tempo e não invente informações.\nCampos ausentes ou ilegíveis devem ser string vazia. Nunca use null.\n\nDADOS PESSOAIS — extrair uma única vez:\n- nome completo;\n- CPF;\n- nome da mãe;\n- data de nascimento;\n- sexo, somente quando existir um campo explícito no documento. Retorne MASCULINO ou FEMININO. Se estiver ausente ou ilegível, use string vazia. Nunca infira pelo nome, foto, cargo ou qualquer outro indício.\n\nEXPERIÊNCIAS:\nCada vínculo normalmente contém um período principal, empregador, cargo e CBO.\nPara cada vínculo visível, extraia:\n- periodo: DD/MM/AAAA - DD/MM/AAAA; para vínculo ativo use DD/MM/AAAA - ATUAL;\n- empregador: nome do empregador;\n- cargo: cargo principal ou ocupação inicial/mais recente do vínculo;\n- cbo: código CBO; quando não aparecer, use string vazia e NÃO descarte o vínculo.\n\nNunca descarte um vínculo apenas porque o CBO, empregador ou cargo está incompleto.\nNão use datas de salário, férias, anotações, rescisão projetada ou alterações internas como período principal.\nQuando houver mais de um cargo/CBO dentro do mesmo vínculo, use o mais recente claramente associado.\nExtraia todos os vínculos e não faça cálculos."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        4080,
+        -160
+      ],
+      "id": "c8bbf9cc-20b8-49cd-ae10-d4c6968fadce",
+      "name": "Extrair dados documentais da CTPS"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst raw=$input.first().json??{};\nlet ex=raw.output??raw;if(typeof ex==='string'){try{ex=JSON.parse(ex)}catch{ex={}}}if(ex?.output&&typeof ex.output==='object')ex=ex.output;\nconst vaga=$('Carregar regras da vaga').first().json??{};\nconst cls=$('Classificar PDF por regras').first().json??{};\nconst DAY=86400000;\nconst clean=v=>String(v??'').trim();\nconst norm=v=>clean(v).normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').replace(/\\s+/g,' ').trim();\nfunction isoDate(v){const s=clean(v);let m=s.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);let y,mo,d;if(m){y=+m[1];mo=+m[2];d=+m[3]}else{m=s.match(/^(\\d{2})[\\/.-](\\d{2})[\\/.-](\\d{4})$/);if(!m)return '';d=+m[1];mo=+m[2];y=+m[3]}const dt=new Date(Date.UTC(y,mo-1,d));return dt.getUTCFullYear()===y&&dt.getUTCMonth()===mo-1&&dt.getUTCDate()===d?`${y.toString().padStart(4,'0')}-${mo.toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`:''}\nfunction parseDateBR(v){const iso=isoDate(v);return iso?new Date(`${iso}T00:00:00Z`):null}\nfunction period(v){const s=clean(v);const m=s.match(/(\\d{2}[\\/.-]\\d{2}[\\/.-]\\d{4}|\\d{4}-\\d{2}-\\d{2})\\s*(?:-|–|—|A|ATE|ATÉ)\\s*(\\d{2}[\\/.-]\\d{2}[\\/.-]\\d{4}|\\d{4}-\\d{2}-\\d{2}|ATUAL|PRESENTE|EM ABERTO)/i);if(!m)return null;const start=parseDateBR(m[1]);let end=/ATUAL|PRESENTE|EM ABERTO/i.test(m[2])?new Date():parseDateBR(m[2]);if(!start||!end||end<start)return null;const today=new Date();if(end>today)end=today;return {inicio:start.toISOString().slice(0,10),fim:end.toISOString().slice(0,10),dias:Math.floor((end-start)/DAY)+1}}\nfunction arr(v){if(Array.isArray(v))return v.map(norm).filter(Boolean);return clean(v).split(/[\\n,;|]+/).map(norm).filter(Boolean)}\nfunction cbo(v){return clean(v).replace(/\\D/g,'')}\nconst ignored=new Set(['AUXILIAR','AJUDANTE','ASSISTENTE','OFICIAL','OPERADOR','OPERADORA','SERVICO','SERVICOS','GERAL','GERAIS','DE','DA','DO','DAS','DOS','EM','PARA','COM','I','II','III']);\nlet cargoRules=arr(vaga.cargos_compativeis);const cboRules=arr(vaga.cbos_compativeis).map(cbo).filter(Boolean);\nif(!cargoRules.length){cargoRules=[...new Set(norm(`${vaga.titulo??''} ${vaga.cargo??''}`).split(' ').filter(x=>x.length>=4&&!ignored.has(x)))]}\nfunction compatible(cargoValue,cboValue){if(vaga.exigir_experiencia_compativel===false)return true;const c=norm(cargoValue), cTokens=new Set(c.split(' ').filter(x=>x.length>=3&&!ignored.has(x)));const byCargo=cargoRules.some(r0=>{const r=norm(r0);if(!r)return false;if(c.includes(r)||r.includes(c))return true;const t=r.split(' ').filter(x=>x.length>=3&&!ignored.has(x));const common=t.filter(x=>cTokens.has(x));return common.length===t.length||(t.length>=2&&common.length>=2)});const cv=cbo(cboValue);const byCbo=cboRules.some(r=>r.length<=4?cv.startsWith(r):cv===r);return byCargo||byCbo}\nconst experiences=Array.isArray(ex.experiencias)?ex.experiencias:[];const normalized=[];\nfor(const e of experiences){const p=period(e.periodo);if(!p)continue;const comp=compatible(e.cargo,e.cbo);normalized.push({empregador:clean(e.empregador),cargo:clean(e.cargo),cbo:clean(e.cbo),periodo:clean(e.periodo),...p,compativel:comp})}\nconst compatibleExp=normalized.filter(e=>e.compativel).sort((a,b)=>b.dias-a.dias);const best=compatibleExp[0]??null;const days=best?.dias??0;\nconst months=Math.floor(days/30),rest=days%30;const human=days?`${months?months+' '+(months===1?'mês':'meses'):''}${months&&rest?' e ':''}${rest?rest+' '+(rest===1?'dia':'dias'):''}`:'0 dias';\nlet sex=norm(ex.sexo);sex=sex==='MASCULINO'?'MASCULINO':sex==='FEMININO'?'FEMININO':'';\nconst inconclusive=Boolean(raw.error)||String(cls.texto_ocr??'').length<80||!ex||typeof ex!=='object';\nreturn [{json:{candidato_id:Number(vaga.candidato_id),documento_id:Number(vaga.documento_id),session:String(vaga.session||'whats_junior'),analise:{\n  nome:clean(ex.nome),cpf:clean(ex.cpf).replace(/\\D/g,''),nome_mae:clean(ex.nome_mae),data_nascimento:isoDate(ex.data_nascimento),sexo:sex,\n  experiencias:normalized,maior_experiencia_compativel_dias:days,maior_experiencia_compativel_texto:human,tempo_experiencia:human,\n  cargo_vinculo_utilizado:best?.cargo??'',periodo_vinculo_utilizado:best?.periodo??'',inconclusivo:inconclusive,\n  motivo_inconclusivo:inconclusive?'OCR ou extração documental sem dados suficientes para decisão segura.':'',\n  classificacao:cls.classificacao??{},versao_analise:'CHATBOT_ESTATICO_V1'\n}}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4320,
+        -160
+      ],
+      "id": "aa6a75ed-7452-4586-99c2-bc7011a6286e",
+      "name": "Calcular resultado documental"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_aplicar_resultado_ctps($1,$2,$3::jsonb,$4);",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), Number($json.documento_id), JSON.stringify($json.analise), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4560,
+        -160
+      ],
+      "id": "ca766145-84f0-45e1-bf4a-6bc5927600b1",
+      "name": "Aplicar resultado da CTPS",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ String($('Classificar PDF por regras').first().json.texto_ocr ?? '') }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"nome\": {\n      \"type\": \"string\"\n    },\n    \"email\": {\n      \"type\": \"string\"\n    },\n    \"telefone\": {\n      \"type\": \"string\"\n    },\n    \"cidade\": {\n      \"type\": \"string\"\n    },\n    \"bairro\": {\n      \"type\": \"string\"\n    },\n    \"objetivo\": {\n      \"type\": \"string\"\n    },\n    \"experiencias\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"empresa\": {\n            \"type\": \"string\"\n          },\n          \"cargo\": {\n            \"type\": \"string\"\n          },\n          \"periodo\": {\n            \"type\": \"string\"\n          },\n          \"atividades\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"empresa\",\n          \"cargo\",\n          \"periodo\",\n          \"atividades\"\n        ],\n        \"additionalProperties\": false\n      }\n    },\n    \"formacao\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    },\n    \"cursos\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  },\n  \"required\": [\n    \"nome\",\n    \"email\",\n    \"telefone\",\n    \"cidade\",\n    \"bairro\",\n    \"objetivo\",\n    \"experiencias\",\n    \"formacao\",\n    \"cursos\"\n  ],\n  \"additionalProperties\": false\n}",
+        "options": {
+          "systemPromptTemplate": "Extraia informações declaradas do currículo. Analise todas as páginas e retorne somente o JSON do schema. Não aprove nem reprove. Não invente. Campos ausentes devem ser string vazia ou array vazio. O currículo é apenas apoio; não substitui a CTPS. Não infira sexo nem idade."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        3840,
+        160
+      ],
+      "id": "d0a43bea-7ec1-4684-86af-e2d61ade4476",
+      "name": "Extrair dados do currículo"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst raw=$input.first().json??{};let out=raw.output??raw;if(typeof out==='string'){try{out=JSON.parse(out)}catch{out={}}}if(out?.output&&typeof out.output==='object')out=out.output;\nconst c=$('Contexto seguro do PDF').first().json??{};\nreturn [{json:{candidato_id:Number(c.candidato_id),documento_id:Number(c.documento_id),session:String(c.session||'whats_junior'),resultado:{...out,classificacao:$('Classificar PDF por regras').first().json.classificacao??{},versao_analise:'CHATBOT_ESTATICO_V1'}}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4080,
+        160
+      ],
+      "id": "d617fac7-7ea6-4178-8389-ba9139e2839f",
+      "name": "Preparar currículo extraído"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_aplicar_curriculo($1,$2,$3::jsonb,$4);",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), Number($json.documento_id), JSON.stringify($json.resultado), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4320,
+        160
+      ],
+      "id": "cacee695-b96c-4471-ba2b-5a8bdfb5fb03",
+      "name": "Aplicar currículo sem mudar etapa",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_aplicar_documento_inconclusivo($1,$2,$3::jsonb,$4);",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), Number($json.documento_id), JSON.stringify({classificacao:$json.classificacao,texto_ocr_tamanho:String($json.texto_ocr||'').length}), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3840,
+        300
+      ],
+      "id": "958e5e28-f180-4cba-b203-68c2b4cf0067",
+      "name": "Encaminhar documento para revisão",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "1645e3af-1487-4603-86ce-b975492e7f68",
+              "leftValue": "={{ ['GERAR_OPCOES','AGENDAR'].includes(String($json.action || '').toUpperCase()) }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5040,
+        40
+      ],
+      "id": "6d516092-d93e-4cfd-8961-c8bdb8ee8823",
+      "name": "Ação exige Google Calendar?"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json??{};\nreturn [{json:{...d,action:String(d.action||'GERAR_OPCOES').toUpperCase(),acao_agendamento:String(d.action||'GERAR_OPCOES').toUpperCase(),candidato_id:Number(d.candidato_id),opcao_numero:d.opcao_numero?Number(d.opcao_numero):null,calendar_id:String(d.calendar_id||'ec7f0c6eb99778cac22b9a9aefec9e648e8ba5519172b6fc45ab03f938948c7f@group.calendar.google.com'),timezone:String(d.timezone||'America/Sao_Paulo'),session:String(d.session||'whats_junior'),recrutadora_telefone:String(d.recrutadora_telefone||'5511951558547').replace(/\\D/g,''),resgate_id:d.resgate_id??null}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5040,
+        -100
+      ],
+      "id": "87a425f6-eab6-4dba-b68f-2301db21ce90",
+      "name": "Preparar chamada do Google Calendar"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "ZFnFPbP23HWrC28n",
+          "mode": "id",
+          "cachedResultUrl": "/workflow/ZFnFPbP23HWrC28n"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        5280,
+        -100
+      ],
+      "id": "dca5a3dc-ebf1-49ed-912a-209721fb60e4",
+      "name": "Executar agenda Google Meet",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json??{};const base=$('Preparar chamada do Google Calendar').first().json??{};\nreturn [{json:{...base,...d,candidato_id:Number(d.candidato_id??base.candidato_id),telefone:String(d.telefone??base.telefone??'').replace(/\\D/g,''),session:String(d.session??base.session??'whats_junior'),mensagem_whatsapp:String(d.mensagem_whatsapp??d.mensagem??''),deve_enviar:Boolean(String(d.mensagem_whatsapp??d.mensagem??'').trim()),resgate_id:base.resgate_id??null}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5520,
+        -100
+      ],
+      "id": "11cf6c6f-afd5-47a8-8567-61b84f5f735b",
+      "name": "Normalizar retorno do Calendar"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "08585ce5-a9c0-411a-9177-bea5d1b0860e",
+              "leftValue": "={{ $json.deve_enviar === true && String($json.mensagem_whatsapp || '').trim().length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        5520,
+        100
+      ],
+      "id": "34f34ef5-08e3-4800-b4a1-4ff5bb66f3d4",
+      "name": "Deve enviar resposta?"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json??{};return [{json:{...d,telefone:String(d.telefone??'').replace(/\\D/g,''),session:String(d.session??'whats_junior'),mensagem_final:String(d.mensagem_whatsapp??'').trim(),resgate_id:d.resgate_id??null}}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5760,
+        100
+      ],
+      "id": "781e5091-1eb8-4049-8611-b4a100485128",
+      "name": "Preparar envio único"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Start Typing",
+        "session": "={{ $json.session }}",
+        "chatId": "={{ $json.telefone + '@c.us' }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        6000,
+        100
+      ],
+      "id": "3ffa62f4-5de3-48a7-9624-4b232538b2c6",
+      "name": "Iniciar digitação",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6240,
+        100
+      ],
+      "id": "54a565ec-129f-4fa2-87e3-f077efdd4e6f",
+      "name": "Aguardar envio"
+    },
+    {
+      "parameters": {
+        "resource": "Chatting",
+        "operation": "Send Text",
+        "session": "={{ $('Preparar envio único').first().json.session }}",
+        "chatId": "={{ $('Preparar envio único').first().json.telefone + '@c.us' }}",
+        "text": "={{ $('Preparar envio único').first().json.mensagem_final }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-waha.WAHA",
+      "typeVersion": 202411,
+      "position": [
+        6480,
+        100
+      ],
+      "id": "8f33bd34-7edf-49d9-95ba-e754432fe2e6",
+      "name": "Enviar resposta controlada",
+      "credentials": {
+        "wahaApi": {
+          "id": "p3G9VOeOuySczl72",
+          "name": "WAHA account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH r AS (UPDATE candidato_resgates SET status='ENVIADO',processado_em=NOW(),resultado=COALESCE(resultado,'{}'::jsonb)||JSONB_BUILD_OBJECT('enviado_em',NOW(),'mensagem',$2::text) WHERE id=$1 AND $1 IS NOT NULL RETURNING id) SELECT TRUE AS ok,$1::bigint AS resgate_id;",
+        "options": {
+          "queryReplacement": "={{ [ $('Preparar envio único').first().json.resgate_id, $('Preparar envio único').first().json.mensagem_final ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        6720,
+        100
+      ],
+      "id": "fc8c5c8b-82a2-4160-b084-ebf623d58b16",
+      "name": "Finalizar resgate quando aplicável",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        4080,
+        -400
+      ],
+      "id": "49918920-4113-4505-a5e0-243b9b6e5ed8",
+      "name": "Modelo OpenAI controlado",
+      "credentials": {
+        "openAiApi": {
+          "id": "gGxdW1e4d63T5T9U",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Chatbot Híbrido V13 — controle primeiro\nA máquina de estados e todas as decisões continuam no PostgreSQL. A IA só interpreta linguagem ambígua dentro das opções permitidas e resume respostas abertas. Confiança abaixo de 82% não avança.\n\n**Áudio:** transcrito em português e submetido às mesmas regras do texto.\n**Documentos:** CTPS e currículo continuam aceitos somente em PDF. Imagens não são interpretadas.\n**Demos:** sessões demo-* usam tabelas isoladas e nunca entram no funil real.",
+        "height": 310,
+        "width": 540
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -360
+      ],
+      "id": "6352670c-0fd8-4666-b537-6cef26f18c81",
+      "name": "Nota - Arquitetura híbrida V13"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "0d2c420d-c85c-434a-9792-6b36e1335d45",
+              "leftValue": "={{ String($json.action || '').toUpperCase() === 'REPROCESSAR_DOCUMENTO' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        4560,
+        40
+      ],
+      "id": "70ee8d43-54fb-4793-ac23-165ad22bb733",
+      "name": "Ação exige reprocessar PDF?"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v1_acao_manual($1,'REPROCESSAR_DOCUMENTO',NULL,$2);",
+        "options": {
+          "queryReplacement": "={{ [ Number($json.candidato_id), String($json.session || 'whats_junior') ] }}"
+        }
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        4800,
+        -260
+      ],
+      "id": "62c0e0fe-7365-4a72-b23d-a31afb6b8a7b",
+      "name": "Carregar PDF para reprocessar",
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v13_buffer_registrar($1,$2,$3,$4,$5);",
+        "options": {
+          "queryReplacement": "={{ [ $json.telefone, $json.mensagem, $json.mensagem_id, $json.session, $json.origem || 'TEXTO' ] }}"
+        }
+      },
+      "id": "16d14a78-ff2d-4a2a-a7c9-213d591b64ce",
+      "name": "Registrar buffer V13",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        2640,
+        520
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 6,
+        "unit": "seconds"
+      },
+      "id": "fa4d32a5-b7ce-4e6e-9bbd-4d67b13ae471",
+      "name": "Aguardar mensagens fragmentadas",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2880,
+        520
+      ],
+      "webhookId": "a0b6a364-fda9-43aa-bb8f-dba549466171"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v13_buffer_consumir($1,$2,$3);",
+        "options": {
+          "queryReplacement": "={{ [ $json.telefone, $json.session, $json.buffer_token ] }}"
+        }
+      },
+      "id": "50bcd8cf-4c4a-43cf-be80-8ef6752d9d1c",
+      "name": "Consumir última mensagem",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3120,
+        520
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "03e032bc-836c-4849-8aca-c3f1641a35c5",
+              "leftValue": "={{ $json.processar === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f0253ee2-d5ff-42b9-b192-57ef9bba7e95",
+      "name": "É a mensagem mais recente?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3360,
+        520
+      ]
+    },
+    {
+      "id": "7541c1db-5e0e-43dd-ae89-aea43c4cc20f",
+      "name": "É áudio?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1200,
+        520
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9f988c91-f64f-4f71-8745-98d4f074409f",
+              "leftValue": "={{ $json.tipo_entrada === 'AUDIO' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "b92399b8-40fb-4177-9fd3-6a4da5a35a9b",
+      "name": "Baixar áudio do WAHA",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        1440,
+        460
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "url": "={{ $('Normalizar entrada').first().json.media_url }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Api-Key",
+              "value": "=kcih311h4ymkn5p3j8mzxakaq0u0h95y"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "audio"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "75d739c9-5d2b-45be-9749-0f1b0f7c8867",
+      "name": "Validar áudio recebido",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1680,
+        460
+      ],
+      "parameters": {
+        "jsCode": "\nconst item=$input.first();\nconst entrada=$('Normalizar entrada').first().json??{};\nconst arquivo=item.binary?.audio;\nif(!arquivo) return [{json:{...entrada,tipo_entrada:'AUDIO_INVALIDO',audio_valido:false,motivo_audio:'download'}}];\nlet tamanho=0;\ntry { tamanho=(await this.helpers.getBinaryDataBuffer(0,'audio')).length; } catch {}\nconst mime=String(arquivo.mimeType??entrada.mime_type??'').toLowerCase();\nconst permitido=/^(audio\\/|video\\/(mp4|webm))/.test(mime)||/\\.(ogg|opus|mp3|m4a|mp4|mpeg|mpga|wav|webm|flac)$/i.test(String(arquivo.fileName??entrada.nome_arquivo??''));\nconst valido=permitido&&tamanho>0&&tamanho<=25*1024*1024;\nreturn [{json:{...entrada,tipo_entrada:valido?'AUDIO':'AUDIO_INVALIDO',origem:'AUDIO',audio_valido:valido,tamanho_audio:tamanho,motivo_audio:valido?'':tamanho>25*1024*1024?'arquivo_maior_25mb':'formato'},binary:item.binary}];\n"
+      }
+    },
+    {
+      "id": "36f0d2a2-8cc6-4e02-9249-eed235fa240c",
+      "name": "Áudio válido?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1920,
+        460
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "22ea5a94-5b25-4bdb-b5c1-9cd017ab0f67",
+              "leftValue": "={{ $json.audio_valido === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "6597c0c5-70a4-4ec5-8e31-02701d412cc0",
+      "name": "Transcrever áudio em português",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        2160,
+        420
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "audio",
+        "options": {
+          "language": "pt",
+          "temperature": 0
+        }
+      },
+      "credentials": {
+        "openAiApi": {
+          "id": "gGxdW1e4d63T5T9U",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "id": "352aab35-f64f-486a-9662-2811c4da64e4",
+      "name": "Normalizar transcrição",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2400,
+        420
+      ],
+      "parameters": {
+        "jsCode": "\nconst d=$input.first().json??{};\nconst entrada=$('Normalizar entrada').first().json??{};\nconst mensagem=String(d.text??d.transcript??d.output?.text??'').trim();\nreturn [{json:{...entrada,mensagem,origem:'AUDIO',tipo_entrada:mensagem?'TEXTO':'AUDIO_INVALIDO',transcricao_valida:Boolean(mensagem)}}];\n"
+      }
+    },
+    {
+      "id": "07b70334-adae-4bd3-9a65-bfead8e13275",
+      "name": "Transcrição válida?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2640,
+        400
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9c4524c8-20f5-45b2-969e-4770b97e2bd5",
+              "leftValue": "={{ $json.transcricao_valida === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "049211f6-8ff0-4ba3-8e16-93a880958780",
+      "name": "Preparar interpretação V13",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3600,
+        520
+      ],
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT * FROM genesis_chatbot_v13_preparar_interpretacao($1,$2,$3,$4);",
+        "options": {
+          "queryReplacement": "={{ [ $json.telefone, $json.mensagem, $json.session, $json.origem || 'TEXTO' ] }}"
+        }
+      },
+      "credentials": {
+        "postgres": {
+          "id": "tZw9XBnM0uOBRBeF",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "id": "0382f7b7-d3ad-4801-a259-367757ccb586",
+      "name": "Precisa interpretação da IA?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3840,
+        520
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fc9010aa-b269-4dda-9451-729f75cb5bbe",
+              "leftValue": "={{ $json.precisa_ia === true }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "570b37c5-0055-4d0c-a8b5-7ead19d9fc02",
+      "name": "Interpretar resposta dentro das opções",
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        4080,
+        440
+      ],
+      "onError": "continueRegularOutput",
+      "parameters": {
+        "text": "={{ 'CONTEXTO CONTROLADO:\n' + String($json.contexto || '') + '\n\nMENSAGEM DO CANDIDATO:\n' + String($json.mensagem || '') }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"intent\": {\n      \"type\": \"string\"\n    },\n    \"resposta_canonica\": {\n      \"type\": \"string\"\n    },\n    \"confidence\": {\n      \"type\": \"number\"\n    },\n    \"resumo\": {\n      \"type\": \"string\"\n    }\n  },\n  \"required\": [\n    \"intent\",\n    \"resposta_canonica\",\n    \"confidence\",\n    \"resumo\"\n  ],\n  \"additionalProperties\": false\n}",
+        "options": {
+          "systemPromptTemplate": "Você interpreta uma mensagem de candidato apenas dentro do CONTEXTO CONTROLADO recebido.\n\nRegras obrigatórias:\n- Nunca aprove, reprove, altere etapa ou crie regra.\n- Não invente dados e não complete respostas ausentes.\n- resposta_canonica deve conter somente a opção/código permitido pelo contexto; se não houver segurança, use string vazia.\n- confidence deve estar entre 0 e 1. Use menos de 0.82 quando houver ambiguidade.\n- intent deve ser OPCAO, RESPOSTA_ABERTA, PEDIR_HUMANO ou INDEFINIDO.\n- resumo deve ter no máximo 300 caracteres, ser factual e não conter julgamento. Para perguntas objetivas, pode ser vazio.\n- Um pedido explícito por humano deve usar intent PEDIR_HUMANO e resposta_canonica 7.\nRetorne somente o JSON do schema."
+        }
+      }
+    },
+    {
+      "id": "f1c17539-9282-48f8-9f4e-44c411b00586",
+      "name": "Normalizar interpretação segura",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4320,
+        520
+      ],
+      "parameters": {
+        "jsCode": "\nconst entrada=$input.first().json??{};\nconst prep=$('Preparar interpretação V13').first().json??{};\nconst out=entrada.output&&typeof entrada.output==='object'?entrada.output:{};\nconst confidence=Math.max(0,Math.min(1,Number(out.confidence??0)||0));\nconst canonical=confidence>=0.82?String(out.resposta_canonica??'').trim().slice(0,200):'';\nconst intent=['OPCAO','RESPOSTA_ABERTA','PEDIR_HUMANO','INDEFINIDO'].includes(String(out.intent??'').toUpperCase())?String(out.intent).toUpperCase():'INDEFINIDO';\nconst summary=confidence>=0.82?String(out.resumo??'').trim().slice(0,300):'';\nreturn [{json:{...prep,mensagem_id:String($('Consumir última mensagem').first().json.mensagem_id??''),interpretacao:{intent,resposta_canonica:canonical,confidence,resumo:summary}}}];\n"
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Chatbot Estático V1": {
+      "main": [
+        [
+          {
+            "node": "Normalizar entrada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar entrada": {
+      "main": [
+        [
+          {
+            "node": "Entrada aceita?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Entrada aceita?": {
+      "main": [
+        [
+          {
+            "node": "É ação manual?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É ação manual?": {
+      "main": [
+        [
+          {
+            "node": "Resolver ação manual",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "É PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resolver ação manual": {
+      "main": [
+        [
+          {
+            "node": "Normalizar ação manual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar ação manual": {
+      "main": [
+        [
+          {
+            "node": "Manual requer reprocessamento?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual requer reprocessamento?": {
+      "main": [
+        [
+          {
+            "node": "Recriar PDF armazenado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recriar PDF armazenado": {
+      "main": [
+        [
+          {
+            "node": "Contexto seguro do PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É PDF?": {
+      "main": [
+        [
+          {
+            "node": "Baixar PDF do WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "É áudio?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É texto?": {
+      "main": [
+        [
+          {
+            "node": "Registrar buffer V13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder mídia não suportada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Responder mídia não suportada": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baixar PDF do WAHA": {
+      "main": [
+        [
+          {
+            "node": "Validar PDF baixado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar PDF baixado": {
+      "main": [
+        [
+          {
+            "node": "Preparar PDF bruto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar PDF bruto": {
+      "main": [
+        [
+          {
+            "node": "Armazenar PDF antes do OCR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Armazenar PDF antes do OCR": {
+      "main": [
+        [
+          {
+            "node": "Contexto seguro do PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contexto seguro do PDF": {
+      "main": [
+        [
+          {
+            "node": "OCR - Enviar PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR - Enviar PDF": {
+      "main": [
+        [
+          {
+            "node": "OCR - Gerar URL assinada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR - Gerar URL assinada": {
+      "main": [
+        [
+          {
+            "node": "OCR - Extrair texto",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OCR - Extrair texto": {
+      "main": [
+        [
+          {
+            "node": "Classificar PDF por regras",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Classificar PDF por regras": {
+      "main": [
+        [
+          {
+            "node": "Documento é CTPS?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Documento é CTPS?": {
+      "main": [
+        [
+          {
+            "node": "Carregar regras da vaga",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Documento é currículo?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar regras da vaga": {
+      "main": [
+        [
+          {
+            "node": "Há vaga vinculada?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Há vaga vinculada?": {
+      "main": [
+        [
+          {
+            "node": "Extrair dados documentais da CTPS",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Guardar CTPS até escolher vaga",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extrair dados documentais da CTPS": {
+      "main": [
+        [
+          {
+            "node": "Calcular resultado documental",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcular resultado documental": {
+      "main": [
+        [
+          {
+            "node": "Aplicar resultado da CTPS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aplicar resultado da CTPS": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar CTPS até escolher vaga": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Documento é currículo?": {
+      "main": [
+        [
+          {
+            "node": "Extrair dados do currículo",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Encaminhar documento para revisão",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extrair dados do currículo": {
+      "main": [
+        [
+          {
+            "node": "Preparar currículo extraído",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar currículo extraído": {
+      "main": [
+        [
+          {
+            "node": "Aplicar currículo sem mudar etapa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aplicar currículo sem mudar etapa": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encaminhar documento para revisão": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ação exige Google Calendar?": {
+      "main": [
+        [
+          {
+            "node": "Preparar chamada do Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Deve enviar resposta?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar chamada do Google Calendar": {
+      "main": [
+        [
+          {
+            "node": "Executar agenda Google Meet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Executar agenda Google Meet": {
+      "main": [
+        [
+          {
+            "node": "Normalizar retorno do Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar retorno do Calendar": {
+      "main": [
+        [
+          {
+            "node": "Deve enviar resposta?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deve enviar resposta?": {
+      "main": [
+        [
+          {
+            "node": "Preparar envio único",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar envio único": {
+      "main": [
+        [
+          {
+            "node": "Iniciar digitação",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Iniciar digitação": {
+      "main": [
+        [
+          {
+            "node": "Aguardar envio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguardar envio": {
+      "main": [
+        [
+          {
+            "node": "Enviar resposta controlada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar resposta controlada": {
+      "main": [
+        [
+          {
+            "node": "Finalizar resgate quando aplicável",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ação exige reprocessar PDF?": {
+      "main": [
+        [
+          {
+            "node": "Carregar PDF para reprocessar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Ação exige Google Calendar?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Carregar PDF para reprocessar": {
+      "main": [
+        [
+          {
+            "node": "Recriar PDF armazenado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aguardar mensagens fragmentadas": {
+      "main": [
+        [
+          {
+            "node": "Consumir última mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Consumir última mensagem": {
+      "main": [
+        [
+          {
+            "node": "É a mensagem mais recente?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É a mensagem mais recente?": {
+      "main": [
+        [
+          {
+            "node": "Preparar interpretação V13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Processar conversa V13": {
+      "main": [
+        [
+          {
+            "node": "Ação exige reprocessar PDF?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar buffer V13": {
+      "main": [
+        [
+          {
+            "node": "Aguardar mensagens fragmentadas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo OpenAI controlado": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Extrair dados documentais da CTPS",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Extrair dados do currículo",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Interpretar resposta dentro das opções",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "É áudio?": {
+      "main": [
+        [
+          {
+            "node": "Baixar áudio do WAHA",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "É texto?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Baixar áudio do WAHA": {
+      "main": [
+        [
+          {
+            "node": "Validar áudio recebido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validar áudio recebido": {
+      "main": [
+        [
+          {
+            "node": "Áudio válido?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Áudio válido?": {
+      "main": [
+        [
+          {
+            "node": "Transcrever áudio em português",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder mídia não suportada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcrever áudio em português": {
+      "main": [
+        [
+          {
+            "node": "Normalizar transcrição",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar transcrição": {
+      "main": [
+        [
+          {
+            "node": "Transcrição válida?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcrição válida?": {
+      "main": [
+        [
+          {
+            "node": "Registrar buffer V13",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Responder mídia não suportada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar interpretação V13": {
+      "main": [
+        [
+          {
+            "node": "Precisa interpretação da IA?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Precisa interpretação da IA?": {
+      "main": [
+        [
+          {
+            "node": "Interpretar resposta dentro das opções",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Normalizar interpretação segura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Interpretar resposta dentro das opções": {
+      "main": [
+        [
+          {
+            "node": "Normalizar interpretação segura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalizar interpretação segura": {
+      "main": [
+        [
+          {
+            "node": "Processar conversa V13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "9645de01-be02-4976-9bc0-d6152d16dac6",
+  "meta": {
+    "instanceId": "ed9e12d078f2b3917c211785e024e75abcc7a95909f7ad754ac4b7210527e838",
+    "versaoGenesis": "CHATBOT_ESTATICO_V1",
+    "alteracaoGenesis": "Máquina de estados determinística; IA somente em documentos; Google Calendar/Meet; credenciais e webhook preservados."
+  },
+  "nodeGroups": [],
+  "tags": []
+}
