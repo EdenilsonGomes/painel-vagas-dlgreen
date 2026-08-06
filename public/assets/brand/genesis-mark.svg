@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Genesis</title>
+  <desc id="desc">Monograma G da plataforma Genesis</desc>
+  <defs>
+    <linearGradient id="brand" x1="20" y1="18" x2="108" y2="112" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#64efbe"/>
+      <stop offset=".52" stop-color="#11b88d"/>
+      <stop offset="1" stop-color="#2e91ff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(34 26) rotate(48) scale(112)">
+      <stop stop-color="#123f48"/>
+      <stop offset="1" stop-color="#061b27"/>
+    </radialGradient>
+  </defs>
+  <rect width="128" height="128" rx="34" fill="url(#glow)"/>
+  <path d="M98 43A41 41 0 1 0 103 76H69" fill="none" stroke="url(#brand)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M103 76v21" fill="none" stroke="#55e9b8" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="98" cy="43" r="5" fill="#fff"/>
+  <circle cx="103" cy="97" r="4" fill="#2e91ff"/>
+</svg>
