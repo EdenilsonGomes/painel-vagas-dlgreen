@@ -1,7 +1,0 @@
-ATENÇÃO
-
-- genesis-estrutura.sql: referência da estrutura real exportada. NÃO execute esse arquivo no banco.
-- 24_GENESIS_IA_V13_4_FLUXO_MALEAVEL_SEGURO.sql: patch incremental V13.4.
-- 24_ROLLBACK_GENESIS_IA_V13_4.sql: restaura as funções anteriores usando a estrutura real fornecida.
-
-A forma recomendada de aplicar ou reverter é pelos workflows n8n entregues separadamente.
