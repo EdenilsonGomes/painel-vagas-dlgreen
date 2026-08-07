@@ -1,0 +1,26 @@
+'use strict';
+const fs=require('node:fs');const path=require('node:path');const {spawnSync}=require('node:child_process');
+const root=path.resolve(__dirname,'..');const read=f=>fs.readFileSync(path.join(root,f),'utf8');const ok=(c,m)=>{if(!c)throw new Error(m)};
+function syntax(f){const r=spawnSync(process.execPath,['--check',path.join(root,f)],{encoding:'utf8'});ok(r.status===0,`${f}: ${r.stderr||r.stdout}`)}
+const files=['server.js','lib/atendimento-v15.js','lib/atendimentos-v16.js','public/app.js','public/atendimento-v15.js','public/atendimentos-v16.js','scripts/migrate-v16.js','scripts/preflight-v16.js'];files.forEach(f=>{ok(fs.existsSync(path.join(root,f)),`Arquivo ausente: ${f}`);syntax(f)});
+const server=read('server.js'),mod=read('lib/atendimentos-v16.js'),legacyAtendimento=read('lib/atendimento-v15.js'),html=read('public/index.html'),app=read('public/app.js'),chat=read('public/atendimento-v15.js'),css=read('public/atendimentos-v16.css'),sql=read('sql/27_GENESIS_IA_V16_ATENDIMENTOS_HANDOFF_DOCUMENTOS.sql'),pkg=JSON.parse(read('package.json'));
+const workflowPath=path.resolve(root,'..','n8n','Genesis-IA-Chatbot-Hibrido-V16-Pausa-Documentos-Handoff-Credenciais-Preservadas.json');
+ok(fs.existsSync(workflowPath),'Workflow Chatbot V16 ausente.');
+const workflowText=fs.readFileSync(workflowPath,'utf8');const workflow=JSON.parse(workflowText);
+const normalizar=(workflow.nodes||[]).find(n=>n.name==='Normalizar entrada');
+ok(normalizar,'Workflow V16 sem node Normalizar entrada.');
+ok(JSON.stringify(normalizar).includes('manual_reprocess_document_id'),'Normalizar entrada não propaga manual_reprocess_document_id.');
+const handoffWorkflowPath=path.resolve(root,'..','n8n','Genesis-IA-Handoff-Humano-V16-Analise-Segura.json');
+const handoffWorkflow=JSON.parse(fs.readFileSync(handoffWorkflowPath,'utf8'));
+ok(JSON.stringify(handoffWorkflow).includes('resposta_triagem_sugerida'),'Workflow de handoff não contempla sugestão segura da pergunta pendente de triagem.');
+ok(pkg.version==='16.1.0','Painel precisa estar na versão 16.1.0.');
+['registerAtendimentosV16','HANDOFF_ANALYSIS_WEBHOOK_URL','manual_reprocess_document_id'].forEach(x=>ok(server.includes(x),`Backend sem ${x}`));
+['genesis_v16_etapa_retomada_apos_suporte($1)','/api/atendimentos','/api/atendimentos/resumo','/handoff-preview','/finalizar-handoff','/documentos','processPendingDocument','genesis_v16_aplicar_resposta_triagem_humana','triagem_confirmada'].forEach(x=>ok(mod.includes(x),`Módulo V16 sem ${x}`));
+ok(legacyAtendimento.includes('HANDOFF_V16_OBRIGATORIO'),'Rota antiga /devolver ainda pode contornar o handoff V16.');
+['view-atendimentos','humanServiceNavBadge','uploadCandidateDocumentButton','Finalizar atendimento'].forEach(x=>ok(html.includes(x),`Interface sem ${x}`));
+['GenesisAtendimentosV16','candidateHumanServiceBadge'].forEach(x=>ok(app.includes(x),`App sem ${x}`));
+['candidateHandoffDialogV16','Salvar e devolver para IA','arquivo_base64','8*1024*1024','candidateHandoffApplyTriageV16','triagem_confirmada'].forEach(x=>ok(chat.includes(x)||mod.includes(x),`Handoff/upload sem ${x}`));
+['@media (max-width: 860px)','@media (max-width: 620px)','human-service-card','handoff-dialog'].forEach(x=>ok(css.includes(x),`CSS responsivo V16 sem ${x}`));
+['genesis_v16_controle_entrada','IA_PAUSADA_PDF','genesis_v16_estagiar_documento','genesis_v16_registrar_pdf','genesis_v16_aplicar_resposta_triagem_humana','genesis_v16_etapa_retomada_apos_suporte','hash_sha256','trg_genesis_v16_pausar_ia_suporte'].forEach(x=>ok(sql.includes(x),`Migration V16 sem ${x}`));
+ok(!/DROP\s+(TABLE|SCHEMA|DATABASE)/i.test(sql),'Migration V16 contém DROP destrutivo.');ok(sql.includes('BEGIN;')&&sql.includes('COMMIT;'),'Migration V16 não é transacional.');ok((sql.match(/\$\$/g)||[]).length%2===0,'Dollar-quotes SQL desbalanceados.');
+console.log('Genesis IA V16: Central de Atendimentos, handoff seguro, pausa automática, preservação/upload/deduplicação de PDFs validados estaticamente.');

@@ -1,0 +1,95 @@
+/* Gênesis IA V16 — Central de Atendimentos + handoff humano/IA */
+.nav-item { position: relative; }
+.nav-count-badge { margin-left:auto; min-width:22px; height:22px; padding:0 6px; border-radius:999px; display:inline-grid; place-items:center; font-size:11px; font-style:normal; font-weight:800; background:#dc2626; color:#fff; }
+
+.human-service-hero { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:24px; margin-bottom:16px; }
+.human-service-hero h2 { margin:4px 0 6px; }
+.human-service-hero p { margin:0; color:var(--muted-text, #64748b); max-width:680px; }
+.human-service-hero-action { min-width:150px; text-align:right; }
+.human-service-hero-action strong { display:block; font-size:34px; line-height:1; }
+.human-service-hero-action span { color:var(--muted-text, #64748b); font-size:13px; }
+.human-service-kpis { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+.human-service-kpis article { border:1px solid var(--border-color,#dbe3ea); border-radius:16px; padding:16px 18px; background:var(--surface,#fff); }
+.human-service-kpis span { display:block; color:var(--muted-text,#64748b); font-size:12px; margin-bottom:8px; }
+.human-service-kpis strong { font-size:24px; }
+.human-service-toolbar { margin-bottom:14px; }
+.human-service-panel { padding:0; overflow:hidden; }
+.human-service-list { display:grid; }
+.human-service-card { display:grid; grid-template-columns:minmax(220px,1.1fr) minmax(220px,1.5fr) auto; gap:18px; align-items:center; padding:18px 20px; border-bottom:1px solid var(--border-color,#e2e8f0); transition:background .15s ease; }
+.human-service-card:last-child { border-bottom:0; }
+.human-service-card:hover { background:var(--surface-subtle,#f8fafc); }
+.human-service-person { display:grid; gap:5px; min-width:0; }
+.human-service-person strong { font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.human-service-person span,.human-service-person small { color:var(--muted-text,#64748b); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.human-service-message { min-width:0; display:grid; gap:7px; }
+.human-service-message p { margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.human-service-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.human-service-owner { font-size:12px; color:var(--muted-text,#64748b); }
+.human-state { display:inline-flex; align-items:center; gap:6px; width:max-content; padding:5px 9px; border-radius:999px; font-size:11px; font-weight:800; }
+.human-state::before { content:''; width:7px; height:7px; border-radius:50%; background:currentColor; }
+.human-state.waiting-owner { color:#b45309; background:#fffbeb; }
+.human-state.waiting-recruiter { color:#b91c1c; background:#fef2f2; }
+.human-state.waiting-candidate { color:#047857; background:#ecfdf5; }
+.human-state.conversation { color:#1d4ed8; background:#eff6ff; }
+.human-service-time { font-size:12px; font-weight:700; color:var(--muted-text,#64748b); }
+.human-service-time.attention { color:#b91c1c; }
+.human-service-actions { display:flex; align-items:center; gap:8px; }
+
+.handoff-dialog { width:min(760px,calc(100vw - 28px)); max-height:90vh; }
+.handoff-section { border:1px solid var(--border-color,#e2e8f0); border-radius:14px; padding:14px; margin-bottom:12px; }
+.handoff-section h3 { margin:0 0 5px; font-size:14px; }
+.handoff-section > p { margin:0 0 10px; color:var(--muted-text,#64748b); font-size:13px; }
+.handoff-suggestion { display:grid; grid-template-columns:auto minmax(0,1fr); gap:10px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--border-color,#e2e8f0); }
+.handoff-suggestion:first-of-type { border-top:0; }
+.handoff-suggestion input[type="checkbox"] { margin-top:4px; }
+.handoff-suggestion label { display:grid; gap:4px; }
+.handoff-suggestion small { color:var(--muted-text,#64748b); }
+.handoff-suggestion input[type="text"] { width:100%; }
+.handoff-doc-list { display:grid; gap:8px; }
+.handoff-doc { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 12px; border-radius:12px; background:var(--surface-subtle,#f8fafc); }
+.handoff-doc > div { min-width:0; display:grid; gap:3px; }
+.handoff-doc strong,.handoff-doc span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.handoff-next { padding:12px 14px; border-radius:12px; background:color-mix(in srgb, var(--brand-primary,#0f766e) 8%, transparent); }
+.handoff-next strong { display:block; margin-bottom:5px; }
+.handoff-summary { width:100%; min-height:72px; resize:vertical; }
+
+.document-upload-dialog { width:min(560px,calc(100vw - 28px)); }
+.upload-drop-zone { border:1px dashed var(--border-color,#cbd5e1); border-radius:14px; padding:18px; text-align:center; background:var(--surface-subtle,#f8fafc); }
+.upload-drop-zone input { max-width:100%; }
+
+.atendimento-inline-status { display:inline-flex; margin-top:5px; }
+
+@media (max-width: 860px) {
+  .human-service-hero { align-items:flex-start; }
+  .human-service-hero-action { min-width:110px; }
+  .human-service-kpis { grid-template-columns:repeat(3,1fr); }
+  .human-service-card { grid-template-columns:1fr auto; }
+  .human-service-message { grid-column:1 / -1; grid-row:2; }
+  .human-service-actions { grid-column:2; grid-row:1; }
+}
+
+@media (max-width: 620px) {
+  .human-service-hero { display:grid; gap:14px; padding:18px; }
+  .human-service-hero-action { text-align:left; }
+  .human-service-kpis { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+  .human-service-kpis article { padding:12px; }
+  .human-service-kpis span { min-height:30px; }
+  .human-service-kpis strong { font-size:21px; }
+  .human-service-card { display:grid; grid-template-columns:1fr; gap:12px; padding:16px; }
+  .human-service-message,.human-service-actions { grid-column:auto; grid-row:auto; }
+  .human-service-actions .button { width:100%; }
+  .conversation-toolbar-actions { width:100%; flex-wrap:wrap; }
+  .conversation-toolbar-actions .button { flex:1 1 150px; }
+  .handoff-dialog .modal-footer { position:sticky; bottom:0; background:var(--surface,#fff); }
+  .handoff-suggestion { grid-template-columns:24px minmax(0,1fr); }
+  .handoff-doc { align-items:flex-start; }
+}
+
+.handoff-triage-question { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:11px 12px; margin:8px 0 10px; border-radius:12px; background:var(--surface-subtle,#f8fafc); }
+.handoff-triage-question strong { line-height:1.35; }
+.handoff-triage-question span { flex:0 0 auto; font-size:10px; font-weight:800; letter-spacing:.04em; color:var(--muted-text,#64748b); }
+.handoff-triage-confirm { display:flex; align-items:center; gap:8px; margin-bottom:10px; font-weight:700; }
+.handoff-triage .field { display:grid; gap:6px; }
+.handoff-triage select,.handoff-triage input[type="text"] { width:100%; }
+.handoff-triage small { color:var(--muted-text,#64748b); line-height:1.35; }
+@media (max-width: 620px) { .handoff-triage-question { display:grid; gap:6px; } }
