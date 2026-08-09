@@ -159,7 +159,7 @@ app.use(helmet({
       connectSrc: ["'self'"],
       fontSrc: ["'self'"],
       objectSrc: ["'none'"],
-      frameAncestors: ["'none'"],
+      frameAncestors: ["'self'"],
       baseUri: ["'self'"],
       formAction: ["'self'"],
     },
