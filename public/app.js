@@ -191,7 +191,8 @@ const viewMeta = {
   divulgacao: ['AQUISIÇÃO', 'Central de Divulgação', 'Facebook assistido e WhatsApp controlado, vinculados às vagas oficiais.', '+ Nova campanha'],
   monitoring: ['ADMINISTRAÇÃO', 'Monitoramento', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
   audit: ['ADMINISTRAÇÃO', 'Auditoria da IA', 'Valide estados, documentos, resgates e agendamentos do fluxo determinístico.', 'Sincronizar'],
-  prospecting: ['ADMINISTRAÇÃO', 'Prospecção', 'Busque empresas na Apify com limites rígidos de quantidade e orçamento.', 'Nova busca'],
+  prospecting: ['COMERCIAL', 'Prospecção', 'Encontre, enriqueça e prepare empresas para uma abordagem comercial controlada.', 'Nova busca'],
+  commercialChats: ['COMERCIAL', 'Conversas comerciais', 'Respostas e negociações do número dedicado de prospecção.', 'Atualizar conversas'],
   brands: ['WHITE-LABEL', 'Empresas e marcas', 'Configure a identidade que será aplicada às artes e canais de cada cliente.', ''],
   publications: ['CONTEÚDO', 'Portal e comunidades', 'Modere grupos e vagas recebidas e acompanhe as contas públicas.', ''],
   demos: ['COMERCIAL', 'Demonstrações', 'Crie testes isolados de 7 dias e acompanhe a ativação pelo WhatsApp.', '+ Nova demonstração'],
@@ -421,7 +422,7 @@ function badgeClass(status) {
 }
 
 function setView(name) {
-  if (!currentUserIsAdmin() && ['audit', 'prospecting', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
+  if (!currentUserIsAdmin() && ['audit', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
   state.activeView = name;
   document.body.dataset.activeView = name;
   if (['atendimentos','reviews'].includes(name)) { const group = document.getElementById('conversationsNavGroup'); if (group) group.open = true; }
@@ -451,7 +452,8 @@ async function loadCurrentView(force = false) {
     if (state.activeView === 'divulgacao') await window.GenesisDivulgacaoV1?.load(force);
     if (state.activeView === 'monitoring') await loadMonitoring(force);
     if (state.activeView === 'audit') await loadAudit(force);
-    if (state.activeView === 'prospecting') await Promise.all([window.GenesisAdmin?.loadProspecting(force), window.GenesisOperationsV14?.loadProspectingSafety(force)]);
+    if (state.activeView === 'prospecting') await Promise.all([window.GenesisAdmin?.loadProspecting(force), window.GenesisOperationsV14?.loadProspectingSafety(force), window.GenesisProspectingV20?.loadProspectingExtras(force)]);
+    if (state.activeView === 'commercialChats') await window.GenesisProspectingV20?.loadCommercialChats(force);
     if (state.activeView === 'brands') await window.GenesisOperationsV14?.loadBrands(force);
     if (state.activeView === 'publications') await window.GenesisPortalPublicacoes?.load(force);
     if (state.activeView === 'demos') await window.GenesisDemos?.load(force);
@@ -2499,6 +2501,7 @@ function handlePrimaryAction() {
   if (state.activeView === 'divulgacao') return window.GenesisDivulgacaoV1?.focusCreate();
   if (state.activeView === 'reviews') return loadReviews(true);
   if (state.activeView === 'prospecting') return window.GenesisAdmin?.focusNewProspecting();
+  if (state.activeView === 'commercialChats') return window.GenesisProspectingV20?.loadCommercialChats(true);
   if (state.activeView === 'brands') return window.GenesisOperationsV14?.loadBrands(true);
   if (state.activeView === 'demos') return window.GenesisDemos?.focusCreate();
   if (state.activeView === 'crm') return window.GenesisCRM?.focusCreate();
@@ -2525,7 +2528,7 @@ async function loadCurrentUser() {
     }
     item.classList.toggle('hidden', role !== 'ADMIN');
   });
-  if (role !== 'ADMIN' && ['audit', 'prospecting', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(state.activeView)) setView('dashboard');
+  if (role !== 'ADMIN' && ['audit', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(state.activeView)) setView('dashboard');
 }
 
 async function logout() {

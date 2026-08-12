@@ -144,7 +144,7 @@
     if (!tbody) return;
     renderLeadSummary();
     if (!state.leads.length) {
-      tbody.innerHTML = `<tr><td colspan="6">${app().emptyState('Nenhum prospecto encontrado', 'Execute uma busca ou altere os filtros.')}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7">${app().emptyState('Nenhum prospecto encontrado', 'Execute uma busca ou altere os filtros.')}</td></tr>`;
       return;
     }
     tbody.innerHTML = state.leads.map((lead) => {
@@ -155,8 +155,11 @@
       const assisted = phoneDigits && !lead.nao_contatar && lead.status === 'APROVADO_CONTATO' ? `<button class="button button-primary compact" data-admin-action="assisted-contact" data-id="${lead.id}" type="button">Preparar contato</button>` : '';
       const reply = lead.resposta_tipo ? `<span class="lead-reply-badge ${safe(String(lead.resposta_tipo).toLowerCase())}">${lead.resposta_tipo === 'HUMANA' ? 'Resposta humana' : lead.resposta_tipo === 'AUTOMATICA' ? 'Resposta automática' : lead.resposta_tipo === 'DESCADASTRO' ? 'Descadastrado' : safe(lead.resposta_tipo)}</span>` : '';
       const options = pipelineOptions.map((status) => `<option value="${status}" ${status === lead.status ? 'selected' : ''}>${safe(statusLabels[status] || status)}</option>`).join('');
+      const enrichLabel = lead.enriquecimento_status === 'CONCLUIDO' ? 'Enriquecido' : lead.enriquecimento_status === 'FALHA' ? 'Falha no enriquecimento' : 'Não enriquecido';
+      const offer = lead.oferta_sugerida === 'PORTAL_GRATIS' ? 'Portal grátis' : lead.oferta_sugerida === 'DIVULGACAO_CANDIDATOS' ? 'Aquisição de candidatos' : lead.oferta_sugerida === 'AUTOMACAO_RECRUTAMENTO' ? 'Automação de RH' : '';
       return `<tr data-lead-row="${lead.id}">
-        <td><div class="table-primary"><strong>${safe(lead.empresa_nome)}</strong><span>${safe(lead.categoria || 'Categoria não informada')}</span><div class="table-inline-links">${web}${maps}</div></div></td>
+        <td class="prospect-select-col"><input class="prospect-row-check" data-prospect-lead-id="${lead.id}" type="checkbox" aria-label="Selecionar ${safe(lead.empresa_nome)}"></td>
+        <td><div class="table-primary"><strong>${safe(lead.empresa_nome)}</strong><span>${safe(lead.categoria || 'Categoria não informada')}</span><div class="lead-enrichment-line"><span class="lead-enrich-status ${lead.enriquecimento_status === 'CONCLUIDO' ? 'done' : ''}">${safe(enrichLabel)}</span>${offer ? `<span class="lead-offer-badge">${safe(offer)}</span>` : ''}${lead.ats_detectado ? `<span class="lead-ats-badge">${safe(lead.ats_detectado)}</span>` : ''}</div><div class="table-inline-links">${web}${maps}${lead.portal_vagas_url ? `<a class="text-link" href="${safe(lead.portal_vagas_url)}" target="_blank" rel="noopener">Vagas</a>` : ''}</div></div></td>
         <td><div class="table-primary"><strong>${safe(fmtPhone(lead.telefone))}</strong><span>${safe(lead.email || 'E-mail não encontrado')}</span>${reply}</div></td>
         <td><div class="table-primary"><strong>${safe([lead.cidade, lead.estado].filter(Boolean).join(' - ') || 'Não informado')}</strong><span>${safe(lead.bairro || lead.endereco || '')}</span></div></td>
         <td><div class="lead-score ${scoreClass(lead.score)}"><strong>${Number(lead.score || 0)}</strong><span>/100</span></div><small>${Number(lead.avaliacao || 0).toFixed(1)} ★ · ${Number(lead.quantidade_avaliacoes || 0)} avaliações</small></td>

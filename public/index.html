@@ -21,11 +21,14 @@
   <link rel="stylesheet" href="/v18-ui.css?v=1800">
   <link rel="stylesheet" href="/geo-v1.css?v=1900">
   <link rel="stylesheet" href="/crm-v1.css?v=1900">
+  <link rel="stylesheet" href="/prospecting-v20.css?v=2000">
+  <link rel="stylesheet" href="/mobile-v20.css?v=2000">
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/demos-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=1800" defer></script>
   <script src="/geo-v1.js?v=1900" defer></script>
-  <script src="/crm-v1.js?v=1900" defer></script>
+  <script src="/crm-v1.js?v=2000" defer></script>
+  <script src="/prospecting-v20.js?v=2000" defer></script>
   <script src="/app.js?v=1900" defer></script>
   <script src="/atendimento-v15.js?v=1610" defer></script>
   <script src="/conversations-v16-4.js?v=1640" defer></script>
@@ -35,7 +38,7 @@
   <script src="/operations-v14.js?v=1610" defer></script>
   <script src="/divulgacao-v1.js?v=1420" defer></script>
 </head>
-<body class="genesis-v17 genesis-v18 genesis-v19" data-ui-version="19" data-active-view="dashboard">
+<body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20" data-ui-version="20" data-active-view="dashboard">
   <div class="app-shell">
     <aside class="sidebar" id="sidebar" aria-label="Menu lateral">
       <div class="brand">
@@ -64,6 +67,7 @@
         <span class="nav-section-label hidden" data-admin-only>Comercial</span>
         <button class="nav-item hidden" data-view="crm" data-admin-only type="button"><span class="nav-icon" data-icon="chart"></span><b>Comercial</b></button>
         <button class="nav-item hidden" data-view="prospecting" data-admin-only type="button"><span class="nav-icon" data-icon="target"></span><b>Prospecção</b></button>
+        <button class="nav-item hidden" data-view="commercialChats" data-admin-only type="button"><span class="nav-icon" data-icon="messages"></span><b>Conversas comerciais</b><em id="commercialUnreadNavBadge" class="nav-count-badge hidden">0</em></button>
         <button class="nav-item hidden" data-view="demos" data-admin-only type="button"><span class="nav-icon" data-icon="monitor"></span><b>Demonstrações</b></button>
         <span class="nav-section-label hidden" data-admin-only>Administração</span>
         <button class="nav-item hidden" data-view="publications" data-admin-only type="button"><span class="nav-icon" data-icon="globe"></span><b>Conteúdo do portal</b></button>
@@ -402,6 +406,25 @@
           </section>
         </section>
 
+        <section id="view-commercialChats" class="view hidden admin-view commercial-chats-view" data-admin-only>
+          <section class="commercial-chat-shell panel">
+            <aside class="commercial-chat-list">
+              <header class="commercial-chat-list-head"><div><p class="eyebrow">COMERCIAL</p><h2>Conversas comerciais</h2><small id="commercialChatReport" class="commercial-chat-report">Carregando indicadores...</small></div><button id="commercialChatsRefresh" class="icon-button" type="button" aria-label="Atualizar"><span data-icon="refresh"></span></button></header>
+              <div class="commercial-chat-filters"><label class="inline-search"><span data-icon="search"></span><input id="commercialChatSearch" type="search" placeholder="Empresa, telefone ou site"></label><div class="segmented commercial-chat-segments"><button class="active" data-commercial-filter="TODOS" type="button">Todos</button><button data-commercial-filter="NAO_LIDAS" type="button">Não lidas</button><button data-commercial-filter="RESPONDEU" type="button">Responderam</button><button data-commercial-filter="ASSUMIDAS" type="button">Assumidas</button></div></div>
+              <div id="commercialChatList" class="commercial-chat-items"><div class="empty-state compact">Carregando conversas...</div></div>
+            </aside>
+            <section class="commercial-chat-main">
+              <div id="commercialChatEmpty" class="commercial-chat-empty"><span data-icon="messages"></span><strong>Selecione uma empresa</strong><p>Respostas do número de prospecção aparecem aqui, separadas das conversas dos candidatos.</p></div>
+              <div id="commercialChatWorkspace" class="commercial-chat-workspace hidden">
+                <header class="commercial-chat-header"><button id="commercialChatBack" class="icon-button mobile-only" type="button" aria-label="Voltar"><span data-icon="chevron-left"></span></button><div class="commercial-chat-person"><span id="commercialChatAvatar" class="commercial-chat-avatar">E</span><span><strong id="commercialChatName">Empresa</strong><small id="commercialChatMeta">Lead comercial</small></span></div><div class="commercial-chat-actions"><span id="commercialChatStage" class="badge badge-neutral">Lead</span><button id="commercialChatAssume" class="button button-primary compact" type="button">Assumir conversa</button></div></header>
+                <div id="commercialChatMessages" class="commercial-chat-messages"></div>
+                <form id="commercialChatComposer" class="commercial-chat-composer"><textarea id="commercialChatInput" maxlength="4000" rows="2" placeholder="Assuma a conversa para responder..." disabled></textarea><button id="commercialChatSend" class="button button-primary" type="submit" disabled>Enviar</button></form>
+              </div>
+            </section>
+            <aside id="commercialChatContext" class="commercial-chat-context"><div class="empty-state compact">Contexto comercial do lead.</div></aside>
+          </section>
+        </section>
+
         <section id="view-prospecting" class="view hidden admin-view" data-admin-only>
           <section class="admin-hero">
             <div><p class="eyebrow light">ADMIN · APIFY</p><h2>Prospecção de empresas com orçamento controlado</h2><p>Busque empresas no Google Maps, importe os resultados e trabalhe os leads em um funil comercial sem ultrapassar o limite mensal definido.</p></div>
@@ -464,7 +487,10 @@
               <div class="segmented" id="prospectLeadStatusSegments"><button class="active" data-prospect-status="TODOS" type="button">Todos</button><button data-prospect-status="NOVO" type="button">Novos</button><button data-prospect-status="APROVADO_CONTATO" type="button">Aprovados</button><button data-prospect-status="RESPONDEU" type="button">Responderam</button><button data-prospect-status="REUNIAO" type="button">Reunião</button><button data-prospect-status="CLIENTE" type="button">Clientes</button><button data-prospect-status="NAO_CONTATAR" type="button">Não contatar</button></div>
               <div class="toolbar-right"><label class="inline-search"><span>⌕</span><input id="prospectLeadSearch" type="search" placeholder="Empresa, cidade, telefone ou site"></label><a class="button button-ghost" href="/api/admin/prospeccao/exportar.csv">Exportar CSV</a></div>
             </div>
+            <div id="prospectingBulkToolbar" class="prospecting-bulk-toolbar"><label class="mini-check"><input id="prospectingSelectAll" type="checkbox"> Selecionar visíveis</label><span><strong id="prospectingSelectedCount">0</strong> selecionado(s)</span><div><button id="prospectingEnrichSelected" class="button button-ghost compact" type="button" disabled>Enriquecer</button><button id="prospectingQueueSelected" class="button button-primary compact" type="button" disabled>Preparar disparo</button><button id="prospectingClearSelection" class="button button-ghost compact" type="button" disabled>Limpar</button></div></div>
+            <div id="prospectingEnrichmentProgress" class="information-callout compact hidden"></div>
             <div class="data-table-wrapper"><table class="data-table filterable-table prospect-data-table"><thead><tr>
+              <th class="prospect-select-col" aria-label="Selecionar"></th>
               <th><details class="table-filter-menu"><summary>Empresa <span>⌄</span></summary><div class="table-filter-popover wide"><label>Segmento<select id="prospectCategoryFilter"><option value="">Todos</option></select></label><label>Responsável<select id="prospectOwnerFilter"><option value="">Todos</option></select></label></div></details></th>
               <th><details class="table-filter-menu"><summary>Contato <span>⌄</span></summary><div class="table-filter-popover wide"><label>Disponibilidade<select id="prospectContactFilter"><option value="">Todos</option><option value="COM_WHATSAPP">Com WhatsApp</option><option value="AUTORIZADO">Autorizado</option><option value="NAO_AUTORIZADO">Sem autorização</option><option value="SEM_WHATSAPP">Sem WhatsApp</option></select></label><label>Resposta<select id="prospectReplyFilter"><option value="">Todas</option><option value="HUMANA">Humana</option><option value="AUTOMATICA">Automática</option><option value="DESCADASTRO">Descadastro</option></select></label></div></details></th>
               <th><details class="table-filter-menu"><summary>Local <span>⌄</span></summary><div class="table-filter-popover wide"><label>Estado<select id="prospectStateFilter"><option value="">Todos</option></select></label><label>Cidade<select id="prospectCityFilter"><option value="">Todas</option></select></label></div></details></th>
@@ -994,6 +1020,19 @@
       <header class="modal-header"><div><p class="eyebrow">MINHA DISPONIBILIDADE</p><h2 id="agendaSettingsTitle">Horários padrão de entrevista</h2><span>Novas vagas herdam esta agenda e vagas vinculadas são atualizadas automaticamente.</span></div><button id="closeAgendaSettingsButton" class="icon-button" type="button" aria-label="Fechar">×</button></header>
       <div class="modal-body"><div class="form-grid"><div class="field span-full"><span>Dias disponíveis</span><div id="agendaWeekdays" class="weekday-checks"><label><input type="checkbox" value="1"><span>Seg</span></label><label><input type="checkbox" value="2"><span>Ter</span></label><label><input type="checkbox" value="3"><span>Qua</span></label><label><input type="checkbox" value="4"><span>Qui</span></label><label><input type="checkbox" value="5"><span>Sex</span></label><label><input type="checkbox" value="6"><span>Sáb</span></label><label><input type="checkbox" value="7"><span>Dom</span></label></div></div><div class="field span-full"><span>Horários oferecidos</span><div id="agendaTimeChips" class="agenda-time-chips"></div><div class="agenda-time-adder"><input id="agendaNewTime" type="time" step="900"><button id="addAgendaTimeButton" class="button button-ghost" type="button">Adicionar horário</button></div></div><label class="field"><span>Duração</span><select id="agendaDuration"><option value="20">20 minutos</option><option value="30">30 minutos</option><option value="40">40 minutos</option><option value="60">60 minutos</option></select></label><label class="field"><span>Janela de busca</span><select id="agendaLookahead"><option value="5">5 dias</option><option value="7">7 dias</option><option value="10">10 dias</option><option value="14">14 dias</option><option value="21">21 dias</option><option value="30">30 dias</option></select></label><label class="field span-full"><span>ID do Google Calendar</span><input id="agendaCalendarId" type="text" placeholder="seu-calendario@group.calendar.google.com"><small>Opcional: se vazio, o workflow mantém o calendário padrão atual.</small></label><label class="field span-full"><span>WhatsApp para alertas</span><input id="agendaWhatsapp" type="tel" placeholder="5511999999999"></label><label class="toggle-field span-full"><input id="agendaAvoidHolidays" type="checkbox"><span><strong>Evitar feriados</strong><small>Mantém o comportamento atual da busca de horários.</small></span></label><label class="toggle-field span-full"><input id="agendaActive" type="checkbox"><span><strong>Agenda ativa</strong><small>Permite que vagas vinculadas ofereçam horários.</small></span></label></div><div id="agendaSettingsError" class="form-error hidden"></div></div>
       <footer class="modal-footer"><button id="cancelAgendaSettingsButton" class="button button-ghost" type="button">Cancelar</button><button id="saveAgendaSettingsButton" class="button button-primary" type="submit">Salvar disponibilidade</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="prospectingBatchDialog" class="modal prospecting-batch-dialog" aria-labelledby="prospectingBatchTitle">
+    <form id="prospectingBatchForm">
+      <header class="modal-header"><div><p class="eyebrow">PROSPECÇÃO CONTROLADA</p><h2 id="prospectingBatchTitle">Preparar contatos</h2><span id="prospectingBatchSubtitle">Selecione como a Gênesis deve abordar os leads escolhidos.</span></div><button id="closeProspectingBatchDialog" class="icon-button" type="button" aria-label="Fechar"><span data-icon="close"></span></button></header>
+      <div class="modal-body form-grid">
+        <label class="field span-2"><span>Mensagem</span><select id="prospectingBatchModel"><option value="AUTO">Usar oferta sugerida de cada lead</option></select><small>No modo automático, portal grátis, aquisição de candidatos ou automação são escolhidos conforme o enriquecimento.</small></label>
+        <label class="field span-2"><span>Origem/base legítima do contato *</span><input id="prospectingBatchSource" maxlength="200" required value="Contato comercial público da empresa" placeholder="Ex.: telefone comercial publicado no Google/site"></label>
+        <label class="toggle-field span-2"><input id="prospectingBatchConfirm" type="checkbox"><span><strong>Confirmo a origem do contato</strong><small>Os envios respeitam horário comercial, limite diário, espaçamento, respostas automáticas e descadastro.</small></span></label>
+        <div class="information-callout span-2"><strong id="prospectingBatchCount">0 leads selecionados</strong><span>Leads sem WhatsApp, já contatados ou marcados como não contatar serão ignorados.</span></div>
+      </div>
+      <footer class="modal-footer"><button id="cancelProspectingBatchDialog" class="button button-ghost" type="button">Cancelar</button><button id="confirmProspectingBatch" class="button button-primary" type="submit">Preparar disparos</button></footer>
     </form>
   </dialog>
 
