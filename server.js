@@ -360,4 +360,5658 @@ function buildManualContinuationMessage(candidate, customMessage = '') {
   if (status === 'CONTRATADO' || stage === 'CONTRATADO') {
     return `${hello} Seu processo foi concluÃ­do e vocÃª estÃ¡ registrado como contratado. A equipe seguirÃ¡ com as orientaÃ§Ãµes necessÃ¡rias.`;
   }
-  if (status === 'EM_ADMISSAO' || ÷NôöÚ$z{-®éÜj×ö6öF–vòÀ¢fvöæöÖS¢6æF–FFRçfvöæöÖRÀ¢7&–FõöVÓ¢6æF–FFRæ7&VFVEöBÀ¢GVÆ—¦FõöVÓ¢6æF–FFRçWFFVEöBÀ¢FVÕö6W÷fÆ–Fó¢õåÆG³‡ÒBòçFW7B…7G&–ær†6æF–FFRæ6WÇÂrr’ç&WÆ6R‚õÄBörÂrr’’À¢FFöæ66–ÖVçFõö–æf÷&ÖF¢&ööÆVâ†6æF–FFRæFFöæ66–ÖVçFò’À¢FFöæ66–ÖVçFõö÷&–vVÓ¢6æF–FFRæFFöæ66–ÖVçFõö÷&–vVÒÇÂçVÆÂÀ¢–FFUö6Æ7VÆF¢vRÀ¢–FFUöFV6Æ&F¢6æF–FFRæ–FFUöFV6Æ&FóòçVÆÂÀ¢–FFU÷&U÷fÆ–FF¢6æF–FFRæ–FFU÷&U÷fÆ–FFÀ¢–FFUö6öæf—&ÖFöFö7VÖVçFÆÖVçFS¢6æF–FFRæ–FFUö6öæf—&ÖFöFö7VÖVçFÆÖVçFRÓÓÒG'VRÀ¢–FFUöF—fW&vVæ6–öFö7VÖVçFÃ¢6æF–FFRæ–FFUöF—fW&vVæ6–öFö7VÖVçFÂÓÓÒG'VRÀ¢–FFU÷fÆ–FF¢6æF–FFRæ–FFU÷fÆ–FFÀ¢6W†õö–æf÷&ÖFó¢6æF–FFRç6W†òÇÂçVÆÂÀ¢6W†õö÷&–vVÓ¢6æF–FFRç6W†õö÷&–vVÒÇÂçVÆÂÀ¢7FGW5÷&W&÷f6õö6öF–vó¢6æF–FFRæÖ÷F—fõ÷&W&÷f6õö6öF–vòÇÂçVÆÂÀ¢7FGW5÷&W&÷f6õö6FVv÷&–¢6æF–FFRæÖ÷F—fõ÷&W&÷f6õö6FVv÷&–ÇÂçVÆÂÀ¢&W&÷f6õ÷&VÆö6fVÃ¢6æF–FFRç&W&÷f6õ÷&VÆö6fVÂÀ¢&÷fFó¢6æF–FFRæ&÷fFòÀ¢&W6VçF6õ÷&öf—76–öæÅö–æf÷&ÖF¢&ööÆVâ…7G&–ær†6æF–FFRæ&W6VçF6õ÷&öf—76–öæÂÇÂrr’çG&–Ò‚’’À¢ÒÀ¢6öæf–wW&6õ÷fv¢°¢–FFUöÖ–æ–Ö¢6æF–FFRæ–FFUöÖ–æ–ÖÀ¢–FFUöÖ†–Ö¢6æF–FFRæ–FFUöÖ†–ÖÀ¢W‡W&–Væ6–öÖ–æ–ÖöÖW6W3¢6æF–FFRæW‡W&–Væ6–öÖ–æ–ÖöÖW6W2À¢VçG&Wf—7FöF–5÷6VÖæ¢6æF–FFRæVçG&Wf—7FöF–5÷6VÖæÀ¢VçG&Wf—7Fö†÷&&–÷3¢6æF–FFRæVçG&Wf—7Fö†÷&&–÷2À¢VçG&Wf—7FöGW&6õöÖ–çWF÷3¢6æF–FFRæVçG&Wf—7FöGW&6õöÖ–çWF÷2À¢ÒÀ¢ÖVç6vVç3¢†ÖW76vW4'”6æF–FFRævWB„çVÖ&W"†6æF–FFRæ–B’’ÇÂµÒ’æÖ‚†ÖW76vR’Óâ‡°¢–C¢ÖW76vRæ–BÀ¢VVÓ¢ÖW76vRçVVÒÀ¢ÖVç6vVÓ¢&VF7DVF—EFW‡B†ÖW76vRæÖVç6vVÒÂ6æF–FFR’À¢ÖVç6vVÕö–E÷&W6VçFS¢&ööÆVâ†ÖW76vRæÖVç6vVÕö–B’À¢Æ÷FU÷&W7÷7Fö–C¢ÖW76vRæÆ÷FU÷&W7÷7Fö–BÇÂçVÆÂÀ¢÷&–vVÕöÖVç6vVÕö–E÷&W6VçFS¢&ööÆVâ†ÖW76vRæ÷&–vVÕöÖVç6vVÕö–B’À¢6öçFW‡Fõ÷6æ6†÷C¢ÖW76vRæ6öçFW‡Fõ÷6æ6†÷BÇÂçVÆÂÀ¢7&VFVEöC¢ÖW76vRæ7&VFVEöBÀ¢Ò’’À¢Fö7VÖVçF÷3¢†Fö7VÖVçG4'”6æF–FFRævWB„çVÖ&W"†6æF–FFRæ–B’’ÇÂµÒ’æÖ‚†Fö7VÖVçB’Óâ‡°¢–C¢Fö7VÖVçBæ–BÀ¢F—ó¢Fö7VÖVçBçF—òÀ¢F—GVÆó¢Fö7VÖVçBçF—GVÆòÀ¢æöÖUö'V—fó¢Fö7VÖVçBææöÖUö'V—fòòu´%T•dõõDeÒr¢çVÆÂÀ¢Ö–ÖU÷G—S¢Fö7VÖVçBæÖ–ÖU÷G—RÀ¢FÖæ†õö'—FW3¢Fö7VÖVçBçFÖæ†õö'—FW2À¢7FGW5÷&ö6W76ÖVçFó¢Fö7VÖVçBç7FGW5÷&ö6W76ÖVçFòÀ¢6Æ76–f–66õö6öæf–æ6¢Fö7VÖVçBæ6Æ76–f–66õö6öæf–æ6À¢÷77V•öFFöæ66–ÖVçFõöW‡G&–F¢&ööÆVâ†Fö7VÖVçBæFFöæ66–ÖVçFõöW‡G&–F’À¢&W7VÇFFõ÷&W7VÖ–Fó¢Fö7VÖVçBç&W7VÇFFòbbG—VöbFö7VÖVçBç&W7VÇFFòÓÓÒvö&¦V7Brò°¢7FGW3¢Fö7VÖVçBç&W7VÇFFòç7FGW2À¢6Æ76–f–66ó¢Fö7VÖVçBç&W7VÇFFòæ6Æ76–f–66òÀ¢&÷fFó¢Fö7VÖVçBç&W7VÇFFòæ&÷fFòÀ¢Ö÷F—fó¢Fö7VÖVçBç&W7VÇFFòæÖ÷F—fòÀ¢Ò¢çVÆÂÀ¢7&VFVEöC¢Fö7VÖVçBæ7&VFVEöBÀ¢&ö6W76FõöC¢Fö7VÖVçBç&ö6W76FõöBÀ¢Ò’’À¢WfVçF÷3¢†WfVçG4'”6æF–FFRævWB„çVÖ&W"†6æF–FFRæ–B’’ÇÂµÒ’æÖ‚†WfVçB’Óâ‡°¢–C¢WfVçBæ–BÂWfVçFó¢WfVçBæWfVçFòÂFW67&–6ó¢&VF7DVF—EFW‡B†WfVçBæFW67&–6òÂ6æF–FFR’Â7&VFVEöC¢WfVçBæ7&VFVEöBÀ¢Ò’’À¢VçG&Wf—7F3¢–çFW'f–Ww4'”6æF–FFRævWB„çVÖ&W"†6æF–FFRæ–B’’ÇÂµÒÀ¢&ö&ÆVÖ3¢†—77VW4'”6æF–FFRævWB„çVÖ&W"†6æF–FFRæ–B’’ÇÂµÒ’æÖ‚†—77VR’Óâ‡°¢–C¢—77VRæ–BÀ¢6æF–FFó¢Æ–2À¢6FVv÷&–¢—77VRæ6FVv÷&–À¢w&f–FFS¢—77VRæw&f–FFRÀ¢÷&–vVÕöFWFV66ó¢—77VRæ÷&–vVÕöFWFV66òÀ¢6öæf–æ6¢—77VRæ6öæf–æ6À¢F—GVÆó¢&VF7DVF—EFW‡B†—77VRçF—GVÆòÂ6æF–FFR’À¢FW67&–6ó¢&VF7DVF—EFW‡B†—77VRæFW67&–6òÂ6æF–FFR’À¢Wf–FVæ6–¢¥4ôâç'6R‡&VF7DVF—EFW‡B„¥4ôâç7G&–æv–g’†—77VRæWf–FVæ6–ÇÂ·Ò’Â6æF–FFR’’À¢6ö×÷'FÖVçFõöW7W&Fó¢&VF7DVF—EFW‡B†—77VRæ6ö×÷'FÖVçFõöW7W&FòÂ6æF–FFR’À¢7VvW7Fõö6÷'&V6ó¢&VF7DVF—EFW‡B†—77VRç7VvW7Fõö6÷'&V6òÂ6æF–FFR’À¢7FGW5÷&Wf—6ó¢—77VRç7FGW5÷&Wf—6òÀ¢ö'6W'f6õ÷&Wf—6ó¢&VF7DVF—EFW‡B†—77VRæö'6W'f6õ÷&Wf—6òÂ6æF–FFR’À¢7&VFVEöC¢—77VRæ7&VFVEöBÀ¢Ò’’À¢Ó°¢Ò“° ¢6öç7B&ö&ÆV×2Ò—77VW5&W7VÇBç&÷w2æÖ‚†—77VR’Óâ°¢6öç7B6æF–FFRÒ6æF–FFW4'”–BævWB„çVÖ&W"†—77VRæ6æF–FFõö–B’’ÇÂ·Ó°¢&WGW&â°¢–C¢—77VRæ–BÀ¢6æF–FFó¢Æ–6W2ævWB„çVÖ&W"†—77VRæ6æF–FFõö–B’’À¢6FVv÷&–¢—77VRæ6FVv÷&–À¢w&f–FFS¢—77VRæw&f–FFRÀ¢÷&–vVÕöFWFV66ó¢—77VRæ÷&–vVÕöFWFV66òÀ¢6öæf–æ6¢—77VRæ6öæf–æ6À¢F—GVÆó¢&VF7DVF—EFW‡B†—77VRçF—GVÆòÂ6æF–FFR’À¢FW67&–6ó¢&VF7DVF—EFW‡B†—77VRæFW67&–6òÂ6æF–FFR’À¢7FGW5÷&Wf—6ó¢—77VRç7FGW5÷&Wf—6òÀ¢6ö×÷'FÖVçFõöW7W&Fó¢&VF7DVF—EFW‡B†—77VRæ6ö×÷'FÖVçFõöW7W&FòÂ6æF–FFR’À¢7VvW7Fõö6÷'&V6ó¢&VF7DVF—EFW‡B†—77VRç7VvW7Fõö6÷'&V6òÂ6æF–FFR’À¢ö'6W'f6õ÷&Wf—6ó¢&VF7DVF—EFW‡B†—77VRæö'6W'f6õ÷&Wf—6òÂ6æF–FFR’À¢7&VFVEöC¢—77VRæ7&VFVEöBÀ¢Ó°¢Ò“°¢6öç7BfVVF&6²ÒfVVF&6µ&W7VÇBç&÷w2æÖ‚‡&÷r’Óâ‡°¢–C¢&÷ræ–BÂ&ö&ÆVÖö–C¢&÷rç&ö&ÆVÖö–BÂFV6—6ó¢&÷ræFV6—6òÀ¢ö'6W'f6ó¢&VF7DÆÄ6æF–FFW2‡&÷ræö'6W'f6ò’Â&Wf—6Fõ÷÷#¢&÷rç&Wf—6Fõ÷÷"òu´DÔ”åÒr¢çVÆÂÂ7&VFVEöC¢&÷ræ7&VFVEöBÀ¢Ò’“°¢6öç7B7VÖÖ'’Ò°¢fW'6ó¢s’ã2rÀ¢vW&FõöVÓ¢æWrFFR‚’çFô•4õ7G&–ær‚’À¢W&–öFó¢²–æ–6–ó¢7F'BçFô•4õ7G&–ær‚’Âf–Ó¢VæBçFô•4õ7G&–ær‚’Â6VÆV6ó¢W&–öBÒÀ¢W66÷ó¢66÷RÀ¢F÷FÅö6æF–FF÷3¢6öçfW'6F–öç2æÆVæwF‚À¢F÷FÅöÖVç6vVç3¢ÖW76vW5&W7VÇBç&÷t6÷VçBóòÖW76vW5&W7VÇBç&÷w2æÆVæwF‚À¢F÷FÅ÷&ö&ÆVÖ3¢&ö&ÆV×2æÆVæwF‚À¢&ö&ÆVÖ5÷÷%öw&f–FFS¢&ö&ÆV×2ç&VGV6R‚†62Â—FVÒ’Óâ²65¶—FVÒæw&f–FFUÒÒ†65¶—FVÒæw&f–FFUÒÇÂ’²²&WGW&â63²ÒÂ·Ò’À¢&ö&ÆVÖ5÷÷%ö6FVv÷&–¢&ö&ÆV×2ç&VGV6R‚†62Â—FVÒ’Óâ²65¶—FVÒæ6FVv÷&–ÒÒ†65¶—FVÒæ6FVv÷&–ÒÇÂ’²²&WGW&â63²ÒÂ·Ò’À¢f—6õ÷&—f6–FFS¢tFF÷2W76ö—2ÂFö7VÖVçF÷2R7&VFVæ6–—2ì:6òf¦VÒ'FRFW7FW‡÷'F:|:6òâ&Wf—6Rò6öçF\;¦FòFW‡GVÂçFW2FR6ö×'F–Æ†"f÷&FWV—RWF÷&—¦FârÀ¢Ó° ¢6öç7B6fTFFRÒæWr–çFÂäFFUF–ÖTf÷&ÖB‚vVâÔ4rÂ²F–ÖU¦öæS¢tÖW&–6õ6õõVÆòrÂ–V#¢vçVÖW&–2rÂÖöçFƒ¢s"ÖF–v—BrÂF“¢s"ÖF–v—BrÒ’æf÷&ÖB†æWrFFR‚’“°¢6öç7Bf–ÆVæÖRÒvVæW6—2ÖVF—F÷&–ÒG·6fTFFWÒç¦—°¢&W2ç7FGW2ƒ#“°¢&W2ç6WD†VFW"‚t6öçFVçBÕG—RrÂvÆ–6F–öâ÷¦—r“°¢&W2ç6WD†VFW"‚t6öçFVçBÔF—7÷6—F–öârÂGF6†ÖVçC²f–ÆVæÖSÒ"G¶f–ÆVæÖWÒ&“°¢&W2ç6WD†VFW"‚t66†RÔ6öçG&öÂrÂvæò×7F÷&Rr“°¢6öç7B¦—Ò7&VFU¦—'VffW"…°¢²æÖS¢w&W7VÖòæ§6öârÂ6öçFVçC¢¥4ôâç7G&–æv–g’‡7VÖÖ'’ÂçVÆÂÂ"’ÒÀ¢²æÖS¢v6öçfW'62æ§6öârÂ6öçFVçC¢¥4ôâç7G&–æv–g’†6öçfW'6F–öç2ÂçVÆÂÂ"’ÒÀ¢²æÖS¢vVF—F÷&–2æ§6öârÂ6öçFVçC¢¥4ôâç7G&–æv–g’‡&ö&ÆV×2ÂçVÆÂÂ"’ÒÀ¢²æÖS¢w&ö&ÆVÖ2æ77brÂ6öçFVçC¢&÷w5Fô77b‡&ö&ÆV×2Â°¢²v–BrÂt”BuÒÅ²v6æF–FFòrÂt6æF–FFòuÒÅ²v6FVv÷&–rÂt6FVv÷&–uÒÅ²vw&f–FFRrÂtw&f–FFRuÒÅ²v÷&–vVÕöFWFV66òrÂt÷&–vVÒuÒÅ²v6öæf–æ6rÂt6öæf–ì:vuÒÅ²wF—GVÆòrÂuL:×GVÆòuÒÅ²vFW67&–6òrÂtFW67&œ:|:6òuÒÅ²w7FGW5÷&Wf—6òrÂu7FGW2uÒÅ²v7&VFVEöBrÂt7&–FòVÒuÒÀ¢Ò’ÒÀ¢²æÖS¢vfVVF&6²æ77brÂ6öçFVçC¢&÷w5Fô77b†fVVF&6²Â°¢²v–BrÂt”BuÒÅ²w&ö&ÆVÖö–BrÂu&ö&ÆVÖuÒÅ²vFV6—6òrÂtFV6—<:6òuÒÅ²vö'6W'f6òrÂtö'6W'f:|:6òuÒÅ²w&Wf—6Fõ÷÷"rÂu&Wf—6Fò÷"uÒÅ²v7&VFVEöBrÂt7&–FòVÒuÒÀ¢Ò’ÒÀ¢²æÖS¢v6öæf–wW&6öW5÷fv2æ§6öârÂ6öçFVçC¢¥4ôâç7G&–æv–g’†6öçfW'6F–öç2æÖ‚†—FVÒ’Óâ‡²6æF–FFó¢—FVÒæ6æF–FFòæÆ–2Âfv¢—FVÒæ6æF–FFòçfvöæöÖRÂ6öæf–wW&6ó¢—FVÒæ6öæf–wW&6õ÷fvÒ’’ÂçVÆÂÂ"’ÒÀ¢²æÖS¢tÄT”ÔÔRçG‡BrÂ6öçFVçC¢u6÷FRæöæ–Ö—¦FòFVF—F÷&–vVæW6—2”c’ã2âì:6ò6öçL:–ÒDg2Â5bÂFVÆVföæRÂ4UÂæöÖR6—f–Â÷R7&VFVæ6–—2åÅÆârÒÀ¢Ò“°¢&W2ç6VæB‡¦—“°¢Ò6F6‚†W'&÷"’²æW‡B†W'&÷"“²Ğ§Ò“° ¦çF6‚‚rö’öFÖ–âöVF—F÷&–÷&ö&ÆVÖ2ó¦–BrÂ&WV—&TFÖ–âÂ7–æ2‡&WÂ&W2ÂæW‡B’Óâ°¢6öç7B6Æ–VçBÒv—BööÂæ6öææV7B‚“°¢G'’°¢6öç7B–BÒ'6T–B‡&Wç&×2æ–B“°¢6öç7B7FGW2Ò7G&–ær‡&Wæ&öG“òç7FGW2ÇÂrr’çFõWW$66R‚“°¢6öç7Bö'6W'fF–öâÒ7G&–ær‡&Wæ&öG“òæö'6W'f6òÇÂrr’çG&–Ò‚’ç6Æ–6RƒÂC’ÇÂçVÆÃ°¢–b‚–BÇÂ²t4ôäd•$ÔDòrÂtdÅ4õõõ4•D•dòrÂt4õ%$”t”DòrÂt”täõ$DòuÒæ–æ6ÇVFW2‡7FGW2’’°¢&WGW&â&W2ç7FGW2ƒC’æ§6öâ‡²7V6W76ó¢fÇ6RÂW'&ó¢u&Wf—<:6ò–çl:Æ–FârÒ“°¢Ğ¢v—B6Æ–VçBçVW'’‚t$Tt”âr“°¢6öç7BWFFVBÒv—B6Æ–VçBçVW'’†UDDRVF—F÷&–÷&ö&ÆVÖ24UB7FGW5÷&Wf—6óÒC"À¢&Wf—6Fõ÷÷#ÒC2Â&Wf—6FõöCÔäõr‚’Âö'6W'f6õ÷&Wf—6óÒCBÂWFFVEöCÔäõr‚¢t„U$R–CÒC$UEU$ä”är¦Â¶–BÂ7FGW2Â7W'&VçEW6W$æÖR‡&W’Âö'6W'fF–öåÒ“°¢–b‚WFFVBç&÷t6÷VçB’²v—B6Æ–VçBçVW'’‚u$ôÄÄ$4²r“²&WGW&â&W2ç7FGW2ƒCB’æ§6öâ‡²7V6W76ó¢fÇ6RÂW'&ó¢tÆW'Fì:6òVæ6öçG&FòârÒ“²Ğ¢v—B6Æ–VçBçVW'’†”å4U%B”åDòVF—F÷&–öfVVF&6²‡&ö&ÆVÖö–BÂFV6—6òÂö'6W'f6òÂ&Wf—6Fõ÷÷"’dÅTU2‚CÂC"ÂC2ÂCB–Â¶–BÂ7FGW2Âö'6W'fF–öâÂ7W'&VçEW6W$æÖR‡&W•Ò“°¢v—B6Æ–VçBçVW'’‚t4ôÔÔ•Br“°¢&W2æ§6öâ‡²7V6W76ó¢G'VRÂÖVç6vVÓ¢u&Wf—<:6ò&Vv—7G&FârÂ&ö&ÆVÖ¢WFFVBç&÷w5³ÒÒ“°¢Ò6F6‚†W'&÷"’²G'’²v—B6Æ–VçBçVW'’‚u$ôÄÄ$4²r“²Ò6F6‚·ÒæW‡B†W'&÷"“²Ğ¢f–æÆÇ’²6Æ–VçBç&VÆV6R‚“²Ğ§Ò“° ¦ævWB‚rö’öFÖ–âöVF—F÷&–ö6æF–FF÷2ó¦–BrÂ&WV—&TFÖ–âÂ7–æ2‡&WÂ&W2ÂæW‡B’Óâ°¢G'’°¢6öç7B–BÒ'6T–B‡&Wç&×2æ–B“°¢–b‚–B’&WGW&â&W2ç7FGW2ƒC’æ§6öâ‡²7V6W76ó¢fÇ6RÂW'&ó¢t”B–çl:Æ–FòârÒ“°¢6öç7B&W7VÇBÒv—BööÂçVW'’†4TÄT5B¢e$ôÒVF—F÷&–÷&ö&ÆVÖ2t„U$R6æF–FFõö–CÒCõ$DU"%’7&VFVEöBDU42Ä”Ô•BÂ¶–EÒ“°¢6öç7B66÷&RÒÖF‚æÖ‚ƒÂÒ&W7VÇBç&÷w2ç&VGV6R‚‡7VÒÂ—77VR’Óâ7VÒ²‡²5$•D”4¢CÂÅD¢#ÂÔTD”¢Â$•„¢BÕ¶—77VRæw&f–FFUÒÇÂ’Â’“°¢&W2æ§6öâ‡²7V6W76ó¢G'VRÂæ÷F¢66÷&RÂ&ö&ÆVÖ3¢&W7VÇBç&÷w2Ò“°¢Ò6F6‚†W'&÷"’²æW‡B†W'&÷"“²Ğ§Ò“° ¢òòVæGö–çB&÷FVv–Fò&òv÷&¶fÆ÷rFœ:&–òWFöÜ:F–6òà¦ç÷7B‚rö’ö–çFW&æÂöVF—F÷&–÷6–æ7&öæ—¦"rÂ7–æ2‡&WÂ&W2ÂæW‡B’Óâ°¢G'’°¢6öç7BFö¶VâÒ7G&–ær‡&Wæ&öG“òçFö¶VâÇÂ&Wæ†VFW'5²w‚ÖVF—F÷&–×Fö¶VâuÒÇÂrr“°¢–b‚TD•Dõ$”ô”åDU$äÅõDô´TâÇÂ6fTWVÂ‡Fö¶VâÂTD•Dõ$”ô”åDU$äÅõDô´Tâ’’°¢&WGW&â&W2ç7FGW2ƒC’æ§6öâ‡²7V6W76ó¢fÇ6RÂW'&ó¢uFö¶VâFVF—F÷&––çl:Æ–FòârÒ“°¢Ğ¢6öç7BVæBÒæWrFFR‚“°¢6öç7B7F'BÒæWrFFR†VæBævWEF–ÖR‚’Ò#B¢c¢c¢“°¢6öç7B'VâÒv—BW†V7WFT‡–'&–DVF—B‡²7F'BÂVæBÂ÷&–v–ã¢tUDôÔD”4rÂ&WVW7FVD'“¢uv÷&¶fÆ÷rFœ:&–òrÒ“°¢&W2æ§6öâ‡²7V6W76ó¢G'VRÂVF—F÷&–¢'VâÒ“°¢Ò6F6‚†W'&÷"’²æW‡B†W'&÷"“²Ğ§Ò“° ¦çW6R†W‡&W72ç7FF–2‡F‚æ¦ö–â…õöF—&æÖRÂwV&Æ–2r’Â°¢W‡FVç6–öç3¢²v‡FÖÂuÒÀ¢Ö„vS¢&ö6W72æVçbääôDUôTåbÓÓÒw&öGV7F–öâròsVÒr¢À§Ò’“° ¦çW6R‚‡&WÂ&W2ÂæW‡B’Óâ°¢–b‡&WæÖWF†öBÓÓÒttUBr’°¢&WGW&â&W2ç6VæDf–ÆR‡F‚æ¦ö–â…õöF—&æÖRÂwV&Æ–2rÂv–æFW‚æ‡FÖÂr’“°¢Ğ¢&WGW&âæW‡B‚“°§Ò“° ¦çW6R‚†W'&÷"Â&WÂ&W2ÂöæW‡B’Óâ°¢6öç6öÆRæW'&÷"†W'&÷"“° ¢–b†W'&÷#òææÖRÓÓÒuv†&WVW7DW'&÷"r’°¢&WGW&â&W2ç7FGW2„çVÖ&W"†W'&÷"ç7FGW2ÇÂS"’’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢W'&÷"æÖW76vRÇÂtì:6òfö’÷7<:×fVÂ6öæ6ÇV—"÷W&:|:6òæòt„ârÀ¢6öF–vó¢tDTÔõõt„ôU%$òrÀ¢Ò“°¢Ğ ¢6öç7B—4w&÷WÖöFW&F–öâÒ&WçF‚ç7F'G5v—F‚‚rö’÷÷'FÂ×V&Æ–66öW2öw'W÷2òr“°¢6öç7B—5÷'FÄÖöFW&F–öâÒ&WçF‚ç7F'G5v—F‚‚rö’÷÷'FÂ×V&Æ–66öW2òr“° ¢–b†—5÷'FÄÖöFW&F–öâbbW'&÷#òæ6öFRÓÓÒsC%‚r’°¢&WGW&â&W2ç7FGW2ƒS’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢t6öç7VÇFFRÖöFW&:|:6òW6,:&ÖWG&÷2–æ6ö×L:×fV—26öÒò÷7Fw&U5ÂâGVÆ—¦Rò–æVÂ&fW'<:6ò"ãã÷R7WW&–÷"ârÀ¢6öF–vó¢tÔôDU$4õõD•tTÕõ$ÔUE$õ2rÀ¢Ò“°¢Ğ ¢–b†—4w&÷WÖöFW&F–öâbb²s#3SBrÂs#%"rÂsC#ƒBuÒæ–æ6ÇVFW2…7G&–ær†W'&÷#òæ6öFRÇÂrr’’’°¢&WGW&â&W2ç7FGW2ƒC’’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢tò÷7Fw&U5Â–æFW6VÖ&Vw&ÆVvFFR7FGW2&w'W÷2âW†V7WFRçÒ'VâÖ–w&FS§æVÂæòFW&Ö–æÂFW7FR6W'fœ:vòRFVçFRæ÷fÖVçFRârÀ¢6öF–vó¢tu%Uõ5õ5DEU5ôÄTtDòrÀ¢Ò“°¢Ğ ¢–b†—4w&÷WÖöFW&F–öâbbW'&÷#òæ6öFRÓÓÒs#3S"r’°¢&WGW&â&W2ç7FGW2ƒC’’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢tF&VÆFRw'W÷2÷77V’VÖ6öÇVæÆVvFö'&–vL;7&–6VÒfÆ÷"G,:6òâW†V7WFRçÒ'VâÖ–w&FS§æVÂRFVçFRæ÷fÖVçFRârÀ¢6öF–vó¢tu%Uõ5ôU5E%UEU$ôÄTtDrÀ¢Ò“°¢Ğ ¢–b„çVÖ&W"æ—4–çFVvW"„çVÖ&W"†W'&÷#òç7FGW46öFR’’bbçVÖ&W"†W'&÷"ç7FGW46öFR’ãÒCbbçVÖ&W"†W'&÷"ç7FGW46öFR’Âc’°¢&WGW&â&W2ç7FGW2„çVÖ&W"†W'&÷"ç7FGW46öFR’’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢W'&÷"æÖW76vRÇÂtì:6òfö’÷7<:×fVÂ6öæ6ÇV—"÷W&:|:6òârÀ¢6öF–vó¢W'&÷"ææÖRÓÓÒtW‡FW&æÅ6W'f–6TW'&÷"ròu4U%d”4õôU…DU$äõõcBr¢tõU$4õõcBrÀ¢Ò“°¢Ğ ¢–b†W'&÷"bbW'&÷"æ6öFRÓÓÒs#3SRr’°¢6öç7B6öç7G&–çBÒ7G&–ær†W'&÷"æ6öç7G&–çBÇÂrr’çFôÆ÷vW$66R‚“°¢ÆWBÖW76vRÒu&Vv—7G&òGWÆ–6Fòâ&Wf—6R÷2FF÷2–æf÷&ÖF÷2âs°¢–b†6öç7G&–çBæ–æ6ÇVFW2‚v÷W7V&–÷2r’ÇÂ6öç7G&–çBæ–æ6ÇVFW2‚wW7V&–òr’’ÖW76vRÒtW76RW7\:&–òFR6W76ò¬:W†—7FRâs°¢VÇ6R–b†6öç7G&–çBæ–æ6ÇVFW2‚v6æF–FFòr’ÇÂ6öç7G&–çBæ–æ6ÇVFW2‚wFVÆVföæRr’’ÖW76vRÒt¬:W†—7FRVÒ6æF–FFò6F7G&Fò6öÒW76RFVÆVföæRâs°¢VÇ6R–b†6öç7G&–çBæ–æ6ÇVFW2‚w&÷7V66òr’’ÖW76vRÒtW7FV×&W6¬:W†—7FRæ&6RFR&÷7V<:|:6òRì:6òfö’GWÆ–6Fâs°¢VÇ6R–b†6öç7G&–çBæ–æ6ÇVFW2‚v6öF–vòr’’ÖW76vRÒtì:6òfö’÷7<:×fVÂvW&"VÒ<;6F–vòWFöÜ:F–6òW†6ÇW6—fòâFVçFR6Çf"æ÷fÖVçFRâs°¢&WGW&â&W2ç7FGW2ƒC’’æ§6öâ‡²7V6W76ó¢fÇ6RÂW'&ó¢ÖW76vRÒ“°¢Ğ ¢–b†W'&÷"bbW'&÷"æ6öFRÓÓÒs#3S2r’°¢&WGW&â&W2ç7FGW2ƒC’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢tV×&W6–æf÷&ÖFì:6òW†—7FR÷RW7L:–çl:Æ–FârÀ¢Ò“°¢Ğ ¢–b†W'&÷"bb²sC#s2rÂsC%uÒæ–æ6ÇVFW2…7G&–ær†W'&÷"æ6öFRÇÂrr’’’°¢&WGW&â&W2ç7FGW2ƒS’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢—4w&÷WÖöFW&F–öà¢òtW7G'WGW&FRw'W÷2W7L:–æ6ö×ÆWFâW†V7WFRçÒ'VâÖ–w&FS§æVÂæòFW&Ö–æÂFò–æVÂâp¢¢tW7G'WGW&Fò÷7Fw&U5ÂW7L:–æ6ö×ÆWFâW†V7WFR2Ö–w&:|;VW2çFW&–÷&W2Rf:vò&VFWÆ÷’ârÀ¢Ò“°¢Ğ ¢&WGW&â&W2ç7FGW2ƒS’æ§6öâ‡°¢7V6W76ó¢fÇ6RÀ¢W'&ó¢tW'&ò–çFW&æòâ6öç7VÇFR÷2Æöw2Fò6W'fœ:vòæòV7•æVÂârÀ¢Ò“°§Ò“° ¦7–æ2gVæ7F–öâ7F'B‚’°¢G'’°¢v—BööÂçVW'’‚u4TÄT5Br“°¢v—BVç7W&T&ö÷G7G&FÖ–â‚“°¢æÆ—7FVâ…õ%BÂsãããrÂ‚’Óâ°¢6öç6öÆRæÆör†vVæW6—2”–æ–6–Fòæ÷'FGµõ%GÒæ“°¢Ò“°¢Ò6F6‚†W'&÷"’°¢6öç6öÆRæW'&÷"‚tì:6òfö’÷7<:×fVÂ6öæV7F"ò÷7Fw&U5Ã¢rÂW'&÷"“°¢&ö6W72æW†—Bƒ“°¢Ğ§Ğ ¦7–æ2gVæ7F–öâ6‡WFF÷vâ‡6–væÂ’°¢6öç6öÆRæÆör†G·6–væÇÒ&V6V&–FòâVæ6W'&æFòÆ–6:|:6òââæ“°¢v—BööÂæVæB‚“°¢&ö6W72æW†—Bƒ“°§Ğ §&ö6W72æöâ‚u4”uDU$ÒrÂ‚’Óâ6‡WFF÷vâ‚u4”uDU$Òr’“°§&ö6W72æöâ‚u4”t”åBrÂ‚’Óâ6‡WFF÷vâ‚u4”t”åBr’“° §7F'B‚“°
+  if (status === 'EM_ADMISSAO' || stage === 'EM_ADMISSAO') {
+    return `${hello} Seu processo avanÃ§ou para a etapa de admissÃ£o. A equipe responsÃ¡vel seguirÃ¡ com as orientaÃ§Ãµes necessÃ¡rias por aqui.`;
+  }
+  if (stage === 'AGUARDANDO_CTPS_CEP') {
+    return `${hello} Para continuar no processo da vaga ${vacancy}, envie sua Carteira de Trabalho Digital como Documento PDF e informe seu CEP. O CEP pode ser enviado com ou sem ponto ou hÃ­fen.`;
+  }
+  if (stage === 'AGUARDANDO_CTPS') {
+    return `${hello} Seu CEP jÃ¡ foi registrado. Para continuar no processo da vaga ${vacancy}, envie agora a Carteira de Trabalho Digital como Documento PDF.`;
+  }
+  if (stage === 'AGUARDANDO_CEP') {
+    return `${hello} Sua CTPS jÃ¡ foi analisada. Agora preciso apenas do seu CEP. VocÃª pode enviÃ¡-lo com ou sem ponto ou hÃ­fen.`;
+  }
+  if (status === 'APROVADO' && stage === 'AGUARDANDO_APRESENTACAO') {
+    return `${hello} Seu perfil foi aprovado na triagem para a vaga ${vacancy}! Antes de marcarmos a entrevista, conte brevemente sobre suas experiÃªncias, atividades principais e pontos fortes.`;
+  }
+  if (status === 'APROVADO' && ['GERANDO_OPCOES_ENTREVISTA', 'ESCOLHENDO_HORARIO', 'AGUARDANDO_ENTREVISTA'].includes(stage)) {
+    return `${hello} Seu perfil estÃ¡ aprovado para a vaga ${vacancy}. Responda OK para continuarmos com as opÃ§Ãµes de horÃ¡rio da entrevista.`;
+  }
+  if (stage === 'ENTREVISTA_AGENDADA') {
+    return `${hello} Sua entrevista estÃ¡ agendada. Caso precise dos dados ou queira reagendar, envie uma mensagem por aqui.`;
+  }
+  if (stage === 'ESCOLHENDO_VAGA') {
+    return `${hello} Vamos continuar seu atendimento. Informe o nome ou o cÃ³digo da vaga em que vocÃª tem interesse.`;
+  }
+  if (stage === 'ANALISANDO_DOCUMENTOS') {
+    return `${hello} Seu documento serÃ¡ reprocessado agora. Assim que a anÃ¡lise terminar, vocÃª receberÃ¡ o resultado automaticamente.`;
+  }
+  return `${hello} Vamos continuar seu atendimento a partir da etapa atual. Responda por aqui para prosseguirmos.`;
+}
+
+function parseCookies(req) {
+  const result = {};
+  const header = String(req.headers.cookie || '');
+  for (const part of header.split(';')) {
+    const separator = part.indexOf('=');
+    if (separator < 0) continue;
+    const key = part.slice(0, separator).trim();
+    const value = part.slice(separator + 1).trim();
+    if (key) result[key] = decodeURIComponent(value);
+  }
+  return result;
+}
+
+function signSession(payload) {
+  const encoded = Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
+  const signature = crypto
+    .createHmac('sha256', APP_SESSION_SECRET)
+    .update(encoded)
+    .digest('base64url');
+  return `${encoded}.${signature}`;
+}
+
+function readSession(req) {
+  const token = parseCookies(req).genesis_session;
+  if (!token || !token.includes('.')) return null;
+  const [encoded, signature] = token.split('.', 2);
+  const expected = crypto
+    .createHmac('sha256', APP_SESSION_SECRET)
+    .update(encoded)
+    .digest('base64url');
+  if (!safeEqual(signature, expected)) return null;
+  try {
+    const payload = JSON.parse(Buffer.from(encoded, 'base64url').toString('utf8'));
+    if (!payload?.exp || Number(payload.exp) < Date.now()) return null;
+    if (!payload?.usuario) return null;
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+function sessionCookieOptions(req) {
+  const secure = req.secure || String(req.headers['x-forwarded-proto'] || '').toLowerCase() === 'https';
+  return {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure,
+    path: '/',
+    maxAge: SESSION_TTL_HOURS * 60 * 60 * 1000,
+  };
+}
+
+function requireLogin(req, res, next) {
+  if (req.path === '/api/internal/auditoria/sincronizar') {
+    const token = String(req.body?.token || req.headers['x-auditoria-token'] || '');
+    if (AUDITORIA_INTERNAL_TOKEN && safeEqual(token, AUDITORIA_INTERNAL_TOKEN)) {
+      req.user = { id: null, usuario: 'workflow-auditoria', nome: 'Workflow diÃ¡rio', perfil: 'ADMIN' };
+      return next();
+    }
+  }
+  const session = readSession(req);
+  if (session) {
+    req.user = session;
+    return next();
+  }
+  if (req.path.startsWith('/api/')) {
+    return res.status(401).json({ sucesso: false, erro: 'Sua sessÃ£o expirou. Entre novamente.' });
+  }
+  return res.redirect('/login');
+}
+
+function currentUserName(req) {
+  return String(req.user?.nome || APP_LOGIN_NAME || APP_LOGIN_USER || 'Recrutadora');
+}
+
+function requireAdmin(req, res, next) {
+  if (String(req.user?.perfil || '').toUpperCase() === 'ADMIN') return next();
+  return res.status(403).json({ sucesso: false, erro: 'Acesso exclusivo para administradores.' });
+}
+
+async function ensureBootstrapAdmin() {
+  try {
+    const count = await pool.query('SELECT COUNT(*)::INTEGER AS total FROM app_usuarios');
+    if (Number(count.rows[0]?.total || 0) > 0) return;
+    const usuario = normalizeUsername(APP_LOGIN_USER) || 'admin';
+    const senhaHash = await hashPassword(APP_LOGIN_PASSWORD);
+    await pool.query(`
+      INSERT INTO app_usuarios (usuario, senha_hash, nome, perfil, ativo)
+      VALUES ($1, $2, $3, 'ADMIN', TRUE)
+      ON CONFLICT (usuario) DO NOTHING
+    `, [usuario, senhaHash, APP_LOGIN_NAME || 'Administrador']);
+    console.log(`[LOGIN V6] Administrador inicial criado: ${usuario}`);
+  } catch (error) {
+    if (String(error.code || '') === '42P01') {
+      console.warn('[LOGIN V6] MigraÃ§Ã£o 08 ainda nÃ£o executada. Login legado permanecerÃ¡ disponÃ­vel.');
+      return;
+    }
+    throw error;
+  }
+}
+
+const nullableText = z.union([z.string(), z.null(), z.undefined()])
+  .transform((value) => {
+    if (value === null || value === undefined) return null;
+    const trimmed = value.trim();
+    return trimmed === '' ? null : trimmed;
+  });
+
+const nullableDate = z.union([z.string(), z.null(), z.undefined()])
+  .transform((value, ctx) => {
+    if (value === null || value === undefined || value.trim() === '') return null;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      ctx.addIssue({ code: 'custom', message: 'Data invÃ¡lida. Use AAAA-MM-DD.' });
+      return z.NEVER;
+    }
+    return value;
+  });
+
+const nullableMoney = z.union([z.number(), z.string(), z.null(), z.undefined()])
+  .transform((value, ctx) => {
+    if (value === null || value === undefined || value === '') return null;
+    let normalized = value;
+    if (typeof normalized === 'string') {
+      normalized = normalized.trim();
+      if (normalized.includes(',')) {
+        normalized = normalized.replace(/\./g, '').replace(',', '.');
+      }
+    }
+    const number = Number(normalized);
+    if (!Number.isFinite(number) || number < 0) {
+      ctx.addIssue({ code: 'custom', message: 'SalÃ¡rio invÃ¡lido.' });
+      return z.NEVER;
+    }
+    return Math.round(number * 100) / 100;
+  });
+
+const vacancySchema = z.object({
+  empresa_id: z.coerce.number().int().positive(),
+  recrutador_responsavel_id: z.preprocess(
+    (value) => (value === null || value === undefined || String(value).trim() === '' ? null : Number(value)),
+    z.number().int().positive().nullable(),
+  ).default(null),
+  agenda_personalizada: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(false),
+  titulo: z.string().trim().min(2).max(150),
+  cargo: z.string().trim().min(2).max(150),
+  sexo: z.enum(['MASCULINO', 'FEMININO', 'UNISSEX']).default('UNISSEX'),
+  descricao: nullableText,
+  cidade: nullableText,
+  estado: z.union([z.string(), z.null(), z.undefined()])
+    .transform((value) => {
+      const state = String(value || 'SP').trim().toUpperCase();
+      return state || 'SP';
+    })
+    .pipe(z.string().length(2)),
+  bairro: nullableText,
+  endereco_referencia: nullableText,
+  tipo_contrato: nullableText,
+  modalidade: z.union([z.string(), z.null(), z.undefined()])
+    .transform((value) => String(value || 'Presencial').trim() || 'Presencial')
+    .pipe(z.string().max(30)),
+  escala: nullableText,
+  horario: nullableText,
+  salario: nullableMoney,
+  vale_refeicao_valor: nullableMoney,
+  vale_alimentacao_valor: nullableMoney,
+  premio_assiduidade_valor: nullableMoney,
+  outros_beneficios_valor: nullableMoney,
+  vale_transporte_descricao: nullableText,
+  beneficios_observacao: nullableText,
+  possui_insalubridade: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(false),
+  percentual_insalubridade: z.union([z.number(), z.string(), z.null(), z.undefined()])
+    .transform((value, ctx) => {
+      if (value === null || value === undefined || value === '') return null;
+      const number = Number(String(value).replace(',', '.'));
+      if (!Number.isFinite(number) || number < 0 || number > 100) {
+        ctx.addIssue({ code: 'custom', message: 'Percentual de insalubridade invÃ¡lido.' });
+        return z.NEVER;
+      }
+      return Math.round(number * 100) / 100;
+    }),
+  observacao_insalubridade: nullableText,
+  beneficios: nullableText,
+  escolaridade_minima: nullableText,
+  idade_minima: z.coerce.number().int().min(14).max(100).default(25),
+  idade_maxima: z.preprocess(
+    (value) => (value === null || value === undefined || String(value).trim() === '' ? null : Number(value)),
+    z.number().int().min(14).max(100).nullable(),
+  ).default(null),
+  entrevista_dias_semana: z.union([
+    z.array(z.coerce.number().int().min(1).max(7)).min(1).max(7),
+    z.null(),
+    z.undefined(),
+  ]).transform((items) => [...new Set(items || [1, 2, 3, 4, 5])].sort()),
+  entrevista_horarios: z.union([
+    z.array(z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'HorÃ¡rio invÃ¡lido.')).min(1).max(48),
+    z.null(),
+    z.undefined(),
+  ]).transform((items) => [...new Set(items || ['09:00', '10:00', '14:00', '15:00'])].sort()),
+  entrevista_duracao_minutos: z.coerce.number().int().min(10).max(180).default(30),
+  entrevista_busca_dias: z.coerce.number().int().min(1).max(60).default(7),
+  entrevista_evitar_feriados: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(true),
+  experiencia_minima_meses: z.coerce.number().int().min(0).max(600).default(0),
+  experiencia_revisao_minima_meses: z.coerce.number().int().min(0).max(600).default(0),
+  permitir_experiencia_informal_revisao: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()]).transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on').default(false),
+  chatbot_estatico_ativo: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()]).transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on').default(true),
+  aceita_sem_experiencia: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(false),
+  exigir_experiencia_compativel: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(true),
+  cargos_compativeis: nullableText,
+  cbos_compativeis: nullableText,
+  requisitos_obrigatorios: nullableText,
+  requisitos_desejaveis: nullableText,
+  quantidade_vagas: z.coerce.number().int().min(1).max(10000).default(1),
+  formulario_url: z.union([z.string(), z.null(), z.undefined()])
+    .transform((value, ctx) => {
+      if (value === null || value === undefined || value.trim() === '') return null;
+      try {
+        return new URL(value.trim()).toString();
+      } catch {
+        ctx.addIssue({ code: 'custom', message: 'URL do formulÃ¡rio invÃ¡lida.' });
+        return z.NEVER;
+      }
+    }),
+  publicar_portal: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(true),
+  destaque_portal: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => value === true || value === 1 || value === '1' || value === 'true' || value === 'on')
+    .default(false),
+  imagem_capa_url: z.union([z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    if (value === null || value === undefined || value.trim() === '') return null;
+    try { return new URL(value.trim()).toString(); } catch { ctx.addIssue({ code: 'custom', message: 'URL da imagem de capa invÃ¡lida.' }); return z.NEVER; }
+  }),
+  seo_titulo: nullableText,
+  seo_descricao: nullableText,
+  canal_candidatura: z.enum(['WHATSAPP_GENESIS', 'URL_EXTERNA', 'EMAIL']).default('WHATSAPP_GENESIS'),
+  whatsapp_candidatura: nullableText,
+  candidatura_url: z.union([z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    if (value === null || value === undefined || value.trim() === '') return null;
+    try { return new URL(value.trim()).toString(); } catch { ctx.addIssue({ code: 'custom', message: 'URL externa de candidatura invÃ¡lida.' }); return z.NEVER; }
+  }),
+  candidatura_email: z.union([z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    if (value === null || value === undefined || value.trim() === '') return null;
+    const email = value.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { ctx.addIssue({ code: 'custom', message: 'E-mail de candidatura invÃ¡lido.' }); return z.NEVER; }
+    return email;
+  }),
+  status: z.enum(['RASCUNHO', 'ATIVA', 'PAUSADA', 'ENCERRADA']).default('RASCUNHO'),
+  data_inicio: nullableDate,
+  data_encerramento: nullableDate,
+}).superRefine((vacancy, ctx) => {
+  if (vacancy.experiencia_revisao_minima_meses > vacancy.experiencia_minima_meses) { ctx.addIssue({ code: 'custom', path: ['experiencia_revisao_minima_meses'], message: 'A faixa de revisÃ£o nÃ£o pode superar a experiÃªncia exigida.' }); }
+  if (vacancy.idade_maxima !== null && vacancy.idade_maxima < vacancy.idade_minima) {
+    ctx.addIssue({
+      code: 'custom',
+      path: ['idade_maxima'],
+      message: 'A idade mÃ¡xima nÃ£o pode ser menor que a idade mÃ­nima.',
+    });
+  }
+});
+
+async function resolveVacancyScheduling(client, vacancy, user) {
+  let recruiterId = parseId(vacancy.recrutador_responsavel_id);
+  if (!recruiterId && parseId(user?.id)) {
+    const own = await client.query(`
+      SELECT id FROM app_usuarios
+      WHERE id=$1 AND ativo IS TRUE AND (empresa_id=$2 OR empresa_id IS NULL)
+      LIMIT 1
+    `, [user.id, vacancy.empresa_id]);
+    recruiterId = own.rows[0]?.id || null;
+  }
+  if (!recruiterId) {
+    const fallback = await client.query(`
+      SELECT id FROM app_usuarios
+      WHERE ativo IS TRUE AND (empresa_id=$1 OR empresa_id IS NULL)
+      ORDER BY CASE WHEN perfil='RECRUTADOR' THEN 0 ELSE 1 END,id
+      LIMIT 1
+    `, [vacancy.empresa_id]);
+    recruiterId = fallback.rows[0]?.id || null;
+  }
+
+  let agenda = null;
+  if (recruiterId) {
+    const result = await client.query(`
+      SELECT u.id,a.dias_semana,a.horarios,a.duracao_minutos,a.busca_dias,a.evitar_feriados,a.ativa
+      FROM app_usuarios u
+      LEFT JOIN recrutador_agendas a ON a.usuario_id=u.id
+      WHERE u.id=$1 AND u.ativo IS TRUE AND (u.empresa_id=$2 OR u.empresa_id IS NULL)
+      LIMIT 1
+    `, [recruiterId, vacancy.empresa_id]);
+    if (!result.rowCount) {
+      const error = new Error('O recrutador selecionado nÃ£o pertence Ã  empresa desta vaga ou estÃ¡ inativo.');
+      error.statusCode = 400;
+      throw error;
+    }
+    agenda = result.rows[0];
+  }
+
+  if (!vacancy.agenda_personalizada && agenda?.ativa !== false && agenda?.dias_semana && agenda?.horarios) {
+    return {
+      ...vacancy,
+      recrutador_responsavel_id: recruiterId,
+      entrevista_dias_semana: agenda.dias_semana,
+      entrevista_horarios: agenda.horarios,
+      entrevista_duracao_minutos: Number(agenda.duracao_minutos || 30),
+      entrevista_busca_dias: Number(agenda.busca_dias || 7),
+      entrevista_evitar_feriados: agenda.evitar_feriados !== false,
+    };
+  }
+  return { ...vacancy, recrutador_responsavel_id: recruiterId };
+}
+
+const statusSchema = z.object({
+  status: z.enum(['RASCUNHO', 'ATIVA', 'PAUSADA', 'ENCERRADA']),
+});
+
+const aiVacancyActionValues = [
+  'GERAR_TODOS',
+  'GERAR_DESCRICAO',
+  'SUGERIR_CARGOS',
+  'SUGERIR_CBOS',
+  'GERAR_REQUISITOS_OBRIGATORIOS',
+  'GERAR_REQUISITOS_DESEJAVEIS',
+];
+
+const aiVacancyRequestSchema = z.object({
+  acao: z.enum(aiVacancyActionValues),
+  vaga: z.object({
+    titulo: nullableText,
+    cargo: nullableText,
+    sexo: z.union([z.string(), z.null(), z.undefined()]).optional(),
+    descricao: nullableText,
+    cidade: nullableText,
+    estado: nullableText,
+    bairro: nullableText,
+    tipo_contrato: nullableText,
+    modalidade: nullableText,
+    escala: nullableText,
+    horario: nullableText,
+    salario: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    vale_refeicao_valor: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    vale_alimentacao_valor: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    premio_assiduidade_valor: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    outros_beneficios_valor: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    vale_transporte_descricao: nullableText,
+    beneficios_observacao: nullableText,
+    possui_insalubridade: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()]).optional(),
+    percentual_insalubridade: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    observacao_insalubridade: nullableText,
+    beneficios: nullableText,
+    escolaridade_minima: nullableText,
+    experiencia_minima_meses: z.union([z.number(), z.string(), z.null(), z.undefined()]).optional(),
+    aceita_sem_experiencia: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()]).optional(),
+    exigir_experiencia_compativel: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()]).optional(),
+    cargos_compativeis: nullableText,
+    cbos_compativeis: nullableText,
+    requisitos_obrigatorios: nullableText,
+    requisitos_desejaveis: nullableText,
+  }).passthrough(),
+});
+
+function normalizeSuggestionText(value, maxLength = 12_000) {
+  if (Array.isArray(value)) {
+    return [...new Set(
+      value
+        .map((item) => String(item ?? '').trim())
+        .filter(Boolean),
+    )].join('\n').slice(0, maxLength);
+  }
+
+  if (value === null || value === undefined) return '';
+
+  const text = String(value).trim();
+  if (!text) return '';
+
+  return text
+    .split(/\r?\n|;|\|/)
+    .map((item) => item.trim().replace(/^[-â€¢*]\s*/, ''))
+    .filter(Boolean)
+    .filter((item, index, items) => items.indexOf(item) === index)
+    .join('\n')
+    .slice(0, maxLength);
+}
+
+function normalizeCboSuggestions(value) {
+  const source = Array.isArray(value)
+    ? value
+    : String(value ?? '').split(/\r?\n|;|\|/);
+
+  const details = [];
+
+  for (const item of source) {
+    const object = item && typeof item === 'object' ? item : null;
+    const raw = object ? String(object.codigo ?? '') : String(item ?? '');
+    const codigo = raw.match(/\b\d{4}(?:-\d{2})?\b/)?.[0] ?? '';
+    if (!codigo) continue;
+
+    const confidence = String(object?.confianca ?? 'MEDIA').trim().toUpperCase();
+    if (confidence === 'BAIXA') continue;
+
+    if (details.some((entry) => entry.codigo === codigo)) continue;
+
+    details.push({
+      codigo,
+      titulo: String(object?.titulo ?? '').trim().slice(0, 180),
+      confianca: ['ALTA', 'MEDIA'].includes(confidence) ? confidence : 'MEDIA',
+      justificativa: String(object?.justificativa ?? '').trim().slice(0, 400),
+    });
+  }
+
+  return details.slice(0, 10);
+}
+
+function normalizeAiVacancySuggestions(payload) {
+  const source = payload?.sugestoes
+    ?? payload?.suggestions
+    ?? payload?.output?.sugestoes
+    ?? payload?.output
+    ?? payload
+    ?? {};
+
+  const cboDetails = normalizeCboSuggestions(
+    source.cbo_detalhes?.length ? source.cbo_detalhes : source.cbos_compativeis,
+  );
+
+  return {
+    descricao: String(source.descricao ?? '').trim().slice(0, 12_000),
+    cargos_compativeis: normalizeSuggestionText(source.cargos_compativeis),
+    cbos_compativeis: cboDetails.map((item) => item.codigo).join('\n'),
+    cbo_detalhes: cboDetails,
+    requisitos_obrigatorios: normalizeSuggestionText(source.requisitos_obrigatorios),
+    requisitos_desejaveis: normalizeSuggestionText(source.requisitos_desejaveis),
+  };
+}
+
+const candidateStageValues = [
+  // Chatbot EstÃ¡tico V1 â€” mÃ¡quina de estados oficial da Nova Fase.
+  'AGUARDANDO_INTENCAO', 'ESCOLHENDO_VAGA', 'AGUARDANDO_ACAO_VAGA',
+  'DUVIDAS_GERAIS', 'DUVIDAS_VAGA', 'RECRUTADOR_MENU', 'AGUARDANDO_NOME',
+  'AGUARDANDO_EXPERIENCIA', 'AGUARDANDO_TEMPO_DESLOCAMENTO',
+  'AGUARDANDO_CONFIRMACAO_CHEGADA', 'AGUARDANDO_CEP', 'AGUARDANDO_CTPS',
+  'PROCESSANDO_CTPS', 'REVISAO_DOCUMENTAL', 'PENDENTE_APROVACAO_RECRUTADOR',
+  'AGUARDANDO_ESCOLHA_HORARIO', 'ENTREVISTA_AGENDADA', 'NAO_APTO_NESTA_VAGA',
+  'PAUSADO_ATENDIMENTO_HUMANO',
+  // Etapas legadas preservadas para leitura e migraÃ§Ã£o de candidatos antigos.
+  'PRIMEIRO_CONTATO', 'PERGUNTANDO_IDADE', 'PERGUNTANDO_SEXO', 'PERGUNTANDO_EXPERIENCIA',
+  'AGUARDANDO_CTPS_CEP', 'ANALISANDO_DOCUMENTOS', 'APROVADO_TRIAGEM',
+  'REPROVADO_PRE_TRIAGEM', 'REPROVADO_TRIAGEM', 'AGUARDANDO_APRESENTACAO',
+  'GERANDO_OPCOES_ENTREVISTA', 'ESCOLHENDO_HORARIO', 'AGUARDANDO_ENTREVISTA',
+  'EM_ADMISSAO', 'CONTRATADO', 'ENCERRADO'
+];
+
+const candidateCreateSchema = z.object({
+  nome: nullableText,
+  telefone: z.string().transform((value, ctx) => {
+    const digits = String(value || '').replace(/\D/g, '');
+    if (digits.length < 10 || digits.length > 15) {
+      ctx.addIssue({ code: 'custom', message: 'Telefone invÃ¡lido. Use DDI, DDD e nÃºmero.' });
+      return z.NEVER;
+    }
+    return digits;
+  }),
+  cep: z.union([z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    const digits = String(value || '').replace(/\D/g, '');
+    if (!digits) return null;
+    if (digits.length !== 8) {
+      ctx.addIssue({ code: 'custom', message: 'CEP deve possuir 8 nÃºmeros.' });
+      return z.NEVER;
+    }
+    return digits;
+  }),
+  vaga_id: z.union([z.number(), z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    if (value === null || value === undefined || value === '') return null;
+    const id = Number(value);
+    if (!Number.isInteger(id) || id <= 0) {
+      ctx.addIssue({ code: 'custom', message: 'Vaga invÃ¡lida.' });
+      return z.NEVER;
+    }
+    return id;
+  }),
+  status: z.enum(['NOVO', 'EM_PROCESSO', 'APROVADO', 'REPROVADO', 'CONTRATADO', 'ENCERRADO']).default('NOVO'),
+  etapa: z.enum(candidateStageValues).default('PRIMEIRO_CONTATO'),
+});
+
+async function triggerStaticChatbotAction(payload) {
+  if (!CHATBOT_WEBHOOK_URL) return { configurado: false, acionado: false, aviso: 'CHATBOT_WEBHOOK_URL nÃ£o configurada.' };
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CHATBOT_REPROCESS_TIMEOUT_MS);
+  try {
+    const response = await fetch(CHATBOT_WEBHOOK_URL, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
+      body: JSON.stringify({
+        event: 'genesis.manual', session: payload.session || CHATBOT_WAHA_SESSION,
+        manual_force_reply: true, manual_origin: payload.origem || 'PAINEL_CHATBOT_ESTATICO_V1',
+        manual_action: payload.action, manual_candidate_id: payload.candidatoId,
+        manual_review_id: payload.revisaoId || null, manual_rescue_id: payload.resgateId || null,
+        manual_message: payload.mensagem || '',
+        payload: { id: `manual-static-${payload.candidatoId}-${Date.now()}`, fromMe: false, hasMedia: false, body: '' },
+      }),
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(body.erro || body.message || `Webhook retornou HTTP ${response.status}.`);
+    return { configurado: true, acionado: true, retorno: body };
+  } finally { clearTimeout(timer); }
+}
+
+function parseId(value) {
+  const id = Number(value);
+  return Number.isInteger(id) && id > 0 ? id : null;
+}
+
+async function generateVacancyCode(client, companyId) {
+  const normalizedCompanyId = Number(companyId);
+
+  if (!Number.isInteger(normalizedCompanyId) || normalizedCompanyId <= 0) {
+    throw new Error('Empresa invÃ¡lida para geraÃ§Ã£o do cÃ³digo da vaga.');
+  }
+
+  // Serializa a geraÃ§Ã£o por empresa. Assim, duas vagas salvas no mesmo
+  // instante nÃ£o recebem o mesmo cÃ³digo.
+  await client.query(
+    `SELECT pg_advisory_xact_lock(hashtext($1), $2::INTEGER)`,
+    ['genesis_ia_vaga_codigo', normalizedCompanyId],
+  );
+
+  const result = await client.query(`
+    SELECT
+      COALESCE(
+        MAX(
+          NULLIF(
+            substring(UPPER(codigo) FROM '^VAGA-([0-9]+)$'),
+            ''
+          )::INTEGER
+        ),
+        0
+      ) + 1 AS proximo_numero
+    FROM vagas
+    WHERE empresa_id = $1
+  `, [normalizedCompanyId]);
+
+  const nextNumber = Number(result.rows[0]?.proximo_numero || 1);
+  return `VAGA-${String(nextNumber).padStart(3, '0')}`;
+}
+
+
+function escapeXml(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
+}
+
+function normalizePhoneDigits(value) {
+  return String(value || '').replace(/\D/g, '');
+}
+
+function formatWhatsappDisplay(value) {
+  const digits = normalizePhoneDigits(value);
+  if (digits.length === 11) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  }
+  if (digits.length === 10) {
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+  }
+  if (digits.length === 13 && digits.startsWith('55')) {
+    return `(${digits.slice(2, 4)}) ${digits.slice(4, 9)}-${digits.slice(9)}`;
+  }
+  return String(value || '').trim() || '(11) 91302-2278';
+}
+
+function formatMoneyBRL(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number) || number <= 0) return 'SalÃ¡rio a combinar';
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(number);
+}
+
+function compactText(value, fallback = 'A combinar') {
+  const text = String(value || '').trim().replace(/\s+/g, ' ');
+  return text || fallback;
+}
+
+function firstListLine(value, fallback = 'BenefÃ­cios informados na vaga') {
+  const text = String(value || '').trim();
+  if (!text) return fallback;
+  const first = text
+    .split(/\r?\n|;|\|/)
+    .map((item) => item.trim().replace(/^[-â€¢*]\s*/, ''))
+    .filter(Boolean)[0];
+  return (first || fallback).slice(0, 120);
+}
+
+function slugify(value) {
+  return String(value || 'vaga')
+    .normalize('NFD')
+    .replace(/[Ì€-Í¯]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80) || 'vaga';
+}
+
+function wrapSvgText(value, maxChars = 24, maxLines = 3) {
+  const words = String(value || '').trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return [''];
+  const lines = [];
+  let current = '';
+
+  for (const word of words) {
+    const candidate = current ? `${current} ${word}` : word;
+    if (candidate.length <= maxChars || !current) {
+      current = candidate;
+      continue;
+    }
+    lines.push(current);
+    current = word;
+    if (lines.length >= maxLines - 1) break;
+  }
+
+  if (current && lines.length < maxLines) lines.push(current);
+  return lines.slice(0, maxLines).map((line, index, array) => (
+    index === array.length - 1 && words.join(' ').length > array.join(' ').length
+      ? `${line.slice(0, Math.max(0, maxChars - 3)).trimEnd()}...`
+      : line
+  ));
+}
+
+function normalizeVacancySex(value) {
+  const raw = String(value || '').trim().toUpperCase();
+  if (['MASCULINO', 'MASC', 'M'].includes(raw)) return 'MASCULINO';
+  if (['FEMININO', 'FEM', 'F'].includes(raw)) return 'FEMININO';
+  return 'UNISSEX';
+}
+
+function vacancySexLabel(value) {
+  const sexo = normalizeVacancySex(value);
+  return sexo === 'MASCULINO' ? 'Vaga masculina' : sexo === 'FEMININO' ? 'Vaga feminina' : 'Vaga unissex';
+}
+
+
+const rejectionReasonCatalog = Object.freeze({
+  IDADE_MINIMA_NAO_ATENDIDA: { categoria: 'IDADE', label: 'Idade abaixo da faixa da vaga', realocavel: true },
+  IDADE_MAXIMA_NAO_ATENDIDA: { categoria: 'IDADE', label: 'Idade acima da faixa da vaga', realocavel: true },
+  EXPERIENCIA_DECLARADA_NAO_ATENDE: { categoria: 'EXPERIENCIA', label: 'Candidato declarou nÃ£o atender ao tempo mÃ­nimo da vaga', realocavel: true },
+  EXPERIENCIA_INSUFICIENTE: { categoria: 'EXPERIENCIA', label: 'Tempo de experiÃªncia comprovada abaixo do requisito', realocavel: true },
+  EXPERIENCIA_NAO_COMPATIVEL: { categoria: 'EXPERIENCIA', label: 'ExperiÃªncia nÃ£o compatÃ­vel com esta vaga', realocavel: true },
+  DOCUMENTO_INSUFICIENTE: { categoria: 'DOCUMENTO', label: 'Documento insuficiente ou inconclusivo', realocavel: true },
+  NAO_COMPARECEU_ENTREVISTA: { categoria: 'ENTREVISTA', label: 'NÃ£o compareceu Ã  entrevista', realocavel: true },
+  DESISTIU_PROCESSO: { categoria: 'DESISTENCIA', label: 'Desistiu do processo seletivo', realocavel: true },
+  DISPONIBILIDADE_INCOMPATIVEL: { categoria: 'DISPONIBILIDADE', label: 'Disponibilidade de horÃ¡rio ou escala incompatÃ­vel com esta vaga', realocavel: true },
+  DESLOCAMENTO_INCOMPATIVEL: { categoria: 'DISPONIBILIDADE', label: 'Local ou deslocamento incompatÃ­vel com esta vaga', realocavel: true },
+  EXPERIENCIA_NAO_CONFIRMADA_ENTREVISTA: { categoria: 'EXPERIENCIA', label: 'ExperiÃªncia exigida nÃ£o foi confirmada na entrevista', realocavel: true },
+  REQUISITO_NAO_CONFIRMADO_ENTREVISTA: { categoria: 'REQUISITO_DA_VAGA', label: 'Requisito obrigatÃ³rio especÃ­fico nÃ£o confirmado', realocavel: true, exigeDetalhe: true },
+  PERFIL_NAO_ADERENTE_VAGA: { categoria: 'REQUISITO_DA_VAGA', label: 'Registro legado: perfil nÃ£o aderente', realocavel: true, exigeDetalhe: true },
+  DOCUMENTACAO_PENDENTE: { categoria: 'DOCUMENTO', label: 'DocumentaÃ§Ã£o obrigatÃ³ria pendente', realocavel: true },
+  OUTRO: { categoria: 'OUTRO', label: 'Outro motivo', realocavel: true, exigeDetalhe: true },
+});
+
+function rejectionReasonInfo(code, fallbackText = '') {
+  const normalized = String(code || '').trim().toUpperCase();
+  const found = rejectionReasonCatalog[normalized];
+  if (found) return { codigo: normalized, ...found };
+  const fallback = String(fallbackText || code || '').trim();
+  return { codigo: normalized || 'OUTRO', categoria: 'OUTRO', label: fallback || 'Motivo nÃ£o detalhado', realocavel: true };
+}
+
+function candidateSexLabel(value) {
+  const normalized = String(value || '').trim().toUpperCase();
+  if (normalized === 'MASCULINO') return 'Masculino';
+  if (normalized === 'FEMININO') return 'Feminino';
+  return 'NÃ£o informado';
+}
+
+function friendlyDocumentName(candidateName, type, originalName, mimeType) {
+  const rawFirstName = String(candidateName || '').trim().split(/\s+/).filter(Boolean)[0] || 'Candidato';
+  const firstName = rawFirstName
+    .replace(/[\r\n"\/\\:*?<>|]+/g, '_')
+    .slice(0, 60) || 'Candidato';
+  const normalizedType = String(type || '').trim().toUpperCase();
+  const label = normalizedType === 'CTPS'
+    ? 'CTPS'
+    : normalizedType === 'CURRICULO'
+      ? 'Curriculo'
+      : 'Documento';
+  const original = String(originalName || '').trim();
+  let extension = (original.match(/(\.[A-Za-z0-9]{1,8})$/)?.[1] || '').toLowerCase();
+  if (!extension) {
+    const mime = String(mimeType || '').toLowerCase();
+    if (mime.includes('pdf')) extension = '.pdf';
+    else if (mime.includes('png')) extension = '.png';
+    else if (mime.includes('jpeg') || mime.includes('jpg')) extension = '.jpg';
+    else extension = '.bin';
+  }
+  return `${firstName} - ${label}${extension}`;
+}
+
+function inferCompatibleCbosAndRoles(sourceValue) {
+  const source = String(sourceValue || '').normalize('NFD').replace(/[Ì€-Í¯]/g, '').toLowerCase();
+  const rules = [
+    { re: /(auxiliar de limpeza|limpeza|servicos gerais|serviÃ§os gerais|conservacao|conservaÃ§Ã£o|faxina|higienizacao|higienizaÃ§Ã£o|asseio)/, cargo: 'Auxiliar de Limpeza', cargos: 'Auxiliar de Limpeza\nServente de Limpeza\nFaxineiro\nAgente de Limpeza\nAgente de Asseio e ConservaÃ§Ã£o\nAgente de HigienizaÃ§Ã£o\nLimpador de Vidros\nLimpador de Fachadas\nAuxiliar de ServiÃ§os Gerais', cbos: '5143-20\n5143-05\n5143-15\n5142-25' },
+    { re: /(porteiro|controlador de acesso|portaria)/, cargo: 'Porteiro', cargos: 'Porteiro\nControlador de Acesso', cbos: '5174-10\n5174-15' },
+    { re: /(recepcionista|recepcao|recepÃ§Ã£o)/, cargo: 'Recepcionista', cargos: 'Recepcionista', cbos: '4221-05' },
+    { re: /(administrativo|auxiliar administrativo|assistente administrativo)/, cargo: 'Assistente Administrativo', cargos: 'Assistente Administrativo\nAuxiliar Administrativo', cbos: '4110-10\n4110-05' },
+    { re: /(cozinha|cozinheiro|auxiliar de cozinha|copeira|copeiro)/, cargo: 'Auxiliar de Cozinha', cargos: 'Auxiliar de Cozinha\nCopeiro\nCozinheiro', cbos: '5135-05\n5134-25\n5132-05' },
+    { re: /(logistica|logÃ­stica|estoque|almoxarife|expedicao|expediÃ§Ã£o)/, cargo: 'Auxiliar de LogÃ­stica', cargos: 'Auxiliar de LogÃ­stica\nAlmoxarife\nEstoquista', cbos: '4141-05\n4141-10\n4141-25' },
+    { re: /(manutencao|manutenÃ§Ã£o|eletricista|encanador|predial)/, cargo: 'Oficial de ManutenÃ§Ã£o', cargos: 'Oficial de ManutenÃ§Ã£o\nTÃ©cnico de ManutenÃ§Ã£o', cbos: '9113-05\n3131-20\n9511-05' },
+  ];
+  return rules.find((r) => r.re.test(source)) || null;
+}
+
+function promotionTheme(vacancy) {
+  const source = compactText([
+    vacancy.titulo,
+    vacancy.cargo,
+    vacancy.descricao,
+  ].filter(Boolean).join(' '), '').toLowerCase();
+
+  const themes = [
+    {
+      key: 'limpeza',
+      match: /(limpeza|faxina|higieniza|serviÃ§os gerais|servicos gerais|asseio|conservaÃ§Ã£o|conservacao)/,
+      colors: ['#052e2b', '#047857', '#22c55e'],
+      label: 'LIMPEZA & CONSERVAÃ‡ÃƒO',
+      icon: '<path d="M780 158c48 20 78 64 78 112 0 64-52 116-116 116-38 0-72-18-94-47 23 10 49 11 75 1 55-21 83-83 62-138-8-20-20-35-35-49 10 0 20 2 30 5Z" fill="#ecfdf5" opacity=".95"/><path d="M858 193l24 12 12 24-12 24-24 12-24-12-12-24 12-24 24-12Z" fill="#fef08a"/><path d="M715 335l60 137h-120l60-137Z" fill="#86efac"/><rect x="693" y="455" width="44" height="175" rx="20" fill="#f8fafc"/><path d="M635 621h160l-35 93H670l-35-93Z" fill="#bbf7d0"/>',
+    },
+    {
+      key: 'seguranca',
+      match: /(porteiro|portaria|vigil|seguranÃ§a|seguranca|controlador de acesso)/,
+      colors: ['#111827', '#1d4ed8', '#38bdf8'],
+      label: 'SEGURANÃ‡A & PORTARIA',
+      icon: '<path d="M748 150l128 45v98c0 96-55 181-128 215-73-34-128-119-128-215v-98l128-45Z" fill="#dbeafe"/><path d="M748 198v252c52-31 86-93 86-157v-68l-86-27Z" fill="#60a5fa"/><path d="M688 290l38 38 84-88" fill="none" stroke="#0f172a" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>',
+    },
+    {
+      key: 'rh',
+      match: /(recursos humanos|rh\b|recrutamento|seleÃ§Ã£o|selecao|departamento pessoal|dp\b)/,
+      colors: ['#3b0764', '#7e22ce', '#c084fc'],
+      label: 'RECURSOS HUMANOS',
+      icon: '',
+    },
+    {
+      key: 'administrativo',
+      match: /(administr|recep|financeiro|assistente|secretÃ¡r|secretar|atendimento)/,
+      colors: ['#172554', '#4f46e5', '#a78bfa'],
+      label: 'ADMINISTRATIVO & ATENDIMENTO',
+      icon: '<rect x="630" y="170" width="240" height="320" rx="28" fill="#ede9fe"/><rect x="675" y="220" width="150" height="22" rx="11" fill="#6366f1"/><rect x="675" y="274" width="150" height="18" rx="9" fill="#c4b5fd"/><rect x="675" y="320" width="120" height="18" rx="9" fill="#c4b5fd"/><circle cx="748" cy="411" r="50" fill="#818cf8"/><path d="M670 505c12-56 46-84 78-84s66 28 78 84" fill="#ddd6fe"/>',
+    },
+    {
+      key: 'manutencao',
+      match: /(manutenÃ§Ã£o|manutencao|eletric|encanador|tÃ©cnico|tecnico|mecÃ¢n|mecan|predial)/,
+      colors: ['#292524', '#c2410c', '#fb923c'],
+      label: 'MANUTENÃ‡ÃƒO & OPERAÃ‡Ã•ES',
+      icon: '<path d="M814 171c-31 5-58 23-76 49l57 57-61 61-58-58c-26 18-44 46-49 78-8 58 33 112 91 120 58 8 112-33 120-91 4-29-4-58-20-80l-67 67-62-62 67-67c18 13 38 21 58 22Z" fill="#ffedd5"/><path d="M668 439l-84 84c-16 16-16 42 0 58s42 16 58 0l84-84-58-58Z" fill="#fed7aa"/>',
+    },
+    {
+      key: 'logistica',
+      match: /(logÃ­stica|logistica|estoque|almox|motorista|entrega|expediÃ§Ã£o|expedicao|operador de empilhadeira)/,
+      colors: ['#082f49', '#0369a1', '#22d3ee'],
+      label: 'LOGÃSTICA & DISTRIBUIÃ‡ÃƒO',
+      icon: '<rect x="595" y="250" width="180" height="150" rx="15" fill="#cffafe"/><path d="M775 300h80l64 75v25H775V300Z" fill="#67e8f9"/><circle cx="665" cy="425" r="36" fill="#0e7490"/><circle cx="845" cy="425" r="36" fill="#0e7490"/><circle cx="665" cy="425" r="15" fill="#ecfeff"/><circle cx="845" cy="425" r="15" fill="#ecfeff"/><path d="M640 250v-65h180v115" fill="none" stroke="#ecfeff" stroke-width="28" stroke-linecap="round"/>',
+    },
+    {
+      key: 'alimentacao',
+      match: /(cozinha|cozinheiro|copeir|alimenta|restaurante|garÃ§om|garcom|confeiteiro|padeiro)/,
+      colors: ['#431407', '#dc2626', '#f59e0b'],
+      label: 'ALIMENTAÃ‡ÃƒO & SERVIÃ‡OS',
+      icon: '<path d="M618 320c0-89 58-150 130-150s130 61 130 150H618Z" fill="#fef3c7"/><rect x="603" y="320" width="290" height="35" rx="17" fill="#fde68a"/><path d="M680 172c0-40 30-72 68-72s68 32 68 72" fill="none" stroke="#fff7ed" stroke-width="30" stroke-linecap="round"/><path d="M650 420h195" stroke="#fff7ed" stroke-width="25" stroke-linecap="round"/>',
+    },
+    {
+      key: 'tecnologia',
+      match: /(tecnologia|ti\b|suporte|desenvolv|programador|analista de sistemas|infraestrutura|dados)/,
+      colors: ['#0f172a', '#6d28d9', '#06b6d4'],
+      label: 'TECNOLOGIA & INOVAÃ‡ÃƒO',
+      icon: '<rect x="600" y="170" width="290" height="220" rx="25" fill="#e0f2fe"/><rect x="635" y="205" width="220" height="145" rx="12" fill="#0f172a"/><path d="M690 255l-35 25 35 25M800 255l35 25-35 25M752 235l-25 92" fill="none" stroke="#22d3ee" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="M695 420h100M745 390v30" stroke="#e0f2fe" stroke-width="25" stroke-linecap="round"/>',
+    },
+    {
+      key: 'saude',
+      match: /(saÃºde|saude|enferm|cuidador|hospital|clÃ­nic|clinic|farmÃ¡cia|farmacia)/,
+      colors: ['#083344', '#0f766e', '#2dd4bf'],
+      label: 'SAÃšDE & CUIDADO',
+      icon: '<path d="M750 475C615 390 595 302 635 242c38-58 117-48 153 8 36-56 115-66 153-8 40 60 20 148-115 233l-38 25-38-25Z" fill="#ccfbf1"/><path d="M760 260h56v66h66v56h-66v66h-56v-66h-66v-56h66v-66Z" fill="#14b8a6"/>',
+    },
+  ];
+
+  return themes.find((theme) => theme.match.test(source)) || {
+    key: 'generico',
+    colors: ['#111827', '#4338ca', '#22d3ee'],
+    label: 'OPORTUNIDADE PROFISSIONAL',
+    icon: '<circle cx="748" cy="270" r="105" fill="#e0e7ff"/><circle cx="748" cy="240" r="48" fill="#6366f1"/><path d="M640 425c15-86 64-132 108-132s93 46 108 132" fill="#a5b4fc"/><path d="M618 485h260" stroke="#ecfeff" stroke-width="28" stroke-linecap="round"/>',
+  };
+}
+
+
+function listItems(value, fallback = []) {
+  const items = String(value || '')
+    .split(/\r?\n|;|\|/)
+    .map((item) => item.trim().replace(/^[-â€¢*]\s*/, ''))
+    .filter(Boolean);
+  return items.length ? items : fallback;
+}
+
+function formatPercentage(value) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return '';
+  return new Intl.NumberFormat('pt-BR', {
+    minimumFractionDigits: Number.isInteger(number) ? 0 : 1,
+    maximumFractionDigits: 2,
+  }).format(number);
+}
+
+function themePhotoDataUri(themeKey) {
+  const safeKey = /^[a-z0-9_-]+$/i.test(themeKey) ? themeKey : 'generico';
+  const candidates = [
+    path.join(__dirname, 'public', 'assets', 'vacancy-themes', `${safeKey}.jpg`),
+    path.join(__dirname, 'public', 'assets', 'vacancy-themes', 'generico.jpg'),
+  ];
+
+  for (const filePath of candidates) {
+    try {
+      const buffer = fs.readFileSync(filePath);
+      return `data:image/jpeg;base64,${buffer.toString('base64')}`;
+    } catch {}
+  }
+
+  return '';
+}
+
+function binaryImageDataUri(value, mime = 'image/jpeg') {
+  return Buffer.isBuffer(value) && value.length ? `data:${mime};base64,${value.toString('base64')}` : '';
+}
+
+function brandColor(value, fallback) {
+  const color = String(value || '').trim();
+  return /^#[0-9A-Fa-f]{6}$/.test(color) ? color.toUpperCase() : fallback;
+}
+
+function buildSvgTextLines(lines, options = {}) {
+  const {
+    x = 0,
+    lineHeight = 32,
+    maxLines = lines.length,
+    prefix = '',
+  } = options;
+
+  return lines.slice(0, maxLines).map((line, index) => (
+    `<tspan x="${x}" dy="${index === 0 ? 0 : lineHeight}">${escapeXml(prefix + line)}</tspan>`
+  )).join('');
+}
+
+function calculateInsalubrity(vacancy) {
+  const active = vacancy.possui_insalubridade === true
+    || String(vacancy.possui_insalubridade || '').toLowerCase() === 'true';
+  const percentage = Number(vacancy.percentual_insalubridade);
+  const salary = Number(vacancy.salario);
+
+  if (!active) return null;
+
+  const percentText = Number.isFinite(percentage)
+    ? `${formatPercentage(percentage)}%`
+    : 'percentual a confirmar';
+  const estimatedValue = Number.isFinite(percentage) && Number.isFinite(salary) && salary > 0
+    ? salary * (percentage / 100)
+    : null;
+
+  return {
+    percentage: Number.isFinite(percentage) ? percentage : null,
+    percentText,
+    estimatedValue,
+    estimatedText: estimatedValue ? formatMoneyBRL(estimatedValue) : '',
+    observation: compactText(vacancy.observacao_insalubridade, ''),
+  };
+}
+
+function monetaryBenefitItems(vacancy) {
+  const items = [
+    ['Vale-refeiÃ§Ã£o', vacancy.vale_refeicao_valor],
+    ['Vale-alimentaÃ§Ã£o', vacancy.vale_alimentacao_valor],
+    ['PrÃªmio assiduidade', vacancy.premio_assiduidade_valor],
+    ['Outros benefÃ­cios', vacancy.outros_beneficios_valor],
+  ];
+  return items
+    .map(([label, value]) => ({ label, value: Number(value) }))
+    .filter((item) => Number.isFinite(item.value) && item.value > 0);
+}
+
+function calculateApproximateGains(vacancy) {
+  const salary = Number(vacancy.salario);
+  const insalubrity = calculateInsalubrity(vacancy);
+  const benefits = monetaryBenefitItems(vacancy);
+  const totalBenefits = benefits.reduce((sum, item) => sum + item.value, 0);
+  const total = (Number.isFinite(salary) && salary > 0 ? salary : 0)
+    + totalBenefits
+    + Number(insalubrity?.estimatedValue || 0);
+  return {
+    salary: Number.isFinite(salary) && salary > 0 ? salary : 0,
+    benefits,
+    totalBenefits,
+    insalubrity,
+    total,
+    totalText: total > 0 ? formatMoneyBRL(total) : 'A combinar',
+  };
+}
+
+function buildPromotionAssets(vacancy) {
+  const contactNumber = vacancy.marca_whatsapp || vacancy.whatsapp_candidatura || PROMO_WHATSAPP_NUMBER;
+  const contactDisplay = formatWhatsappDisplay(contactNumber);
+  const contactDigits = normalizePhoneDigits(contactNumber);
+  const title = compactText(vacancy.titulo || vacancy.cargo, 'Vaga disponÃ­vel');
+  const company = compactText(vacancy.empresa_nome, 'Empresa contratante');
+  const location = compactText(
+    [vacancy.bairro, vacancy.cidade, vacancy.estado].filter(Boolean).join(' Â· '),
+    'Local a combinar',
+  );
+  const salary = formatMoneyBRL(vacancy.salario);
+  const sexoLabel = vacancySexLabel(vacancy.sexo);
+  const schedule = [
+    vacancy.escala ? `Escala ${compactText(vacancy.escala, '')}` : '',
+    vacancy.horario ? compactText(vacancy.horario, '') : '',
+  ].filter(Boolean).join(' Â· ') || 'HorÃ¡rio a confirmar';
+  const textualBenefits = listItems(vacancy.beneficios, []);
+  const theme = promotionTheme(vacancy);
+  const aiPhotoDataUri = binaryImageDataUri(vacancy.arte_ia_imagem, vacancy.arte_ia_mime || 'image/jpeg');
+  const photoDataUri = aiPhotoDataUri || themePhotoDataUri(theme.key);
+  const logoDataUri = binaryImageDataUri(vacancy.marca_logo_png, vacancy.marca_logo_mime || 'image/png');
+  const gains = calculateApproximateGains(vacancy);
+
+  const benefitLinesText = [
+    ...gains.benefits.map((item) => `${item.label}: ${formatMoneyBRL(item.value)}`),
+    vacancy.vale_transporte_descricao ? `VT: ${compactText(vacancy.vale_transporte_descricao, '')}` : '',
+    ...textualBenefits,
+  ].filter(Boolean);
+
+  const breakdownLines = [
+    `ğŸ’° SalÃ¡rio: ${salary}`,
+    ...gains.benefits.map((item) => `â€¢ ${item.label}: ${formatMoneyBRL(item.value)}`),
+    gains.insalubrity ? `â€¢ Insalubridade ${gains.insalubrity.percentText}${gains.insalubrity.estimatedText ? `: aprox. ${gains.insalubrity.estimatedText}` : ''}` : '',
+    vacancy.vale_transporte_descricao ? `ğŸšŒ Vale-transporte: ${compactText(vacancy.vale_transporte_descricao, '')}` : '',
+  ].filter(Boolean);
+
+  const whatsappText = [
+    `*${title} | InÃ­cio imediato*`,
+    `ğŸ‘¥ ${sexoLabel}`,
+    `ğŸ¢ Empresa: ${company}`,
+    `ğŸ“ Local: ${location}`,
+    `ğŸ• Jornada: ${schedule}`,
+    ...breakdownLines,
+    gains.total > 0 ? `ğŸ’µ *Ganhos mensais aproximados: ${gains.totalText}*` : '',
+    benefitLinesText.length ? `ğŸ BenefÃ­cios: ${benefitLinesText.join(' | ')}` : '',
+    vacancy.beneficios_observacao ? `â„¹ï¸ ${compactText(vacancy.beneficios_observacao, '')}` : '',
+    '',
+    `ğŸ“² Para se candidatar, envie mensagem no WhatsApp: ${contactDisplay}`,
+  ].filter(Boolean).join('\n');
+
+  const facebookText = [
+    `ğŸ“¢ VAGA ABERTA â€” ${title}`,
+    `ğŸ‘¥ ${sexoLabel}`,
+    `ğŸ¢ ${company}`,
+    `ğŸ“ ${location}`,
+    `ğŸ• ${schedule}`,
+    `ğŸ’° SalÃ¡rio: ${salary}`,
+    gains.total > 0 ? `ğŸ’µ Ganhos mensais aproximados: ${gains.totalText}` : '',
+    benefitLinesText.length ? `ğŸ ${benefitLinesText.join(' | ')}` : '',
+    '',
+    `ğŸ“² WhatsApp: ${contactDisplay}`,
+  ].filter(Boolean).join('\n');
+
+  const titleLines = wrapSvgText(title, 18, 3);
+  const locationLines = wrapSvgText(location, 27, 2);
+  const scheduleLines = wrapSvgText(schedule, 29, 2);
+  const benefitCardLines = benefitLinesText.length
+    ? benefitLinesText.flatMap((item) => wrapSvgText(item, 31, 1)).slice(0, 4)
+    : ['BenefÃ­cios informados na seleÃ§Ã£o'];
+  const gainsLine = gains.total > 0 ? gains.totalText : salary;
+  const [themeDark, themePrimary, themeAccent] = theme.colors;
+  const dark = brandColor(vacancy.marca_cor_secundaria, themeDark);
+  const primary = brandColor(vacancy.marca_cor_primaria, themePrimary);
+  const accent = brandColor(vacancy.marca_cor_destaque, themeAccent);
+
+  const primarySvg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350" role="img" aria-label="Vaga ${escapeXml(title)}">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${dark}"/><stop offset="65%" stop-color="${primary}"/><stop offset="100%" stop-color="${accent}"/></linearGradient>
+    <linearGradient id="whatsapp" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#16a34a"/><stop offset="100%" stop-color="#22c55e"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#020617" flood-opacity=".28"/></filter>
+    <clipPath id="photoClip"><path d="M560 0H1080V1350H470C545 1130 565 920 540 690C515 450 500 245 560 0Z"/></clipPath>
+    <linearGradient id="photoShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#020617" stop-opacity=".7"/><stop offset="55%" stop-color="#020617" stop-opacity=".08"/><stop offset="100%" stop-color="#020617" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1080" height="1350" fill="#f8fafc"/>
+  ${photoDataUri ? `<image href="${photoDataUri}" x="470" y="0" width="610" height="1350" preserveAspectRatio="xMidYMid slice" clip-path="url(#photoClip)"/>` : ''}
+  <path d="M560 0H1080V1350H470C545 1130 565 920 540 690C515 450 500 245 560 0Z" fill="url(#photoShade)"/>
+  <path d="M0 0H650C590 230 610 450 635 690C660 930 625 1135 545 1350H0Z" fill="url(#panel)"/>
+  <g opacity=".12" fill="#ffffff"><circle cx="80" cy="120" r="3"/><circle cx="120" cy="120" r="3"/><circle cx="160" cy="120" r="3"/><circle cx="80" cy="160" r="3"/><circle cx="120" cy="160" r="3"/><circle cx="160" cy="160" r="3"/></g>
+
+  <g transform="translate(760 48)" filter="url(#shadow)">
+    <rect width="272" height="112" rx="24" fill="#ffffff" fill-opacity=".94"/>
+    ${logoDataUri
+      ? `<image href="${logoDataUri}" x="22" y="18" width="228" height="76" preserveAspectRatio="xMidYMid meet"/>`
+      : `<text x="136" y="65" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="900" fill="${dark}">${escapeXml(company)}</text>`}
+  </g>
+
+  <g transform="translate(46 62)">
+    <rect width="285" height="62" rx="31" fill="#fbbf24" filter="url(#shadow)"/>
+    <text x="142" y="41" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="27" font-weight="900" fill="#07152e">ğŸ“£ VAGA ABERTA</text>
+  </g>
+
+  <text x="48" y="215" font-family="DejaVu Sans, sans-serif" font-size="66" font-weight="900" fill="#ffffff">${buildSvgTextLines(titleLines, { x: 48, lineHeight: 69 })}</text>
+  <text x="51" y="420" font-family="DejaVu Sans, sans-serif" font-size="30" font-weight="800" fill="#fbbf24">INÃCIO IMEDIATO</text>
+  <text x="51" y="463" font-family="DejaVu Sans, sans-serif" font-size="21" font-weight="700" fill="#dbeafe">${escapeXml(company)}</text>
+  <g transform="translate(40 486)" filter="url(#shadow)">
+    <rect width="260" height="44" rx="22" fill="#ffffff" fill-opacity=".14" stroke="#ffffff" stroke-opacity=".45"/>
+    <text x="130" y="29" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="900" fill="#ffffff">${escapeXml(sexoLabel.toUpperCase())}</text>
+  </g>
+
+  <g transform="translate(38 510)" filter="url(#shadow)">
+    <rect width="500" height="116" rx="28" fill="#ffffff" fill-opacity=".11" stroke="#ffffff" stroke-opacity=".65" stroke-width="2"/>
+    <circle cx="58" cy="58" r="38" fill="#ffffff" fill-opacity=".16"/><text x="58" y="70" text-anchor="middle" font-size="34">ğŸ“</text>
+    <text x="112" y="41" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="800" fill="#bae6fd">LOCAL</text>
+    <text x="112" y="76" font-family="DejaVu Sans, sans-serif" font-size="25" font-weight="850" fill="#ffffff">${buildSvgTextLines(locationLines, { x: 112, lineHeight: 29 })}</text>
+  </g>
+
+  <g transform="translate(38 646)" filter="url(#shadow)">
+    <rect width="500" height="116" rx="28" fill="#ffffff" fill-opacity=".11" stroke="#ffffff" stroke-opacity=".65" stroke-width="2"/>
+    <circle cx="58" cy="58" r="38" fill="#ffffff" fill-opacity=".16"/><text x="58" y="70" text-anchor="middle" font-size="34">ğŸ•</text>
+    <text x="112" y="41" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="800" fill="#bae6fd">ESCALA E HORÃRIO</text>
+    <text x="112" y="76" font-family="DejaVu Sans, sans-serif" font-size="24" font-weight="850" fill="#ffffff">${buildSvgTextLines(scheduleLines, { x: 112, lineHeight: 28 })}</text>
+  </g>
+
+  <g transform="translate(38 782)" filter="url(#shadow)">
+    <rect width="500" height="128" rx="28" fill="#ffffff" fill-opacity=".96"/>
+    <text x="30" y="38" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="900" fill="#475569">GANHOS MENSAIS APROXIMADOS</text>
+    <text x="30" y="90" font-family="DejaVu Sans, sans-serif" font-size="43" font-weight="950" fill="#0f172a">${escapeXml(gainsLine)}</text>
+    <text x="30" y="116" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700" fill="#64748b">SalÃ¡rio + adicionais e benefÃ­cios com valor informado</text>
+  </g>
+
+  <g transform="translate(38 930)" filter="url(#shadow)">
+    <rect width="500" height="190" rx="28" fill="#07152e" fill-opacity=".88" stroke="#ffffff" stroke-opacity=".55" stroke-width="2"/>
+    <text x="28" y="39" font-family="DejaVu Sans, sans-serif" font-size="19" font-weight="900" fill="#fbbf24">BENEFÃCIOS E ADICIONAIS</text>
+    <text x="30" y="77" font-family="DejaVu Sans, sans-serif" font-size="23" font-weight="750" fill="#ffffff">${buildSvgTextLines(benefitCardLines, { x: 30, lineHeight: 31, prefix: 'â€¢ ' })}</text>
+  </g>
+
+  <g transform="translate(34 1170)" filter="url(#shadow)">
+    <rect width="600" height="132" rx="34" fill="url(#whatsapp)"/>
+    <circle cx="68" cy="66" r="45" fill="#ffffff"/><text x="68" y="80" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="39" font-weight="900" fill="#16a34a">â˜</text>
+    <text x="132" y="49" font-family="DejaVu Sans, sans-serif" font-size="22" font-weight="800" fill="#ffffff">Candidate-se pelo WhatsApp</text>
+    <text x="132" y="94" font-family="DejaVu Sans, sans-serif" font-size="39" font-weight="950" fill="#ffffff">${escapeXml(contactDisplay)}</text>
+  </g>
+</svg>`;
+
+  return {
+    whatsapp_texto: whatsappText,
+    facebook_texto: facebookText,
+    contato_display: contactDisplay,
+    contato_digits: contactDigits,
+    tema: theme.key,
+    ganhos_aproximados: gains.total,
+    ganhos_aproximados_texto: gains.totalText,
+    imagem_fonte: aiPhotoDataUri ? 'IA' : 'MODELO',
+    modelo_ia: vacancy.arte_ia_modelo || null,
+    marca_configurada: Boolean(vacancy.marca_configurada),
+    imagem_svg: primarySvg,
+    imagem_data_url: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(primarySvg)}`,
+    nome_arquivo: `${slugify(vacancy.codigo || title)}-divulgacao.svg`,
+  };
+}
+
+async function promotionPng(vacancy) {
+  const assets = buildPromotionAssets(vacancy);
+  const svg = assets.imagem_svg;
+  return sharp(Buffer.from(svg, 'utf8')).png({ quality: 94, compressionLevel: 8 }).toBuffer();
+}
+
+async function loadVacancyForPromotion(id) {
+  const result = await pool.query(`
+    SELECT v.*, e.nome AS empresa_nome,
+      m.cor_primaria AS marca_cor_primaria,m.cor_secundaria AS marca_cor_secundaria,
+      m.cor_destaque AS marca_cor_destaque,m.whatsapp AS marca_whatsapp,
+      m.logo_png AS marca_logo_png,m.logo_mime AS marca_logo_mime,m.configurada AS marca_configurada,
+      ai.imagem AS arte_ia_imagem,ai.mime_type AS arte_ia_mime,ai.modelo AS arte_ia_modelo,ai.id AS arte_ia_id
+    FROM vagas v
+    JOIN empresas e ON e.id = v.empresa_id
+    LEFT JOIN empresa_marcas m ON m.empresa_id=e.id
+    LEFT JOIN LATERAL (
+      SELECT a.id,a.imagem,a.mime_type,a.modelo FROM vaga_artes_ia a
+      WHERE a.vaga_id=v.id AND a.ativa IS TRUE AND a.status='PRONTA'
+      ORDER BY a.versao DESC LIMIT 1
+    ) ai ON TRUE
+    WHERE v.id = $1
+    LIMIT 1
+  `, [id]);
+  return result.rows[0] || null;
+}
+
+function validationError(res, error) {
+  return res.status(400).json({
+    sucesso: false,
+    erro: 'Dados invÃ¡lidos.',
+    detalhes: error.issues.map((issue) => ({
+      campo: issue.path.join('.') || 'geral',
+      mensagem: issue.message,
+    })),
+  });
+}
+
+app.get('/health', async (_req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.json({ status: 'ok' });
+  } catch (error) {
+    console.error('Falha no health check:', error);
+    res.status(503).json({ status: 'erro', banco: 'indisponÃ­vel' });
+  }
+});
+
+app.get('/login', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+app.get('/login.html', (_req, res) => res.redirect('/login'));
+app.get('/login.css', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'login.css')));
+app.get('/login.js', (_req, res) => res.sendFile(path.join(__dirname, 'public', 'login.js')));
+
+app.post('/api/auth/login', async (req, res, next) => {
+  try {
+    const usuario = normalizeUsername(req.body?.usuario);
+    const senha = String(req.body?.senha || '');
+    let account = null;
+    try {
+      const result = await pool.query(`
+        SELECT id, usuario, senha_hash, nome, perfil, ativo, deve_trocar_senha,
+          NULLIF(TO_JSONB(app_usuarios)->>'empresa_id','')::BIGINT AS empresa_id
+        FROM app_usuarios
+        WHERE LOWER(usuario) = LOWER($1)
+        LIMIT 1
+      `, [usuario]);
+      account = result.rows[0] || null;
+    } catch (error) {
+      if (String(error.code || '') !== '42P01') throw error;
+    }
+
+    if (account) {
+      const valid = account.ativo === true && await verifyPassword(senha, account.senha_hash);
+      if (!valid) return res.status(401).json({ sucesso: false, erro: 'UsuÃ¡rio ou senha incorretos.' });
+      const payload = {
+        id: account.id,
+        usuario: account.usuario,
+        nome: account.nome,
+        perfil: account.perfil,
+        empresa_id: account.empresa_id || null,
+        exp: Date.now() + (SESSION_TTL_HOURS * 60 * 60 * 1000),
+      };
+      await pool.query('UPDATE app_usuarios SET ultimo_login_at = NOW() WHERE id = $1', [account.id]);
+      res.cookie('genesis_session', signSession(payload), sessionCookieOptions(req));
+      return res.json({ sucesso: true, usuario: { id: account.id, usuario: account.usuario, nome: account.nome, perfil: account.perfil, empresa_id: account.empresa_id || null } });
+    }
+
+    // Fallback de seguranÃ§a antes da migraÃ§Ã£o V6.
+    if (!safeEqual(usuario, normalizeUsername(APP_LOGIN_USER)) || !safeEqual(senha, APP_LOGIN_PASSWORD)) {
+      return res.status(401).json({ sucesso: false, erro: 'UsuÃ¡rio ou senha incorretos.' });
+    }
+    const payload = {
+      id: null,
+      usuario: normalizeUsername(APP_LOGIN_USER),
+      nome: APP_LOGIN_NAME,
+      perfil: 'ADMIN',
+      exp: Date.now() + (SESSION_TTL_HOURS * 60 * 60 * 1000),
+    };
+    res.cookie('genesis_session', signSession(payload), sessionCookieOptions(req));
+    return res.json({ sucesso: true, usuario: payload });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  res.clearCookie('genesis_session', { ...sessionCookieOptions(req), maxAge: 0 });
+  return res.json({ sucesso: true });
+});
+
+app.get('/api/public/vagas/:id/divulgacao/:tipo.png', async (req, res, next) => {
+  try {
+    const token = String(req.query.token || '');
+    if (!DIVULGACAO_API_TOKEN || !safeEqual(token, DIVULGACAO_API_TOKEN)) {
+      return res.status(401).json({ sucesso: false, erro: 'Token de divulgaÃ§Ã£o invÃ¡lido.' });
+    }
+    const id = parseId(req.params.id);
+    const tipo = String(req.params.tipo || 'principal').toLowerCase();
+    if (!id || !['principal', 'detalhes'].includes(tipo)) {
+      return res.status(400).json({ sucesso: false, erro: 'ParÃ¢metros invÃ¡lidos.' });
+    }
+    const vacancy = await loadVacancyForPromotion(id);
+    if (!vacancy) return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    const png = await promotionPng(vacancy, tipo);
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'public, max-age=300');
+    return res.send(png);
+  } catch (error) { return next(error); }
+});
+
+app.get('/api/public/documentos/:id/reprocessar.pdf', async (req, res, next) => {
+  try {
+    const token = String(req.query.token || '');
+    if (!CHATBOT_REPROCESS_TOKEN || !safeEqual(token, CHATBOT_REPROCESS_TOKEN)) {
+      return res.status(401).json({ sucesso: false, erro: 'Token de reprocessamento invÃ¡lido.' });
+    }
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de documento invÃ¡lido.' });
+
+    const result = await pool.query(`
+      SELECT
+        COALESCE(nome_arquivo, arquivo, 'CTPS Digital.pdf') AS nome_arquivo,
+        COALESCE(NULLIF(mime_type, ''), 'application/pdf') AS mime_type,
+        conteudo
+      FROM documentos
+      WHERE id = $1
+        AND conteudo IS NOT NULL
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Documento nÃ£o encontrado ou sem arquivo armazenado.' });
+    }
+
+    const document = result.rows[0];
+    res.setHeader('Content-Type', document.mime_type || 'application/pdf');
+    res.setHeader('Content-Disposition', `inline; filename="${String(document.nome_arquivo).replace(/["\r\n]/g, '_')}"`);
+    res.setHeader('Cache-Control', 'no-store, private');
+    return res.send(document.conteudo);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+registerDemosV13({
+  app,
+  pool,
+  z,
+  requireLogin,
+  requireAdmin,
+  currentUserName,
+  publicDir: path.join(__dirname, 'public'),
+  wahaBaseUrl: WAHA_BASE_URL,
+  wahaApiKey: WAHA_API_KEY,
+  chatbotWebhookUrl: DEMO_CHATBOT_WEBHOOK_URL,
+  panelBaseUrl: PANEL_URL,
+  trialDays: DEMO_TRIAL_DAYS,
+  maxActive: DEMO_MAX_ACTIVE,
+  expiryCheckMinutes: DEMO_EXPIRY_CHECK_MINUTES,
+});
+
+registerOperationsV14({
+  app,
+  pool,
+  requireLogin,
+  requireAdmin,
+  currentUserName,
+  wahaBaseUrl: WAHA_BASE_URL,
+  wahaApiKey: WAHA_API_KEY,
+  panelBaseUrl: PANEL_URL,
+});
+
+registerAtendimentoV15({
+  app,
+  pool,
+  requireLogin,
+  requireAdmin,
+  currentUserName,
+  wahaBaseUrl: WAHA_BASE_URL,
+  wahaApiKey: WAHA_API_KEY,
+  chatbotSession: CHATBOT_WAHA_SESSION,
+  panelBaseUrl: PANEL_URL,
+  triggerManualCandidateMessage,
+  buildManualContinuationMessage,
+  entrevistaGestaoWebhookUrl: ENTREVISTA_GESTAO_WEBHOOK_URL,
+  entrevistaGestaoWebhookToken: ENTREVISTA_GESTAO_WEBHOOK_TOKEN,
+  alertasAdminEnabled: ALERTAS_ADMIN_ENABLED,
+});
+
+registerAtendimentosV16({
+  app,
+  pool,
+  requireLogin,
+  currentUserName,
+  triggerChatbotReprocess,
+  triggerManualCandidateMessage,
+  buildManualContinuationMessage,
+  chatbotSession: CHATBOT_WAHA_SESSION,
+  handoffAnalysisWebhookUrl: HANDOFF_ANALYSIS_WEBHOOK_URL,
+  handoffAnalysisWebhookToken: HANDOFF_ANALYSIS_WEBHOOK_TOKEN,
+  handoffAnalysisTimeoutMs: HANDOFF_ANALYSIS_TIMEOUT_MS,
+});
+
+app.use(requireLogin);
+
+// GÃªnesis V19 â€” mÃ³dulos aditivos. NÃ£o alteram o fluxo da Evelyn, CTPS, WAHA ou agenda.
+registerGeoV1({ app, pool });
+registerCrmV1({ app, pool, requireAdmin, currentUserName });
+registerProspectingV20({ app, pool, requireAdmin, currentUserName, wahaBaseUrl: WAHA_BASE_URL, wahaApiKey: WAHA_API_KEY });
+
+// GÃªnesis UI V18 â€” conta do prÃ³prio usuÃ¡rio.
+// Usa somente colunas jÃ¡ existentes em app_usuarios; nenhuma migration nova Ã© necessÃ¡ria.
+app.get('/api/auth/profile', async (req, res, next) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(409).json({ sucesso: false, erro: 'Este acesso ainda usa o login legado. Migre o usuÃ¡rio para uma conta individual antes de editar o perfil.' });
+    }
+    const result = await pool.query(`
+      SELECT id, usuario, nome, perfil, empresa_id,
+        COALESCE(TO_JSONB(app_usuarios)->>'telefone_whatsapp','') AS telefone_whatsapp,
+        COALESCE((TO_JSONB(app_usuarios)->>'alerta_entrevista')::BOOLEAN, TRUE) AS alerta_entrevista,
+        COALESCE((TO_JSONB(app_usuarios)->>'alerta_revisao')::BOOLEAN, TRUE) AS alerta_revisao,
+        ultimo_login_at
+      FROM app_usuarios
+      WHERE id = $1 AND ativo IS TRUE
+      LIMIT 1
+    `, [req.user.id]);
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'UsuÃ¡rio nÃ£o encontrado ou inativo.' });
+    return res.json({ sucesso: true, usuario: result.rows[0] });
+  } catch (error) { return next(error); }
+});
+
+app.put('/api/auth/profile', async (req, res, next) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(409).json({ sucesso: false, erro: 'Este acesso ainda usa o login legado e nÃ£o pode ser editado por esta tela.' });
+    }
+    const nome = String(req.body?.nome || '').trim();
+    const usuario = normalizeUsername(req.body?.usuario);
+    const telefone = String(req.body?.telefone_whatsapp || '').replace(/\D/g, '').slice(0, 30);
+    const alertaEntrevista = req.body?.alerta_entrevista !== false;
+    const alertaRevisao = req.body?.alerta_revisao !== false;
+    if (nome.length < 2 || nome.length > 150) return res.status(400).json({ sucesso: false, erro: 'Informe um nome entre 2 e 150 caracteres.' });
+    if (usuario.length < 3) return res.status(400).json({ sucesso: false, erro: 'Informe um usuÃ¡rio vÃ¡lido com pelo menos 3 caracteres.' });
+
+    const duplicate = await pool.query('SELECT id FROM app_usuarios WHERE LOWER(usuario)=LOWER($1) AND id <> $2 LIMIT 1', [usuario, req.user.id]);
+    if (duplicate.rowCount) return res.status(409).json({ sucesso: false, erro: 'Esse usuÃ¡rio de acesso jÃ¡ estÃ¡ em uso.' });
+
+    const baseUpdate = await pool.query(`
+      UPDATE app_usuarios
+      SET nome=$1, usuario=$2, updated_at=NOW()
+      WHERE id=$3 AND ativo IS TRUE
+      RETURNING id
+    `, [nome, usuario, req.user.id]);
+    if (!baseUpdate.rowCount) return res.status(404).json({ sucesso: false, erro: 'UsuÃ¡rio nÃ£o encontrado ou inativo.' });
+
+    // Campos de alertas vieram na V15. O fallback mantÃ©m a ediÃ§Ã£o bÃ¡sica funcional
+    // caso uma instalaÃ§Ã£o legada ainda nÃ£o tenha essas colunas.
+    try {
+      await pool.query(`
+        UPDATE app_usuarios
+        SET telefone_whatsapp=NULLIF($1,''), alerta_entrevista=$2, alerta_revisao=$3, updated_at=NOW()
+        WHERE id=$4
+      `, [telefone, alertaEntrevista, alertaRevisao, req.user.id]);
+    } catch (optionalError) {
+      if (String(optionalError.code || '') !== '42703') throw optionalError;
+      console.warn('[PERFIL V18] Colunas opcionais de alerta ainda nÃ£o existem; nome e usuÃ¡rio foram atualizados.');
+    }
+
+    const refreshed = await pool.query(`
+      SELECT id, usuario, nome, perfil, empresa_id,
+        COALESCE(TO_JSONB(app_usuarios)->>'telefone_whatsapp','') AS telefone_whatsapp,
+        COALESCE((TO_JSONB(app_usuarios)->>'alerta_entrevista')::BOOLEAN, TRUE) AS alerta_entrevista,
+        COALESCE((TO_JSONB(app_usuarios)->>'alerta_revisao')::BOOLEAN, TRUE) AS alerta_revisao
+      FROM app_usuarios WHERE id=$1 LIMIT 1
+    `, [req.user.id]);
+    const row = refreshed.rows[0];
+    const sessionPayload = {
+      id: row.id,
+      usuario: row.usuario,
+      nome: row.nome,
+      perfil: row.perfil || req.user.perfil || 'RECRUTADOR',
+      empresa_id: row.empresa_id || null,
+      exp: Date.now() + (SESSION_TTL_HOURS * 60 * 60 * 1000),
+    };
+    res.cookie('genesis_session', signSession(sessionPayload), sessionCookieOptions(req));
+    return res.json({ sucesso: true, mensagem: 'Perfil atualizado com sucesso.', usuario: row });
+  } catch (error) {
+    if (String(error.code || '') === '23505') return res.status(409).json({ sucesso: false, erro: 'Esse usuÃ¡rio de acesso jÃ¡ estÃ¡ em uso.' });
+    return next(error);
+  }
+});
+
+app.post('/api/auth/change-password', async (req, res, next) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(409).json({ sucesso: false, erro: 'Este acesso ainda usa o login legado e nÃ£o pode alterar a senha por esta tela.' });
+    }
+    const senhaAtual = String(req.body?.senha_atual || '');
+    const novaSenha = String(req.body?.nova_senha || '');
+    if (!senhaAtual) return res.status(400).json({ sucesso: false, erro: 'Informe sua senha atual.' });
+    if (novaSenha.length < 8 || novaSenha.length > 200) return res.status(400).json({ sucesso: false, erro: 'A nova senha precisa ter entre 8 e 200 caracteres.' });
+    if (senhaAtual === novaSenha) return res.status(400).json({ sucesso: false, erro: 'Escolha uma nova senha diferente da senha atual.' });
+
+    const current = await pool.query('SELECT senha_hash FROM app_usuarios WHERE id=$1 AND ativo IS TRUE LIMIT 1', [req.user.id]);
+    if (!current.rowCount) return res.status(404).json({ sucesso: false, erro: 'UsuÃ¡rio nÃ£o encontrado ou inativo.' });
+    const valid = await verifyPassword(senhaAtual, current.rows[0].senha_hash);
+    if (!valid) return res.status(401).json({ sucesso: false, erro: 'A senha atual estÃ¡ incorreta.' });
+
+    const senhaHash = await hashPassword(novaSenha);
+    await pool.query('UPDATE app_usuarios SET senha_hash=$1, deve_trocar_senha=FALSE, updated_at=NOW() WHERE id=$2', [senhaHash, req.user.id]);
+    return res.json({ sucesso: true, mensagem: 'Senha atualizada com sucesso.' });
+  } catch (error) { return next(error); }
+});
+
+app.get('/api/auth/me', (req, res) => res.json({
+  sucesso: true,
+  usuario: { id: req.user.id || null, usuario: req.user.usuario, nome: req.user.nome || APP_LOGIN_NAME, perfil: req.user.perfil || 'RECRUTADOR', empresa_id: req.user.empresa_id || null },
+}));
+
+registerAdminV6({ app, pool, requireAdmin, currentUserName });
+registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl: PORTAL_BASE_URL });
+registerDivulgacaoV1({
+  app,
+  pool,
+  currentUserName,
+  wahaBaseUrl: WAHA_BASE_URL,
+  wahaApiKey: WAHA_API_KEY,
+  divulgacaoSession: DIVULGACAO_WAHA_SESSION,
+  portalBaseUrl: PORTAL_BASE_URL,
+  automaticEnabled: DIVULGACAO_WHATSAPP_AUTOMATICO,
+  loadVacancyForPromotion,
+  promotionPng,
+});
+registerScreeningV13({ app, pool, z, currentUserName });
+
+
+app.get('/api/dashboard', async (req, res, next) => {
+  try {
+    const period = normalizeAnalyticsPeriod(req.query.periodo);
+    const [metricas, funil, entrevistas, atencao, saude] = await Promise.all([
+      pool.query(`
+        WITH periodo AS (
+          SELECT (
+            DATE_TRUNC('day', NOW() AT TIME ZONE 'America/Sao_Paulo')
+            - (($1::INTEGER - 1) * INTERVAL '1 day')
+          ) AT TIME ZONE 'America/Sao_Paulo' AS inicio
+        ),
+        entrevista_atual AS (
+          SELECT DISTINCT ON (candidato_id) candidato_id, inicio, status
+          FROM entrevistas
+          WHERE status = 'AGENDADA'
+          ORDER BY candidato_id, updated_at DESC NULLS LAST, created_at DESC, id DESC
+        ),
+        mensagens_ultimas AS (
+          SELECT c.id,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) IN ('USUARIO','CANDIDATO')) AS ultima_usuario,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) = 'IA') AS ultima_ia
+          FROM candidatos c
+          LEFT JOIN mensagens m ON m.candidato_id = c.id
+          WHERE UPPER(COALESCE(c.status, '')) IN ('NOVO','EM_PROCESSO','APROVADO')
+          GROUP BY c.id
+        ),
+        vaga_preferida AS (
+          SELECT c.vaga_id, COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o informada') AS nome, COUNT(*)::INTEGER AS quantidade
+          FROM candidatos c
+          LEFT JOIN vagas v ON v.id = c.vaga_id
+          CROSS JOIN periodo p
+          WHERE c.vaga_id IS NOT NULL AND COALESCE(c.vaga_escolhida_at, c.created_at, c.updated_at) >= p.inicio
+          GROUP BY c.vaga_id, COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o informada')
+          ORDER BY quantidade DESC, nome ASC LIMIT 1
+        )
+        SELECT
+          (SELECT COUNT(*) FROM candidatos)::INTEGER AS total_candidatos,
+          (SELECT COUNT(*) FROM candidatos WHERE UPPER(COALESCE(status, '')) IN ('NOVO', 'EM_PROCESSO'))::INTEGER AS em_processo,
+          (SELECT COUNT(*) FROM candidatos WHERE UPPER(COALESCE(status, '')) = 'APROVADO')::INTEGER AS aprovados_triagem,
+          (SELECT COUNT(*) FROM candidatos WHERE UPPER(COALESCE(status, '')) = 'EM_ADMISSAO')::INTEGER AS em_admissao,
+          (SELECT COUNT(*) FROM candidatos WHERE UPPER(COALESCE(status, '')) = 'CONTRATADO')::INTEGER AS contratados,
+          (SELECT COUNT(*) FROM vagas WHERE status = 'ATIVA')::INTEGER AS vagas_ativas,
+          (SELECT COUNT(*) FROM entrevista_atual WHERE (inicio AT TIME ZONE 'America/Sao_Paulo')::DATE = (NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE)::INTEGER AS entrevistas_hoje,
+          (SELECT COUNT(*) FROM candidato_revisoes WHERE UPPER(COALESCE(status, 'PENDENTE')) = 'PENDENTE')::INTEGER AS pendencias_humanas,
+          (SELECT COUNT(*) FROM documentos WHERE UPPER(COALESCE(status_processamento, '')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO'))::INTEGER AS documentos_falha,
+          (SELECT COUNT(*) FROM mensagens_ultimas WHERE ultima_usuario <= NOW() - INTERVAL '2 hours' AND (ultima_ia IS NULL OR ultima_ia < ultima_usuario))::INTEGER AS sem_resposta_2h,
+          (SELECT COUNT(*) FROM mensagens m CROSS JOIN periodo p WHERE UPPER(COALESCE(m.quem, '')) IN ('USUARIO', 'CANDIDATO') AND m.created_at >= p.inicio)::INTEGER AS mensagens_recebidas_periodo,
+          (SELECT COUNT(*) FROM candidatos c CROSS JOIN periodo p WHERE c.created_at >= p.inicio)::INTEGER AS candidatos_periodo,
+          COALESCE((SELECT nome FROM vaga_preferida), 'Sem dados no perÃ­odo') AS vaga_mais_escolhida_nome,
+          COALESCE((SELECT quantidade FROM vaga_preferida), 0)::INTEGER AS vaga_mais_escolhida_quantidade,
+          (SELECT COUNT(*) FROM candidatos WHERE (created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = (NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE)::INTEGER AS movimento_iniciaram,
+          (SELECT COUNT(*) FROM documentos WHERE UPPER(COALESCE(tipo, '')) = 'CTPS' AND (created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = (NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE)::INTEGER AS movimento_ctps,
+          (SELECT COUNT(*) FROM candidatos WHERE (aprovado IS TRUE OR UPPER(COALESCE(status, '')) = 'APROVADO') AND (updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE = (NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE)::INTEGER AS movimento_aprovados,
+          (SELECT COUNT(*) FROM entrevistas WHERE UPPER(COALESCE(status, '')) = 'AGENDADA' AND (created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = (NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE)::INTEGER AS movimento_agendados
+      `, [period.days]),
+      pool.query(`
+        SELECT etapa, COUNT(*)::INTEGER AS quantidade
+        FROM candidatos
+        WHERE UPPER(COALESCE(status, '')) NOT IN ('REPROVADO', 'CONTRATADO', 'ENCERRADO')
+        GROUP BY etapa ORDER BY quantidade DESC, etapa ASC
+      `),
+      pool.query(`
+        WITH atuais AS (
+          SELECT DISTINCT ON (candidato_id) id, candidato_id, inicio, fim, meet_link, google_event_url
+          FROM entrevistas WHERE status = 'AGENDADA'
+          ORDER BY candidato_id, updated_at DESC NULLS LAST, created_at DESC, id DESC
+        )
+        SELECT e.id, e.candidato_id, e.inicio, e.fim, e.meet_link, e.google_event_url,
+          COALESCE(c.nome, 'Candidato #' || c.id) AS candidato_nome,
+          COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o informada') AS vaga_nome
+        FROM atuais e
+        JOIN candidatos c ON c.id = e.candidato_id
+        LEFT JOIN vagas v ON v.id = c.vaga_id
+        WHERE e.inicio >= NOW()
+        ORDER BY e.inicio ASC LIMIT 16
+      `),
+      pool.query(`
+        WITH mensagens_ultimas AS (
+          SELECT c.id AS candidato_id, COALESCE(c.nome, 'Candidato #' || c.id) AS candidato_nome,
+            COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada') AS vaga_nome,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) IN ('USUARIO','CANDIDATO')) AS ultima_usuario,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) = 'IA') AS ultima_ia
+          FROM candidatos c
+          LEFT JOIN vagas v ON v.id = c.vaga_id
+          LEFT JOIN mensagens m ON m.candidato_id = c.id
+          WHERE UPPER(COALESCE(c.status, '')) IN ('NOVO','EM_PROCESSO','APROVADO')
+          GROUP BY c.id, COALESCE(c.nome, 'Candidato #' || c.id), COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada')
+        ),
+        itens AS (
+          SELECT 1 AS ordem, 'DOCUMENTOS_FALHA'::TEXT AS tipo, COUNT(*)::INTEGER AS quantidade,
+            MIN(d.created_at) AS referencia,
+            (ARRAY_AGG(d.candidato_id ORDER BY d.created_at ASC))[1] AS candidato_id,
+            (ARRAY_AGG(COALESCE(c.nome, 'Candidato #' || c.id) ORDER BY d.created_at ASC))[1] AS candidato_nome,
+            (ARRAY_AGG(COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada') ORDER BY d.created_at ASC))[1] AS vaga_nome
+          FROM documentos d JOIN candidatos c ON c.id = d.candidato_id LEFT JOIN vagas v ON v.id = c.vaga_id
+          WHERE UPPER(COALESCE(d.status_processamento, '')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO')
+          HAVING COUNT(*) > 0
+          UNION ALL
+          SELECT 2, 'REVISOES_PENDENTES', COUNT(*)::INTEGER, MIN(r.created_at),
+            (ARRAY_AGG(r.candidato_id ORDER BY r.created_at ASC))[1],
+            (ARRAY_AGG(COALESCE(c.nome, 'Candidato #' || c.id) ORDER BY r.created_at ASC))[1],
+            (ARRAY_AGG(COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada') ORDER BY r.created_at ASC))[1]
+          FROM candidato_revisoes r JOIN candidatos c ON c.id = r.candidato_id
+          LEFT JOIN vagas v ON v.id = COALESCE(r.vaga_id, c.vaga_id)
+          WHERE UPPER(COALESCE(r.status, 'PENDENTE')) = 'PENDENTE' HAVING COUNT(*) > 0
+          UNION ALL
+          SELECT 3, 'APROVADOS_SEM_HORARIO', COUNT(*)::INTEGER, MIN(c.updated_at),
+            (ARRAY_AGG(c.id ORDER BY c.updated_at ASC))[1],
+            (ARRAY_AGG(COALESCE(c.nome, 'Candidato #' || c.id) ORDER BY c.updated_at ASC))[1],
+            (ARRAY_AGG(COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada') ORDER BY c.updated_at ASC))[1]
+          FROM candidatos c LEFT JOIN vagas v ON v.id = c.vaga_id
+          WHERE (c.aprovado IS TRUE OR UPPER(COALESCE(c.status, '')) = 'APROVADO')
+            AND NOT EXISTS (SELECT 1 FROM entrevistas e WHERE e.candidato_id = c.id AND UPPER(COALESCE(e.status, '')) = 'AGENDADA')
+          HAVING COUNT(*) > 0
+          UNION ALL
+          SELECT 4, 'SEM_RESPOSTA', COUNT(*)::INTEGER, MIN(ultima_usuario),
+            (ARRAY_AGG(candidato_id ORDER BY ultima_usuario ASC))[1],
+            (ARRAY_AGG(candidato_nome ORDER BY ultima_usuario ASC))[1],
+            (ARRAY_AGG(vaga_nome ORDER BY ultima_usuario ASC))[1]
+          FROM mensagens_ultimas
+          WHERE ultima_usuario <= NOW() - INTERVAL '2 hours' AND (ultima_ia IS NULL OR ultima_ia < ultima_usuario)
+          HAVING COUNT(*) > 0
+        )
+        SELECT ordem, tipo, quantidade, referencia, candidato_id, candidato_nome, vaga_nome
+        FROM itens ORDER BY ordem LIMIT 5
+      `),
+      pool.query(`
+        SELECT
+          (SELECT MAX(created_at) FROM atendimento_logs) AS ultima_entrada,
+          (SELECT MAX(created_at) FROM mensagens WHERE UPPER(COALESCE(quem, '')) = 'IA') AS ultima_resposta_ia,
+          (SELECT COUNT(*) FROM workflow_erros WHERE resolvido IS FALSE)::INTEGER AS erros_pendentes,
+          (SELECT COUNT(*) FROM workflow_erros WHERE resolvido IS FALSE
+            AND (COALESCE(workflow_nome, '') ILIKE '%calendar%' OR COALESCE(node_nome, '') ILIKE '%calendar%' OR COALESCE(erro_mensagem, '') ILIKE '%calendar%'))::INTEGER AS erros_calendar
+      `),
+    ]);
+
+    const metrics = metricas.rows[0] || {};
+    const healthRow = saude.rows[0] || {};
+    const recentActivity = healthRow.ultima_entrada && new Date(healthRow.ultima_entrada).getTime() > Date.now() - 60 * 60 * 1000;
+    const recentReply = healthRow.ultima_resposta_ia && new Date(healthRow.ultima_resposta_ia).getTime() > Date.now() - 60 * 60 * 1000;
+
+    res.json({
+      sucesso: true,
+      periodo: period.key,
+      metricas: metrics,
+      movimento_dia: {
+        iniciaram: metrics.movimento_iniciaram || 0,
+        ctps_recebidas: metrics.movimento_ctps || 0,
+        aprovados: metrics.movimento_aprovados || 0,
+        agendados: metrics.movimento_agendados || 0,
+      },
+      funil: funil.rows,
+      proximas_entrevistas: entrevistas.rows,
+      atencao: atencao.rows,
+      saude: {
+        n8n: Number(healthRow.erros_pendentes || 0) > 0 ? 'AtenÃ§Ã£o' : 'Online',
+        waha: recentActivity ? 'Online' : 'Sem atividade',
+        banco: 'Online',
+        calendar: Number(healthRow.erros_calendar || 0) > 0 ? 'AtenÃ§Ã£o' : 'Sem erro recente',
+        atendimento: recentReply ? 'Ativo' : 'Sem atividade',
+      },
+      atualizado_em: new Date().toISOString(),
+    });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/alertas/resolver', async (req, res, next) => {
+  try {
+    const chave = String(req.body?.chave || '').trim();
+    if (!chave || chave.length > 300) {
+      return res.status(400).json({ sucesso: false, erro: 'Chave de alerta invÃ¡lida.' });
+    }
+
+    await pool.query(`
+      INSERT INTO alertas_resolvidos (chave, resolvido_por, observacao, resolvido_em)
+      VALUES ($1, $2, $3, NOW())
+      ON CONFLICT (chave)
+      DO UPDATE SET
+        resolvido_por = EXCLUDED.resolvido_por,
+        observacao = EXCLUDED.observacao,
+        resolvido_em = NOW()
+    `, [chave, currentUserName(req), String(req.body?.observacao || '').trim() || null]);
+
+    res.json({ sucesso: true, mensagem: 'Alerta marcado como resolvido.' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/empresas', async (req, res, next) => {
+  try {
+    const admin = String(req.user?.perfil || '').toUpperCase() === 'ADMIN';
+    const params = [];
+    const where = admin || !req.user?.empresa_id ? 'ativo = TRUE' : 'ativo = TRUE AND id = $1';
+    if (!admin && req.user?.empresa_id) params.push(req.user.empresa_id);
+    const result = await pool.query(`
+      SELECT id, nome
+      FROM empresas
+      WHERE ${where}
+      ORDER BY nome ASC
+    `, params);
+
+    res.json({ sucesso: true, empresas: result.rows });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/candidatos', async (_req, res, next) => {
+  try {
+    const result = await pool.query(`
+      SELECT
+        c.id,
+        c.nome,
+        c.telefone,
+        c.vaga_id,
+        c.vaga AS vaga_legacy,
+        c.status,
+        c.etapa,
+        c.ia_atendimento_ativo,
+        c.ia_pausada_em,
+        c.ia_pausada_por,
+        c.ia_pausa_motivo,
+        c.atendimento_humano_ativo,
+        c.atendimento_humano_usuario_id,
+        c.atendimento_humano_nome,
+        c.atendimento_humano_assumido_em,
+        hu.nome AS atendimento_responsavel_nome,
+        lm.quem AS ultima_mensagem_quem,
+        lm.created_at AS ultima_mensagem_em,
+        c.cep,
+        c.observacao_triagem,
+        c.motivo_reprovacao,
+        c.motivo_reprovacao_codigo,
+        c.motivo_reprovacao_categoria,
+        c.motivo_reprovacao_detalhe,
+        c.reprovacao_realocavel,
+        c.sexo,
+        c.sexo_origem,
+        c.sexo_nao_informado,
+        c.sexo_compativel_vaga,
+        c.sexo_revisao_necessaria,
+        c.tempo_faltante_experiencia,
+        c.tempo_medio_empresas_texto,
+        c.quantidade_vinculos_validos,
+        c.created_at,
+        c.updated_at,
+        c.apresentacao_profissional,
+        c.personalidade_resumo,
+        c.personalidade_tags,
+        c.personalidade_updated_at,
+        v.codigo AS vaga_codigo,
+        COALESCE(v.titulo, c.vaga) AS vaga_nome,
+        v.status AS vaga_status,
+        COALESCE(d.quantidade_documentos, 0)::INTEGER AS quantidade_documentos,
+        COALESCE(d.tem_ctps, FALSE) AS tem_ctps,
+        COALESCE(d.tem_curriculo, FALSE) AS tem_curriculo,
+        COALESCE(d.tem_documento_processando, FALSE) AS tem_documento_processando,
+        COALESCE(d.tem_documento_pendente_revisao, FALSE) AS tem_documento_pendente_revisao,
+        e.inicio AS entrevista_inicio,
+        e.fim AS entrevista_fim,
+        e.status AS entrevista_status,
+        e.meet_link AS entrevista_meet_link
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      LEFT JOIN app_usuarios hu ON hu.id=c.atendimento_humano_usuario_id
+      LEFT JOIN LATERAL (SELECT quem,created_at FROM mensagens WHERE candidato_id=c.id ORDER BY id DESC LIMIT 1) lm ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT
+          COUNT(*) AS quantidade_documentos,
+          BOOL_OR(UPPER(COALESCE(tipo, '')) = 'CTPS') AS tem_ctps,
+          BOOL_OR(UPPER(COALESCE(tipo, '')) = 'CURRICULO') AS tem_curriculo,
+          BOOL_OR(UPPER(COALESCE(status_processamento, '')) IN ('PROCESSANDO','PENDENTE')) AS tem_documento_processando,
+          BOOL_OR(UPPER(COALESCE(tipo, '')) = 'PENDENTE_REVISAO') AS tem_documento_pendente_revisao
+        FROM documentos
+        WHERE candidato_id = c.id
+      ) d ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT inicio, fim, status, meet_link
+        FROM entrevistas
+        WHERE candidato_id = c.id
+          AND status = 'AGENDADA'
+        ORDER BY created_at DESC
+        LIMIT 1
+      ) e ON TRUE
+      ORDER BY c.updated_at DESC NULLS LAST, c.id DESC
+    `);
+
+    const candidatos = result.rows;
+    const resumo = candidatos.reduce((accumulator, candidato) => {
+      const status = String(candidato.status || '').toUpperCase();
+      accumulator.total += 1;
+
+      if (status === 'NOVO' || status === 'EM_PROCESSO') {
+        accumulator.em_processo += 1;
+      }
+
+      if (status === 'APROVADO') accumulator.aprovados += 1;
+      if (status === 'EM_ADMISSAO') accumulator.em_admissao += 1;
+      if (status === 'CONTRATADO') accumulator.contratados += 1;
+
+      if (status === 'REPROVADO') {
+        accumulator.reprovados += 1;
+      }
+
+      return accumulator;
+    }, {
+      total: 0,
+      em_processo: 0,
+      aprovados: 0,
+      em_admissao: 0,
+      contratados: 0,
+      reprovados: 0,
+    });
+
+    res.json({ sucesso: true, candidatos, resumo });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/candidatos/:id/detalhes', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+    }
+
+    const candidatoResult = await pool.query(`
+      SELECT
+        c.*,
+        v.codigo AS vaga_codigo,
+        COALESCE(v.titulo, c.vaga) AS vaga_nome,
+        v.bairro AS vaga_bairro,
+        v.cidade AS vaga_cidade,
+        v.horario AS vaga_horario,
+        v.escala AS vaga_escala,
+        v.salario AS vaga_salario,
+        v.sexo AS vaga_sexo,
+        v.experiencia_minima_meses,
+        v.experiencia_revisao_minima_meses,
+        e.id AS entrevista_id,
+        e.inicio AS entrevista_inicio,
+        e.fim AS entrevista_fim,
+        e.status AS entrevista_status,
+        e.confirmacao_recrutador_status AS entrevista_confirmacao_recrutador_status,
+        e.meet_link AS entrevista_meet_link,
+        e.google_event_url AS entrevista_google_event_url,
+        ctps_meta.resultado->>'matcher_version' AS ctps_matcher_version
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      LEFT JOIN app_usuarios hu ON hu.id=c.atendimento_humano_usuario_id
+      LEFT JOIN LATERAL (SELECT quem,created_at FROM mensagens WHERE candidato_id=c.id ORDER BY id DESC LIMIT 1) lm ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT resultado
+        FROM documentos
+        WHERE candidato_id=c.id AND UPPER(COALESCE(tipo,''))='CTPS'
+        ORDER BY created_at DESC,id DESC
+        LIMIT 1
+      ) ctps_meta ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT *
+        FROM entrevistas
+        WHERE candidato_id = c.id
+        ORDER BY created_at DESC
+        LIMIT 1
+      ) e ON TRUE
+      WHERE c.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!candidatoResult.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+
+    const isAdminUser = String(req.user?.perfil || '').toUpperCase() === 'ADMIN';
+    const documentosResult = await pool.query(`
+      SELECT
+        id,
+        tipo,
+        titulo,
+        COALESCE(nome_arquivo, arquivo, 'documento.pdf') AS nome_arquivo,
+        mime_type,
+        tamanho_bytes,
+        (conteudo IS NOT NULL) AS disponivel_download,
+        created_at
+      FROM documentos
+      WHERE candidato_id = $1
+      ORDER BY created_at DESC, id DESC
+      LIMIT 200
+    `, [id]);
+
+    const conversaResult = await pool.query(`
+      SELECT id, quem, mensagem, mensagem_id, origem, autor_usuario_id, autor_nome,
+        status_envio, client_message_id, created_at
+      FROM mensagens
+      WHERE candidato_id = $1
+      ORDER BY created_at DESC, id DESC
+      LIMIT 120
+    `, [id]);
+
+    const timelineResult = isAdminUser ? await pool.query(`
+      SELECT *
+      FROM (
+        SELECT
+          'MENSAGEM'::TEXT AS tipo,
+          CASE WHEN quem = 'USUARIO' THEN 'Mensagem do candidato' ELSE 'Mensagem da Evelyn' END AS titulo,
+          mensagem::TEXT AS descricao,
+          created_at
+        FROM mensagens
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'EVENTO'::TEXT AS tipo,
+          REPLACE(evento, '_', ' ') AS titulo,
+          descricao::TEXT,
+          created_at
+        FROM eventos
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'DOCUMENTO'::TEXT AS tipo,
+          COALESCE(titulo, tipo, 'Documento') AS titulo,
+          COALESCE(nome_arquivo, arquivo, 'Arquivo recebido') AS descricao,
+          created_at
+        FROM documentos
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'ENTREVISTA'::TEXT AS tipo,
+          'Entrevista ' || LOWER(status) AS titulo,
+          CONCAT(
+            'InÃ­cio: ', TO_CHAR(inicio AT TIME ZONE 'America/Sao_Paulo', 'DD/MM/YYYY HH24:MI'),
+            CASE WHEN meet_link IS NOT NULL THEN ' | Google Meet disponÃ­vel' ELSE '' END
+          ) AS descricao,
+          created_at
+        FROM entrevistas
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'REPROVACAO'::TEXT AS tipo,
+          'ReprovaÃ§Ã£o: ' || COALESCE(NULLIF(motivo, ''), codigo) AS titulo,
+          CONCAT(
+            'Categoria: ', categoria,
+            ' | RealocÃ¡vel: ', CASE WHEN realocavel THEN 'sim' ELSE 'nÃ£o' END,
+            CASE WHEN observacao IS NOT NULL AND BTRIM(observacao) <> '' THEN ' | ' || observacao ELSE '' END
+          ) AS descricao,
+          created_at
+        FROM candidato_reprovacoes_historico
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'AUDITORIA'::TEXT AS tipo,
+          CASE acao
+            WHEN 'ADICIONADO' THEN 'Candidato adicionado'
+            WHEN 'REMOVIDO' THEN 'Candidato removido'
+            ELSE 'Cadastro modificado'
+          END AS titulo,
+          CASE
+            WHEN acao = 'MODIFICADO' THEN 'Campos alterados: ' || COALESCE(
+              (SELECT STRING_AGG(valor, ', ') FROM JSONB_ARRAY_ELEMENTS_TEXT(campos_alterados) AS campos(valor)),
+              'nÃ£o identificados'
+            )
+            ELSE COALESCE(nome, telefone, 'Registro de auditoria')
+          END AS descricao,
+          created_at
+        FROM auditoria_candidatos
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'AUDITORIA'::TEXT AS tipo,
+          'Dado corrigido: ' || REPLACE(campo, '_', ' ') AS titulo,
+          CONCAT(
+            'De: ', COALESCE(NULLIF(valor_anterior, ''), 'nÃ£o informado'),
+            ' â†’ Para: ', COALESCE(NULLIF(valor_novo, ''), 'nÃ£o informado'),
+            CASE WHEN motivo IS NOT NULL AND BTRIM(motivo) <> '' THEN ' | Motivo: ' || motivo ELSE '' END,
+            CASE WHEN alterado_por_nome IS NOT NULL AND BTRIM(alterado_por_nome) <> '' THEN ' | Por: ' || alterado_por_nome ELSE '' END
+          ) AS descricao,
+          created_at
+        FROM candidato_dados_historico
+        WHERE candidato_id = $1
+
+        UNION ALL
+
+        SELECT
+          'AUDITORIA'::TEXT AS tipo,
+          CASE
+            WHEN modo = 'CORRIGIR_E_CONTINUAR' THEN 'CorreÃ§Ã£o tÃ©cnica e continuidade'
+            ELSE 'CorreÃ§Ã£o tÃ©cnica'
+          END AS titulo,
+          CONCAT(
+            COALESCE(status_anterior, 'â€”'), ' Â· ', COALESCE(etapa_anterior, 'â€”'),
+            ' â†’ ', COALESCE(status_novo, 'â€”'), ' Â· ', COALESCE(etapa_nova, 'â€”'),
+            CASE WHEN motivo IS NOT NULL AND BTRIM(motivo) <> '' THEN ' | Motivo: ' || motivo ELSE '' END,
+            CASE WHEN alterado_por_nome IS NOT NULL AND BTRIM(alterado_por_nome) <> '' THEN ' | Por: ' || alterado_por_nome ELSE '' END
+          ) AS descricao,
+          created_at
+        FROM candidato_estado_historico
+        WHERE candidato_id = $1
+      ) linha
+      ORDER BY created_at DESC
+      LIMIT 200
+    `, [id]) : { rows: [] };
+
+    const candidato = candidatoResult.rows[0];
+    const documentos = documentosResult.rows.map((documento) => ({
+      ...documento,
+      nome_exibicao: friendlyDocumentName(candidato.nome, documento.tipo, documento.nome_arquivo, documento.mime_type),
+    }));
+
+    res.json({
+      sucesso: true,
+      candidato,
+      documentos,
+      conversa: conversaResult.rows.reverse(),
+      timeline: timelineResult.rows,
+      permissoes: { administrador: isAdminUser },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/documentos/:id/download', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ sucesso: false, erro: 'ID de documento invÃ¡lido.' });
+    }
+
+    const result = await pool.query(`
+      SELECT
+        d.tipo,
+        COALESCE(d.nome_arquivo, d.arquivo, 'documento.pdf') AS nome_arquivo,
+        COALESCE(d.mime_type, 'application/pdf') AS mime_type,
+        d.conteudo,
+        c.nome AS candidato_nome
+      FROM documentos d
+      JOIN candidatos c ON c.id = d.candidato_id
+      WHERE d.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Documento nÃ£o encontrado.' });
+    }
+
+    const documento = result.rows[0];
+    if (!documento.conteudo) {
+      return res.status(404).json({
+        sucesso: false,
+        erro: 'Este documento Ã© anterior Ã  ativaÃ§Ã£o do armazenamento para download.',
+      });
+    }
+
+    const nomeAmigavel = friendlyDocumentName(
+      documento.candidato_nome,
+      documento.tipo,
+      documento.nome_arquivo,
+      documento.mime_type,
+    );
+    const nomeSeguroAscii = nomeAmigavel.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^A-Za-z0-9._ -]+/g, '_')
+      .replace(/[\r\n"]/g, '_')
+      .slice(0, 180);
+
+    res.setHeader('Content-Type', documento.mime_type || 'application/octet-stream');
+    res.setHeader('Content-Length', documento.conteudo.length);
+    res.setHeader(
+      'Content-Disposition',
+      `attachment; filename="${nomeSeguroAscii}"; filename*=UTF-8''${encodeURIComponent(nomeAmigavel)}`,
+    );
+    res.setHeader('Cache-Control', 'private, no-store');
+    return res.send(documento.conteudo);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.get('/api/documentos/:id/visualizar', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) {
+      return res.status(400).json({ sucesso: false, erro: 'ID de documento invÃ¡lido.' });
+    }
+
+    const result = await pool.query(`
+      SELECT
+        d.tipo,
+        COALESCE(d.nome_arquivo, d.arquivo, 'documento.pdf') AS nome_arquivo,
+        COALESCE(d.mime_type, 'application/pdf') AS mime_type,
+        d.conteudo,
+        c.nome AS candidato_nome
+      FROM documentos d
+      JOIN candidatos c ON c.id = d.candidato_id
+      WHERE d.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Documento nÃ£o encontrado.' });
+    }
+    const documento = result.rows[0];
+    if (!documento.conteudo) {
+      return res.status(404).json({ sucesso: false, erro: 'VisualizaÃ§Ã£o indisponÃ­vel para este documento antigo.' });
+    }
+
+    const nomeAmigavel = friendlyDocumentName(
+      documento.candidato_nome,
+      documento.tipo,
+      documento.nome_arquivo,
+      documento.mime_type,
+    );
+    const nomeSeguroAscii = nomeAmigavel.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^A-Za-z0-9._ -]+/g, '_')
+      .replace(/[\r\n"]/g, '_')
+      .slice(0, 180);
+
+    res.setHeader('Content-Type', documento.mime_type || 'application/octet-stream');
+    res.setHeader('Content-Length', documento.conteudo.length);
+    res.setHeader(
+      'Content-Disposition',
+      `inline; filename="${nomeSeguroAscii}"; filename*=UTF-8''${encodeURIComponent(nomeAmigavel)}`,
+    );
+    res.setHeader('Cache-Control', 'private, no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    return res.send(documento.conteudo);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+
+app.post('/api/candidatos', async (req, res, next) => {
+  try {
+    const parsed = candidateCreateSchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+    const c = parsed.data;
+
+    const result = await pool.query(`
+      WITH vaga_selecionada AS (
+        SELECT id, titulo
+        FROM vagas
+        WHERE id = $4
+        LIMIT 1
+      )
+      INSERT INTO candidatos (
+        nome, telefone, cep, vaga_id, vaga, vaga_escolhida_at, status, etapa, aprovado,
+        canal, created_at, updated_at
+      )
+      VALUES (
+        $1, $2, $3,
+        (SELECT id FROM vaga_selecionada),
+        (SELECT titulo FROM vaga_selecionada),
+        CASE WHEN EXISTS (SELECT 1 FROM vaga_selecionada) THEN NOW() ELSE NULL END,
+        $5, $6,
+        CASE WHEN $5 = 'APROVADO' THEN TRUE WHEN $5 = 'REPROVADO' THEN FALSE ELSE NULL END,
+        'Painel Genesis IA', NOW(), NOW()
+      )
+      RETURNING *
+    `, [c.nome, c.telefone, c.cep, c.vaga_id, c.status, c.etapa]);
+
+    res.status(201).json({
+      sucesso: true,
+      mensagem: 'Candidato adicionado com sucesso.',
+      candidato: result.rows[0],
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.delete('/api/candidatos/:id', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+
+    await client.query('BEGIN');
+    const candidato = await client.query(`
+      SELECT id, nome, telefone,
+        EXISTS (SELECT 1 FROM entrevistas e WHERE e.candidato_id = candidatos.id AND e.status = 'AGENDADA') AS possui_entrevista
+      FROM candidatos
+      WHERE id = $1
+      FOR UPDATE
+    `, [id]);
+
+    if (!candidato.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+
+    const tabelaExiste = async (nome) => {
+      const result = await client.query('SELECT to_regclass($1) AS relation', [`public.${nome}`]);
+      return Boolean(result.rows[0]?.relation);
+    };
+
+    if (await tabelaExiste('n8n_chat_histories')) {
+      await client.query('DELETE FROM n8n_chat_histories WHERE session_id = $1', [String(id)]);
+    }
+
+    const tabelasDependentes = [
+      'entrevistas',
+      'entrevista_opcoes',
+      'candidato_estado',
+      'documentos',
+      'eventos',
+      'mensagens',
+    ];
+
+    for (const tabela of tabelasDependentes) {
+      if (await tabelaExiste(tabela)) {
+        await client.query(`DELETE FROM ${tabela} WHERE candidato_id = $1`, [id]);
+      }
+    }
+
+    await client.query('DELETE FROM candidatos WHERE id = $1', [id]);
+    await client.query('COMMIT');
+
+    res.json({
+      sucesso: true,
+      mensagem: 'Candidato removido do banco de dados.',
+      aviso_calendar: candidato.rows[0].possui_entrevista
+        ? 'O evento do Google Calendar nÃ£o Ã© removido pelo painel e deve ser excluÃ­do manualmente.'
+        : null,
+    });
+  } catch (error) {
+    await client.query('ROLLBACK');
+    next(error);
+  } finally {
+    client.release();
+  }
+});
+
+
+app.post('/api/ia/vagas/gerar', async (req, res, next) => {
+  try {
+    if (!AI_VAGAS_WEBHOOK_URL) {
+      return res.status(503).json({
+        sucesso: false,
+        erro: 'A assistÃªncia de IA ainda nÃ£o foi configurada no servidor.',
+      });
+    }
+
+    const parsed = aiVacancyRequestSchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+
+    const data = parsed.data;
+    const titulo = String(data.vaga.titulo || '').trim();
+    const cargo = String(data.vaga.cargo || '').trim();
+
+    if (!titulo && !cargo) {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'Preencha pelo menos o tÃ­tulo ou o cargo antes de pedir sugestÃµes Ã  IA.',
+      });
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), AI_VAGAS_TIMEOUT_MS);
+
+    let response;
+    try {
+      response = await fetch(AI_VAGAS_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          origem: 'GENESIS_IA_PAINEL',
+          acao: data.acao,
+          vaga: data.vaga,
+        }),
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+
+    const responseText = await response.text();
+    let body = null;
+
+    try {
+      body = responseText ? JSON.parse(responseText) : null;
+    } catch {
+      body = null;
+    }
+
+    if (!response.ok) {
+      console.error('Falha no workflow de IA para vagas:', {
+        status: response.status,
+        body: body ?? responseText.slice(0, 1_000),
+      });
+
+      return res.status(502).json({
+        sucesso: false,
+        erro: body?.erro
+          || body?.message
+          || 'O workflow de IA nÃ£o conseguiu gerar as sugestÃµes.',
+      });
+    }
+
+    const sugestoes = normalizeAiVacancySuggestions(body);
+
+    if (!Object.values(sugestoes).some(Boolean)) {
+      return res.status(502).json({
+        sucesso: false,
+        erro: 'A IA respondeu, mas nÃ£o retornou sugestÃµes utilizÃ¡veis.',
+      });
+    }
+
+    return res.json({
+      sucesso: true,
+      sugestoes,
+      avisos: [
+        'Revise as sugestÃµes antes de aplicÃ¡-las.',
+        'Para CBO, o sistema descartou sugestÃµes de baixa confianÃ§a. Confirme cÃ³digo e tÃ­tulo na consulta oficial do MinistÃ©rio do Trabalho antes de salvar.',
+      ],
+    });
+  } catch (error) {
+    if (error?.name === 'AbortError') {
+      return res.status(504).json({
+        sucesso: false,
+        erro: 'A geraÃ§Ã£o demorou mais que o esperado. Tente novamente.',
+      });
+    }
+
+    return next(error);
+  }
+});
+
+app.get('/api/vagas', async (req, res, next) => {
+  try {
+    const period = normalizeAnalyticsPeriod(req.query.periodo);
+    const status = String(req.query.status || '').trim().toUpperCase();
+    const busca = String(req.query.busca || '').trim();
+    const values = [period.days];
+    const filters = [];
+
+    if (status && status !== 'TODAS') {
+      if (!['RASCUNHO', 'ATIVA', 'PAUSADA', 'ENCERRADA'].includes(status)) {
+        return res.status(400).json({ sucesso: false, erro: 'Status invÃ¡lido.' });
+      }
+      values.push(status);
+      filters.push(`v.status = $${values.length}`);
+    }
+
+    if (busca) {
+      values.push(`%${busca}%`);
+      filters.push(`(
+        v.codigo ILIKE $${values.length}
+        OR v.titulo ILIKE $${values.length}
+        OR v.cargo ILIKE $${values.length}
+        OR COALESCE(v.cidade, '') ILIKE $${values.length}
+        OR COALESCE(v.bairro, '') ILIKE $${values.length}
+      )`);
+    }
+
+    const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+
+    const result = await pool.query(`
+      WITH periodo AS (
+        SELECT (
+          DATE_TRUNC('day', NOW() AT TIME ZONE 'America/Sao_Paulo')
+          - (($1::INTEGER - 1) * INTERVAL '1 day')
+        ) AT TIME ZONE 'America/Sao_Paulo' AS inicio
+      )
+      SELECT
+        v.*,
+        e.nome AS empresa_nome,
+        COALESCE(estatisticas.total_interessados, 0)::INTEGER AS total_interessados,
+        COALESCE(estatisticas.em_processo, 0)::INTEGER AS candidatos_em_processo,
+        COALESCE(estatisticas.aprovados, 0)::INTEGER AS candidatos_aprovados,
+        COALESCE(estatisticas.reprovados, 0)::INTEGER AS candidatos_reprovados,
+        COALESCE(estatisticas.total_interessados_periodo, 0)::INTEGER AS total_interessados_periodo,
+        COALESCE(estatisticas.funil_periodo, 0)::INTEGER AS candidatos_funil_periodo,
+        COALESCE(estatisticas.aprovados_periodo, 0)::INTEGER AS candidatos_aprovados_periodo,
+        COALESCE(estatisticas.reprovados_periodo, 0)::INTEGER AS candidatos_reprovados_periodo,
+        COALESCE(estatisticas.novos, 0)::INTEGER AS candidatos_novos,
+        COALESCE(estatisticas.em_analise, 0)::INTEGER AS candidatos_em_analise,
+        COALESCE(estatisticas.entrevistas, 0)::INTEGER AS candidatos_entrevista,
+        COALESCE(estatisticas.entrevistas_hoje, 0)::INTEGER AS entrevistas_hoje,
+        estatisticas.ultima_movimentacao
+      FROM vagas v
+      JOIN empresas e ON e.id = v.empresa_id
+      LEFT JOIN LATERAL (
+        SELECT
+          COUNT(*) AS total_interessados,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) IN ('NOVO', 'EM_PROCESSO')
+          ) AS em_processo,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) IN ('APROVADO', 'EM_ADMISSAO', 'CONTRATADO')
+          ) AS aprovados,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) = 'REPROVADO'
+          ) AS reprovados,
+          COUNT(*) FILTER (
+            WHERE COALESCE(c.vaga_escolhida_at, c.created_at, c.updated_at) >= p.inicio
+          ) AS total_interessados_periodo,
+          COUNT(*) FILTER (
+            WHERE COALESCE(c.vaga_escolhida_at, c.created_at, c.updated_at) >= p.inicio
+              AND UPPER(COALESCE(c.status, '')) IN ('NOVO', 'EM_PROCESSO', 'APROVADO', 'EM_ADMISSAO')
+          ) AS funil_periodo,
+          COUNT(*) FILTER (
+            WHERE COALESCE(c.vaga_escolhida_at, c.created_at, c.updated_at) >= p.inicio
+              AND UPPER(COALESCE(c.status, '')) IN ('APROVADO', 'EM_ADMISSAO', 'CONTRATADO')
+          ) AS aprovados_periodo,
+          COUNT(*) FILTER (
+            WHERE COALESCE(c.vaga_escolhida_at, c.created_at, c.updated_at) >= p.inicio
+              AND UPPER(COALESCE(c.status, '')) = 'REPROVADO'
+          ) AS reprovados_periodo,
+          COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'NOVO') AS novos,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) = 'EM_PROCESSO'
+              AND UPPER(COALESCE(c.etapa, '')) NOT IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+          ) AS em_analise,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.etapa, '')) IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+          ) AS entrevistas,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.etapa, '')) IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+              AND c.updated_at::date = (NOW() AT TIME ZONE 'America/Sao_Paulo')::date
+          ) AS entrevistas_hoje,
+          MAX(c.updated_at) AS ultima_movimentacao
+        FROM candidatos c
+        CROSS JOIN periodo p
+        WHERE c.vaga_id = v.id
+      ) estatisticas ON TRUE
+      ${where}
+      ORDER BY
+        CASE v.status
+          WHEN 'ATIVA' THEN 1
+          WHEN 'RASCUNHO' THEN 2
+          WHEN 'PAUSADA' THEN 3
+          ELSE 4
+        END,
+        v.updated_at DESC
+    `, values);
+
+    const ranked = [...result.rows].sort((a, b) =>
+      Number(b.total_interessados_periodo || 0) - Number(a.total_interessados_periodo || 0)
+      || String(a.titulo || '').localeCompare(String(b.titulo || ''), 'pt-BR')
+    );
+    const top = ranked.find((vaga) => Number(vaga.total_interessados_periodo || 0) > 0) || null;
+
+    res.json({
+      sucesso: true,
+      periodo: period.key,
+      portal_base_url: PORTAL_BASE_URL,
+      vagas: result.rows,
+      resumo_periodo: {
+        vaga_mais_escolhida_id: top?.id || null,
+        vaga_mais_escolhida_nome: top?.titulo || 'Sem dados no perÃ­odo',
+        vaga_mais_escolhida_quantidade: Number(top?.total_interessados_periodo || 0),
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/vagas/:id', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+
+    const result = await pool.query(`
+      SELECT
+        v.*,
+        e.nome AS empresa_nome,
+        COALESCE(estatisticas.total_interessados, 0)::INTEGER AS total_interessados,
+        COALESCE(estatisticas.em_processo, 0)::INTEGER AS candidatos_em_processo,
+        COALESCE(estatisticas.aprovados, 0)::INTEGER AS candidatos_aprovados,
+        COALESCE(estatisticas.reprovados, 0)::INTEGER AS candidatos_reprovados,
+        COALESCE(estatisticas.novos, 0)::INTEGER AS candidatos_novos,
+        COALESCE(estatisticas.em_analise, 0)::INTEGER AS candidatos_em_analise,
+        COALESCE(estatisticas.entrevistas, 0)::INTEGER AS candidatos_entrevista,
+        COALESCE(estatisticas.entrevistas_hoje, 0)::INTEGER AS entrevistas_hoje,
+        estatisticas.ultima_movimentacao
+      FROM vagas v
+      JOIN empresas e ON e.id = v.empresa_id
+      LEFT JOIN LATERAL (
+        SELECT
+          COUNT(*) AS total_interessados,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) IN ('NOVO', 'EM_PROCESSO')
+          ) AS em_processo,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) IN ('APROVADO', 'CONTRATADO')
+          ) AS aprovados,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) = 'REPROVADO'
+          ) AS reprovados,
+          COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'NOVO') AS novos,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.status, '')) = 'EM_PROCESSO'
+              AND UPPER(COALESCE(c.etapa, '')) NOT IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+          ) AS em_analise,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.etapa, '')) IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+          ) AS entrevistas,
+          COUNT(*) FILTER (
+            WHERE UPPER(COALESCE(c.etapa, '')) IN ('AGUARDANDO_ENTREVISTA', 'ENTREVISTA_AGENDADA')
+              AND c.updated_at::date = (NOW() AT TIME ZONE 'America/Sao_Paulo')::date
+          ) AS entrevistas_hoje,
+          MAX(c.updated_at) AS ultima_movimentacao
+        FROM candidatos c
+        WHERE c.vaga_id = v.id
+      ) estatisticas ON TRUE
+      WHERE v.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+
+    res.json({ sucesso: true, portal_base_url: PORTAL_BASE_URL, vaga: result.rows[0] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/vagas/:id/duplicar', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    await client.query('BEGIN');
+    const sourceResult = await client.query('SELECT * FROM vagas WHERE id = $1 FOR SHARE', [id]);
+    if (!sourceResult.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+    const v = sourceResult.rows[0];
+    const codigo = await generateVacancyCode(client, v.empresa_id);
+    const result = await client.query(`
+      INSERT INTO vagas (
+        empresa_id, codigo, titulo, cargo, sexo, descricao, cidade, estado, bairro,
+        endereco_referencia, tipo_contrato, modalidade, escala, horario, salario,
+        vale_refeicao_valor, vale_alimentacao_valor, premio_assiduidade_valor,
+        outros_beneficios_valor, vale_transporte_descricao, beneficios_observacao,
+        possui_insalubridade, percentual_insalubridade, observacao_insalubridade,
+        beneficios, escolaridade_minima, experiencia_minima_meses, experiencia_revisao_minima_meses, permitir_experiencia_informal_revisao, chatbot_estatico_ativo,
+        aceita_sem_experiencia, exigir_experiencia_compativel, cargos_compativeis,
+        cbos_compativeis, requisitos_obrigatorios, requisitos_desejaveis,
+        quantidade_vagas, formulario_url, publicar_portal, destaque_portal,
+        imagem_capa_url, seo_titulo, seo_descricao, canal_candidatura,
+        whatsapp_candidatura, candidatura_url, candidatura_email,
+        status, data_inicio, data_encerramento, portal_publicado_em
+      )
+      SELECT
+        empresa_id, $1, titulo || ' â€” CÃ³pia', cargo, sexo, descricao, cidade, estado, bairro,
+        endereco_referencia, tipo_contrato, modalidade, escala, horario, salario,
+        vale_refeicao_valor, vale_alimentacao_valor, premio_assiduidade_valor,
+        outros_beneficios_valor, vale_transporte_descricao, beneficios_observacao,
+        possui_insalubridade, percentual_insalubridade, observacao_insalubridade,
+        beneficios, escolaridade_minima, experiencia_minima_meses, experiencia_revisao_minima_meses, permitir_experiencia_informal_revisao, chatbot_estatico_ativo,
+        aceita_sem_experiencia, exigir_experiencia_compativel, cargos_compativeis,
+        cbos_compativeis, requisitos_obrigatorios, requisitos_desejaveis,
+        quantidade_vagas, formulario_url, publicar_portal, FALSE,
+        imagem_capa_url, seo_titulo, seo_descricao, canal_candidatura,
+        whatsapp_candidatura, candidatura_url, candidatura_email,
+        'RASCUNHO', NULL, NULL, NULL
+      FROM vagas WHERE id = $2
+      RETURNING *
+    `, [codigo, id]);
+    const enriched = await client.query(`
+      UPDATE vagas SET
+        idade_minima = $2,
+        idade_maxima = $3,
+        entrevista_dias_semana = $4::SMALLINT[],
+        entrevista_horarios = $5::JSONB,
+        entrevista_duracao_minutos = $6,
+        entrevista_busca_dias = $7,
+        entrevista_evitar_feriados = $8,
+        recrutador_responsavel_id = $9,
+        agenda_personalizada = $10,
+        updated_at = NOW()
+      WHERE id = $1 RETURNING *
+    `, [result.rows[0].id, Number(v.idade_minima ?? 25), v.idade_maxima ?? null, v.entrevista_dias_semana ?? [],
+      JSON.stringify(v.entrevista_horarios ?? []),
+      Number(v.entrevista_duracao_minutos || 30), Number(v.entrevista_busca_dias || 7),
+      v.entrevista_evitar_feriados !== false, v.recrutador_responsavel_id || null, v.agenda_personalizada === true]);
+
+    const sourceScreening = await client.query(`
+      SELECT id FROM vaga_triagem_versoes
+      WHERE vaga_id=$1 AND status='ATIVA'
+      ORDER BY numero DESC LIMIT 1
+    `, [id]);
+    if (sourceScreening.rowCount) {
+      const copiedVersion = await client.query(`
+        INSERT INTO vaga_triagem_versoes(vaga_id,numero,status,criado_por,criado_por_nome)
+        VALUES($1,1,'ATIVA',$2,$3)
+        RETURNING id
+      `, [enriched.rows[0].id, req.user?.id || null, currentUserName(req)]);
+      await client.query(`
+        INSERT INTO vaga_perguntas(
+          vaga_id,versao_id,codigo,ordem,texto,tipo,finalidade,obrigatoria,opcoes,
+          regra_operador,regra_valor,pontos,mensagem_nao_atende,ativa
+        )
+        SELECT $1,$2,codigo,ordem,texto,tipo,finalidade,obrigatoria,opcoes,
+               regra_operador,regra_valor,pontos,mensagem_nao_atende,ativa
+        FROM vaga_perguntas
+        WHERE versao_id=$3 AND ativa IS TRUE
+        ORDER BY ordem
+      `, [enriched.rows[0].id, copiedVersion.rows[0].id, sourceScreening.rows[0].id]);
+    }
+    await client.query('COMMIT');
+    res.status(201).json({ sucesso: true, mensagem: `Vaga duplicada como ${codigo}.`, vaga: enriched.rows[0] });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    next(error);
+  } finally { client.release(); }
+});
+
+app.post('/api/vagas', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const parsed = vacancySchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+    const aiProfile = inferCompatibleCbosAndRoles([parsed.data.titulo, parsed.data.descricao].filter(Boolean).join(' ')) || {};
+    let v = { ...parsed.data, cargo: parsed.data.cargo || aiProfile.cargo || parsed.data.titulo, cargos_compativeis: parsed.data.cargos_compativeis || aiProfile.cargos || parsed.data.titulo, cbos_compativeis: parsed.data.cbos_compativeis || aiProfile.cbos || '' };
+    await client.query('BEGIN');
+    v = await resolveVacancyScheduling(client, v, req.user);
+    const codigo = await generateVacancyCode(client, v.empresa_id);
+    const result = await client.query(`
+      INSERT INTO vagas (
+        empresa_id, codigo, titulo, cargo, sexo, descricao, cidade, estado, bairro,
+        endereco_referencia, tipo_contrato, modalidade, escala, horario, salario,
+        vale_refeicao_valor, vale_alimentacao_valor, premio_assiduidade_valor,
+        outros_beneficios_valor, vale_transporte_descricao, beneficios_observacao,
+        possui_insalubridade, percentual_insalubridade, observacao_insalubridade,
+        beneficios, escolaridade_minima, experiencia_minima_meses, experiencia_revisao_minima_meses, permitir_experiencia_informal_revisao, chatbot_estatico_ativo,
+        aceita_sem_experiencia, exigir_experiencia_compativel, cargos_compativeis,
+        cbos_compativeis, requisitos_obrigatorios, requisitos_desejaveis,
+        quantidade_vagas, formulario_url, publicar_portal, destaque_portal,
+        imagem_capa_url, seo_titulo, seo_descricao, canal_candidatura,
+        whatsapp_candidatura, candidatura_url, candidatura_email,
+        status, data_inicio, data_encerramento
+      ) VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
+        $16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,
+        $31,$32,$33,$34,$35,$36,$37,$38,$39,$40,$41,$42,$43,$44,$45,
+        $46,$47,$48,$49,$50
+      ) RETURNING *
+    `, [
+      v.empresa_id, codigo, v.titulo, v.cargo, v.sexo, v.descricao, v.cidade, v.estado, v.bairro,
+      v.endereco_referencia, v.tipo_contrato, v.modalidade, v.escala, v.horario, v.salario,
+      v.vale_refeicao_valor, v.vale_alimentacao_valor, v.premio_assiduidade_valor,
+      v.outros_beneficios_valor, v.vale_transporte_descricao, v.beneficios_observacao,
+      v.possui_insalubridade,
+      v.possui_insalubridade ? v.percentual_insalubridade : null,
+      v.possui_insalubridade ? v.observacao_insalubridade : null,
+      v.beneficios, v.escolaridade_minima, v.experiencia_minima_meses, v.experiencia_revisao_minima_meses, v.permitir_experiencia_informal_revisao, v.chatbot_estatico_ativo,
+      v.aceita_sem_experiencia, v.exigir_experiencia_compativel,
+      v.cargos_compativeis, v.cbos_compativeis, v.requisitos_obrigatorios,
+      v.requisitos_desejaveis, v.quantidade_vagas, v.formulario_url,
+      v.publicar_portal, v.destaque_portal, v.imagem_capa_url, v.seo_titulo,
+      v.seo_descricao, v.canal_candidatura, v.whatsapp_candidatura,
+      v.candidatura_url, v.candidatura_email, v.status, v.data_inicio, v.data_encerramento,
+    ]);
+    const enriched = await client.query(`
+      UPDATE vagas SET
+        idade_minima = $2,
+        idade_maxima = $3,
+        entrevista_dias_semana = $4::SMALLINT[],
+        entrevista_horarios = $5::JSONB,
+        entrevista_duracao_minutos = $6,
+        entrevista_busca_dias = $7,
+        entrevista_evitar_feriados = $8,
+        recrutador_responsavel_id = $9,
+        agenda_personalizada = $10,
+        updated_at = NOW()
+      WHERE id = $1
+      RETURNING *
+    `, [result.rows[0].id, v.idade_minima, v.idade_maxima, v.entrevista_dias_semana,
+      JSON.stringify(v.entrevista_horarios), v.entrevista_duracao_minutos,
+      v.entrevista_busca_dias, v.entrevista_evitar_feriados,
+      v.recrutador_responsavel_id || null, v.agenda_personalizada === true]);
+    await client.query('COMMIT');
+    res.status(201).json({ sucesso: true, mensagem: `Vaga ${codigo} cadastrada com sucesso.`, vaga: enriched.rows[0] });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch (rollbackError) { console.error('Falha ao desfazer criaÃ§Ã£o da vaga:', rollbackError); }
+    next(error);
+  } finally { client.release(); }
+});
+
+app.put('/api/vagas/:id', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const parsed = vacancySchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+    const aiProfile = inferCompatibleCbosAndRoles([parsed.data.titulo, parsed.data.descricao].filter(Boolean).join(' ')) || {};
+    let v = { ...parsed.data, cargo: parsed.data.cargo || aiProfile.cargo || parsed.data.titulo, cargos_compativeis: parsed.data.cargos_compativeis || aiProfile.cargos || parsed.data.titulo, cbos_compativeis: parsed.data.cbos_compativeis || aiProfile.cbos || '' };
+    await client.query('BEGIN');
+    v = await resolveVacancyScheduling(client, v, req.user);
+    const currentResult = await client.query('SELECT id, empresa_id, codigo FROM vagas WHERE id = $1 FOR UPDATE', [id]);
+    if (!currentResult.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+    const currentVacancy = currentResult.rows[0];
+    const companyChanged = Number(currentVacancy.empresa_id) !== Number(v.empresa_id);
+    const codigo = companyChanged ? await generateVacancyCode(client, v.empresa_id) : currentVacancy.codigo;
+    const result = await client.query(`
+      UPDATE vagas SET
+        empresa_id=$1, codigo=$2, titulo=$3, cargo=$4, sexo=$5, descricao=$6, cidade=$7,
+        estado=$8, bairro=$9, endereco_referencia=$10, tipo_contrato=$11,
+        modalidade=$12, escala=$13, horario=$14, salario=$15,
+        vale_refeicao_valor=$16, vale_alimentacao_valor=$17,
+        premio_assiduidade_valor=$18, outros_beneficios_valor=$19,
+        vale_transporte_descricao=$20, beneficios_observacao=$21,
+        possui_insalubridade=$22, percentual_insalubridade=$23,
+        observacao_insalubridade=$24, beneficios=$25,
+        escolaridade_minima=$26, experiencia_minima_meses=$27,
+        experiencia_revisao_minima_meses=$28,
+        permitir_experiencia_informal_revisao=$29,
+        chatbot_estatico_ativo=$30,
+        aceita_sem_experiencia=$31, exigir_experiencia_compativel=$32,
+        cargos_compativeis=$33, cbos_compativeis=$34,
+        requisitos_obrigatorios=$35, requisitos_desejaveis=$36,
+        quantidade_vagas=$37, formulario_url=$38, publicar_portal=$39,
+        destaque_portal=$40, imagem_capa_url=$41, seo_titulo=$42,
+        seo_descricao=$43, canal_candidatura=$44, whatsapp_candidatura=$45,
+        candidatura_url=$46, candidatura_email=$47, status=$48,
+        data_inicio=$49, data_encerramento=$50, updated_at=NOW()
+      WHERE id=$51 RETURNING *
+    `, [
+      v.empresa_id, codigo, v.titulo, v.cargo, v.sexo, v.descricao, v.cidade, v.estado, v.bairro,
+      v.endereco_referencia, v.tipo_contrato, v.modalidade, v.escala, v.horario, v.salario,
+      v.vale_refeicao_valor, v.vale_alimentacao_valor, v.premio_assiduidade_valor,
+      v.outros_beneficios_valor, v.vale_transporte_descricao, v.beneficios_observacao,
+      v.possui_insalubridade,
+      v.possui_insalubridade ? v.percentual_insalubridade : null,
+      v.possui_insalubridade ? v.observacao_insalubridade : null,
+      v.beneficios, v.escolaridade_minima, v.experiencia_minima_meses, v.experiencia_revisao_minima_meses, v.permitir_experiencia_informal_revisao, v.chatbot_estatico_ativo,
+      v.aceita_sem_experiencia, v.exigir_experiencia_compativel,
+      v.cargos_compativeis, v.cbos_compativeis, v.requisitos_obrigatorios,
+      v.requisitos_desejaveis, v.quantidade_vagas, v.formulario_url,
+      v.publicar_portal, v.destaque_portal, v.imagem_capa_url, v.seo_titulo,
+      v.seo_descricao, v.canal_candidatura, v.whatsapp_candidatura,
+      v.candidatura_url, v.candidatura_email, v.status, v.data_inicio,
+      v.data_encerramento, id,
+    ]);
+    const enriched = await client.query(`
+      UPDATE vagas SET
+        idade_minima = $2,
+        idade_maxima = $3,
+        entrevista_dias_semana = $4::SMALLINT[],
+        entrevista_horarios = $5::JSONB,
+        entrevista_duracao_minutos = $6,
+        entrevista_busca_dias = $7,
+        entrevista_evitar_feriados = $8,
+        recrutador_responsavel_id = $9,
+        agenda_personalizada = $10,
+        updated_at = NOW()
+      WHERE id = $1
+      RETURNING *
+    `, [id, v.idade_minima, v.idade_maxima, v.entrevista_dias_semana,
+      JSON.stringify(v.entrevista_horarios), v.entrevista_duracao_minutos,
+      v.entrevista_busca_dias, v.entrevista_evitar_feriados,
+      v.recrutador_responsavel_id || null, v.agenda_personalizada === true]);
+    await client.query('COMMIT');
+    res.json({ sucesso: true, mensagem: companyChanged ? `Vaga atualizada e recebeu o novo cÃ³digo ${codigo}.` : 'Vaga atualizada com sucesso.', vaga: enriched.rows[0] });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch (rollbackError) { console.error('Falha ao desfazer atualizaÃ§Ã£o da vaga:', rollbackError); }
+    next(error);
+  } finally { client.release(); }
+});
+
+app.delete('/api/vagas/:id', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    await client.query('BEGIN');
+    const vacancy = await client.query('SELECT id, titulo, codigo FROM vagas WHERE id = $1 FOR UPDATE', [id]);
+    if (!vacancy.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+    const linked = await client.query('SELECT COUNT(*)::INTEGER AS total FROM candidatos WHERE vaga_id = $1', [id]);
+    if (Number(linked.rows[0]?.total || 0) > 0) {
+      await client.query('ROLLBACK');
+      return res.status(409).json({ sucesso: false, erro: 'Esta vaga possui candidatos vinculados. Encerre a vaga ou remova os vÃ­nculos antes de excluir.' });
+    }
+    await client.query('DELETE FROM vagas WHERE id = $1', [id]);
+    await client.query('COMMIT');
+    res.json({ sucesso: true, mensagem: 'Vaga excluÃ­da com sucesso.' });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    next(error);
+  } finally { client.release(); }
+});
+
+app.patch('/api/vagas/:id/status', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+
+    const parsed = statusSchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+
+    const result = await pool.query(`
+      UPDATE vagas
+      SET
+        status = $1::VARCHAR,
+        data_encerramento = CASE
+          WHEN $1::VARCHAR = 'ENCERRADA'::VARCHAR THEN COALESCE(data_encerramento, CURRENT_DATE)
+          ELSE data_encerramento
+        END,
+        updated_at = NOW()
+      WHERE id = $2
+      RETURNING *
+    `, [parsed.data.status, id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+
+    res.json({
+      sucesso: true,
+      mensagem: 'Status alterado com sucesso.',
+      vaga: result.rows[0],
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+app.get('/api/vagas/:id/divulgacao/:tipo.png', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    const tipo = String(req.params.tipo || 'principal').toLowerCase();
+    if (!id || !['principal', 'detalhes'].includes(tipo)) {
+      return res.status(400).json({ sucesso: false, erro: 'ParÃ¢metros invÃ¡lidos.' });
+    }
+    const vacancy = await loadVacancyForPromotion(id);
+    if (!vacancy) return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    const png = await promotionPng(vacancy, tipo);
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Content-Disposition', `attachment; filename="${slugify(vacancy.codigo || vacancy.titulo)}-${tipo}.png"`);
+    res.setHeader('Cache-Control', 'private, no-store');
+    return res.send(png);
+  } catch (error) { return next(error); }
+});
+
+app.post('/api/vagas/:id/divulgacao', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const vacancy = await loadVacancyForPromotion(id);
+    if (!vacancy) {
+      return res.status(404).json({ sucesso: false, erro: 'Vaga nÃ£o encontrada.' });
+    }
+    const assets = buildPromotionAssets(vacancy);
+    const base = PUBLIC_BASE_URL || `${req.protocol}://${req.get('host')}`;
+    assets.imagem_png_url = `/api/vagas/${id}/divulgacao/principal.png?v=${vacancy.arte_ia_id || 'modelo'}`;
+    assets.imagem_data_url = assets.imagem_png_url;
+    delete assets.imagem_svg;
+    if (DIVULGACAO_API_TOKEN) {
+      assets.imagem_publica_png_url = `${base}/api/public/vagas/${id}/divulgacao/principal.png?token=${encodeURIComponent(DIVULGACAO_API_TOKEN)}`;
+    }
+
+    res.json({
+      sucesso: true,
+      divulgacao: assets,
+      vaga: {
+        id: vacancy.id,
+        codigo: vacancy.codigo,
+        titulo: vacancy.titulo,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
+
+app.get('/api/revisoes', async (req, res, next) => {
+  try {
+    const status = String(req.query.status || 'PENDENTE').toUpperCase();
+    const result = await pool.query(`
+      SELECT r.*, COALESCE(c.nome,c.telefone,'Candidato #'||c.id) AS candidato_nome,
+        c.telefone,c.sexo AS candidato_sexo,c.etapa,c.status AS candidato_status,
+        COALESCE(v.titulo,c.vaga,'Sem vaga') AS vaga_nome,v.sexo AS vaga_sexo,
+        curriculo.id AS curriculo_id, curriculo.resultado AS curriculo_resultado
+      FROM candidato_revisoes r
+      JOIN candidatos c ON c.id=r.candidato_id
+      LEFT JOIN vagas v ON v.id=r.vaga_id
+      LEFT JOIN LATERAL (
+        SELECT d.id,d.resultado FROM documentos d
+        WHERE d.candidato_id=c.id AND UPPER(COALESCE(d.tipo,''))='CURRICULO'
+        ORDER BY d.created_at DESC,d.id DESC LIMIT 1
+      ) curriculo ON TRUE
+      WHERE ($1='TODOS' OR r.status=$1)
+      ORDER BY CASE r.tipo WHEN 'INCOMPATIBILIDADE_SEXO' THEN 1 WHEN 'REVISAO_DOCUMENTAL' THEN 2 WHEN 'EXCECAO_EXPERIENCIA' THEN 3 ELSE 4 END, r.created_at ASC
+    `, [status]);
+    res.json({ sucesso: true, revisoes: result.rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/revisoes/lote/decidir', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const entries = Array.isArray(req.body?.decisoes) ? req.body.decisoes : [];
+    if (!entries.length || entries.length > 100) return res.status(400).json({ sucesso:false, erro:'Selecione entre 1 e 100 revisÃµes.' });
+    const decisions = entries.map((entry) => ({
+      id: parseId(entry?.id),
+      decisao: String(entry?.decisao || '').toUpperCase(),
+      motivo: String(entry?.motivo || '').trim().slice(0,4000) || null,
+    }));
+    if (decisions.some((entry) => !entry.id || !['APROVAR','NAO_APROVAR'].includes(entry.decisao))) {
+      return res.status(400).json({ sucesso:false, erro:'HÃ¡ uma decisÃ£o invÃ¡lida no lote.' });
+    }
+    await client.query('BEGIN');
+    const results = [];
+    for (const entry of decisions) {
+      const result = await client.query(`SELECT * FROM genesis_resolver_revisao_v1($1,$2,$3,$4)`, [entry.id, entry.decisao, entry.motivo, currentUserName(req)]);
+      if (!result.rowCount) {
+        const error = new Error(`A revisÃ£o #${entry.id} nÃ£o estÃ¡ mais pendente.`);
+        error.statusCode = 409;
+        throw error;
+      }
+      results.push({ revisao_id: entry.id, ...result.rows[0] });
+    }
+    await client.query('COMMIT');
+    const acionamentos = [];
+    for (const item of results) {
+      try {
+        const action = await triggerStaticChatbotAction({ candidatoId:item.candidato_id, revisaoId:item.revisao_id, action:item.action, mensagem:item.mensagem_whatsapp || '', origem:'PAINEL_REVISAO_LOTE_V14' });
+        acionamentos.push({ revisao_id:item.revisao_id, ...action });
+      } catch (error) {
+        acionamentos.push({ revisao_id:item.revisao_id, acionado:false, aviso:error.message });
+      }
+    }
+    res.json({ sucesso:true, mensagem:`${results.length} decisÃµes registradas.`, resultados:results, acionamentos });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    next(error);
+  } finally { client.release(); }
+});
+
+app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const decisao = String(req.body?.decisao || '').toUpperCase();
+    const motivo = String(req.body?.motivo || '').trim().slice(0,4000) || null;
+    if (!id || !['APROVAR','NAO_APROVAR','REPROCESSAR','SOLICITAR_NOVO_PDF'].includes(decisao)) return res.status(400).json({ sucesso:false, erro:'DecisÃ£o invÃ¡lida.' });
+    await client.query('BEGIN');
+    const result = await client.query(`SELECT * FROM genesis_resolver_revisao_v1($1,$2,$3,$4)`, [id, decisao, motivo, currentUserName(req)]);
+    if (!result.rowCount) { await client.query('ROLLBACK'); return res.status(404).json({ sucesso:false, erro:'RevisÃ£o nÃ£o encontrada ou jÃ¡ concluÃ­da.' }); }
+    await client.query('COMMIT');
+    const data=result.rows[0];
+    let acionamento=null;
+    try { acionamento=await triggerStaticChatbotAction({ candidatoId:data.candidato_id, revisaoId:id, action:data.action, mensagem:data.mensagem_whatsapp || '', origem:'PAINEL_REVISAO_CHATBOT_ESTATICO_V1' }); }
+    catch(error){ acionamento={acionado:false,aviso:error.message}; }
+    res.json({ sucesso:true, mensagem:data.mensagem_painel || 'DecisÃ£o registrada.', resultado:data, acionamento });
+  } catch(error){ try{await client.query('ROLLBACK')}catch{} next(error); } finally { client.release(); }
+});
+
+app.post('/api/candidatos/:id/resgate', async (req, res, next) => {
+  try {
+    const candidatoId=parseId(req.params.id); const problemaId=parseId(req.body?.auditoria_problema_id);
+    if(!candidatoId) return res.status(400).json({sucesso:false,erro:'Candidato invÃ¡lido.'});
+    const result=await pool.query(`INSERT INTO candidato_resgates (candidato_id,auditoria_problema_id,origem,motivo,status,solicitado_por) VALUES ($1,$2,'PAINEL',COALESCE((SELECT titulo FROM auditoria_problemas WHERE id=$2),'Retomada solicitada pelo painel'),'SOLICITADO',$3) RETURNING *`,[candidatoId,problemaId,currentUserName(req)]);
+    let acionamento=null; try{acionamento=await triggerStaticChatbotAction({candidatoId,resgateId:result.rows[0].id,action:'RESGATAR',origem:'PAINEL_RESGATE_CHATBOT_ESTATICO_V1'});}catch(error){acionamento={acionado:false,aviso:error.message};}
+    res.json({sucesso:true,mensagem:'Candidato enviado para a fila de resgate.',resgate:result.rows[0],acionamento});
+  } catch(error){next(error);}
+});
+
+app.get('/api/entrevistas', async (req, res, next) => {
+  try {
+    const status = String(req.query.status || 'AGENDADA').trim().toUpperCase();
+    const periodo = String(req.query.periodo || 'PROXIMAS').trim().toUpperCase();
+    const values = [];
+    const filters = [];
+
+    if (status && status !== 'TODAS') {
+      values.push(status);
+      filters.push(`UPPER(COALESCE(e.status, '')) = $${values.length}`);
+    }
+
+    if (periodo === 'HOJE') {
+      filters.push(`e.inicio >= DATE_TRUNC('day', NOW()) AND e.inicio < DATE_TRUNC('day', NOW()) + INTERVAL '1 day'`);
+    } else if (periodo === 'SEMANA') {
+      filters.push(`e.inicio >= NOW() - INTERVAL '1 day' AND e.inicio < NOW() + INTERVAL '7 days'`);
+    } else if (periodo === 'PROXIMAS') {
+      filters.push(`e.inicio >= NOW() - INTERVAL '2 hours'`);
+    }
+
+    const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+    const result = await pool.query(`
+      WITH entrevistas_base AS (
+        SELECT e.*,
+          ROW_NUMBER() OVER (
+            PARTITION BY e.candidato_id, UPPER(COALESCE(e.status, ''))
+            ORDER BY e.updated_at DESC NULLS LAST, e.created_at DESC, e.id DESC
+          ) AS ordem_agendada
+        FROM entrevistas e
+      )
+      SELECT
+        e.*,
+        COALESCE(c.nome, 'Candidato #' || c.id) AS candidato_nome,
+        c.telefone,
+        c.status AS candidato_status,
+        c.etapa AS candidato_etapa,
+        COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o informada') AS vaga_nome,
+        v.codigo AS vaga_codigo,
+        v.horario AS vaga_horario,
+        v.escala AS vaga_escala
+      FROM entrevistas_base e
+      JOIN candidatos c ON c.id = e.candidato_id
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      ${where}
+        ${where ? 'AND' : 'WHERE'} (UPPER(COALESCE(e.status, '')) <> 'AGENDADA' OR e.ordem_agendada = 1)
+      ORDER BY e.inicio ASC NULLS LAST, e.created_at DESC
+      LIMIT 500
+    `, values);
+
+    res.json({ sucesso: true, entrevistas: result.rows });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/documentos', async (req, res, next) => {
+  try {
+    const tipo = String(req.query.tipo || '').trim().toUpperCase();
+    const values = [];
+    const filters = [];
+
+    if (tipo === 'FALHA') {
+      filters.push(`UPPER(COALESCE(d.status_processamento, '')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO')`);
+    } else if (tipo === 'PENDENTE') {
+      filters.push(`(
+        UPPER(COALESCE(d.tipo, '')) IN ('PENDENTE','PENDENTE_REVISAO')
+        OR UPPER(COALESCE(d.status_processamento, '')) IN ('RECEBIDO','ARMAZENADO','PROCESSANDO','REPROCESSAMENTO_SOLICITADO','REVISAO','PENDENTE')
+      )`);
+    } else if (tipo && tipo !== 'TODOS') {
+      values.push(tipo);
+      filters.push(`UPPER(COALESCE(d.tipo, '')) = $${values.length}`);
+    }
+
+    const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+    const result = await pool.query(`
+      SELECT d.id, d.candidato_id, d.tipo, d.titulo,
+        COALESCE(d.nome_arquivo, d.arquivo, 'documento.pdf') AS nome_arquivo,
+        d.mime_type, d.tamanho_bytes, d.status_processamento, d.resultado, d.processado_at, d.created_at,
+        (d.conteudo IS NOT NULL) AS disponivel_download,
+        COALESCE(c.nome, 'Candidato #' || c.id) AS candidato_nome,
+        c.telefone, c.etapa AS candidato_etapa, c.status AS candidato_status,
+        COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o vinculada') AS vaga_nome
+      FROM documentos d
+      JOIN candidatos c ON c.id = d.candidato_id
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      ${where}
+      ORDER BY d.created_at DESC, d.id DESC LIMIT 1000
+    `, values);
+
+    const documentos = result.rows.map((documento) => ({
+      ...documento,
+      nome_exibicao: friendlyDocumentName(documento.candidato_nome, documento.tipo, documento.nome_arquivo, documento.mime_type),
+    }));
+    res.json({ sucesso: true, documentos });
+  } catch (error) { next(error); }
+});
+
+app.get('/api/monitoramento', requireAdmin, async (_req, res, next) => {
+  try {
+    const [metricas, logs, erros, tarefas, alertas, atividades, recentes, followups, divulgacoes] = await Promise.all([
+      pool.query(`
+        SELECT
+          (SELECT COUNT(*) FROM atendimento_logs WHERE created_at >= NOW() - INTERVAL '24 hours')::INTEGER AS entradas_24h,
+          (SELECT COUNT(*) FROM atendimento_logs WHERE candidato_id IS NULL AND created_at >= NOW() - INTERVAL '24 hours')::INTEGER AS entradas_sem_candidato_24h,
+          (SELECT COUNT(*) FROM workflow_erros WHERE resolvido IS FALSE)::INTEGER AS erros_pendentes,
+          (SELECT COUNT(*) FROM workflow_erros WHERE created_at >= NOW() - INTERVAL '24 hours')::INTEGER AS erros_24h,
+          (SELECT COUNT(*) FROM documentos WHERE UPPER(COALESCE(tipo, '')) = 'PENDENTE')::INTEGER AS documentos_pendentes,
+          (SELECT COUNT(*) FROM candidatos WHERE etapa = 'PROCESSANDO_CTPS')::INTEGER AS candidatos_analisando,
+          (SELECT COUNT(*) FROM candidato_followups WHERE enviado_em >= NOW() - INTERVAL '24 hours' AND status = 'ENVIADO')::INTEGER AS followups_24h,
+          (SELECT COUNT(*) FROM divulgacao_vagas_envios WHERE enviado_em >= DATE_TRUNC('day', NOW() AT TIME ZONE 'America/Sao_Paulo') AT TIME ZONE 'America/Sao_Paulo' AND status IN ('IMAGEM_ENVIADA','TEXTO_ENVIADO','ENVIADO'))::INTEGER AS divulgacoes_hoje,
+          (SELECT MAX(created_at) FROM atendimento_logs) AS ultima_entrada,
+          (SELECT MAX(created_at) FROM mensagens WHERE quem = 'IA') AS ultima_resposta_ia,
+          (SELECT MAX(created_at) FROM candidatos) AS ultimo_candidato_criado,
+          (SELECT MAX(enviado_em) FROM divulgacao_vagas_envios WHERE status IN ('IMAGEM_ENVIADA','TEXTO_ENVIADO','ENVIADO')) AS ultima_divulgacao
+      `),
+      pool.query(`
+        SELECT l.id, l.mensagem_id, l.candidato_id, l.telefone_extraido,
+          l.raw_from, l.raw_sender_alt, l.tipo_mensagem, l.mime_type,
+          l.nome_arquivo, l.status, l.detalhe, l.created_at,
+          c.nome AS candidato_nome
+        FROM atendimento_logs l
+        LEFT JOIN candidatos c ON c.id = l.candidato_id
+        ORDER BY l.created_at DESC LIMIT 120
+      `),
+      pool.query(`SELECT * FROM workflow_erros ORDER BY resolvido ASC, created_at DESC LIMIT 120`),
+      pool.query(`
+        SELECT t.*, COALESCE(c.nome, 'Candidato #' || c.id) AS candidato_nome
+        FROM candidato_tarefas t JOIN candidatos c ON c.id = t.candidato_id
+        WHERE t.status IN ('PENDENTE', 'EM_ANDAMENTO')
+        ORDER BY t.vencimento ASC NULLS LAST, t.created_at DESC LIMIT 80
+      `),
+      pool.query(`
+        WITH alertas AS (
+          SELECT 'entrada:' || l.id AS chave, 'CRITICO'::TEXT AS severidade,
+            'ENTRADA_SEM_CANDIDATO'::TEXT AS tipo, 'Acionamento sem candidato'::TEXT AS titulo,
+            CONCAT(COALESCE(NULLIF(l.telefone_extraido, ''), 'Telefone nÃ£o identificado'), ' Â· ', COALESCE(l.tipo_mensagem, 'mensagem'), ' Â· nÃ£o vinculado ao cadastro') AS descricao,
+            l.candidato_id, l.created_at
+          FROM atendimento_logs l
+          WHERE l.candidato_id IS NULL AND l.created_at < NOW() - INTERVAL '5 minutes'
+          UNION ALL
+          SELECT 'documento:' || d.id, 'ALTO', 'DOCUMENTO_PENDENTE',
+            COALESCE(c.nome, 'Candidato sem nome') || ' enviou um PDF',
+            'Documento parado em classificaÃ§Ã£o hÃ¡ mais de 20 minutos', d.candidato_id, d.created_at
+          FROM documentos d JOIN candidatos c ON c.id = d.candidato_id
+          WHERE UPPER(COALESCE(d.tipo, '')) = 'PENDENTE' AND d.created_at < NOW() - INTERVAL '20 minutes'
+          UNION ALL
+          SELECT 'candidato:' || c.id || ':' || c.etapa, 'MEDIO', 'CANDIDATO_PARADO',
+            COALESCE(c.nome, 'Candidato #' || c.id),
+            CONCAT('Sem avanÃ§o hÃ¡ ', GREATEST(1, FLOOR(EXTRACT(EPOCH FROM (NOW() - c.updated_at)) / 3600)::INTEGER), ' hora(s) em ', REPLACE(c.etapa, '_', ' ')),
+            c.id, c.updated_at
+          FROM candidatos c
+          WHERE c.status IN ('NOVO', 'EM_PROCESSO', 'APROVADO')
+            AND c.etapa IN ('PROCESSANDO_CTPS','REVISAO_DOCUMENTAL','PENDENTE_APROVACAO_RECRUTADOR','AGUARDANDO_ESCOLHA_HORARIO','AGUARDANDO_CTPS','AGUARDANDO_CEP','AGUARDANDO_NOME','AGUARDANDO_EXPERIENCIA','AGUARDANDO_TEMPO_DESLOCAMENTO','AGUARDANDO_CONFIRMACAO_CHEGADA')
+            AND c.updated_at < NOW() - INTERVAL '18 hours'
+        )
+        SELECT a.* FROM alertas a
+        LEFT JOIN alertas_resolvidos r ON r.chave = a.chave
+        WHERE r.chave IS NULL
+        ORDER BY CASE a.severidade WHEN 'CRITICO' THEN 1 WHEN 'ALTO' THEN 2 ELSE 3 END, a.created_at ASC
+        LIMIT 150
+      `),
+      pool.query(`
+        SELECT id, candidato_id, acao, nome, telefone, campos_alterados, created_at
+        FROM auditoria_candidatos ORDER BY created_at DESC LIMIT 60
+      `),
+      pool.query(`
+        SELECT c.id, c.nome, c.telefone, c.status, c.etapa, c.updated_at,
+          COALESCE(v.titulo, c.vaga, 'Sem vaga vinculada') AS vaga_nome
+        FROM candidatos c LEFT JOIN vagas v ON v.id = c.vaga_id
+        ORDER BY c.created_at DESC NULLS LAST, c.id DESC LIMIT 20
+      `),
+      pool.query(`
+        SELECT f.*, COALESCE(c.nome, c.telefone, 'Candidato #' || c.id) AS candidato_nome
+        FROM candidato_followups f JOIN candidatos c ON c.id = f.candidato_id
+        ORDER BY f.enviado_em DESC LIMIT 50
+      `),
+      pool.query(`
+        SELECT d.*, v.codigo, v.titulo AS vaga_titulo
+        FROM divulgacao_vagas_envios d JOIN vagas v ON v.id = d.vaga_id
+        ORDER BY d.enviado_em DESC LIMIT 50
+      `),
+    ]);
+
+    res.json({
+      sucesso: true,
+      metricas: metricas.rows[0], logs: logs.rows, erros: erros.rows,
+      tarefas_pendentes: tarefas.rows, alertas: alertas.rows,
+      atividades: atividades.rows, candidatos_recentes: recentes.rows,
+      followups: followups.rows, divulgacoes: divulgacoes.rows,
+      atualizado_em: new Date().toISOString(),
+    });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/workflow-erros/:id/resolver', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+
+    const result = await pool.query(`
+      UPDATE workflow_erros
+      SET resolvido = TRUE, resolvido_por = $1, resolvido_em = NOW()
+      WHERE id = $2
+      RETURNING id
+    `, [currentUserName(req), id]);
+
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Erro nÃ£o encontrado.' });
+    res.json({ sucesso: true, mensagem: 'Erro marcado como resolvido.' });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get('/api/busca-global', async (req, res, next) => {
+  try {
+    const q = String(req.query.q || '').trim();
+    if (q.length < 2) return res.json({ sucesso: true, resultados: [] });
+    const pattern = `%${q}%`;
+
+    const [candidatos, vagas, documentos] = await Promise.all([
+      pool.query(`
+        SELECT
+          'CANDIDATO'::TEXT AS tipo,
+          c.id,
+          COALESCE(c.nome, c.telefone, 'Candidato #' || c.id) AS titulo,
+          CONCAT(COALESCE(c.telefone, ''), ' Â· ', COALESCE(v.titulo, c.vaga, 'Sem vaga')) AS subtitulo
+        FROM candidatos c
+        LEFT JOIN vagas v ON v.id = c.vaga_id
+        WHERE COALESCE(c.nome, '') ILIKE $1
+           OR COALESCE(c.telefone, '') ILIKE $1
+           OR COALESCE(c.cpf, '') ILIKE $1
+           OR COALESCE(v.titulo, c.vaga, '') ILIKE $1
+        ORDER BY c.updated_at DESC
+        LIMIT 10
+      `, [pattern]),
+      pool.query(`
+        SELECT
+          'VAGA'::TEXT AS tipo,
+          v.id,
+          CONCAT(v.codigo, ' Â· ', v.titulo) AS titulo,
+          CONCAT_WS(' Â· ', NULLIF(v.bairro, ''), NULLIF(v.cidade, ''), NULLIF(v.horario, '')) AS subtitulo
+        FROM vagas v
+        WHERE v.codigo ILIKE $1 OR v.titulo ILIKE $1 OR v.cargo ILIKE $1
+           OR COALESCE(v.bairro, '') ILIKE $1 OR COALESCE(v.cidade, '') ILIKE $1
+        ORDER BY v.updated_at DESC
+        LIMIT 10
+      `, [pattern]),
+      pool.query(`
+        SELECT
+          'DOCUMENTO'::TEXT AS tipo,
+          d.id,
+          COALESCE(d.nome_arquivo, d.arquivo, 'Documento') AS titulo,
+          CONCAT(COALESCE(c.nome, c.telefone, 'Candidato'), ' Â· ', COALESCE(d.tipo, 'OUTRO')) AS subtitulo,
+          d.candidato_id
+        FROM documentos d
+        JOIN candidatos c ON c.id = d.candidato_id
+        WHERE COALESCE(d.nome_arquivo, d.arquivo, '') ILIKE $1
+           OR COALESCE(c.nome, '') ILIKE $1
+           OR COALESCE(c.telefone, '') ILIKE $1
+        ORDER BY d.created_at DESC
+        LIMIT 10
+      `, [pattern]),
+    ]);
+
+    res.json({
+      sucesso: true,
+      resultados: [...candidatos.rows, ...vagas.rows, ...documentos.rows],
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.post('/api/admin/candidatos/:id/ctps/decisao-manual', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const decisao = String(req.body?.decisao || '').trim().toUpperCase();
+    const observacao = String(req.body?.observacao || '').trim().slice(0, 2000);
+    const enviarMensagem = req.body?.enviar_mensagem === true;
+    if (!id) return res.status(400).json({ sucesso:false, erro:'ID de candidato invÃ¡lido.' });
+    if (!['APROVAR','REPROVAR'].includes(decisao)) return res.status(400).json({ sucesso:false, erro:'Selecione uma decisÃ£o manual vÃ¡lida.' });
+
+    await client.query('BEGIN');
+    const current = await client.query(`
+      SELECT c.*, COALESCE(v.titulo,c.vaga,'vaga atual') AS vaga_nome,
+        (SELECT d.id FROM documentos d WHERE d.candidato_id=c.id AND UPPER(COALESCE(d.tipo,''))='CTPS' ORDER BY d.created_at DESC,d.id DESC LIMIT 1) AS ctps_documento_id
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id=c.vaga_id
+      WHERE c.id=$1
+      FOR UPDATE OF c
+    `,[id]);
+    if (!current.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso:false, erro:'Candidato nÃ£o encontrado.' });
+    }
+    const candidate = current.rows[0];
+    const userName = currentUserName(req);
+    if (String(candidate.etapa || '').toUpperCase() === 'REPROVADO_POS_ENTREVISTA') {
+      await client.query('ROLLBACK');
+      return res.status(409).json({ sucesso:false, erro:'A decisÃ£o manual da CTPS nÃ£o pode substituir uma decisÃ£o registrada apÃ³s entrevista. Use a Ã¡rea â€œResultado apÃ³s entrevistaâ€ para esse caso.' });
+    }
+    if (['CONTRATADO','ENCERRADO'].includes(String(candidate.status || '').toUpperCase()) && decisao === 'REPROVAR') {
+      await client.query('ROLLBACK');
+      return res.status(409).json({ sucesso:false, erro:'O processo jÃ¡ estÃ¡ encerrado. Reabra a candidatura antes de alterar a decisÃ£o da CTPS.' });
+    }
+
+    let mensagemCandidato = '';
+    let resumoPainel = '';
+    if (decisao === 'REPROVAR') {
+      const reasonCode = String(req.body?.motivo_codigo || '').trim().toUpperCase();
+      const allowedReasons = ['EXPERIENCIA_INSUFICIENTE','EXPERIENCIA_NAO_COMPATIVEL','DOCUMENTO_INSUFICIENTE','OUTRO'];
+      if (!allowedReasons.includes(reasonCode)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ sucesso:false, erro:'Selecione o motivo da decisÃ£o da CTPS.' });
+      }
+      if (reasonCode === 'OUTRO' && !observacao) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ sucesso:false, erro:'Descreva o motivo da reprovaÃ§Ã£o manual.' });
+      }
+      const reasonInfo = rejectionReasonInfo(reasonCode, reasonCode);
+      const reallocatable = req.body?.realocavel !== false;
+      await client.query(`
+        UPDATE candidatos SET
+          status='REPROVADO',etapa='NAO_APTO_NESTA_VAGA',aprovado=FALSE,
+          motivo_reprovacao=$2,motivo_reprovacao_codigo=$3,motivo_reprovacao_categoria=$4,
+          motivo_reprovacao_detalhe=COALESCE(NULLIF($5,''),$2),reprovacao_realocavel=$6,reprovacao_vaga_id=vaga_id,
+          reprovacao_registrada_em=NOW(),revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,
+          ia_atendimento_ativo=FALSE,ia_pausada_em=NOW(),ia_pausada_por=$7,
+          ia_pausa_motivo='DecisÃ£o manual da CTPS',updated_at=NOW()
+        WHERE id=$1
+      `,[id,reasonInfo.label,reasonInfo.codigo,reasonInfo.categoria,observacao,reallocatable,userName]);
+      await client.query(`
+        INSERT INTO candidato_reprovacoes_historico
+          (candidato_id,vaga_id,codigo,categoria,motivo,observacao,realocavel,origem,created_at)
+        VALUES ($1,$2,$3,$4,$5,NULLIF($6,''),$7,'PAINEL_CTPS_MANUAL',NOW())
+      `,[id,candidate.vaga_id,reasonInfo.codigo,reasonInfo.categoria,reasonInfo.label,observacao,reallocatable]).catch(()=>{});
+      await client.query(`
+        UPDATE candidato_revisoes SET status='NAO_APROVADO',decisao='NAO_APROVAR',decisao_motivo=$2,
+          decidido_por=$3,decidido_em=NOW(),updated_at=NOW()
+        WHERE candidato_id=$1 AND status='PENDENTE' AND tipo IN ('EXCECAO_EXPERIENCIA','REVISAO_DOCUMENTAL')
+      `,[id,observacao || reasonInfo.label,userName]).catch(()=>{});
+      mensagemCandidato = `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}apÃ³s a revisÃ£o da sua documentaÃ§Ã£o, neste momento nÃ£o serÃ¡ possÃ­vel continuar na vaga ${candidate.vaga_nome}. Seu cadastro poderÃ¡ ser considerado em futuras oportunidades compatÃ­veis.`;
+      resumoPainel = 'CTPS reprovada manualmente.';
+      await client.query(`INSERT INTO eventos(candidato_id,evento,descricao,created_at) VALUES($1,'CTPS_DECISAO_MANUAL_REPROVADA',$2,NOW())`,[
+        id,`DecisÃ£o manual por ${userName}. Motivo: ${reasonInfo.label}.${observacao ? ` ObservaÃ§Ã£o: ${observacao}` : ''} Candidato avisado: ${enviarMensagem ? 'SIM' : 'NÃƒO'}.`,
+      ]);
+    } else {
+      const alreadyApproved = candidate.aprovado === true && String(candidate.status || '').toUpperCase() !== 'REPROVADO';
+      if (!alreadyApproved) {
+        const currentStage = String(candidate.etapa || '').toUpperCase();
+        const nextStage = ['NAO_APTO_NESTA_VAGA','REVISAO_DOCUMENTAL','PENDENTE_APROVACAO_RECRUTADOR','ANALISANDO_DOCUMENTOS'].includes(currentStage)
+          ? 'ESCOLHENDO_HORARIO'
+          : (candidate.etapa || 'ESCOLHENDO_HORARIO');
+        await client.query(`
+          UPDATE candidatos SET
+            aprovado=TRUE,status='APROVADO',etapa=$2,
+            motivo_reprovacao=NULL,motivo_reprovacao_codigo=NULL,motivo_reprovacao_categoria=NULL,motivo_reprovacao_detalhe=NULL,
+            reprovacao_realocavel=NULL,reprovacao_vaga_id=NULL,revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,
+            ia_atendimento_ativo=CASE WHEN atendimento_humano_ativo IS TRUE THEN FALSE ELSE TRUE END,
+            ia_retomada_em=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_em ELSE NOW() END,
+            ia_retomada_por=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_por ELSE $3 END,
+            updated_at=NOW()
+          WHERE id=$1
+        `,[id,nextStage,userName]);
+      } else {
+        await client.query(`UPDATE candidatos SET revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,updated_at=NOW() WHERE id=$1`,[id]);
+      }
+      await client.query(`
+        UPDATE candidato_revisoes SET status='APROVADO',decisao='APROVAR',decisao_motivo=$2,
+          decidido_por=$3,decidido_em=NOW(),updated_at=NOW()
+        WHERE candidato_id=$1 AND status='PENDENTE' AND tipo IN ('EXCECAO_EXPERIENCIA','REVISAO_DOCUMENTAL')
+      `,[id,observacao || 'AprovaÃ§Ã£o manual da CTPS',userName]).catch(()=>{});
+      mensagemCandidato = alreadyApproved
+        ? `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}sua anÃ¡lise documental foi revisada e sua aprovaÃ§Ã£o nesta etapa foi confirmada. Seu processo continua normalmente.`
+        : `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}sua anÃ¡lise documental foi revisada e vocÃª estÃ¡ apto(a) para continuar na vaga ${candidate.vaga_nome}. Responda por aqui para seguirmos com as prÃ³ximas etapas.`;
+      resumoPainel = alreadyApproved ? 'A aprovaÃ§Ã£o da CTPS foi confirmada manualmente.' : 'CTPS aprovada manualmente.';
+      await client.query(`INSERT INTO eventos(candidato_id,evento,descricao,created_at) VALUES($1,'CTPS_DECISAO_MANUAL_APROVADA',$2,NOW())`,[
+        id,`DecisÃ£o manual por ${userName}.${observacao ? ` ObservaÃ§Ã£o: ${observacao}` : ''} Candidato avisado: ${enviarMensagem ? 'SIM' : 'NÃƒO'}.`,
+      ]);
+    }
+
+    await client.query('COMMIT');
+    let delivery = null;
+    if (enviarMensagem) {
+      try {
+        delivery = await triggerManualCandidateMessage({
+          candidatoId:id,mensagem:mensagemCandidato,evento:`CTPS_DECISAO_MANUAL_${decisao}_ENVIADA`,solicitadoPor:userName,
+        });
+      } catch (error) {
+        delivery = { enviado:false, erro:error.message };
+      }
+    }
+    return res.json({
+      sucesso:true,mensagem:resumoPainel,
+      aviso: delivery && !delivery.enviado ? (delivery.erro || delivery.aviso || 'A decisÃ£o foi salva, mas a mensagem nÃ£o foi confirmada.') : null,
+      envio:delivery,
+    });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    next(error);
+  } finally { client.release(); }
+});
+
+app.post('/api/admin/candidatos/:id/acao', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const action = String(req.body?.action || '').trim().toUpperCase();
+    const observation = String(req.body?.observacao || '').trim().slice(0, 2000);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+    if (!['REPROVAR_VAGA', 'ENCERRAR', 'REABRIR'].includes(action)) {
+      return res.status(400).json({ sucesso: false, erro: 'AÃ§Ã£o administrativa invÃ¡lida.' });
+    }
+
+    await client.query('BEGIN');
+    const current = await client.query(`
+      SELECT c.*, COALESCE(v.titulo, c.vaga, 'vaga atual') AS vaga_nome
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id=c.vaga_id
+      WHERE c.id=$1
+      FOR UPDATE
+    `, [id]);
+    if (!current.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+
+    const candidate = current.rows[0];
+    const userName = currentUserName(req);
+    let message = '';
+    let eventName = '';
+    let eventDescription = '';
+
+    if (action === 'REPROVAR_VAGA') {
+      const reasonCode = String(req.body?.motivo_codigo || '').trim().toUpperCase();
+      const allowedReasons = ['EXPERIENCIA_INSUFICIENTE','EXPERIENCIA_NAO_COMPATIVEL','DOCUMENTO_INSUFICIENTE','DISPONIBILIDADE_INCOMPATIVEL','DESLOCAMENTO_INCOMPATIVEL','OUTRO'];
+      if (!allowedReasons.includes(reasonCode)) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ sucesso: false, erro: 'Selecione um motivo vÃ¡lido para a reprovaÃ§Ã£o.' });
+      }
+      if (reasonCode === 'OUTRO' && !observation) {
+        await client.query('ROLLBACK');
+        return res.status(400).json({ sucesso: false, erro: 'Descreva o motivo da reprovaÃ§Ã£o.' });
+      }
+      const reasonInfo = rejectionReasonInfo(reasonCode, reasonCode);
+      const reallocatable = req.body?.realocavel !== false;
+      await client.query(`
+        UPDATE candidatos SET
+          status='REPROVADO', etapa='NAO_APTO_NESTA_VAGA', aprovado=FALSE,
+          motivo_reprovacao=$2, motivo_reprovacao_codigo=$3,
+          motivo_reprovacao_categoria=$4,
+          motivo_reprovacao_detalhe=COALESCE(NULLIF($5,''),$2),
+          reprovacao_realocavel=$6, reprovacao_vaga_id=vaga_id,
+          reprovacao_registrada_em=NOW(), revisao_pendente=FALSE,
+          revisao_tipo=NULL, revisao_motivo=NULL,
+          ia_atendimento_ativo=FALSE, ia_pausada_em=NOW(), ia_pausada_por=$7,
+          ia_pausa_motivo='ReprovaÃ§Ã£o administrativa nesta vaga', updated_at=NOW()
+        WHERE id=$1
+      `, [id, reasonInfo.label, reasonInfo.codigo, reasonInfo.categoria, observation, reallocatable, userName]);
+      await client.query(`
+        INSERT INTO candidato_reprovacoes_historico
+          (candidato_id,vaga_id,codigo,categoria,motivo,observacao,realocavel,origem,created_at)
+        VALUES ($1,$2,$3,$4,$5,NULLIF($6,''),$7,'PAINEL_ADMIN',NOW())
+      `, [id, candidate.vaga_id, reasonInfo.codigo, reasonInfo.categoria, reasonInfo.label, observation, reallocatable]).catch(() => {});
+      message = `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}apÃ³s a anÃ¡lise do seu perfil, neste momento nÃ£o serÃ¡ possÃ­vel continuar na vaga ${candidate.vaga_nome}. Seu cadastro poderÃ¡ ser considerado em futuras oportunidades compatÃ­veis.`;
+      eventName = 'REPROVACAO_ADMINISTRATIVA_NA_VAGA';
+      eventDescription = `ReprovaÃ§Ã£o registrada por ${userName}. Motivo: ${reasonInfo.label}.${observation ? ` Detalhe: ${observation}` : ''}`;
+    }
+
+    if (action === 'ENCERRAR') {
+      await client.query(`
+        UPDATE candidatos SET status='ENCERRADO', etapa='ENCERRADO',
+          ia_atendimento_ativo=FALSE, ia_pausada_em=NOW(), ia_pausada_por=$2,
+          ia_pausa_motivo=COALESCE(NULLIF($3,''),'Candidatura encerrada administrativamente'),
+          updated_at=NOW()
+        WHERE id=$1
+      `, [id, userName, observation]);
+      eventName = 'CANDIDATURA_ENCERRADA_ADMIN';
+      eventDescription = `Candidatura encerrada por ${userName}.${observation ? ` Motivo: ${observation}` : ''}`;
+    }
+
+    if (action === 'REABRIR') {
+      await client.query(`
+        UPDATE candidatos SET status='EM_PROCESSO', etapa='AGUARDANDO_INTENCAO', aprovado=NULL,
+          motivo_reprovacao=NULL, motivo_reprovacao_codigo=NULL,
+          motivo_reprovacao_categoria=NULL, motivo_reprovacao_detalhe=NULL,
+          revisao_pendente=FALSE, revisao_tipo=NULL, revisao_motivo=NULL,
+          ia_atendimento_ativo=TRUE, ia_retomada_em=NOW(), ia_retomada_por=$2,
+          ia_pausa_motivo=NULL, updated_at=NOW()
+        WHERE id=$1
+      `, [id, userName]);
+      eventName = 'CANDIDATURA_REABERTA_ADMIN';
+      eventDescription = `Candidatura reaberta por ${userName}; fluxo retomado no menu inicial.`;
+    }
+
+    await client.query(`INSERT INTO eventos(candidato_id,evento,descricao,created_at) VALUES($1,$2,$3,NOW())`, [id, eventName, eventDescription]);
+    await client.query('COMMIT');
+
+    let delivery = null;
+    if (action === 'REPROVAR_VAGA' && req.body?.enviar_mensagem === true) {
+      try {
+        delivery = await triggerManualCandidateMessage({
+          candidatoId: id,
+          mensagem: message,
+          evento: 'REPROVACAO_ADMINISTRATIVA_ENVIADA',
+          solicitadoPor: userName,
+        });
+      } catch (error) {
+        delivery = { enviado: false, erro: error.message };
+      }
+    }
+
+    return res.json({
+      sucesso: true,
+      mensagem: action === 'REPROVAR_VAGA' ? 'Candidato reprovado nesta vaga.' : action === 'ENCERRAR' ? 'Candidatura encerrada.' : 'Candidatura reaberta.',
+      aviso: delivery && !delivery.enviado ? (delivery.erro || delivery.aviso || 'A decisÃ£o foi salva, mas a mensagem nÃ£o foi confirmada.') : null,
+      envio: delivery,
+    });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    return next(error);
+  } finally {
+    client.release();
+  }
+});
+
+app.post('/api/candidatos/:id/ia', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+    if (typeof req.body?.ativo !== 'boolean') {
+      return res.status(400).json({ sucesso: false, erro: 'Informe ativo como true ou false.' });
+    }
+
+    const active = req.body.ativo;
+    const reason = String(req.body?.motivo || '').trim().slice(0, 1000);
+    const userName = currentUserName(req);
+
+    await client.query('BEGIN');
+    const result = await client.query(`
+      UPDATE candidatos
+      SET
+        ia_atendimento_ativo = $1,
+        ia_pausada_em = CASE WHEN $1 = FALSE THEN NOW() ELSE ia_pausada_em END,
+        ia_pausada_por = CASE WHEN $1 = FALSE THEN $2 ELSE ia_pausada_por END,
+        ia_pausa_motivo = CASE WHEN $1 = FALSE THEN NULLIF($3, '') ELSE ia_pausa_motivo END,
+        ia_retomada_em = CASE WHEN $1 = TRUE THEN NOW() ELSE ia_retomada_em END,
+        ia_retomada_por = CASE WHEN $1 = TRUE THEN $2 ELSE ia_retomada_por END,
+        ia_ultima_acao_manual = CASE WHEN $1 = TRUE THEN 'IA_RETOMADA' ELSE 'IA_PAUSADA' END,
+        ia_ultima_acao_manual_em = NOW(),
+        ia_ultima_acao_manual_por = $2,
+        atendimento_humano_ativo = CASE WHEN $1 = TRUE THEN FALSE ELSE atendimento_humano_ativo END,
+        atendimento_humano_usuario_id = CASE WHEN $1 = TRUE THEN NULL ELSE atendimento_humano_usuario_id END,
+        atendimento_humano_nome = CASE WHEN $1 = TRUE THEN NULL ELSE atendimento_humano_nome END,
+        atendimento_humano_finalizado_em = CASE WHEN $1 = TRUE THEN NOW() ELSE atendimento_humano_finalizado_em END,
+        updated_at = NOW()
+      WHERE id = $4
+      RETURNING *
+    `, [active, userName, reason, id]);
+
+    if (!result.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+
+    await client.query(`
+      INSERT INTO eventos (candidato_id, evento, descricao, created_at)
+      VALUES ($1, $2, $3, NOW())
+    `, [
+      id,
+      active ? 'ATENDIMENTO_IA_RETOMADO' : 'ATENDIMENTO_IA_PAUSADO',
+      active
+        ? `Atendimento automÃ¡tico retomado por ${userName}.`
+        : `Atendimento automÃ¡tico pausado por ${userName}.${reason ? ` Motivo: ${reason}` : ''}`,
+    ]);
+    await client.query('COMMIT');
+
+    return res.json({
+      sucesso: true,
+      mensagem: active
+        ? 'Atendimento automÃ¡tico retomado.'
+        : 'Atendimento automÃ¡tico pausado. A IA nÃ£o responderÃ¡ novas mensagens deste candidato.',
+      candidato: result.rows[0],
+    });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    return next(error);
+  } finally {
+    client.release();
+  }
+});
+
+app.post('/api/candidatos/:id/continuar-atendimento', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+
+    const allowedStatuses = ['NOVO', 'EM_PROCESSO', 'APROVADO', 'EM_ADMISSAO', 'REPROVADO', 'CONTRATADO', 'ENCERRADO'];
+    const status = String(req.body?.status || '').trim().toUpperCase();
+    const stage = String(req.body?.etapa || '').trim().toUpperCase();
+    const customMessage = String(req.body?.mensagem || '').trim().slice(0, 4000);
+    const sendNow = req.body?.enviar_mensagem !== false;
+    const activateAi = req.body?.ativar_ia !== false;
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ sucesso: false, erro: 'Status invÃ¡lido.' });
+    }
+    if (!candidateStageValues.includes(stage)) {
+      return res.status(400).json({ sucesso: false, erro: 'Etapa invÃ¡lida.' });
+    }
+
+    await client.query('BEGIN');
+    const result = await client.query(`
+      UPDATE candidatos c
+      SET
+        status = $1,
+        etapa = $2,
+        ia_atendimento_ativo = $3,
+        ia_retomada_em = CASE WHEN $3 = TRUE THEN NOW() ELSE ia_retomada_em END,
+        ia_retomada_por = CASE WHEN $3 = TRUE THEN $4 ELSE ia_retomada_por END,
+        ia_ultima_acao_manual = 'CONTINUAR_ATENDIMENTO',
+        ia_ultima_acao_manual_em = NOW(),
+        ia_ultima_acao_manual_por = $4,
+        updated_at = NOW()
+      WHERE c.id = $5
+      RETURNING c.*,
+        COALESCE((SELECT titulo FROM vagas WHERE id = c.vaga_id), c.vaga, 'vaga atual') AS vaga_nome
+    `, [status, stage, activateAi, currentUserName(req), id]);
+
+    if (!result.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+
+    const candidate = result.rows[0];
+    const message = buildManualContinuationMessage(candidate, customMessage);
+    await client.query(`
+      UPDATE candidatos
+      SET ia_ultima_mensagem_manual = $1
+      WHERE id = $2
+    `, [message, id]);
+    await client.query(`
+      INSERT INTO eventos (candidato_id, evento, descricao, created_at)
+      VALUES ($1, 'ATENDIMENTO_CONTINUADO_PELO_PAINEL', $2, NOW())
+    `, [id, `Status ${status}; etapa ${stage}; aÃ§Ã£o executada por ${currentUserName(req)}.`]);
+    await client.query('COMMIT');
+
+    let delivery = { configurado: false, enviado: false };
+    if (sendNow) {
+      try {
+        delivery = await triggerManualCandidateMessage({
+          candidatoId: id,
+          mensagem: message,
+          evento: 'MENSAGEM_CONTINUACAO_MANUAL',
+          solicitadoPor: currentUserName(req),
+        });
+      } catch (webhookError) {
+        console.error('Falha ao enviar continuaÃ§Ã£o manual:', webhookError);
+        delivery = { configurado: Boolean(ATENDIMENTO_MANUAL_WEBHOOK_URL), enviado: false, erro: webhookError.message };
+      }
+    }
+
+    return res.json({
+      sucesso: true,
+      mensagem: sendNow
+        ? (delivery.enviado ? 'Atendimento retomado e mensagem enviada.' : 'Etapa atualizada, mas o envio da mensagem nÃ£o foi confirmado.')
+        : 'Etapa atualizada sem envio de mensagem.',
+      candidato: candidate,
+      mensagem_enviada: message,
+      envio: delivery,
+      aviso: sendNow && !delivery.enviado
+        ? (delivery.aviso || delivery.erro || 'Revise o workflow de atendimento manual no n8n.')
+        : null,
+    });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    return next(error);
+  } finally {
+    client.release();
+  }
+});
+
+app.post('/api/candidatos/:id/reprocessar-ctps', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID de candidato invÃ¡lido.' });
+    if (!CHATBOT_WEBHOOK_URL) {
+      return res.status(503).json({ sucesso: false, erro: 'Configure CHATBOT_WEBHOOK_URL no serviÃ§o do painel.' });
+    }
+    if (!CHATBOT_REPROCESS_TOKEN) {
+      return res.status(503).json({ sucesso: false, erro: 'Configure CHATBOT_REPROCESS_TOKEN no serviÃ§o do painel.' });
+    }
+
+    const result = await pool.query(`
+      SELECT
+        c.id AS candidato_id,
+        c.nome,
+        c.telefone,
+        c.status,
+        c.etapa,
+        d.id AS documento_id,
+        COALESCE(d.nome_arquivo, d.arquivo, 'CTPS Digital.pdf') AS nome_arquivo,
+        COALESCE(NULLIF(d.mime_type, ''), 'application/pdf') AS mime_type
+      FROM candidatos c
+      JOIN LATERAL (
+        SELECT id, nome_arquivo, arquivo, mime_type
+        FROM documentos
+        WHERE candidato_id = c.id
+          AND conteudo IS NOT NULL
+          AND COALESCE(NULLIF(mime_type, ''), 'application/pdf') = 'application/pdf'
+          AND UPPER(COALESCE(tipo, '')) IN ('CTPS', 'PENDENTE', 'OUTRO')
+        ORDER BY
+          CASE UPPER(COALESCE(tipo, '')) WHEN 'CTPS' THEN 0 WHEN 'PENDENTE' THEN 1 ELSE 2 END,
+          created_at DESC,
+          id DESC
+        LIMIT 1
+      ) d ON TRUE
+      WHERE c.id = $1
+      LIMIT 1
+    `, [id]);
+
+    if (!result.rowCount) {
+      return res.status(404).json({
+        sucesso: false,
+        erro: 'NÃ£o hÃ¡ uma CTPS/PDF armazenada para reprocessar. PeÃ§a ao candidato para enviar o arquivo novamente.',
+      });
+    }
+
+    const data = result.rows[0];
+    if (['CONTRATADO', 'ENCERRADO'].includes(String(data.status || '').toUpperCase())) {
+      return res.status(400).json({ sucesso: false, erro: 'Este processo jÃ¡ estÃ¡ encerrado e nÃ£o pode ser reprocessado.' });
+    }
+
+    const publicBase = PUBLIC_BASE_URL || `${req.protocol}://${req.get('host')}`;
+    const mediaUrl = `${publicBase}/api/public/documentos/${data.documento_id}/reprocessar.pdf?token=${encodeURIComponent(CHATBOT_REPROCESS_TOKEN)}`;
+
+    await pool.query(`
+      UPDATE candidatos
+      SET
+        status = 'EM_PROCESSO',
+        etapa = 'ANALISANDO_DOCUMENTOS',
+        ia_atendimento_ativo = TRUE,
+        ia_retomada_em = NOW(),
+        ia_retomada_por = $1,
+        ia_ultima_acao_manual = 'REPROCESSAR_CTPS',
+        ia_ultima_acao_manual_em = NOW(),
+        ia_ultima_acao_manual_por = $1,
+        updated_at = NOW()
+      WHERE id = $2
+    `, [currentUserName(req), id]);
+
+    await pool.query(`
+      INSERT INTO eventos (candidato_id, evento, descricao, created_at)
+      VALUES ($1, 'REPROCESSAMENTO_CTPS_SOLICITADO', $2, NOW())
+    `, [id, `Reprocessamento solicitado no painel por ${currentUserName(req)}. Documento #${data.documento_id}.`]);
+
+    await triggerChatbotReprocess({
+      candidatoId: id,
+      telefone: data.telefone,
+      documentoId: data.documento_id,
+      nomeArquivo: data.nome_arquivo,
+      mimeType: data.mime_type,
+      mediaUrl,
+    });
+
+    return res.json({
+      sucesso: true,
+      mensagem: 'A CTPS foi enviada novamente para anÃ¡lise. O resultado serÃ¡ encaminhado automaticamente ao candidato.',
+      documento_id: data.documento_id,
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.patch('/api/candidatos/:id', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+
+    const allowedStatuses = ['NOVO', 'EM_PROCESSO', 'APROVADO', 'EM_ADMISSAO', 'REPROVADO', 'CONTRATADO', 'ENCERRADO'];
+    const status = req.body?.status ? String(req.body.status).trim().toUpperCase() : null;
+    const etapa = req.body?.etapa ? String(req.body.etapa).trim().toUpperCase() : null;
+    const vagaId = req.body?.vaga_id === null || req.body?.vaga_id === ''
+      ? null
+      : req.body?.vaga_id !== undefined ? Number(req.body.vaga_id) : undefined;
+
+    if (status && !allowedStatuses.includes(status)) {
+      return res.status(400).json({ sucesso: false, erro: 'Status invÃ¡lido.' });
+    }
+    if (etapa && !/^[A-Z0-9_]{2,80}$/.test(etapa)) {
+      return res.status(400).json({ sucesso: false, erro: 'Etapa invÃ¡lida.' });
+    }
+    if (status === 'REPROVADO' || etapa === 'REPROVADO_POS_ENTREVISTA') {
+      return res.status(400).json({
+        sucesso: false,
+        erro: 'Para reprovar apÃ³s a entrevista, use o campo â€œResultado apÃ³s entrevistaâ€ e informe o motivo obrigatÃ³rio.',
+      });
+    }
+    if (vagaId !== undefined && vagaId !== null && (!Number.isInteger(vagaId) || vagaId <= 0)) {
+      return res.status(400).json({ sucesso: false, erro: 'Vaga invÃ¡lida.' });
+    }
+
+    const result = await pool.query(`
+      UPDATE candidatos
+      SET
+        status = COALESCE($1, status),
+        etapa = COALESCE($2, etapa),
+        vaga_escolhida_at = CASE
+          WHEN $3::BOOLEAN AND vaga_id IS DISTINCT FROM $4::BIGINT THEN NOW()
+          ELSE vaga_escolhida_at
+        END,
+        vaga_id = CASE WHEN $3::BOOLEAN THEN $4::BIGINT ELSE vaga_id END,
+        vaga = CASE
+          WHEN $3::BOOLEAN AND $4::BIGINT IS NOT NULL
+          THEN COALESCE((SELECT titulo FROM vagas WHERE id = $4::BIGINT), vaga)
+          WHEN $3::BOOLEAN AND $4::BIGINT IS NULL THEN NULL
+          ELSE vaga
+        END,
+        updated_at = NOW()
+      WHERE id = $5
+      RETURNING *
+    `, [status, etapa, vagaId !== undefined, vagaId ?? null, id]);
+
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    res.json({ sucesso: true, mensagem: 'Candidato atualizado.', candidato: result.rows[0] });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+app.post('/api/candidatos/:id/decisao-pos-entrevista', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const decisao = String(req.body?.decisao || '').trim().toUpperCase();
+    const motivoCodigo = String(req.body?.motivo_codigo || req.body?.motivo || '').trim().toUpperCase();
+    const motivoInfo = rejectionReasonInfo(motivoCodigo, req.body?.motivo);
+    const motivo = motivoInfo.label;
+    const observacao = String(req.body?.observacao || '').trim();
+    const realocavel = req.body?.realocavel === undefined ? motivoInfo.realocavel : Boolean(req.body.realocavel);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    if (!['EM_ADMISSAO', 'REPROVADO_POS_ENTREVISTA', 'CONTRATADO'].includes(decisao)) {
+      return res.status(400).json({ sucesso: false, erro: 'DecisÃ£o invÃ¡lida.' });
+    }
+    if (decisao === 'REPROVADO_POS_ENTREVISTA' && !rejectionReasonCatalog[motivoInfo.codigo]) {
+      return res.status(400).json({ sucesso: false, erro: 'Selecione um motivo vÃ¡lido para a reprovaÃ§Ã£o apÃ³s a entrevista.' });
+    }
+    if (decisao === 'REPROVADO_POS_ENTREVISTA' && motivoInfo.exigeDetalhe && !observacao) {
+      return res.status(400).json({ sucesso: false, erro: 'Descreva o requisito ou contexto especÃ­fico desta reprovaÃ§Ã£o.' });
+    }
+
+    const status = decisao === 'REPROVADO_POS_ENTREVISTA' ? 'REPROVADO' : decisao;
+    const etapa = decisao;
+    await client.query('BEGIN');
+    const result = await client.query(`
+      UPDATE candidatos
+      SET
+        status = $1::VARCHAR,
+        etapa = $2::VARCHAR,
+        motivo_reprovacao_pos_entrevista = CASE
+          WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN $3::TEXT
+          ELSE NULL::TEXT
+        END,
+        motivo_reprovacao = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN $3::TEXT ELSE motivo_reprovacao END,
+        motivo_reprovacao_codigo = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN $7::TEXT ELSE motivo_reprovacao_codigo END,
+        motivo_reprovacao_categoria = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN $8::TEXT ELSE motivo_reprovacao_categoria END,
+        motivo_reprovacao_detalhe = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN COALESCE(NULLIF($4::TEXT, ''), $3::TEXT) ELSE motivo_reprovacao_detalhe END,
+        reprovacao_realocavel = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN $9::BOOLEAN ELSE reprovacao_realocavel END,
+        reprovacao_vaga_id = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN vaga_id ELSE reprovacao_vaga_id END,
+        reprovacao_registrada_em = CASE WHEN $2::VARCHAR = 'REPROVADO_POS_ENTREVISTA'::VARCHAR THEN NOW() ELSE reprovacao_registrada_em END,
+        observacao_decisao_pos_entrevista = NULLIF($4::TEXT, ''),
+        decisao_pos_entrevista_at = NOW(),
+        decisao_pos_entrevista_por = $5::TEXT,
+        admissao_iniciada_at = CASE
+          WHEN $2::VARCHAR = 'EM_ADMISSAO'::VARCHAR
+          THEN COALESCE(admissao_iniciada_at, NOW())
+          ELSE admissao_iniciada_at
+        END,
+        updated_at = NOW()
+      WHERE id = $6::BIGINT
+      RETURNING *
+    `, [status, etapa, motivo || null, observacao, currentUserName(req), id, motivoInfo.codigo, motivoInfo.categoria, realocavel]);
+    if (!result.rowCount) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ sucesso: false, erro: 'Candidato nÃ£o encontrado.' });
+    }
+    const descricao = decisao === 'REPROVADO_POS_ENTREVISTA'
+      ? `Reprovado apÃ³s entrevista. Motivo: ${motivo}${observacao ? ` | ObservaÃ§Ã£o: ${observacao}` : ''}`
+      : decisao === 'EM_ADMISSAO'
+        ? `Candidato movido para admissÃ£o${observacao ? `: ${observacao}` : '.'}`
+        : `Candidato marcado como contratado${observacao ? `: ${observacao}` : '.'}`;
+    await client.query(`
+      INSERT INTO eventos (candidato_id, evento, descricao, created_at)
+      VALUES ($1, $2, $3, NOW())
+    `, [id, decisao, descricao]);
+
+    if (decisao === 'REPROVADO_POS_ENTREVISTA') {
+      await client.query(`
+        INSERT INTO candidato_reprovacoes_historico
+        (candidato_id, vaga_id, etapa, categoria, codigo, motivo, observacao, realocavel, origem, dados_contexto, registrado_por)
+        SELECT
+          c.id, c.vaga_id, $2::TEXT, $3::TEXT, $4::TEXT, $5::TEXT,
+          NULLIF($6::TEXT, ''), $7::BOOLEAN, 'PAINEL',
+          JSONB_BUILD_OBJECT('status_anterior', c.status, 'decisao', $2::TEXT), $8::TEXT
+        FROM candidatos c
+        WHERE c.id = $1
+      `, [id, etapa, motivoInfo.categoria, motivoInfo.codigo, motivo, observacao, realocavel, currentUserName(req)]);
+    }
+    await client.query('COMMIT');
+
+    let conviteGrupo = null;
+    if (decisao === 'REPROVADO_POS_ENTREVISTA') {
+      try {
+        conviteGrupo = await triggerPostInterviewRejection({
+          candidatoId: id,
+          motivo,
+          observacao,
+          solicitadoPor: currentUserName(req),
+        });
+      } catch (webhookError) {
+        console.error('Falha ao notificar reprovaÃ§Ã£o e grupo:', webhookError);
+        conviteGrupo = {
+          configurado: Boolean(REPROVACAO_WEBHOOK_URL),
+          enviado: false,
+          erro: webhookError.message,
+        };
+      }
+    }
+
+    return res.json({
+      sucesso: true,
+      mensagem: decisao === 'REPROVADO_POS_ENTREVISTA'
+        ? 'ReprovaÃ§Ã£o registrada.'
+        : 'DecisÃ£o registrada.',
+      candidato: result.rows[0],
+      convite_grupo: conviteGrupo,
+      aviso: conviteGrupo?.aviso
+        || (conviteGrupo && conviteGrupo.enviado === false
+          ? 'A decisÃ£o foi salva, mas a mensagem ao candidato nÃ£o foi confirmada. VocÃª pode clicar em salvar novamente para tentar o envio.'
+          : null),
+    });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    return next(error);
+  } finally { client.release(); }
+});
+
+app.get('/api/candidatos/:id/notas', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const result = await pool.query(`
+      SELECT * FROM candidato_notas
+      WHERE candidato_id = $1
+      ORDER BY created_at DESC
+    `, [id]);
+    res.json({ sucesso: true, notas: result.rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/candidatos/:id/notas', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    const nota = String(req.body?.nota || '').trim();
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    if (nota.length < 2 || nota.length > 8000) {
+      return res.status(400).json({ sucesso: false, erro: 'A nota deve ter entre 2 e 8000 caracteres.' });
+    }
+    const result = await pool.query(`
+      INSERT INTO candidato_notas (candidato_id, nota, criado_por)
+      VALUES ($1, $2, $3)
+      RETURNING *
+    `, [id, nota, currentUserName(req)]);
+    res.status(201).json({ sucesso: true, nota: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.get('/api/candidatos/:id/tarefas', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const result = await pool.query(`
+      SELECT * FROM candidato_tarefas
+      WHERE candidato_id = $1
+      ORDER BY
+        CASE status WHEN 'PENDENTE' THEN 1 WHEN 'EM_ANDAMENTO' THEN 2 ELSE 3 END,
+        vencimento ASC NULLS LAST,
+        created_at DESC
+    `, [id]);
+    res.json({ sucesso: true, tarefas: result.rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/candidatos/:id/tarefas', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    const titulo = String(req.body?.titulo || '').trim();
+    const descricao = String(req.body?.descricao || '').trim() || null;
+    const prioridade = String(req.body?.prioridade || 'MEDIA').trim().toUpperCase();
+    const vencimento = req.body?.vencimento ? new Date(req.body.vencimento) : null;
+
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    if (titulo.length < 2 || titulo.length > 250) {
+      return res.status(400).json({ sucesso: false, erro: 'TÃ­tulo da tarefa invÃ¡lido.' });
+    }
+    if (!['BAIXA', 'MEDIA', 'ALTA', 'URGENTE'].includes(prioridade)) {
+      return res.status(400).json({ sucesso: false, erro: 'Prioridade invÃ¡lida.' });
+    }
+    if (vencimento && Number.isNaN(vencimento.getTime())) {
+      return res.status(400).json({ sucesso: false, erro: 'Vencimento invÃ¡lido.' });
+    }
+
+    const result = await pool.query(`
+      INSERT INTO candidato_tarefas
+        (candidato_id, titulo, descricao, prioridade, vencimento, criado_por)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+    `, [id, titulo, descricao, prioridade, vencimento, currentUserName(req)]);
+    res.status(201).json({ sucesso: true, tarefa: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.patch('/api/tarefas/:id', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    const status = String(req.body?.status || '').trim().toUpperCase();
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    if (!['PENDENTE', 'EM_ANDAMENTO', 'CONCLUIDA', 'CANCELADA'].includes(status)) {
+      return res.status(400).json({ sucesso: false, erro: 'Status invÃ¡lido.' });
+    }
+    const result = await pool.query(`
+      UPDATE candidato_tarefas
+      SET
+        status = $1,
+        concluido_em = CASE WHEN $1 = 'CONCLUIDA' THEN NOW() ELSE NULL END,
+        updated_at = NOW()
+      WHERE id = $2
+      RETURNING *
+    `, [status, id]);
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Tarefa nÃ£o encontrada.' });
+    res.json({ sucesso: true, tarefa: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.get('/api/candidatos/:id/etiquetas', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const [all, selected] = await Promise.all([
+      pool.query(`SELECT * FROM etiquetas ORDER BY nome ASC`),
+      pool.query(`
+        SELECT e.*
+        FROM candidato_etiquetas ce
+        JOIN etiquetas e ON e.id = ce.etiqueta_id
+        WHERE ce.candidato_id = $1
+        ORDER BY e.nome ASC
+      `, [id]),
+    ]);
+    res.json({ sucesso: true, etiquetas: all.rows, selecionadas: selected.rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/candidatos/:id/etiquetas', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const etiquetaIds = Array.isArray(req.body?.etiqueta_ids)
+      ? [...new Set(req.body.etiqueta_ids.map(Number).filter((value) => Number.isInteger(value) && value > 0))]
+      : [];
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+
+    await client.query('BEGIN');
+    await client.query(`DELETE FROM candidato_etiquetas WHERE candidato_id = $1`, [id]);
+    for (const etiquetaId of etiquetaIds) {
+      await client.query(`
+        INSERT INTO candidato_etiquetas (candidato_id, etiqueta_id)
+        VALUES ($1, $2)
+        ON CONFLICT DO NOTHING
+      `, [id, etiquetaId]);
+    }
+    await client.query('COMMIT');
+    res.json({ sucesso: true, mensagem: 'Etiquetas atualizadas.' });
+  } catch (error) {
+    try { await client.query('ROLLBACK'); } catch {}
+    next(error);
+  } finally {
+    client.release();
+  }
+});
+
+
+// ============================================================
+// GENESIS IA V9 â€” Templates de vagas e Auditoria hÃ­brida
+// ============================================================
+
+const templateDataSchema = z.record(z.string(), z.any());
+const vacancyTemplateSchema = z.object({
+  nome: z.string().trim().min(2).max(160),
+  descricao: nullableText,
+  empresa_id: z.union([z.number(), z.string(), z.null(), z.undefined()]).transform((value, ctx) => {
+    if (value === null || value === undefined || value === '') return null;
+    const id = Number(value);
+    if (!Number.isInteger(id) || id <= 0) { ctx.addIssue({ code: 'custom', message: 'Empresa invÃ¡lida.' }); return z.NEVER; }
+    return id;
+  }),
+  dados: templateDataSchema,
+  ativo: z.union([z.boolean(), z.string(), z.number(), z.null(), z.undefined()])
+    .transform((value) => !(value === false || value === 0 || value === '0' || value === 'false'))
+    .default(true),
+});
+
+app.get('/api/vagas-templates', async (_req, res, next) => {
+  try {
+    const result = await pool.query(`
+      SELECT t.*, e.nome AS empresa_nome
+      FROM vagas_templates t
+      LEFT JOIN empresas e ON e.id = t.empresa_id
+      WHERE t.ativo = TRUE
+      ORDER BY t.nome ASC
+    `);
+    res.json({ sucesso: true, templates: result.rows });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/vagas-templates', async (req, res, next) => {
+  try {
+    const parsed = vacancyTemplateSchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+    const d = parsed.data;
+    const result = await pool.query(`
+      INSERT INTO vagas_templates (nome, descricao, empresa_id, dados, ativo, criado_por, atualizado_por)
+      VALUES ($1,$2,$3,$4::JSONB,$5,$6,$6)
+      ON CONFLICT (nome) DO UPDATE SET
+        descricao = EXCLUDED.descricao,
+        empresa_id = EXCLUDED.empresa_id,
+        dados = EXCLUDED.dados,
+        ativo = TRUE,
+        atualizado_por = EXCLUDED.atualizado_por,
+        updated_at = NOW()
+      RETURNING *
+    `, [d.nome, d.descricao, d.empresa_id, JSON.stringify(d.dados || {}), d.ativo, currentUserName(req)]);
+    res.status(201).json({ sucesso: true, mensagem: 'Template salvo com sucesso.', template: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.put('/api/vagas-templates/:id', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const parsed = vacancyTemplateSchema.safeParse(req.body);
+    if (!parsed.success) return validationError(res, parsed.error);
+    const d = parsed.data;
+    const result = await pool.query(`
+      UPDATE vagas_templates SET nome=$2, descricao=$3, empresa_id=$4,
+        dados=$5::JSONB, ativo=$6, atualizado_por=$7, updated_at=NOW()
+      WHERE id=$1 RETURNING *
+    `, [id, d.nome, d.descricao, d.empresa_id, JSON.stringify(d.dados || {}), d.ativo, currentUserName(req)]);
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Template nÃ£o encontrado.' });
+    res.json({ sucesso: true, mensagem: 'Template atualizado.', template: result.rows[0] });
+  } catch (error) { next(error); }
+});
+
+app.delete('/api/vagas-templates/:id', async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const result = await pool.query(`UPDATE vagas_templates SET ativo=FALSE, atualizado_por=$2, updated_at=NOW() WHERE id=$1 RETURNING id`, [id, currentUserName(req)]);
+    if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Template nÃ£o encontrado.' });
+    res.json({ sucesso: true, mensagem: 'Template desativado.' });
+  } catch (error) { next(error); }
+});
+
+function auditNormalizeText(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase().replace(/https?:\/\/\S+/g, ' link ').replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+}
+
+function auditSimilarity(left, right) {
+  const a = auditNormalizeText(left);
+  const b = auditNormalizeText(right);
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+  const grams = (text) => {
+    const padded = `  ${text}  `;
+    const set = new Set();
+    for (let i = 0; i < padded.length - 2; i += 1) set.add(padded.slice(i, i + 3));
+    return set;
+  };
+  const ga = grams(a); const gb = grams(b);
+  let intersection = 0;
+  for (const item of ga) if (gb.has(item)) intersection += 1;
+  return (2 * intersection) / Math.max(1, ga.size + gb.size);
+}
+
+function calculateAgeAt(dateOfBirth, reference = new Date()) {
+  if (!dateOfBirth) return null;
+  const birth = new Date(dateOfBirth);
+  if (Number.isNaN(birth.getTime())) return null;
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' })
+    .formatToParts(reference).reduce((acc, item) => ({ ...acc, [item.type]: item.value }), {});
+  let age = Number(parts.year) - birth.getUTCFullYear();
+  const month = Number(parts.month) - 1;
+  const day = Number(parts.day);
+  if (month < birth.getUTCMonth() || (month === birth.getUTCMonth() && day < birth.getUTCDate())) age -= 1;
+  return age;
+}
+
+function auditFingerprint(parts) {
+  return crypto.createHash('sha256').update(parts.map((item) => String(item ?? '')).join('|')).digest('hex');
+}
+
+async function insertAuditIssue(client, runId, candidate, issue) {
+  const fingerprint = auditFingerprint([
+    candidate.id, issue.categoria, issue.mensagem_usuario_id, issue.mensagem_ia_id,
+    issue.anchor || issue.descricao?.slice(0, 120),
+  ]);
+  const result = await client.query(`
+    INSERT INTO auditoria_problemas (
+      auditoria_id, candidato_id, vaga_id, categoria, gravidade, origem_deteccao,
+      confianca, titulo, descricao, evidencia, comportamento_esperado,
+      sugestao_correcao, mensagem_usuario_id, mensagem_ia_id, fingerprint
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10::JSONB,$11,$12,$13,$14,$15)
+    ON CONFLICT (fingerprint) DO UPDATE SET
+      auditoria_id = EXCLUDED.auditoria_id,
+      gravidade = EXCLUDED.gravidade,
+      confianca = EXCLUDED.confianca,
+      descricao = EXCLUDED.descricao,
+      evidencia = EXCLUDED.evidencia,
+      comportamento_esperado = EXCLUDED.comportamento_esperado,
+      sugestao_correcao = EXCLUDED.sugestao_correcao,
+      updated_at = NOW()
+    RETURNING id
+  `, [runId, candidate.id, candidate.vaga_id || null, issue.categoria, issue.gravidade,
+    issue.origem_deteccao || 'REGRA', issue.confianca ?? 100, issue.titulo,
+    issue.descricao, JSON.stringify(issue.evidencia || {}), issue.comportamento_esperado || null,
+    issue.sugestao_correcao || null, issue.mensagem_usuario_id || null,
+    issue.mensagem_ia_id || null, fingerprint]);
+  return result.rows[0]?.id || null;
+}
+
+function asksForCtps(message) {
+  const text = auditNormalizeText(message);
+  return /(ctps|carteira de trabalho)/.test(text) && /(envie|enviar|mande|mandar|preciso|necessario|necessaria|aguardo|anexe|encaminhe)/.test(text);
+}
+function asksForCep(message) {
+  const text = auditNormalizeText(message);
+  return /\bcep\b/.test(text) && /(informe|envie|mandar|mande|preciso|qual|digite)/.test(text);
+}
+function asksForAge(message) {
+  const text = auditNormalizeText(message);
+  return /(data de nascimento|nascimento|qual.*idade|idade atual)/.test(text)
+    && /(informe|qual|pode.*responder|preciso|confirma)/.test(text);
+}
+function textContainsBirthOrAge(message) {
+  const raw = String(message || '');
+  const text = auditNormalizeText(raw);
+  return /\b\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{4}\b/.test(raw)
+    || /\b\d{4}-\d{1,2}-\d{1,2}\b/.test(raw)
+    || /\b\d{1,2}\s+(?:de\s+)?(?:janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\s+(?:de\s+)?\d{4}\b/.test(text)
+    || /\b(?:tenho|estou com|minha idade e|idade)\s*:?\s*\d{1,3}\s*anos?\b/.test(text)
+    || /^\s*\d{1,3}\s*anos?\s*$/.test(text);
+}
+function extractCepFromMessage(message) {
+  const match = String(message || '').match(/(?:^|\D)(\d{5})[-. ]?(\d{3})(?:\D|$)/);
+  return match ? `${match[1]}${match[2]}` : null;
+}
+function isPauseOrClosure(message) {
+  const text = auditNormalizeText(message);
+  return /(vou aguardar|prefiro aguardar|aguardar outra oportunidade|nao consigo.*domingo|nao posso.*domingo|curso.*domingo|sem disponibilidade|nao tenho interesse|nao quero.*vaga|pode pausar|nao precisa.*chamar)/.test(text);
+}
+function isFollowupMessage(message) {
+  const text = auditNormalizeText(message);
+  return /(ainda deseja continuar|ainda faltam|para continuar|vi que voce iniciou|nao concluiu|lembrete|retomar.*processo)/.test(text);
+}
+function asksForSex(message) {
+  const text = auditNormalizeText(message);
+  return /(sexo|genero)/.test(text) && /(masculino|feminino|como.*prefere.*informar|pode.*informar|qual)/.test(text);
+}
+function textContainsSexAnswer(message) {
+  const text = auditNormalizeText(message);
+  return /^(masculino|feminino|homem|mulher)$/.test(text)
+    || /\b(?:sexo|genero|sou|me identifico como)\s*(?:e|:|-)?\s*(masculino|feminino|homem|mulher)\b/.test(text)
+    || /(prefiro nao informar|nao quero informar|nao desejo informar)/.test(text);
+}
+function exposesTechnicalError(message) {
+  const text = String(message || '');
+  return /(problem in node|module ['"]?.+['"]? is disallowed|cannot read properties|syntaxerror|referenceerror|typeerror|sqlstate|postgres(?:ql)? error|webhook error|execution failed|undefined is not|stack trace|erro no node|falha no workflow)/i.test(text);
+}
+function containsVacancyGroupLink(message) {
+  return /https?:\/\/(?:chat\.)?whatsapp\.com\/\S+/i.test(String(message || ''));
+}
+function mentionsInterviewOffer(message) {
+  const text = auditNormalizeText(message);
+  return /(entrevista|google meet|horarios disponiveis|opcoes disponiveis)/.test(text)
+    && /(marcar|agendar|opcao 1|responda com 1|horario|disponiveis)/.test(text);
+}
+
+async function callAiAudit(candidate, messages, vacancy, documents) {
+  if (!AUDITORIA_IA_WEBHOOK_URL) return [];
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), AUDITORIA_IA_TIMEOUT_MS);
+  try {
+    const response = await fetch(AUDITORIA_IA_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: AUDITORIA_IA_WEBHOOK_TOKEN,
+        candidato: candidate,
+        vaga: vacancy,
+        documentos: documents,
+        mensagens: messages,
+        categorias_permitidas: [
+          'PERGUNTA_IGNORADA','RESPOSTA_FORA_CONTEXTO','INFORMACAO_INVENTADA','CONTRADICAO',
+          'INSTRUCAO_CONFUSA','NAO_RECONHECEU_DOCUMENTO','PERGUNTA_FORA_DA_ETAPA',
+          'RESPOSTA_INCOMPLETA','OPCAO_INVALIDA_NAO_REPETIDA','SOLICITOU_MULTIPLAS_PENDENCIAS',
+          'CONFIRMACAO_IGNORADA','ENCERRAMENTO_NAO_RESPEITADO',
+          'PERGUNTA_REPETIDA','RESPOSTA_REDUNDANTE','PROMESSA_NAO_CUMPRIDA',
+          'INSTRUCAO_CONFUSA','CONDUCAO_EXCESSIVAMENTE_LONGA','RESPOSTA_FRIA_EM_REPROVACAO'
+        ],
+      }),
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error(`Auditoria IA retornou HTTP ${response.status}.`);
+    const body = await response.json().catch(() => ({}));
+    return Array.isArray(body.problemas) ? body.problemas.slice(0, 10) : [];
+  } finally { clearTimeout(timer); }
+}
+
+async function executeHybridAudit({ start, end, origin, requestedBy }) {
+  const client = await pool.connect();
+  let runId = null;
+  try {
+    const run = await client.query(`
+      INSERT INTO auditorias_conversas (origem, inicio_periodo, fim_periodo, status, solicitado_por)
+      VALUES ($1,$2,$3,'PROCESSANDO',$4) RETURNING id
+    `, [origin, start, end, requestedBy]);
+    runId = run.rows[0].id;
+
+    const candidatesResult = await client.query(`
+      SELECT c.*, v.titulo AS vaga_nome, v.idade_minima, v.idade_maxima,
+        v.entrevista_horarios, v.entrevista_dias_semana,
+        v.entrevista_duracao_minutos, v.experiencia_minima_meses, v.experiencia_revisao_minima_meses, TO_JSONB(v) AS vaga_dados
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      WHERE EXISTS (
+        SELECT 1 FROM mensagens m
+        WHERE m.candidato_id = c.id AND m.created_at >= $1 AND m.created_at < $2
+      )
+      ORDER BY c.updated_at DESC
+      LIMIT $3
+    `, [start, end, AUDITORIA_MAX_CONVERSAS]);
+
+    const candidatesWithIssues = new Set();
+    let totalIssues = 0;
+    let aiAuditedConversations = 0;
+    for (const candidate of candidatesResult.rows) {
+      const [messagesResult, documentsResult, interviewsResult, historyResult] = await Promise.all([
+        client.query(`SELECT id, quem, mensagem, mensagem_id, contexto_snapshot, lote_resposta_id, origem_mensagem_id, created_at FROM mensagens WHERE candidato_id=$1 AND created_at >= $2 AND created_at < $3 ORDER BY created_at ASC, id ASC`, [candidate.id, start, end]),
+        client.query(`SELECT id, tipo, titulo, nome_arquivo, mensagem_id, hash_sha256, status_processamento, classificacao_confianca, resultado, (conteudo IS NOT NULL) AS arquivo_armazenado, created_at, processando_at, processado_at FROM documentos WHERE candidato_id=$1 ORDER BY created_at ASC, id ASC`, [candidate.id]),
+        client.query(`SELECT id, inicio, fim, status, meet_link, google_event_url, created_at FROM entrevistas WHERE candidato_id=$1 AND created_at >= $2 AND created_at < $3 ORDER BY created_at ASC`, [candidate.id, start, end]),
+        client.query(`SELECT * FROM candidato_etapas_historico WHERE candidato_id=$1 AND created_at >= $2 AND created_at < $3 ORDER BY created_at ASC`, [candidate.id, start, end]).catch(() => ({ rows: [] })),
+      ]);
+      const messages = messagesResult.rows;
+      const documents = documentsResult.rows;
+      const interviews = interviewsResult.rows;
+      const issues = [];
+      const iaMessages = messages.filter((item) => String(item.quem).toUpperCase() === 'IA');
+      const staticFlow = String(candidate.fluxo_versao || '').toUpperCase() === 'CHATBOT_ESTATICO_V1';
+
+      for (let index = 1; index < messages.length; index += 1) {
+        const previous = messages[index - 1];
+        const current = messages[index];
+        if (String(previous.quem).toUpperCase() !== 'IA' || String(current.quem).toUpperCase() !== 'IA') continue;
+        const seconds = (new Date(current.created_at) - new Date(previous.created_at)) / 1000;
+        if (seconds < 0 || seconds > 120) continue;
+        const similarity = auditSimilarity(previous.mensagem, current.mensagem);
+        if (similarity >= 0.90) {
+          issues.push({ categoria: 'MENSAGEM_DUPLICADA', gravidade: seconds <= 5 ? 'ALTA' : 'MEDIA',
+            titulo: 'Mensagem duplicada ou muito semelhante',
+            descricao: `A Evelyn enviou duas respostas consecutivas com ${Math.round(similarity * 100)}% de similaridade em ${Math.round(seconds)} segundo(s).`,
+            evidencia: { anterior: previous, atual: current, similaridade: similarity },
+            comportamento_esperado: 'Enviar uma Ãºnica resposta consolidada para cada lote de mensagens.',
+            sugestao_correcao: 'Revisar idempotÃªncia, buffer e execuÃ§Ãµes concorrentes.', mensagem_ia_id: current.id,
+            anchor: `${previous.id}-${current.id}` });
+        } else {
+          issues.push({ categoria: 'RESPOSTAS_CONCORRENTES', gravidade: seconds <= 10 ? 'ALTA' : 'MEDIA',
+            titulo: 'Duas respostas da IA sem nova mensagem do candidato',
+            descricao: `A Evelyn enviou duas respostas diferentes em ${Math.round(seconds)} segundo(s), sem uma nova mensagem do candidato entre elas.`,
+            evidencia: { anterior: previous, atual: current, similaridade: similarity },
+            comportamento_esperado: 'Processar cada lote uma Ãºnica vez e consolidar a resposta.',
+            sugestao_correcao: 'Verificar mÃºltiplos webhooks, retries e concorrÃªncia por candidato.', mensagem_ia_id: current.id,
+            anchor: `concurrent-${previous.id}-${current.id}` });
+        }
+      }
+
+      for (const message of iaMessages) {
+        const messageDate = new Date(message.created_at);
+        const snapshot = message.contexto_snapshot && typeof message.contexto_snapshot === 'object' ? message.contexto_snapshot : {};
+        const messagesBefore = messages.filter((item) => new Date(item.created_at) < messageDate);
+        const priorUserMessages = messagesBefore.filter((item) => String(item.quem).toUpperCase() === 'USUARIO');
+
+        if (!String(message.mensagem || '').trim()) {
+          issues.push({ categoria: 'MENSAGEM_IA_VAZIA', gravidade: 'ALTA', titulo: 'Resposta vazia da IA',
+            descricao: 'Foi registrado um envio da IA sem conteÃºdo textual.', evidencia: { mensagem: message },
+            comportamento_esperado: 'NÃ£o enviar mensagens vazias e registrar falhas tÃ©cnicas separadamente.',
+            sugestao_correcao: 'Validar o texto antes do node de envio.', mensagem_ia_id: message.id, anchor: `empty-${message.id}` });
+        }
+        if (exposesTechnicalError(message.mensagem)) {
+          issues.push({ categoria: 'ERRO_TECNICO_EXPOSTO', gravidade: 'CRITICA', titulo: 'Erro tÃ©cnico exposto ao candidato',
+            descricao: 'A resposta contÃ©m detalhes internos de execuÃ§Ã£o, cÃ³digo ou infraestrutura.', evidencia: { mensagem: message },
+            comportamento_esperado: 'Enviar uma mensagem segura e registrar o erro somente nos logs administrativos.',
+            sugestao_correcao: 'Adicionar fallback amigÃ¡vel antes do envio ao WhatsApp.', mensagem_ia_id: message.id, anchor: `technical-${message.id}` });
+        }
+        const sexKnownBefore = priorUserMessages.some((item) => textContainsSexAnswer(item.mensagem));
+        const sexAskedBefore = messagesBefore.some((item) => String(item.quem).toUpperCase() === 'IA' && asksForSex(item.mensagem));
+        if (staticFlow && asksForSex(message.mensagem)) {
+          issues.push({ categoria: 'SEXO_SOLICITADO_NO_FLUXO_ESTATICO', gravidade: 'ALTA', titulo: 'Sexo perguntado ao candidato no fluxo estÃ¡tico',
+            descricao: 'Na Nova Fase, o sexo sÃ³ pode ser extraÃ­do quando estiver explÃ­cito na CTPS e nunca deve ser solicitado no WhatsApp.', evidencia: { mensagem: message },
+            comportamento_esperado: 'Manter a etapa atual e coletar sexo somente da CTPS, sem inferÃªncia e sem bloqueio.',
+            sugestao_correcao: 'Remover a pergunta do template ou do workflow ativo.', mensagem_ia_id: message.id, anchor: `static-sex-${message.id}` });
+        } else if (asksForSex(message.mensagem) && (sexKnownBefore || sexAskedBefore)) {
+          issues.push({ categoria: 'SEXO_SOLICITADO_NOVAMENTE', gravidade: 'MEDIA', titulo: 'Sexo solicitado novamente',
+            descricao: 'A informaÃ§Ã£o jÃ¡ havia sido respondida, recusada ou perguntada anteriormente.', evidencia: { mensagem: message },
+            comportamento_esperado: 'Perguntar uma Ãºnica vez e continuar mesmo quando a pessoa preferir nÃ£o informar.',
+            sugestao_correcao: 'Usar sexo_perguntado_em, sexo e sexo_nao_informado antes da pergunta.', mensagem_ia_id: message.id, anchor: `sex-repeat-${message.id}` });
+        }
+        const statusBeforeMessage = String(snapshot.status_antes || '').toUpperCase();
+        if (isFollowupMessage(message.mensagem) && ['REPROVADO','CONTRATADO','ENCERRADO','EM_ADMISSAO'].includes(statusBeforeMessage)) {
+          issues.push({ categoria: 'FOLLOWUP_APOS_STATUS_FINAL', gravidade: 'ALTA', titulo: 'Follow-up incompatÃ­vel com o status',
+            descricao: `Foi enviado um lembrete quando o status anterior era ${statusBeforeMessage}.`, evidencia: { mensagem: message, contexto_snapshot: snapshot },
+            comportamento_esperado: 'NÃ£o cobrar etapas antigas de candidatos em status final ou administrativo.',
+            sugestao_correcao: 'Excluir status finais da seleÃ§Ã£o de follow-ups.', mensagem_ia_id: message.id, anchor: `followup-final-${message.id}` });
+        }
+
+        const docsBefore = documents.filter((doc) => new Date(doc.created_at) <= messageDate);
+        const hasCtpsOrProcessing = docsBefore.some((doc) => ['CTPS','PENDENTE','PENDENTE_REVISAO'].includes(String(doc.tipo || '').toUpperCase())
+          || ['PROCESSANDO','PENDENTE'].includes(String(doc.status_processamento || '').toUpperCase()));
+        if (asksForCtps(message.mensagem) && hasCtpsOrProcessing) {
+          const doc = docsBefore.at(-1);
+          issues.push({ categoria: 'PEDIDO_REPETIDO_CTPS', gravidade: 'ALTA', titulo: 'CTPS solicitada novamente',
+            descricao: 'A Evelyn solicitou a CTPS apesar de jÃ¡ existir um documento recebido ou em processamento.',
+            evidencia: { mensagem: message, documento: doc },
+            comportamento_esperado: 'Reconhecer o recebimento e informar que o documento estÃ¡ sendo processado.',
+            sugestao_correcao: 'Bloquear a solicitaÃ§Ã£o de CTPS quando houver documento PENDENTE, PROCESSANDO ou CTPS.', mensagem_ia_id: message.id,
+            anchor: `${message.id}-${doc?.id || 'doc'}` });
+        }
+        const cepBefore = snapshot.tem_cep === true || messagesBefore.some((item) => String(item.quem).toUpperCase() === 'USUARIO' && Boolean(extractCepFromMessage(item.mensagem)));
+        if (asksForCep(message.mensagem) && cepBefore) {
+          issues.push({ categoria: 'PEDIDO_REPETIDO_CEP', gravidade: 'MEDIA', titulo: 'CEP solicitado novamente',
+            descricao: 'A Evelyn pediu o CEP embora ele jÃ¡ estivesse disponÃ­vel antes desta resposta.',
+            evidencia: { mensagem: message, contexto_snapshot: snapshot, cep_previamente_informado: true },
+            comportamento_esperado: 'Usar o CEP jÃ¡ salvo e avanÃ§ar para a pendÃªncia seguinte.',
+            sugestao_correcao: 'Usar o snapshot temporal da resposta e impedir pedidos repetidos.', mensagem_ia_id: message.id,
+            anchor: message.id });
+        }
+        const ageKnownBefore = snapshot.idade_declarada != null || snapshot.idade_confirmada_documentalmente === true
+          || messagesBefore.some((item) => String(item.quem).toUpperCase() === 'USUARIO' && textContainsBirthOrAge(item.mensagem));
+        if (staticFlow && asksForAge(message.mensagem)) {
+          issues.push({ categoria: 'IDADE_SOLICITADA_NO_FLUXO_ESTATICO', gravidade: 'ALTA', titulo: 'Idade perguntada ao candidato no fluxo estÃ¡tico',
+            descricao: 'Na Nova Fase, a data de nascimento e a idade sÃ£o extraÃ­das internamente da CTPS.',
+            evidencia: { mensagem: message, contexto_snapshot: snapshot },
+            comportamento_esperado: 'NÃ£o perguntar idade ou nascimento no WhatsApp; encaminhar para revisÃ£o se a CTPS nÃ£o permitir a validaÃ§Ã£o.',
+            sugestao_correcao: 'Remover a pergunta do template ou workflow ativo.', mensagem_ia_id: message.id,
+            anchor: `static-age-${message.id}` });
+        } else if (asksForAge(message.mensagem) && ageKnownBefore) {
+          issues.push({ categoria: 'IDADE_SOLICITADA_NOVAMENTE', gravidade: 'MEDIA', titulo: 'Idade ou nascimento solicitado novamente',
+            descricao: 'A conversa jÃ¡ continha data de nascimento ou idade declarada antes desta pergunta.',
+            evidencia: { mensagem: message, contexto_snapshot: snapshot },
+            comportamento_esperado: 'Registrar a confirmaÃ§Ã£o preliminar e sÃ³ validar definitivamente pelo documento.',
+            sugestao_correcao: 'Aceitar data por extenso e idade declarada sem repetir a pergunta.', mensagem_ia_id: message.id,
+            anchor: `age-repeat-${message.id}` });
+        }
+        const pauseBefore = messagesBefore.filter((item) => String(item.quem).toUpperCase() === 'USUARIO').some((item) => isPauseOrClosure(item.mensagem));
+        if (pauseBefore && isFollowupMessage(message.mensagem)) {
+          issues.push({ categoria: 'FOLLOWUP_APOS_PAUSA', gravidade: 'MEDIA', titulo: 'Follow-up enviado apÃ³s pedido de pausa',
+            descricao: 'O candidato havia indicado que desejava aguardar ou nÃ£o possuÃ­a disponibilidade, mas recebeu uma cobranÃ§a de continuidade.',
+            evidencia: { mensagem: message },
+            comportamento_esperado: 'Pausar os lembretes atÃ© o candidato demonstrar novo interesse.',
+            sugestao_correcao: 'Ampliar os gatilhos de pausa e reativar somente por mensagem do candidato.', mensagem_ia_id: message.id,
+            anchor: `followup-pause-${message.id}` });
+        }
+        if (mentionsInterviewOffer(message.mensagem)) {
+          const age = calculateAgeAt(candidate.data_nascimento, messageDate);
+          const minAge = Number(candidate.idade_minima ?? 0);
+          const maxAge = candidate.idade_maxima === null || candidate.idade_maxima === undefined ? null : Number(candidate.idade_maxima);
+          const missing = [];
+          const hasSnapshot = message.contexto_snapshot && typeof message.contexto_snapshot === 'object';
+          const snap = hasSnapshot ? message.contexto_snapshot : {};
+          if (!(hasSnapshot ? snap.tem_cep === true : cepBefore)) missing.push('CEP');
+          if (!(hasSnapshot ? snap.tem_ctps === true : documents.some((doc) => String(doc.tipo || '').toUpperCase() === 'CTPS' && new Date(doc.created_at) <= messageDate))) missing.push('CTPS');
+          if (!(hasSnapshot ? snap.aprovado === true : (candidate.aprovado === true || String(candidate.status || '').toUpperCase() === 'APROVADO'))) missing.push('aprovaÃ§Ã£o da triagem');
+          if (!staticFlow && !(hasSnapshot ? snap.apresentacao_informada === true : Boolean(String(candidate.apresentacao_profissional || '').trim()))) missing.push('apresentaÃ§Ã£o profissional');
+          if (minAge > 0 || maxAge !== null) {
+            if (!(hasSnapshot ? snap.idade_confirmada_documentalmente === true : candidate.idade_confirmada_documentalmente === true)) missing.push('confirmaÃ§Ã£o documental da idade');
+            else if (!(hasSnapshot ? snap.idade_validada === true : candidate.idade_validada === true)) missing.push('faixa etÃ¡ria validada');
+          }
+          if (missing.length) {
+            issues.push({ categoria: 'ENTREVISTA_SEM_REQUISITOS', gravidade: 'CRITICA', titulo: 'Entrevista liberada sem prÃ©-requisitos',
+              descricao: `Foram oferecidos horÃ¡rios de entrevista sem: ${missing.join(', ')}.`,
+              evidencia: { mensagem: message, requisitos_ausentes: missing, candidato: { status: candidate.status, etapa: candidate.etapa, aprovado: candidate.aprovado, cep: candidate.cep, idade: age } },
+              comportamento_esperado: 'Bloquear agenda atÃ© todos os requisitos obrigatÃ³rios estarem concluÃ­dos.',
+              sugestao_correcao: 'Aplicar a trava determinÃ­stica antes de consultar ou criar horÃ¡rios.', mensagem_ia_id: message.id,
+              anchor: message.id });
+          }
+        }
+      }
+
+      const groupLinkMessages = iaMessages.filter((item) => containsVacancyGroupLink(item.mensagem));
+      if (groupLinkMessages.length > 1) {
+        issues.push({ categoria: 'LINK_GRUPO_REPETIDO', gravidade: 'MEDIA', titulo: 'Link do grupo enviado repetidamente',
+          descricao: `O link de grupo foi enviado ${groupLinkMessages.length} vezes no perÃ­odo analisado.`,
+          evidencia: { mensagens: groupLinkMessages.map((item) => ({ id: item.id, created_at: item.created_at })) },
+          comportamento_esperado: 'Enviar o link uma vez por contexto de reprovaÃ§Ã£o ou solicitaÃ§Ã£o explÃ­cita.',
+          sugestao_correcao: 'Consultar o evento CONVITE_GRUPO_VAGAS_ENVIADO antes do novo envio.', anchor: `group-link-${candidate.id}` });
+      }
+
+      const hashes = new Map();
+      for (const doc of documents) {
+        const hash = String(doc.hash_sha256 || '').trim();
+        if (hash) {
+          if (!hashes.has(hash)) hashes.set(hash, []);
+          hashes.get(hash).push(doc);
+        }
+      }
+      for (const [hash, sameDocs] of hashes) {
+        if (sameDocs.length > 1) {
+          issues.push({ categoria: 'DOCUMENTO_DUPLICADO', gravidade: 'MEDIA', titulo: 'Mesmo arquivo armazenado mais de uma vez',
+            descricao: `Foram encontrados ${sameDocs.length} registros com o mesmo hash SHA-256.`,
+            evidencia: { hash_sha256: hash, documentos: sameDocs.map((item) => ({ id: item.id, tipo: item.tipo, created_at: item.created_at })) },
+            comportamento_esperado: 'Manter um Ãºnico registro por candidato e conteÃºdo de arquivo.',
+            sugestao_correcao: 'Revisar idempotÃªncia por mensagem_id e hash.', anchor: `doc-hash-${candidate.id}-${hash.slice(0,12)}` });
+        }
+      }
+
+      for (const doc of documents) {
+        const type = String(doc.tipo || '').toUpperCase();
+        const processing = String(doc.status_processamento || '').toUpperCase();
+        const pending = ['PENDENTE','PROCESSANDO'].includes(processing) || type === 'PENDENTE';
+        const ageMinutes = (new Date(end) - new Date(doc.created_at)) / 60000;
+        if (pending && ageMinutes > 15) {
+          issues.push({ categoria: 'DOCUMENTO_PRESO', gravidade: ageMinutes > 60 ? 'ALTA' : 'MEDIA', titulo: 'Documento preso em processamento',
+            descricao: `O documento permanece pendente hÃ¡ aproximadamente ${Math.round(ageMinutes)} minutos.`,
+            evidencia: { documento: doc, minutos_pendente: Math.round(ageMinutes) },
+            comportamento_esperado: 'Concluir a classificaÃ§Ã£o ou encaminhar para revisÃ£o segura.',
+            sugestao_correcao: 'Verificar download, OCR e persistÃªncia final do documento.', anchor: `doc-${doc.id}` });
+        }
+        if (type === 'OUTRO' || type === 'PENDENTE_REVISAO') {
+          issues.push({ categoria: 'DOCUMENTO_NAO_RECONHECIDO', gravidade: 'MEDIA', titulo: 'Documento nÃ£o reconhecido automaticamente',
+            descricao: 'O PDF nÃ£o foi confirmado como CTPS ou currÃ­culo e requer revisÃ£o.', evidencia: { documento: doc },
+            comportamento_esperado: 'Preservar o arquivo e permitir revisÃ£o sem solicitar reenvio imediato.',
+            sugestao_correcao: 'Revisar OCR e classificaÃ§Ã£o do documento.', anchor: `doc-unrecognized-${doc.id}` });
+        }
+        if (String(doc.classificacao_confianca || '').toUpperCase() === 'BAIXA') {
+          issues.push({ categoria: 'DOCUMENTO_BAIXA_CONFIANCA', gravidade: 'MEDIA', titulo: 'ClassificaÃ§Ã£o documental com baixa confianÃ§a',
+            descricao: 'O classificador registrou baixa confianÃ§a para este PDF.', evidencia: { documento: doc },
+            comportamento_esperado: 'Encaminhar para revisÃ£o e impedir decisÃµes definitivas baseadas em classificaÃ§Ã£o incerta.',
+            sugestao_correcao: 'Ajustar sinais do classificador ou revisar manualmente.', anchor: `doc-low-${doc.id}` });
+        }
+        const resultText = JSON.stringify(doc.resultado || {});
+        if (/OCR_VAZIO|texto_ocr.{0,20}(""|null)|SEM_TEXTO/i.test(resultText)) {
+          issues.push({ categoria: 'OCR_VAZIO_OU_INSUFICIENTE', gravidade: 'ALTA', titulo: 'OCR vazio ou insuficiente',
+            descricao: 'O resultado do documento nÃ£o contÃ©m texto suficiente para uma classificaÃ§Ã£o segura.', evidencia: { documento: doc },
+            comportamento_esperado: 'NÃ£o decidir a triagem e encaminhar o arquivo para revisÃ£o.',
+            sugestao_correcao: 'Verificar qualidade do PDF, download e provedor de OCR.', anchor: `ocr-empty-${doc.id}` });
+        }
+      }
+
+      const completedCtps = documents.some((doc) => String(doc.tipo || '').toUpperCase() === 'CTPS'
+        && String(doc.status_processamento || 'CONCLUIDO').toUpperCase() === 'CONCLUIDO');
+      const currentStatusUpper = String(candidate.status || '').toUpperCase();
+      if (['APROVADO','EM_ADMISSAO','CONTRATADO'].includes(currentStatusUpper) && !completedCtps) {
+        issues.push({ categoria: 'APROVADO_SEM_CTPS', gravidade: 'CRITICA', titulo: 'Candidato avanÃ§ado sem CTPS concluÃ­da',
+          descricao: `O candidato estÃ¡ com status ${currentStatusUpper}, mas nÃ£o hÃ¡ CTPS concluÃ­da.`,
+          evidencia: { status: candidate.status, etapa: candidate.etapa, documentos: documents.map((item) => ({ id: item.id, tipo: item.tipo, status: item.status_processamento })) },
+          comportamento_esperado: 'Concluir e validar a CTPS antes de aprovar ou iniciar admissÃ£o.',
+          sugestao_correcao: 'Revisar a origem da aprovaÃ§Ã£o e bloquear a transiÃ§Ã£o.', anchor: `approved-no-ctps-${candidate.id}` });
+      }
+      if (candidate.documento_processando === true && candidate.processamento_bloqueado_ate
+          && new Date(candidate.processamento_bloqueado_ate) < new Date(end)) {
+        issues.push({ categoria: 'BLOQUEIO_DOCUMENTO_EXPIRADO', gravidade: 'ALTA', titulo: 'Bloqueio de documento expirado',
+          descricao: 'O candidato permaneceu bloqueado apÃ³s o limite de seguranÃ§a do processamento.',
+          evidencia: { processamento_bloqueado_ate: candidate.processamento_bloqueado_ate },
+          comportamento_esperado: 'Liberar o atendimento e encaminhar o documento para revisÃ£o.',
+          sugestao_correcao: 'Executar o mecanismo de recuperaÃ§Ã£o de processamento expirado.', anchor: `stale-lock-${candidate.id}` });
+      }
+      const hasAgeRuleAudit = Number(candidate.idade_minima || 0) > 0 || candidate.idade_maxima !== null;
+      if (hasAgeRuleAudit && candidate.idade_validada === true && candidate.idade_confirmada_documentalmente !== true) {
+        issues.push({ categoria: 'IDADE_VALIDADA_SEM_DOCUMENTO', gravidade: 'ALTA', titulo: 'Idade marcada como validada sem fonte documental',
+          descricao: 'idade_validada estÃ¡ true, mas idade_confirmada_documentalmente nÃ£o estÃ¡ true.',
+          evidencia: { origem: candidate.data_nascimento_origem, idade: candidate.idade_calculada },
+          comportamento_esperado: 'Usar idade_validada como decisÃ£o final somente apÃ³s CTPS ou currÃ­culo.',
+          sugestao_correcao: 'Migrar o registro para validaÃ§Ã£o preliminar e aguardar documento.', anchor: `age-valid-no-doc-${candidate.id}` });
+      }
+      const ageRejectCode = String(candidate.motivo_reprovacao_codigo || candidate.motivo_reprovacao || '').toUpperCase();
+      if (String(candidate.status || '').toUpperCase() === 'REPROVADO'
+          && ageRejectCode.startsWith('IDADE_')
+          && candidate.idade_confirmada_documentalmente !== true) {
+        issues.push({ categoria: 'REPROVACAO_ETARIA_SEM_DOCUMENTO', gravidade: 'CRITICA', titulo: 'ReprovaÃ§Ã£o etÃ¡ria baseada apenas em informaÃ§Ã£o preliminar',
+          descricao: 'O candidato foi reprovado por idade sem confirmaÃ§Ã£o da CTPS ou currÃ­culo.',
+          evidencia: { codigo: ageRejectCode, origem: candidate.data_nascimento_origem, idade_declarada: candidate.idade_declarada },
+          comportamento_esperado: 'Registrar a idade preliminar e continuar atÃ© a validaÃ§Ã£o documental.',
+          sugestao_correcao: 'Reabrir o processo e aplicar a confirmaÃ§Ã£o documental.', anchor: `age-reject-no-doc-${candidate.id}` });
+      }
+      if (candidate.vaga_id && String(candidate.vaga_dados?.status || '').toUpperCase() === 'ATIVA'
+          && (!Array.isArray(candidate.entrevista_dias_semana) || !candidate.entrevista_dias_semana.length
+              || !Array.isArray(candidate.entrevista_horarios) || !candidate.entrevista_horarios.length)) {
+        issues.push({ categoria: 'VAGA_SEM_CONFIGURACAO_ENTREVISTA', gravidade: 'ALTA', titulo: 'Vaga sem horÃ¡rios de entrevista',
+          descricao: 'A vaga ativa nÃ£o possui dias e horÃ¡rios suficientes para gerar opÃ§Ãµes seguras.',
+          evidencia: { vaga_id: candidate.vaga_id, dias: candidate.entrevista_dias_semana, horarios: candidate.entrevista_horarios },
+          comportamento_esperado: 'Configurar dias, horÃ¡rios e duraÃ§Ã£o antes de ativar o atendimento.',
+          sugestao_correcao: 'Editar a vaga e concluir a seÃ§Ã£o de disponibilidade.', anchor: `vacancy-schedule-${candidate.vaga_id}` });
+      }
+
+      const allowedTransitions = new Map([
+        ['PRIMEIRO_CONTATO', new Set(['PRIMEIRO_CONTATO','ESCOLHENDO_VAGA','PERGUNTANDO_IDADE','PERGUNTANDO_SEXO','PERGUNTANDO_EXPERIENCIA'])],
+        ['ESCOLHENDO_VAGA', new Set(['ESCOLHENDO_VAGA','PERGUNTANDO_IDADE','PERGUNTANDO_SEXO','PERGUNTANDO_EXPERIENCIA','PERGUNTANDO_IDADE','AGUARDANDO_CTPS_CEP','AGUARDANDO_CTPS','AGUARDANDO_CEP','REPROVADO_PRE_TRIAGEM'])],
+        ['PERGUNTANDO_IDADE', new Set(['PERGUNTANDO_IDADE','PERGUNTANDO_SEXO','PERGUNTANDO_EXPERIENCIA','ANALISANDO_DOCUMENTOS','AGUARDANDO_VALIDACAO_IDADE','AGUARDANDO_CTPS_CEP','AGUARDANDO_CTPS','AGUARDANDO_CEP','REPROVADO_PRE_TRIAGEM'])],
+        ['PERGUNTANDO_SEXO', new Set(['PERGUNTANDO_SEXO','AGUARDANDO_CEP','AGUARDANDO_APRESENTACAO','GERANDO_OPCOES_ENTREVISTA'])],
+        ['PERGUNTANDO_EXPERIENCIA', new Set(['PERGUNTANDO_EXPERIENCIA','PERGUNTANDO_IDADE','PERGUNTANDO_SEXO','ESCOLHENDO_VAGA','AGUARDANDO_CTPS_CEP','AGUARDANDO_CTPS','AGUARDANDO_CEP','REPROVADO_PRE_TRIAGEM'])],
+        ['AGUARDANDO_CTPS_CEP', new Set(['AGUARDANDO_CTPS_CEP','AGUARDANDO_CTPS','AGUARDANDO_CEP','ANALISANDO_DOCUMENTOS','REPROVADO_TRIAGEM'])],
+        ['AGUARDANDO_CTPS', new Set(['AGUARDANDO_CTPS','ANALISANDO_DOCUMENTOS','REPROVADO_TRIAGEM'])],
+        ['AGUARDANDO_CEP', new Set(['AGUARDANDO_CEP','PERGUNTANDO_SEXO','ANALISANDO_DOCUMENTOS','APROVADO_TRIAGEM','AGUARDANDO_APRESENTACAO','REPROVADO_TRIAGEM'])],
+        ['ANALISANDO_DOCUMENTOS', new Set(['ANALISANDO_DOCUMENTOS','AGUARDANDO_VALIDACAO_IDADE','AGUARDANDO_CEP','PERGUNTANDO_SEXO','APROVADO_TRIAGEM','AGUARDANDO_APRESENTACAO','REPROVADO_TRIAGEM'])],
+        ['AGUARDANDO_VALIDACAO_IDADE', new Set(['AGUARDANDO_VALIDACAO_IDADE','ANALISANDO_DOCUMENTOS','AGUARDANDO_CEP','PERGUNTANDO_SEXO','APROVADO_TRIAGEM','AGUARDANDO_APRESENTACAO','REPROVADO_PRE_TRIAGEM','REPROVADO_TRIAGEM'])],
+        ['APROVADO_TRIAGEM', new Set(['APROVADO_TRIAGEM','PERGUNTANDO_SEXO','AGUARDANDO_APRESENTACAO','GERANDO_OPCOES_ENTREVISTA'])],
+        ['AGUARDANDO_APRESENTACAO', new Set(['AGUARDANDO_APRESENTACAO','GERANDO_OPCOES_ENTREVISTA','ESCOLHENDO_HORARIO'])],
+        ['GERANDO_OPCOES_ENTREVISTA', new Set(['GERANDO_OPCOES_ENTREVISTA','ESCOLHENDO_HORARIO','AGUARDANDO_ENTREVISTA'])],
+        ['ESCOLHENDO_HORARIO', new Set(['ESCOLHENDO_HORARIO','ENTREVISTA_AGENDADA','AGUARDANDO_ENTREVISTA'])],
+      ]);
+      for (const change of historyResult.rows) {
+        const from = String(change.etapa_anterior || '').toUpperCase();
+        const to = String(change.etapa_nova || '').toUpperCase();
+        if (from && to && allowedTransitions.has(from) && !allowedTransitions.get(from).has(to)) {
+          issues.push({ categoria: 'SALTO_ETAPA', gravidade: ['GERANDO_OPCOES_ENTREVISTA','ESCOLHENDO_HORARIO','ENTREVISTA_AGENDADA'].includes(to) ? 'CRITICA' : 'ALTA',
+            titulo: 'TransiÃ§Ã£o de etapa fora da sequÃªncia esperada',
+            descricao: `A etapa mudou de ${from} para ${to} sem uma transiÃ§Ã£o prevista.`,
+            evidencia: change,
+            comportamento_esperado: 'Manter a sequÃªncia da prÃ©-triagem e registrar uma justificativa para exceÃ§Ãµes.',
+            sugestao_correcao: 'Revisar a saÃ­da estruturada da IA e a validaÃ§Ã£o de transiÃ§Ãµes.', anchor: `stage-${change.id}` });
+        }
+      }
+
+      const rejectionStagesAudit = new Set(['REPROVADO_PRE_TRIAGEM','REPROVADO_TRIAGEM','REPROVADO_POS_ENTREVISTA']);
+      const statusAudit = String(candidate.status || '').toUpperCase();
+      const stageAudit = String(candidate.etapa || '').toUpperCase();
+      if ((statusAudit === 'REPROVADO') !== rejectionStagesAudit.has(stageAudit)) {
+        issues.push({ categoria: 'STATUS_ETAPA_INCONSISTENTE', gravidade: 'CRITICA', titulo: 'Status e etapa incompatÃ­veis',
+          descricao: `O cadastro estÃ¡ com status ${statusAudit || 'vazio'} e etapa ${stageAudit || 'vazia'}, uma combinaÃ§Ã£o nÃ£o permitida.`,
+          evidencia: { status: candidate.status, etapa: candidate.etapa, motivo: candidate.motivo_reprovacao_codigo || candidate.motivo_reprovacao || null },
+          comportamento_esperado: 'Manter status e etapa coerentes e impedir REPROVADO em etapas normais.',
+          sugestao_correcao: 'Aplicar o normalizador de status/etapa e revisar o registro.', anchor: `state-${candidate.id}` });
+      }
+      if (!staticFlow && (candidate.idade_declarada != null || String(candidate.data_nascimento_origem || '').toUpperCase() === 'INFORMADA')
+          && candidate.idade_confirmada_documentalmente !== true
+          && ['APROVADO','EM_ADMISSAO','CONTRATADO'].includes(statusAudit)) {
+        issues.push({ categoria: 'IDADE_SEM_CONFIRMACAO_DOCUMENTAL', gravidade: 'ALTA', titulo: 'Processo avanÃ§ou sem confirmaÃ§Ã£o documental da idade',
+          descricao: 'A idade existe apenas como informaÃ§Ã£o preliminar, mas o processo jÃ¡ estÃ¡ em uma etapa avanÃ§ada.',
+          evidencia: { idade_declarada: candidate.idade_declarada, origem: candidate.data_nascimento_origem, status: candidate.status, etapa: candidate.etapa },
+          comportamento_esperado: 'Confirmar a idade pela CTPS antes da entrevista.',
+          sugestao_correcao: 'Bloquear a agenda atÃ© idade_confirmada_documentalmente=true.', anchor: `age-doc-${candidate.id}` });
+      }
+      if (candidate.idade_divergencia_documental === true) {
+        issues.push({ categoria: 'IDADE_DIVERGENTE_ENTRE_FONTES', gravidade: 'ALTA', titulo: 'Idade divergente entre conversa e documento',
+          descricao: 'A idade ou data informada na conversa diverge da informaÃ§Ã£o extraÃ­da do documento.',
+          evidencia: { idade_declarada: candidate.idade_declarada, idade_documental: candidate.idade_calculada, origem: candidate.data_nascimento_origem },
+          comportamento_esperado: 'Usar o documento como fonte oficial e revisar a divergÃªncia.',
+          sugestao_correcao: 'Confirmar o dado com o candidato antes de decisÃµes irreversÃ­veis.', anchor: `age-divergence-${candidate.id}` });
+      }
+
+      const rejectedStatus = String(candidate.status || '').toUpperCase() === 'REPROVADO';
+      const rejectionCodeAudit = String(candidate.motivo_reprovacao_codigo || '').trim().toUpperCase();
+      const rejectionTextAudit = [candidate.motivo_reprovacao, candidate.motivo_reprovacao_detalhe, candidate.observacao_triagem]
+        .filter(Boolean).join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      if (rejectedStatus && !rejectionCodeAudit) {
+        issues.push({ categoria: 'REPROVACAO_SEM_MOTIVO_ESTRUTURADO', gravidade: 'ALTA', titulo: 'ReprovaÃ§Ã£o sem motivo estruturado',
+          descricao: 'O candidato estÃ¡ reprovado, mas o cÃ³digo e a categoria do motivo nÃ£o foram registrados.',
+          evidencia: { candidato_id: candidate.id, etapa: candidate.etapa, motivo_legado: candidate.motivo_reprovacao || null },
+          comportamento_esperado: 'Registrar categoria, cÃ³digo, detalhe e indicador de realocaÃ§Ã£o para toda reprovaÃ§Ã£o.',
+          sugestao_correcao: 'Revisar o fluxo que gerou a reprovaÃ§Ã£o e completar o motivo no painel.', anchor: `reject-reason-${candidate.id}` });
+      }
+      if (rejectedStatus && candidate.reprovacao_realocavel === null) {
+        issues.push({ categoria: 'REALOCAÃ‡ÃƒO_NAO_DEFINIDA', gravidade: 'MEDIA', titulo: 'RealocaÃ§Ã£o nÃ£o definida na reprovaÃ§Ã£o',
+          descricao: 'O cadastro reprovado nÃ£o informa se o candidato deve permanecer disponÃ­vel para outras vagas.',
+          evidencia: { codigo: rejectionCodeAudit || null, etapa: candidate.etapa },
+          comportamento_esperado: 'Registrar explicitamente se a reprovaÃ§Ã£o permite realocaÃ§Ã£o.',
+          sugestao_correcao: 'Revisar o motivo e marcar a opÃ§Ã£o de realocaÃ§Ã£o no perfil.', anchor: `reallocation-${candidate.id}` });
+      }
+      if (rejectedStatus && ['MOTIVO_NAO_DETALHADO','OUTRO'].includes(rejectionCodeAudit)
+          && String(candidate.motivo_reprovacao_detalhe || '').trim().length < 20) {
+        issues.push({ categoria: 'MOTIVO_REPROVACAO_VAGO', gravidade: 'MEDIA', titulo: 'Motivo de reprovaÃ§Ã£o pouco claro',
+          descricao: 'O cÃ³digo Ã© genÃ©rico e o detalhamento nÃ£o explica objetivamente a decisÃ£o.',
+          evidencia: { codigo: rejectionCodeAudit, detalhe: candidate.motivo_reprovacao_detalhe || null },
+          comportamento_esperado: 'Registrar um motivo especÃ­fico que permita revisÃ£o e realocaÃ§Ã£o.',
+          sugestao_correcao: 'Completar o motivo no perfil do candidato.', anchor: `reject-vague-${candidate.id}` });
+      }
+      if (rejectedStatus && (/\b(sexo|genero|masculino|feminino)\b/.test(rejectionTextAudit) || rejectionCodeAudit.includes('SEXO'))) {
+        issues.push({ categoria: 'REPROVACAO_POR_SEXO', gravidade: 'CRITICA', titulo: 'PossÃ­vel reprovaÃ§Ã£o automÃ¡tica por sexo',
+          descricao: 'O motivo registrado faz referÃªncia a sexo ou gÃªnero. A regra vigente trata esse dado apenas como sinalizaÃ§Ã£o para revisÃ£o humana.',
+          evidencia: { candidato_id: candidate.id, codigo: rejectionCodeAudit || null, detalhe: candidate.motivo_reprovacao_detalhe || candidate.motivo_reprovacao || null },
+          comportamento_esperado: 'Permitir que o candidato continue o processo e usar a divergÃªncia somente para revisÃ£o e realocaÃ§Ã£o.',
+          sugestao_correcao: 'Revisar manualmente a decisÃ£o e remover qualquer bloqueio automÃ¡tico baseado em sexo.', anchor: `reject-sex-${candidate.id}` });
+      }
+
+      const ageNow = calculateAgeAt(candidate.data_nascimento, new Date(end));
+      const minAgeNow = Number(candidate.idade_minima ?? 0);
+      const maxAgeNow = candidate.idade_maxima === null || candidate.idade_maxima === undefined ? null : Number(candidate.idade_maxima);
+      const ageOutsideRange = candidate.idade_confirmada_documentalmente === true && ageNow !== null && (ageNow < minAgeNow || (maxAgeNow !== null && Number.isFinite(maxAgeNow) && ageNow > maxAgeNow));
+      if (ageOutsideRange && !['REPROVADO','ENCERRADO'].includes(String(candidate.status || '').toUpperCase())) {
+        const rangeText = maxAgeNow !== null && Number.isFinite(maxAgeNow)
+          ? `entre ${minAgeNow} e ${maxAgeNow} anos`
+          : `no mÃ­nimo ${minAgeNow} anos`;
+        issues.push({ categoria: 'FAIXA_ETARIA_IGNORADA', gravidade: 'CRITICA', titulo: 'Candidato fora da faixa etÃ¡ria avanÃ§ou',
+          descricao: `O candidato possui ${ageNow} anos e a vaga permite candidatos com ${rangeText}.`,
+          evidencia: { idade: ageNow, idade_minima: minAgeNow, idade_maxima: maxAgeNow, origem_data_nascimento: candidate.data_nascimento_origem, etapa: candidate.etapa, status: candidate.status },
+          comportamento_esperado: 'Interromper a prÃ©-triagem e registrar reprovaÃ§Ã£o por faixa etÃ¡ria nÃ£o atendida.',
+          sugestao_correcao: 'Validar a data de nascimento confirmada pela CTPS antes de liberar a entrevista.', anchor: `age-${candidate.id}` });
+      }
+
+      if (staticFlow) {
+        const staticStages = new Set(['AGUARDANDO_INTENCAO','ESCOLHENDO_VAGA','AGUARDANDO_ACAO_VAGA','DUVIDAS_GERAIS','DUVIDAS_VAGA','RECRUTADOR_MENU','AGUARDANDO_NOME','AGUARDANDO_EXPERIENCIA','AGUARDANDO_TEMPO_DESLOCAMENTO','AGUARDANDO_CONFIRMACAO_CHEGADA','AGUARDANDO_CEP','AGUARDANDO_CTPS','PROCESSANDO_CTPS','REVISAO_DOCUMENTAL','PENDENTE_APROVACAO_RECRUTADOR','AGUARDANDO_ESCOLHA_HORARIO','ENTREVISTA_AGENDADA','NAO_APTO_NESTA_VAGA','PAUSADO_ATENDIMENTO_HUMANO']);
+        if (!staticStages.has(String(candidate.etapa || ''))) issues.push({ categoria:'ETAPA_FORA_DO_FLUXO_ESTATICO', gravidade:'ALTA', titulo:'Etapa incompatÃ­vel com o Chatbot EstÃ¡tico V1', descricao:`A candidatura estÃ¡ marcada como fluxo estÃ¡tico, mas usa a etapa ${candidate.etapa || 'vazia'}.`, evidencia:{ etapa:candidate.etapa, fluxo_versao:candidate.fluxo_versao }, comportamento_esperado:'Usar somente etapas publicadas na mÃ¡quina de estados V1.', sugestao_correcao:'Normalizar a etapa pelo painel ou enviar o candidato para resgate.', anchor:`static-stage-${candidate.id}` });
+        const storedCtps = documents.some((doc) => String(doc.tipo || '').toUpperCase()==='CTPS' && String(doc.status_processamento || '').toUpperCase()!=='ERRO');
+        const ctpsWithoutRawFile = documents.find((doc) => String(doc.tipo || '').toUpperCase()==='CTPS' && doc.arquivo_armazenado !== true);
+        if (ctpsWithoutRawFile) issues.push({ categoria:'CTPS_SEM_ARQUIVO_BRUTO', gravidade:'CRITICA', titulo:'CTPS registrada sem PDF armazenado', descricao:'O documento aparece no banco, mas o arquivo bruto nÃ£o estÃ¡ disponÃ­vel para reprocessamento.', evidencia:{ documento:ctpsWithoutRawFile }, comportamento_esperado:'Salvar o PDF bruto antes de OCR, classificaÃ§Ã£o ou anÃ¡lise.', sugestao_correcao:'Solicitar novo PDF ao candidato e revisar a etapa de armazenamento.', anchor:`static-ctps-raw-${ctpsWithoutRawFile.id}` });
+        if (String(candidate.etapa)==='PROCESSANDO_CTPS' && !storedCtps) issues.push({ categoria:'PROCESSAMENTO_SEM_CTPS_ARMAZENADA', gravidade:'CRITICA', titulo:'Processamento iniciado sem CTPS armazenada', descricao:'A candidatura estÃ¡ processando CTPS, mas nÃ£o existe documento CTPS recuperÃ¡vel no banco.', evidencia:{ etapa:candidate.etapa, documentos:documents.map(d=>({id:d.id,tipo:d.tipo,status:d.status_processamento,arquivo_armazenado:d.arquivo_armazenado})) }, comportamento_esperado:'Somente iniciar OCR depois do armazenamento confirmado.', sugestao_correcao:'Retornar para AGUARDANDO_CTPS e solicitar novo PDF.', anchor:`static-processing-no-file-${candidate.id}` });
+        if (String(candidate.etapa)==='AGUARDANDO_CTPS' && storedCtps) issues.push({ categoria:'ETAPA_NAO_AVANCOU_APOS_CTPS', gravidade:'CRITICA', titulo:'CTPS armazenada, mas candidatura continua aguardando CTPS', descricao:'Existe CTPS no banco e a etapa nÃ£o avanÃ§ou para processamento, revisÃ£o ou resultado.', evidencia:{ etapa:candidate.etapa, documentos:documents.map(d=>({id:d.id,tipo:d.tipo,status:d.status_processamento,arquivo_armazenado:d.arquivo_armazenado})) }, comportamento_esperado:'Armazenar primeiro e avanÃ§ar deterministicamente apÃ³s o recebimento.', sugestao_correcao:'Reprocessar o documento ou enviar para resgate.', anchor:`static-ctps-stage-${candidate.id}` });
+        const pendingReview = ['REVISAO_DOCUMENTAL','PENDENTE_APROVACAO_RECRUTADOR'].includes(String(candidate.etapa));
+        if (pendingReview && candidate.revisao_pendente !== true) issues.push({ categoria:'REVISAO_NAO_REGISTRADA', gravidade:'ALTA', titulo:'Etapa de revisÃ£o sem pendÃªncia registrada', descricao:'O candidato estÃ¡ aguardando decisÃ£o humana, mas revisao_pendente nÃ£o estÃ¡ ativa.', evidencia:{ etapa:candidate.etapa,revisao_tipo:candidate.revisao_tipo }, comportamento_esperado:'Toda pausa para decisÃ£o humana deve gerar registro em candidato_revisoes.', sugestao_correcao:'Criar ou reconstruir a revisÃ£o pelo documento armazenado.', anchor:`static-review-${candidate.id}` });
+        const promisedSchedule = iaMessages.some((m)=>/vou (consultar|verificar).*(horario|opco)|novas opcoes disponiveis/i.test(auditNormalizeText(m.mensagem)));
+        const hasOfferedOptions = messages.some((m)=>String(m.quem).toUpperCase()==='IA' && /1\s*[â€”-].*\d{1,2}:\d{2}/s.test(String(m.mensagem||'')));
+        if (promisedSchedule && !hasOfferedOptions && !interviews.length) issues.push({ categoria:'PROMESSA_AGENDA_SEM_RETORNO', gravidade:'CRITICA', titulo:'HorÃ¡rios prometidos sem opÃ§Ãµes reais', descricao:'Foi enviada promessa de consulta, mas nÃ£o hÃ¡ opÃ§Ãµes reais nem entrevista criada.', evidencia:{ etapa:candidate.etapa }, comportamento_esperado:'Nunca terminar a execuÃ§Ã£o com promessa; enviar opÃ§Ãµes do Google Calendar ou erro explÃ­cito.', sugestao_correcao:'Enviar o candidato para resgate e revisar o subworkflow de agenda.', anchor:`static-calendar-promise-${candidate.id}` });
+      }
+
+      const activeInterviews = interviews.filter((item) => String(item.status || '').toUpperCase() === 'AGENDADA');
+      if (activeInterviews.length > 1) {
+        issues.push({ categoria: 'ENTREVISTA_DUPLICADA', gravidade: 'CRITICA', titulo: 'Mais de uma entrevista ativa',
+          descricao: `Existem ${activeInterviews.length} entrevistas com status AGENDADA para o mesmo candidato.`,
+          evidencia: { entrevistas: activeInterviews }, comportamento_esperado: 'Manter somente uma entrevista ativa por candidatura.',
+          sugestao_correcao: 'Revisar idempotÃªncia da agenda e cancelar duplicidades.', anchor: `interview-duplicate-${candidate.id}` });
+      }
+      for (const interview of activeInterviews) {
+        if (!String(interview.meet_link || interview.google_event_url || '').trim()) {
+          issues.push({ categoria: 'ENTREVISTA_SEM_LINK', gravidade: 'ALTA', titulo: 'Entrevista agendada sem link',
+            descricao: 'A entrevista estÃ¡ ativa, mas nÃ£o possui link do Google Meet ou URL do evento.', evidencia: { entrevista: interview },
+            comportamento_esperado: 'Persistir um link vÃ¡lido antes de confirmar ao candidato.',
+            sugestao_correcao: 'Revisar retorno do Google Calendar e persistÃªncia do evento.', anchor: `interview-link-${interview.id}` });
+        }
+        const inicioEntrevista = new Date(interview.inicio);
+        const fimEntrevista = new Date(interview.fim);
+        const criadaEm = new Date(interview.created_at);
+        if (!Number.isNaN(inicioEntrevista.getTime()) && !Number.isNaN(criadaEm.getTime()) && inicioEntrevista <= criadaEm) {
+          issues.push({ categoria: 'ENTREVISTA_NO_PASSADO', gravidade: 'CRITICA', titulo: 'Entrevista criada para horÃ¡rio passado',
+            descricao: 'O inÃ­cio da entrevista nÃ£o Ã© posterior ao momento em que ela foi registrada.', evidencia: { entrevista: interview },
+            comportamento_esperado: 'Oferecer somente horÃ¡rios futuros e revalidar imediatamente antes da criaÃ§Ã£o.',
+            sugestao_correcao: 'Revisar timezone e janela de busca da agenda.', anchor: `interview-past-${interview.id}` });
+        }
+        const configuredDuration = Number(candidate.entrevista_duracao_minutos || 0);
+        const actualDuration = (!Number.isNaN(inicioEntrevista.getTime()) && !Number.isNaN(fimEntrevista.getTime()))
+          ? Math.round((fimEntrevista - inicioEntrevista) / 60000) : null;
+        if (configuredDuration > 0 && actualDuration !== null && actualDuration !== configuredDuration) {
+          issues.push({ categoria: 'DURACAO_ENTREVISTA_DIVERGENTE', gravidade: 'MEDIA', titulo: 'DuraÃ§Ã£o da entrevista diferente da vaga',
+            descricao: `A entrevista dura ${actualDuration} minutos, mas a vaga estÃ¡ configurada para ${configuredDuration}.`,
+            evidencia: { entrevista: interview, duracao_configurada: configuredDuration, duracao_real: actualDuration },
+            comportamento_esperado: 'Criar o evento com a duraÃ§Ã£o configurada na vaga.',
+            sugestao_correcao: 'Revisar o cÃ¡lculo do fim do slot.', anchor: `interview-duration-${interview.id}` });
+        }
+      }
+
+      const allowedTimes = Array.isArray(candidate.entrevista_horarios) ? candidate.entrevista_horarios : [];
+      const allowedDays = Array.isArray(candidate.entrevista_dias_semana) ? candidate.entrevista_dias_semana.map(Number) : [];
+      for (const interview of interviews.filter((item) => String(item.status).toUpperCase() === 'AGENDADA')) {
+        const date = new Date(interview.inicio);
+        const time = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false }).format(date);
+        const dayName = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Sao_Paulo', weekday: 'short' }).format(date);
+        const dayMap = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+        if ((allowedTimes.length && !allowedTimes.includes(time)) || (allowedDays.length && !allowedDays.includes(dayMap[dayName]))) {
+          issues.push({ categoria: 'ENTREVISTA_FORA_PREFERENCIA', gravidade: 'CRITICA', titulo: 'Entrevista fora dos horÃ¡rios permitidos',
+            descricao: `A entrevista foi agendada para ${time}, fora das preferÃªncias configuradas na vaga.`,
+            evidencia: { entrevista: interview, horarios_permitidos: allowedTimes, dias_permitidos: allowedDays },
+            comportamento_esperado: 'Oferecer e reservar somente horÃ¡rios configurados na vaga e livres no Google Calendar.',
+            sugestao_correcao: 'Revisar o subworkflow de agenda e a segunda validaÃ§Ã£o antes de criar o evento.', anchor: `interview-${interview.id}` });
+        }
+      }
+
+      try {
+        const canUseAiAudit = AUDITORIA_IA_MAX_CONVERSAS > 0
+          && aiAuditedConversations < AUDITORIA_IA_MAX_CONVERSAS
+          && messages.filter((item) => String(item.quem).toUpperCase() === 'USUARIO').length >= 2
+          && iaMessages.length >= 2;
+        const aiIssues = canUseAiAudit
+          ? await callAiAudit(candidate, messages, candidate.vaga_dados || { id: candidate.vaga_id, titulo: candidate.vaga_nome }, documents)
+          : [];
+        if (canUseAiAudit && AUDITORIA_IA_WEBHOOK_URL) aiAuditedConversations += 1;
+        for (const issue of aiIssues) {
+          const category = String(issue.categoria || '').toUpperCase();
+          if (![
+            'PERGUNTA_IGNORADA','RESPOSTA_FORA_CONTEXTO','INFORMACAO_INVENTADA','CONTRADICAO',
+            'INSTRUCAO_CONFUSA','NAO_RECONHECEU_DOCUMENTO','PERGUNTA_FORA_DA_ETAPA',
+            'RESPOSTA_INCOMPLETA','OPCAO_INVALIDA_NAO_REPETIDA','SOLICITOU_MULTIPLAS_PENDENCIAS',
+            'CONFIRMACAO_IGNORADA','ENCERRAMENTO_NAO_RESPEITADO',
+          'PERGUNTA_REPETIDA','RESPOSTA_REDUNDANTE','PROMESSA_NAO_CUMPRIDA',
+          'INSTRUCAO_CONFUSA','CONDUCAO_EXCESSIVAMENTE_LONGA','RESPOSTA_FRIA_EM_REPROVACAO'
+          ].includes(category)) continue;
+          issues.push({ categoria: category, gravidade: ['CRITICA','ALTA','MEDIA','BAIXA'].includes(String(issue.gravidade).toUpperCase()) ? String(issue.gravidade).toUpperCase() : 'MEDIA',
+            origem_deteccao: 'IA', confianca: Math.min(Math.max(Number(issue.confianca || 70), 0), 100),
+            titulo: String(issue.titulo || 'PossÃ­vel problema de conversaÃ§Ã£o').slice(0, 220),
+            descricao: String(issue.descricao || 'A auditora identificou um possÃ­vel problema na conversa.'),
+            evidencia: issue.evidencia || {}, comportamento_esperado: issue.comportamento_esperado || null,
+            sugestao_correcao: issue.sugestao_correcao || null,
+            mensagem_usuario_id: Number(issue.mensagem_usuario_id) || null,
+            mensagem_ia_id: Number(issue.mensagem_ia_id) || null,
+            anchor: `ai-${category}-${issue.mensagem_ia_id || issue.mensagem_usuario_id || auditNormalizeText(issue.descricao).slice(0,30)}` });
+        }
+      } catch (error) {
+        console.warn('[AUDITORIA IA] Falha na anÃ¡lise subjetiva:', error.message);
+      }
+
+      for (const issue of issues) {
+        await insertAuditIssue(client, runId, candidate, issue);
+        totalIssues += 1;
+        candidatesWithIssues.add(candidate.id);
+      }
+    }
+
+    const counts = await client.query(`
+      SELECT
+        COUNT(*) FILTER (WHERE gravidade='CRITICA')::INTEGER AS criticos,
+        COUNT(*) FILTER (WHERE gravidade='ALTA')::INTEGER AS altos,
+        COUNT(*) FILTER (WHERE gravidade='MEDIA')::INTEGER AS medios,
+        COUNT(*) FILTER (WHERE gravidade='BAIXA')::INTEGER AS baixos
+      FROM auditoria_problemas WHERE auditoria_id=$1
+    `, [runId]);
+    const c = counts.rows[0] || {};
+    const totalConversations = candidatesResult.rowCount;
+    const scorePenalty = Number(c.criticos || 0) * 25 + Number(c.altos || 0) * 12 + Number(c.medios || 0) * 6 + Number(c.baixos || 0) * 2;
+    const note = Math.max(0, Math.round((100 - Math.min(100, scorePenalty / Math.max(1, totalConversations))) * 100) / 100);
+    const summary = `${totalConversations} conversa(s) analisada(s); ${totalIssues} alerta(s) detectado(s).`;
+    const updated = await client.query(`
+      UPDATE auditorias_conversas SET status='CONCLUIDA', total_conversas=$2,
+        conversas_sem_alerta=$3, quantidade_criticos=$4, quantidade_altos=$5,
+        quantidade_medios=$6, quantidade_baixos=$7, nota_qualidade=$8,
+        resumo=$9, finished_at=NOW()
+      WHERE id=$1 RETURNING *
+    `, [runId, totalConversations, Math.max(0, totalConversations - candidatesWithIssues.size),
+      Number(c.criticos || 0), Number(c.altos || 0), Number(c.medios || 0), Number(c.baixos || 0), note, summary]);
+    return updated.rows[0];
+  } catch (error) {
+    if (runId) {
+      await client.query(`UPDATE auditorias_conversas SET status='ERRO', erro=$2, finished_at=NOW() WHERE id=$1`, [runId, String(error.message || error)]).catch(() => {});
+    }
+    throw error;
+  } finally { client.release(); }
+}
+
+app.get('/api/admin/auditoria', requireAdmin, async (req, res, next) => {
+  try {
+    const status = String(req.query.status || '').trim().toUpperCase();
+    const severity = String(req.query.gravidade || '').trim().toUpperCase();
+    const category = String(req.query.categoria || '').trim().toUpperCase();
+    const search = String(req.query.busca || '').trim();
+    const values = [];
+    const filters = [];
+    if (status && status !== 'TODOS') { values.push(status); filters.push(`p.status_revisao=$${values.length}`); }
+    if (severity && severity !== 'TODAS') { values.push(severity); filters.push(`p.gravidade=$${values.length}`); }
+    if (category && category !== 'TODAS') { values.push(category); filters.push(`p.categoria=$${values.length}`); }
+    if (search) { values.push(`%${search}%`); filters.push(`(COALESCE(c.nome,'') ILIKE $${values.length} OR COALESCE(c.telefone,'') ILIKE $${values.length} OR p.titulo ILIKE $${values.length})`); }
+    const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+    const [latest, issues, trends, categories] = await Promise.all([
+      pool.query(`SELECT * FROM auditorias_conversas ORDER BY created_at DESC LIMIT 1`),
+      pool.query(`
+        SELECT p.*, c.nome AS candidato_nome, c.telefone, c.etapa, c.status AS candidato_status,
+          v.titulo AS vaga_nome, a.created_at AS auditoria_created_at
+        FROM auditoria_problemas p
+        JOIN candidatos c ON c.id=p.candidato_id
+        LEFT JOIN vagas v ON v.id=p.vaga_id
+        LEFT JOIN auditorias_conversas a ON a.id=p.auditoria_id
+        ${where}
+        ORDER BY CASE p.gravidade WHEN 'CRITICA' THEN 1 WHEN 'ALTA' THEN 2 WHEN 'MEDIA' THEN 3 ELSE 4 END,
+          p.created_at DESC LIMIT 300
+      `, values),
+      pool.query(`SELECT DATE(created_at AT TIME ZONE 'America/Sao_Paulo') AS dia,
+        COUNT(*)::INTEGER AS total,
+        COUNT(*) FILTER (WHERE gravidade='CRITICA')::INTEGER AS criticos,
+        COUNT(*) FILTER (WHERE gravidade='ALTA')::INTEGER AS altos
+        FROM auditoria_problemas WHERE created_at >= NOW() - INTERVAL '14 days'
+        GROUP BY 1 ORDER BY 1 ASC`),
+      pool.query(`SELECT categoria, COUNT(*)::INTEGER AS quantidade
+        FROM auditoria_problemas WHERE created_at >= NOW() - INTERVAL '30 days'
+        GROUP BY categoria ORDER BY quantidade DESC, categoria ASC LIMIT 30`),
+    ]);
+    const summary = await pool.query(`SELECT
+      COUNT(*) FILTER (WHERE status_revisao IN ('NOVO','CONFIRMADO'))::INTEGER AS pendentes,
+      COUNT(*) FILTER (WHERE gravidade='CRITICA' AND status_revisao IN ('NOVO','CONFIRMADO'))::INTEGER AS criticos,
+      COUNT(*) FILTER (WHERE gravidade='ALTA' AND status_revisao IN ('NOVO','CONFIRMADO'))::INTEGER AS altos,
+      COUNT(*) FILTER (WHERE gravidade='MEDIA' AND status_revisao IN ('NOVO','CONFIRMADO'))::INTEGER AS medios,
+      COUNT(*) FILTER (WHERE gravidade='BAIXA' AND status_revisao IN ('NOVO','CONFIRMADO'))::INTEGER AS baixos
+      FROM auditoria_problemas`);
+    res.json({ sucesso: true, ultima_auditoria: latest.rows[0] || null,
+      resumo: summary.rows[0] || {}, problemas: issues.rows, tendencias: trends.rows,
+      categorias: categories.rows, ia_configurada: Boolean(AUDITORIA_IA_WEBHOOK_URL) });
+  } catch (error) { next(error); }
+});
+
+app.post('/api/admin/auditoria/sincronizar', requireAdmin, async (req, res, next) => {
+  try {
+    const period = String(req.body?.periodo || '24H').toUpperCase();
+    const end = new Date();
+    let start = new Date(end.getTime() - 24 * 60 * 60 * 1000);
+    if (period === 'HOJE') {
+      const local = new Date(new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year:'numeric', month:'2-digit', day:'2-digit' }).format(end) + 'T00:00:00-03:00');
+      start = local;
+    } else if (period === '7D') start = new Date(end.getTime() - 7 * 24 * 60 * 60 * 1000);
+    else if (period === 'DESDE_ULTIMA') {
+      const last = await pool.query(`SELECT fim_periodo FROM auditorias_conversas WHERE status='CONCLUIDA' ORDER BY created_at DESC LIMIT 1`);
+      if (last.rows[0]?.fim_periodo) start = new Date(last.rows[0].fim_periodo);
+    } else if (period === 'PERSONALIZADO') {
+      const customStart = new Date(req.body?.inicio);
+      const customEnd = new Date(req.body?.fim);
+      if (Number.isNaN(customStart.getTime()) || Number.isNaN(customEnd.getTime()) || customStart >= customEnd) {
+        return res.status(400).json({ sucesso: false, erro: 'PerÃ­odo personalizado invÃ¡lido.' });
+      }
+      start = customStart; end.setTime(customEnd.getTime());
+    }
+    const run = await executeHybridAudit({ start, end, origin: 'MANUAL', requestedBy: currentUserName(req) });
+    res.json({ sucesso: true, mensagem: run.resumo || 'Auditoria concluÃ­da.', auditoria: run });
+  } catch (error) { next(error); }
+});
+
+
+function auditExportPeriod(query = {}) {
+  const period = String(query.periodo || 'ULTIMA').trim().toUpperCase();
+  const now = new Date();
+  let start = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+  let end = now;
+  if (period === 'HOJE') {
+    const localDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(now);
+    start = new Date(`${localDay}T00:00:00-03:00`);
+  } else if (period === '7D') {
+    start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  } else if (period === '30D') {
+    start = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+  } else if (period === 'PERSONALIZADO') {
+    start = new Date(query.inicio);
+    end = new Date(query.fim);
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || start >= end) {
+      const error = new Error('PerÃ­odo personalizado invÃ¡lido.');
+      error.statusCode = 400;
+      throw error;
+    }
+  }
+  return { period, start, end };
+}
+
+function redactAuditText(value, candidate = {}) {
+  let text = String(value ?? '');
+  const replacements = [candidate.nome, candidate.telefone, candidate.cpf, candidate.cep]
+    .map((item) => String(item || '').trim())
+    .filter((item) => item.length >= 4)
+    .sort((a, b) => b.length - a.length);
+  for (const item of replacements) text = text.replaceAll(item, '[DADO_REMOVIDO]');
+  return text
+    .replace(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/g, '[EMAIL_REMOVIDO]')
+    .replace(/\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/g, '[CPF_REMOVIDO]')
+    .replace(/(?<!\d)(?:\+?55\s*)?(?:\(?\d{2}\)?[\s.-]*)?9?\d{4}[\s.-]?\d{4}(?!\d)/g, '[TELEFONE_REMOVIDO]');
+}
+
+function csvCell(value) {
+  if (value === null || value === undefined) return '';
+  const text = typeof value === 'object' ? JSON.stringify(value) : String(value);
+  return `"${text.replaceAll('"', '""')}"`;
+}
+
+function rowsToCsv(rows, columns) {
+  const header = columns.map(([key, label]) => csvCell(label || key)).join(',');
+  const body = rows.map((row) => columns.map(([key]) => csvCell(row[key])).join(',')).join('\n');
+  return `\uFEFF${header}${body ? `\n${body}` : ''}`;
+}
+
+
+const CRC32_TABLE = (() => {
+  const table = new Uint32Array(256);
+  for (let n = 0; n < 256; n += 1) {
+    let c = n;
+    for (let k = 0; k < 8; k += 1) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    table[n] = c >>> 0;
+  }
+  return table;
+})();
+
+function crc32(buffer) {
+  let crc = 0xFFFFFFFF;
+  for (const byte of buffer) crc = CRC32_TABLE[(crc ^ byte) & 0xFF] ^ (crc >>> 8);
+  return (crc ^ 0xFFFFFFFF) >>> 0;
+}
+
+function zipDosDateTime(date = new Date()) {
+  const year = Math.max(date.getFullYear(), 1980);
+  return {
+    time: ((date.getHours() & 0x1F) << 11) | ((date.getMinutes() & 0x3F) << 5) | ((Math.floor(date.getSeconds() / 2)) & 0x1F),
+    date: (((year - 1980) & 0x7F) << 9) | (((date.getMonth() + 1) & 0x0F) << 5) | (date.getDate() & 0x1F),
+  };
+}
+
+function createZipBuffer(entries) {
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+  const now = zipDosDateTime(new Date());
+
+  for (const entry of entries) {
+    const name = Buffer.from(String(entry.name || 'arquivo.txt').replaceAll('\\', '/'), 'utf8');
+    const data = Buffer.isBuffer(entry.content) ? entry.content : Buffer.from(String(entry.content ?? ''), 'utf8');
+    const compressed = zlib.deflateRawSync(data, { level: 9 });
+    const checksum = crc32(data);
+    const utf8Flag = 0x0800;
+
+    const local = Buffer.alloc(30);
+    local.writeUInt32LE(0x04034B50, 0);
+    local.writeUInt16LE(20, 4);
+    local.writeUInt16LE(utf8Flag, 6);
+    local.writeUInt16LE(8, 8);
+    local.writeUInt16LE(now.time, 10);
+    local.writeUInt16LE(now.date, 12);
+    local.writeUInt32LE(checksum, 14);
+    local.writeUInt32LE(compressed.length, 18);
+    local.writeUInt32LE(data.length, 22);
+    local.writeUInt16LE(name.length, 26);
+    local.writeUInt16LE(0, 28);
+    localParts.push(local, name, compressed);
+
+    const central = Buffer.alloc(46);
+    central.writeUInt32LE(0x02014B50, 0);
+    central.writeUInt16LE(20, 4);
+    central.writeUInt16LE(20, 6);
+    central.writeUInt16LE(utf8Flag, 8);
+    central.writeUInt16LE(8, 10);
+    central.writeUInt16LE(now.time, 12);
+    central.writeUInt16LE(now.date, 14);
+    central.writeUInt32LE(checksum, 16);
+    central.writeUInt32LE(compressed.length, 20);
+    central.writeUInt32LE(data.length, 24);
+    central.writeUInt16LE(name.length, 28);
+    central.writeUInt16LE(0, 30);
+    central.writeUInt16LE(0, 32);
+    central.writeUInt16LE(0, 34);
+    central.writeUInt16LE(0, 36);
+    central.writeUInt32LE(0, 38);
+    central.writeUInt32LE(offset, 42);
+    centralParts.push(central, name);
+    offset += local.length + name.length + compressed.length;
+  }
+
+  const centralDirectory = Buffer.concat(centralParts);
+  const end = Buffer.alloc(22);
+  end.writeUInt32LE(0x06054B50, 0);
+  end.writeUInt16LE(0, 4);
+  end.writeUInt16LE(0, 6);
+  end.writeUInt16LE(entries.length, 8);
+  end.writeUInt16LE(entries.length, 10);
+  end.writeUInt32LE(centralDirectory.length, 12);
+  end.writeUInt32LE(offset, 16);
+  end.writeUInt16LE(0, 20);
+  return Buffer.concat([...localParts, centralDirectory, end]);
+}
+
+
+app.get('/api/admin/documentos/auditoria-ctps.zip', requireAdmin, async (req, res, next) => {
+  try {
+    const resultado = String(req.query.resultado || 'TODOS').trim().toUpperCase();
+    if (!['TODOS', 'APROVADOS', 'REPROVADOS'].includes(resultado)) {
+      return res.status(400).json({ sucesso: false, erro: 'Filtro de resultado invÃ¡lido.' });
+    }
+
+    const limitePorGrupo = Math.min(Math.max(Number(req.query.limite || 25), 1), 50);
+    const vagaIdRaw = String(req.query.vaga_id || '').trim();
+    const vagaId = vagaIdRaw ? parseId(vagaIdRaw) : null;
+    if (vagaIdRaw && !vagaId) {
+      return res.status(400).json({ sucesso: false, erro: 'Vaga invÃ¡lida.' });
+    }
+
+    const inicio = String(req.query.inicio || '').trim();
+    const fim = String(req.query.fim || '').trim();
+    const validDate = (value) => !value || /^\d{4}-\d{2}-\d{2}$/.test(value);
+    if (!validDate(inicio) || !validDate(fim) || (inicio && fim && inicio > fim)) {
+      return res.status(400).json({ sucesso: false, erro: 'PerÃ­odo invÃ¡lido.' });
+    }
+
+    const values = [];
+    const filters = [
+      `c.ctps_analisada_at IS NOT NULL`,
+      `(c.aprovado IS TRUE OR c.aprovado IS FALSE)`,
+    ];
+    if (vagaId) {
+      values.push(vagaId);
+      filters.push(`c.vaga_id = $${values.length}`);
+    }
+    if (inicio) {
+      values.push(inicio);
+      filters.push(`(c.ctps_analisada_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= $${values.length}::DATE`);
+    }
+    if (fim) {
+      values.push(fim);
+      filters.push(`(c.ctps_analisada_at AT TIME ZONE 'America/Sao_Paulo')::DATE <= $${values.length}::DATE`);
+    }
+
+    const metadataResult = await pool.query(`
+      SELECT
+        c.id AS candidato_id,
+        c.nome AS candidato_nome,
+        c.status AS candidato_status,
+        c.etapa AS candidato_etapa,
+        c.aprovado,
+        c.ctps_analisada_at,
+        c.tempo_experiencia,
+        c.maior_experiencia_compativel_dias,
+        c.maior_experiencia_compativel_texto,
+        c.experiencias_ctps,
+        c.motivo_reprovacao_codigo,
+        c.motivo_reprovacao_categoria,
+        c.motivo_reprovacao_detalhe,
+        v.id AS vaga_id,
+        COALESCE(v.titulo, c.vaga, 'Vaga nÃ£o vinculada') AS vaga_nome,
+        v.codigo AS vaga_codigo,
+        v.experiencia_minima_meses,
+        d.id AS documento_id,
+        COALESCE(d.nome_arquivo, d.arquivo, 'CTPS Digital.pdf') AS nome_arquivo,
+        COALESCE(d.mime_type, 'application/pdf') AS mime_type,
+        d.tamanho_bytes,
+        OCTET_LENGTH(d.conteudo) AS bytes_reais,
+        (d.conteudo IS NOT NULL) AS arquivo_armazenado,
+        d.status_processamento,
+        d.classificacao_confianca,
+        d.resultado AS documento_resultado,
+        d.created_at AS documento_criado_em,
+        d.processado_at AS documento_processado_em
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id = c.vaga_id
+      JOIN LATERAL (
+        SELECT d2.*
+        FROM documentos d2
+        WHERE d2.candidato_id = c.id
+          AND UPPER(COALESCE(d2.tipo, '')) = 'CTPS'
+        ORDER BY COALESCE(d2.processado_at, d2.created_at) DESC, d2.id DESC
+        LIMIT 1
+      ) d ON TRUE
+      WHERE ${filters.join(' AND ')}
+      ORDER BY c.ctps_analisada_at DESC, c.id DESC
+      LIMIT 2000
+    `, values);
+
+    const approved = metadataResult.rows.filter((row) => row.aprovado === true).slice(0, limitePorGrupo);
+    const rejected = metadataResult.rows.filter((row) => row.aprovado === false).slice(0, limitePorGrupo);
+    let selected = resultado === 'APROVADOS' ? approved : resultado === 'REPROVADOS' ? rejected : [...approved, ...rejected];
+
+    if (!selected.length) {
+      return res.status(404).json({ sucesso: false, erro: 'Nenhuma CTPS analisada encontrada para os filtros escolhidos.' });
+    }
+
+    const MAX_EXPORT_BYTES = 120 * 1024 * 1024;
+    let plannedBytes = 0;
+    const downloadableIds = [];
+    const includeDocument = new Set();
+    const skipReason = new Map();
+    for (const row of selected) {
+      const documentId = Number(row.documento_id);
+      const size = Number(row.bytes_reais || row.tamanho_bytes || 0);
+      if (!row.arquivo_armazenado || !documentId) {
+        skipReason.set(documentId || `cand-${row.candidato_id}`, 'PDF bruto nÃ£o estÃ¡ armazenado no banco.');
+        continue;
+      }
+      if (size <= 0) {
+        skipReason.set(documentId, 'Tamanho do PDF nÃ£o pÃ´de ser determinado.');
+        continue;
+      }
+      if (plannedBytes + size > MAX_EXPORT_BYTES) {
+        skipReason.set(documentId, 'PDF nÃ£o incluÃ­do porque o pacote atingiu o limite de 120 MB.');
+        continue;
+      }
+      plannedBytes += size;
+      includeDocument.add(documentId);
+      downloadableIds.push(documentId);
+    }
+
+    const contentById = new Map();
+    if (downloadableIds.length) {
+      const contentResult = await pool.query(
+        `SELECT id, conteudo FROM documentos WHERE id = ANY($1::BIGINT[])`,
+        [downloadableIds],
+      );
+      for (const row of contentResult.rows) {
+        if (row.conteudo) contentById.set(Number(row.id), row.conteudo);
+      }
+    }
+
+    const bestExperience = (row) => {
+      const documentData = row.documento_resultado && typeof row.documento_resultado === 'object' ? row.documento_resultado : {};
+      const experiences = Array.isArray(row.experiencias_ctps) ? row.experiencias_ctps : [];
+      const compatible = experiences
+        .filter((item) => item && item.compativel === true)
+        .sort((left, right) => Number(right.dias || 0) - Number(left.dias || 0));
+      const best = compatible[0] || {};
+      return {
+        cargo: documentData.cargo_vinculo_utilizado || best.cargo || '',
+        cbo: best.cbo || '',
+        periodo: documentData.periodo_vinculo_utilizado || best.periodo || '',
+      };
+    };
+
+    const csvRows = selected.map((row) => {
+      const resultLabel = row.aprovado === true ? 'APROVADO' : 'REPROVADO';
+      const best = bestExperience(row);
+      const documentId = Number(row.documento_id);
+      const content = contentById.get(documentId);
+      return {
+        candidato_id: row.candidato_id,
+        candidato: row.candidato_nome || `Candidato #${row.candidato_id}`,
+        resultado_triagem: resultLabel,
+        status_atual: row.candidato_status,
+        etapa_atual: row.candidato_etapa,
+        vaga_codigo: row.vaga_codigo,
+        vaga: row.vaga_nome,
+        experiencia_minima_meses: row.experiencia_minima_meses,
+        maior_experiencia_compativel_dias: row.maior_experiencia_compativel_dias,
+        maior_experiencia_compativel_texto: row.maior_experiencia_compativel_texto || row.tempo_experiencia,
+        cargo_vinculo_utilizado: best.cargo,
+        cbo_vinculo_utilizado: best.cbo,
+        periodo_vinculo_utilizado: best.periodo,
+        experiencias_extraidas: row.experiencias_ctps || [],
+        motivo_reprovacao_codigo: row.motivo_reprovacao_codigo,
+        motivo_reprovacao_categoria: row.motivo_reprovacao_categoria,
+        motivo_reprovacao_detalhe: row.motivo_reprovacao_detalhe,
+        ctps_analisada_em: row.ctps_analisada_at,
+        documento_id: row.documento_id,
+        arquivo_original: row.nome_arquivo,
+        status_processamento: row.status_processamento,
+        classificacao_confianca: row.classificacao_confianca,
+        pdf_incluido: Boolean(content) ? 'SIM' : 'NÃƒO',
+        observacao_pdf: content ? '' : (skipReason.get(documentId) || 'PDF bruto indisponÃ­vel.'),
+      };
+    });
+
+    const entries = [];
+    for (const row of selected) {
+      const documentId = Number(row.documento_id);
+      const content = contentById.get(documentId);
+      if (!content) continue;
+      const folder = row.aprovado === true ? 'aprovados' : 'reprovados';
+      const candidateName = slugify(row.candidato_nome || `candidato-${row.candidato_id}`);
+      entries.push({
+        name: `${folder}/${row.candidato_id}-${candidateName}.pdf`,
+        content,
+      });
+    }
+
+    const summary = {
+      versao: 'CTPS-AUDITORIA-1.0',
+      gerado_em: new Date().toISOString(),
+      filtros: {
+        resultado,
+        limite_por_resultado: limitePorGrupo,
+        vaga_id: vagaId,
+        inicio: inicio || null,
+        fim: fim || null,
+      },
+      selecionados: selected.length,
+      aprovados: selected.filter((row) => row.aprovado === true).length,
+      reprovados: selected.filter((row) => row.aprovado === false).length,
+      pdfs_incluidos: entries.length,
+      pdfs_indisponiveis_ou_omitidos: selected.length - entries.length,
+      bytes_planejados: plannedBytes,
+      limite_bytes_pacote: MAX_EXPORT_BYTES,
+      observacao: 'A classificaÃ§Ã£o APROVADO/REPROVADO usa o campo candidatos.aprovado, preservando a decisÃ£o de triagem mesmo quando o status atual mudou depois da entrevista.',
+    };
+
+    entries.unshift(
+      { name: 'resumo.json', content: JSON.stringify(summary, null, 2) },
+      { name: 'auditoria_ctps.csv', content: rowsToCsv(csvRows, [
+        ['candidato_id', 'ID candidato'],
+        ['candidato', 'Candidato'],
+        ['resultado_triagem', 'Resultado da triagem'],
+        ['status_atual', 'Status atual'],
+        ['etapa_atual', 'Etapa atual'],
+        ['vaga_codigo', 'CÃ³digo da vaga'],
+        ['vaga', 'Vaga'],
+        ['experiencia_minima_meses', 'ExperiÃªncia mÃ­nima da vaga (meses)'],
+        ['maior_experiencia_compativel_dias', 'Maior experiÃªncia compatÃ­vel (dias)'],
+        ['maior_experiencia_compativel_texto', 'Maior experiÃªncia compatÃ­vel'],
+        ['cargo_vinculo_utilizado', 'Cargo do vÃ­nculo utilizado'],
+        ['cbo_vinculo_utilizado', 'CBO do vÃ­nculo utilizado'],
+        ['periodo_vinculo_utilizado', 'PerÃ­odo do vÃ­nculo utilizado'],
+        ['experiencias_extraidas', 'ExperiÃªncias extraÃ­das da CTPS'],
+        ['motivo_reprovacao_codigo', 'CÃ³digo da reprovaÃ§Ã£o'],
+        ['motivo_reprovacao_categoria', 'Categoria da reprovaÃ§Ã£o'],
+        ['motivo_reprovacao_detalhe', 'Detalhe da reprovaÃ§Ã£o'],
+        ['ctps_analisada_em', 'CTPS analisada em'],
+        ['documento_id', 'ID documento'],
+        ['arquivo_original', 'Arquivo original'],
+        ['status_processamento', 'Status processamento'],
+        ['classificacao_confianca', 'ConfianÃ§a classificaÃ§Ã£o'],
+        ['pdf_incluido', 'PDF incluÃ­do no ZIP'],
+        ['observacao_pdf', 'ObservaÃ§Ã£o do PDF'],
+      ]) },
+      {
+        name: 'LEIA-ME.txt',
+        content: [
+          'GENESIS IA â€” ExportaÃ§Ã£o de auditoria de CTPS',
+          '',
+          'Este pacote contÃ©m documentos pessoais reais e deve ser tratado como material restrito de RH.',
+          'A pasta aprovados/ reÃºne candidatos cujo campo aprovado=true apÃ³s a triagem documental.',
+          'A pasta reprovados/ reÃºne candidatos cujo campo aprovado=false apÃ³s a triagem documental.',
+          'O arquivo auditoria_ctps.csv cruza a decisÃ£o histÃ³rica com os dados de experiÃªncia jÃ¡ armazenados.',
+          'Documentos antigos sem PDF bruto continuam no CSV com PDF incluÃ­do = NÃƒO.',
+          'O exportador limita o conteÃºdo bruto a 120 MB para proteger a estabilidade do painel.',
+          '',
+        ].join('\n'),
+      },
+    );
+
+    const safeDate = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit',
+    }).format(new Date());
+    const filename = `genesis-auditoria-ctps-${safeDate}.zip`;
+    const zip = createZipBuffer(entries);
+    res.status(200);
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Content-Length', zip.length);
+    res.setHeader('Cache-Control', 'private, no-store');
+    return res.send(zip);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.get('/api/admin/auditoria/exportar.zip', requireAdmin, async (req, res, next) => {
+  try {
+    const scope = String(req.query.escopo || 'TODOS').trim().toUpperCase();
+    const { period, start, end } = auditExportPeriod(req.query);
+    let auditRun = null;
+    if (period === 'ULTIMA') {
+      const latest = await pool.query(`SELECT * FROM auditorias_conversas WHERE status='CONCLUIDA' ORDER BY created_at DESC LIMIT 1`);
+      auditRun = latest.rows[0] || null;
+      if (!auditRun) return res.status(404).json({ sucesso: false, erro: 'Nenhuma auditoria concluÃ­da para exportar.' });
+      start.setTime(new Date(auditRun.inicio_periodo).getTime());
+      end.setTime(new Date(auditRun.fim_periodo).getTime());
+    }
+
+    const candidateResult = await pool.query(`
+      SELECT DISTINCT c.*, v.titulo AS vaga_nome, v.codigo AS vaga_codigo,
+        v.idade_minima, v.idade_maxima, v.experiencia_minima_meses,
+        v.entrevista_dias_semana, v.entrevista_horarios, v.entrevista_duracao_minutos
+      FROM candidatos c
+      LEFT JOIN vagas v ON v.id=c.vaga_id
+      WHERE EXISTS (
+        SELECT 1 FROM mensagens m WHERE m.candidato_id=c.id AND m.created_at >= $1 AND m.created_at < $2
+      )
+      ${scope === 'CONFIRMADOS' ? `AND EXISTS (SELECT 1 FROM auditoria_problemas ap WHERE ap.candidato_id=c.id AND ap.status_revisao='CONFIRMADO' AND ap.created_at >= $1 AND ap.created_at < $2)` : ''}
+      ORDER BY c.id ASC
+      LIMIT $3
+    `, [start, end, AUDITORIA_MAX_CONVERSAS]);
+
+    const candidateIds = candidateResult.rows.map((row) => Number(row.id));
+    const aliases = new Map(candidateIds.map((id, index) => [id, `CANDIDATO-${String(index + 1).padStart(3, '0')}`]));
+    const candidatesById = new Map(candidateResult.rows.map((candidate) => [Number(candidate.id), candidate]));
+    const redactAllCandidates = (value) => candidateResult.rows.reduce((text, candidate) => redactAuditText(text, candidate), String(value ?? ''));
+    const [issuesResult, feedbackResult, messagesResult, documentsResult, eventsResult, interviewsResult] = candidateIds.length
+      ? await Promise.all([
+        pool.query(`SELECT p.* FROM auditoria_problemas p WHERE p.candidato_id = ANY($1::BIGINT[]) AND p.created_at >= $2 AND p.created_at < $3 ORDER BY p.created_at ASC`, [candidateIds, start, end]),
+        pool.query(`SELECT f.* FROM auditoria_feedback f JOIN auditoria_problemas p ON p.id=f.problema_id WHERE p.candidato_id = ANY($1::BIGINT[]) AND f.created_at >= $2 AND f.created_at < $3 ORDER BY f.created_at ASC`, [candidateIds, start, end]),
+        pool.query(`SELECT id,candidato_id,quem,mensagem,mensagem_id,contexto_snapshot,lote_resposta_id,origem_mensagem_id,created_at FROM mensagens WHERE candidato_id = ANY($1::BIGINT[]) AND created_at >= $2 AND created_at < $3 ORDER BY candidato_id,created_at,id`, [candidateIds, start, end]),
+        pool.query(`SELECT id,candidato_id,tipo,titulo,nome_arquivo,mime_type,tamanho_bytes,status_processamento,classificacao_confianca,data_nascimento_extraida,resultado,created_at,processado_at FROM documentos WHERE candidato_id = ANY($1::BIGINT[]) ORDER BY candidato_id,created_at,id`, [candidateIds]),
+        pool.query(`SELECT id,candidato_id,evento,descricao,created_at FROM eventos WHERE candidato_id = ANY($1::BIGINT[]) AND created_at >= $2 AND created_at < $3 ORDER BY candidato_id,created_at,id`, [candidateIds, start, end]),
+        pool.query(`SELECT id,candidato_id,vaga_id,inicio,fim,status,created_at FROM entrevistas WHERE candidato_id = ANY($1::BIGINT[]) AND created_at >= $2 AND created_at < $3 ORDER BY candidato_id,created_at,id`, [candidateIds, start, end]),
+      ])
+      : [{ rows: [] }, { rows: [] }, { rows: [] }, { rows: [] }, { rows: [] }, { rows: [] }];
+
+    const byCandidate = (rows) => rows.reduce((map, row) => {
+      const key = Number(row.candidato_id);
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(row);
+      return map;
+    }, new Map());
+    const messagesByCandidate = byCandidate(messagesResult.rows);
+    const documentsByCandidate = byCandidate(documentsResult.rows);
+    const eventsByCandidate = byCandidate(eventsResult.rows);
+    const interviewsByCandidate = byCandidate(interviewsResult.rows);
+    const issuesByCandidate = byCandidate(issuesResult.rows);
+
+    const conversations = candidateResult.rows.map((candidate) => {
+      const alias = aliases.get(Number(candidate.id));
+      const birth = candidate.data_nascimento ? new Date(candidate.data_nascimento) : null;
+      const age = birth && !Number.isNaN(birth.getTime()) ? calculateAgeAt(candidate.data_nascimento, end) : null;
+      return {
+        candidato: {
+          alias,
+          status: candidate.status,
+          etapa: candidate.etapa,
+          vaga_codigo: candidate.vaga_codigo,
+          vaga_nome: candidate.vaga_nome,
+          criado_em: candidate.created_at,
+          atualizado_em: candidate.updated_at,
+          tem_cep_valido: /^\d{8}$/.test(String(candidate.cep || '').replace(/\D/g, '')),
+          data_nascimento_informada: Boolean(candidate.data_nascimento),
+          data_nascimento_origem: candidate.data_nascimento_origem || null,
+          idade_calculada: age,
+          idade_declarada: candidate.idade_declarada ?? null,
+          idade_pre_validada: candidate.idade_pre_validada,
+          idade_confirmada_documentalmente: candidate.idade_confirmada_documentalmente === true,
+          idade_divergencia_documental: candidate.idade_divergencia_documental === true,
+          idade_validada: candidate.idade_validada,
+          sexo_informado: candidate.sexo || null,
+          sexo_origem: candidate.sexo_origem || null,
+          status_reprovacao_codigo: candidate.motivo_reprovacao_codigo || null,
+          status_reprovacao_categoria: candidate.motivo_reprovacao_categoria || null,
+          reprovacao_realocavel: candidate.reprovacao_realocavel,
+          aprovado: candidate.aprovado,
+          apresentacao_profissional_informada: Boolean(String(candidate.apresentacao_profissional || '').trim()),
+        },
+        configuracao_vaga: {
+          idade_minima: candidate.idade_minima,
+          idade_maxima: candidate.idade_maxima,
+          experiencia_minima_meses: candidate.experiencia_minima_meses,
+          entrevista_dias_semana: candidate.entrevista_dias_semana,
+          entrevista_horarios: candidate.entrevista_horarios,
+          entrevista_duracao_minutos: candidate.entrevista_duracao_minutos,
+        },
+        mensagens: (messagesByCandidate.get(Number(candidate.id)) || []).map((message) => ({
+          id: message.id,
+          quem: message.quem,
+          mensagem: redactAuditText(message.mensagem, candidate),
+          mensagem_id_presente: Boolean(message.mensagem_id),
+          lote_resposta_id: message.lote_resposta_id || null,
+          origem_mensagem_id_presente: Boolean(message.origem_mensagem_id),
+          contexto_snapshot: message.contexto_snapshot || null,
+          created_at: message.created_at,
+        })),
+        documentos: (documentsByCandidate.get(Number(candidate.id)) || []).map((document) => ({
+          id: document.id,
+          tipo: document.tipo,
+          titulo: document.titulo,
+          nome_arquivo: document.nome_arquivo ? '[ARQUIVO_PDF]' : null,
+          mime_type: document.mime_type,
+          tamanho_bytes: document.tamanho_bytes,
+          status_processamento: document.status_processamento,
+          classificacao_confianca: document.classificacao_confianca,
+          possui_data_nascimento_extraida: Boolean(document.data_nascimento_extraida),
+          resultado_resumido: document.resultado && typeof document.resultado === 'object' ? {
+            status: document.resultado.status,
+            classificacao: document.resultado.classificacao,
+            aprovado: document.resultado.aprovado,
+            motivo: document.resultado.motivo,
+          } : null,
+          created_at: document.created_at,
+          processado_at: document.processado_at,
+        })),
+        eventos: (eventsByCandidate.get(Number(candidate.id)) || []).map((event) => ({
+          id: event.id, evento: event.evento, descricao: redactAuditText(event.descricao, candidate), created_at: event.created_at,
+        })),
+        entrevistas: interviewsByCandidate.get(Number(candidate.id)) || [],
+        problemas: (issuesByCandidate.get(Number(candidate.id)) || []).map((issue) => ({
+          id: issue.id,
+          candidato: alias,
+          categoria: issue.categoria,
+          gravidade: issue.gravidade,
+          origem_deteccao: issue.origem_deteccao,
+          confianca: issue.confianca,
+          titulo: redactAuditText(issue.titulo, candidate),
+          descricao: redactAuditText(issue.descricao, candidate),
+          evidencia: JSON.parse(redactAuditText(JSON.stringify(issue.evidencia || {}), candidate)),
+          comportamento_esperado: redactAuditText(issue.comportamento_esperado, candidate),
+          sugestao_correcao: redactAuditText(issue.sugestao_correcao, candidate),
+          status_revisao: issue.status_revisao,
+          observacao_revisao: redactAuditText(issue.observacao_revisao, candidate),
+          created_at: issue.created_at,
+        })),
+      };
+    });
+
+    const problems = issuesResult.rows.map((issue) => {
+      const candidate = candidatesById.get(Number(issue.candidato_id)) || {};
+      return {
+        id: issue.id,
+        candidato: aliases.get(Number(issue.candidato_id)),
+        categoria: issue.categoria,
+        gravidade: issue.gravidade,
+        origem_deteccao: issue.origem_deteccao,
+        confianca: issue.confianca,
+        titulo: redactAuditText(issue.titulo, candidate),
+        descricao: redactAuditText(issue.descricao, candidate),
+        status_revisao: issue.status_revisao,
+        comportamento_esperado: redactAuditText(issue.comportamento_esperado, candidate),
+        sugestao_correcao: redactAuditText(issue.sugestao_correcao, candidate),
+        observacao_revisao: redactAuditText(issue.observacao_revisao, candidate),
+        created_at: issue.created_at,
+      };
+    });
+    const feedback = feedbackResult.rows.map((row) => ({
+      id: row.id, problema_id: row.problema_id, decisao: row.decisao,
+      observacao: redactAllCandidates(row.observacao), revisado_por: row.revisado_por ? '[ADMIN]' : null, created_at: row.created_at,
+    }));
+    const summary = {
+      versao: '9.3',
+      gerado_em: new Date().toISOString(),
+      periodo: { inicio: start.toISOString(), fim: end.toISOString(), selecao: period },
+      escopo: scope,
+      total_candidatos: conversations.length,
+      total_mensagens: messagesResult.rowCount ?? messagesResult.rows.length,
+      total_problemas: problems.length,
+      problemas_por_gravidade: problems.reduce((acc, item) => { acc[item.gravidade] = (acc[item.gravidade] || 0) + 1; return acc; }, {}),
+      problemas_por_categoria: problems.reduce((acc, item) => { acc[item.categoria] = (acc[item.categoria] || 0) + 1; return acc; }, {}),
+      aviso_privacidade: 'Dados pessoais, documentos e credenciais nÃ£o fazem parte desta exportaÃ§Ã£o. Revise o conteÃºdo textual antes de compartilhar fora da equipe autorizada.',
+    };
+
+    const safeDate = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+    const filename = `genesis-auditoria-${safeDate}.zip`;
+    res.status(200);
+    res.setHeader('Content-Type', 'application/zip');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader('Cache-Control', 'no-store');
+    const zip = createZipBuffer([
+      { name: 'resumo.json', content: JSON.stringify(summary, null, 2) },
+      { name: 'conversas.json', content: JSON.stringify(conversations, null, 2) },
+      { name: 'auditorias.json', content: JSON.stringify(problems, null, 2) },
+      { name: 'problemas.csv', content: rowsToCsv(problems, [
+        ['id','ID'],['candidato','Candidato'],['categoria','Categoria'],['gravidade','Gravidade'],['origem_deteccao','Origem'],['confianca','ConfianÃ§a'],['titulo','TÃ­tulo'],['descricao','DescriÃ§Ã£o'],['status_revisao','Status'],['created_at','Criado em'],
+      ]) },
+      { name: 'feedback.csv', content: rowsToCsv(feedback, [
+        ['id','ID'],['problema_id','Problema'],['decisao','DecisÃ£o'],['observacao','ObservaÃ§Ã£o'],['revisado_por','Revisado por'],['created_at','Criado em'],
+      ]) },
+      { name: 'configuracoes_vagas.json', content: JSON.stringify(conversations.map((item) => ({ candidato: item.candidato.alias, vaga: item.candidato.vaga_nome, configuracao: item.configuracao_vaga })), null, 2) },
+      { name: 'LEIA-ME.txt', content: 'Pacote anonimizado da Auditoria Genesis IA V9.3. NÃ£o contÃ©m PDFs, CPF, telefone, CEP, nome civil ou credenciais.\\n' },
+    ]);
+    res.send(zip);
+  } catch (error) { next(error); }
+});
+
+app.patch('/api/admin/auditoria/problemas/:id', requireAdmin, async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const status = String(req.body?.status || '').toUpperCase();
+    const observation = String(req.body?.observacao || '').trim().slice(0, 4000) || null;
+    if (!id || !['CONFIRMADO','FALSO_POSITIVO','CORRIGIDO','IGNORADO'].includes(status)) {
+      return res.status(400).json({ sucesso: false, erro: 'RevisÃ£o invÃ¡lida.' });
+    }
+    await client.query('BEGIN');
+    const updated = await client.query(`UPDATE auditoria_problemas SET status_revisao=$2,
+      revisado_por=$3, revisado_at=NOW(), observacao_revisao=$4, updated_at=NOW()
+      WHERE id=$1 RETURNING *`, [id, status, currentUserName(req), observation]);
+    if (!updated.rowCount) { await client.query('ROLLBACK'); return res.status(404).json({ sucesso: false, erro: 'Alerta nÃ£o encontrado.' }); }
+    await client.query(`INSERT INTO auditoria_feedback (problema_id, decisao, observacao, revisado_por) VALUES ($1,$2,$3,$4)`, [id, status, observation, currentUserName(req)]);
+    await client.query('COMMIT');
+    res.json({ sucesso: true, mensagem: 'RevisÃ£o registrada.', problema: updated.rows[0] });
+  } catch (error) { try { await client.query('ROLLBACK'); } catch {} next(error); }
+  finally { client.release(); }
+});
+
+app.get('/api/admin/auditoria/candidatos/:id', requireAdmin, async (req, res, next) => {
+  try {
+    const id = parseId(req.params.id);
+    if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+    const result = await pool.query(`SELECT * FROM auditoria_problemas WHERE candidato_id=$1 ORDER BY created_at DESC LIMIT 100`, [id]);
+    const score = Math.max(0, 100 - result.rows.reduce((sum, issue) => sum + ({ CRITICA: 40, ALTA: 20, MEDIA: 10, BAIXA: 4 }[issue.gravidade] || 0), 0));
+    res.json({ sucesso: true, nota: score, problemas: result.rows });
+  } catch (error) { next(error); }
+});
+
+// Endpoint protegido para o workflow diÃ¡rio automÃ¡tico.
+app.post('/api/internal/auditoria/sincronizar', async (req, res, next) => {
+  try {
+    const token = String(req.body?.token || req.headers['x-auditoria-token'] || '');
+    if (!AUDITORIA_INTERNAL_TOKEN || !safeEqual(token, AUDITORIA_INTERNAL_TOKEN)) {
+      return res.status(401).json({ sucesso: false, erro: 'Token da auditoria invÃ¡lido.' });
+    }
+    const end = new Date();
+    const start = new Date(end.getTime() - 24 * 60 * 60 * 1000);
+    const run = await executeHybridAudit({ start, end, origin: 'AUTOMATICA', requestedBy: 'Workflow diÃ¡rio' });
+    res.json({ sucesso: true, auditoria: run });
+  } catch (error) { next(error); }
+});
+
+app.use(express.static(path.join(__dirname, 'public'), {
+  extensions: ['html'],
+  maxAge: process.env.NODE_ENV === 'production' ? '5m' : 0,
+}));
+
+app.use((req, res, next) => {
+  if (req.method === 'GET') {
+    return res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
+  return next();
+});
+
+app.use((error, req, res, _next) => {
+  console.error(error);
+
+  if (error?.name === 'WahaRequestError') {
+    return res.status(Number(error.status || 502)).json({
+      sucesso: false,
+      erro: error.message || 'NÃ£o foi possÃ­vel concluir a operaÃ§Ã£o no WAHA.',
+      codigo: 'DEMO_WAHA_ERRO',
+    });
+  }
+
+  const isGroupModeration = req.path.startsWith('/api/portal-publicacoes/grupos/');
+  const isPortalModeration = req.path.startsWith('/api/portal-publicacoes/');
+
+  if (isPortalModeration && error?.code === '42P08') {
+    return res.status(500).json({
+      sucesso: false,
+      erro: 'A consulta de moderaÃ§Ã£o usa parÃ¢metros incompatÃ­veis com o PostgreSQL. Atualize o painel para a versÃ£o 12.0.1 ou superior.',
+      codigo: 'MODERACAO_TIPAGEM_PARAMETROS',
+    });
+  }
+
+  if (isGroupModeration && ['23514', '22P02', '42804'].includes(String(error?.code || ''))) {
+    return res.status(409).json({
+      sucesso: false,
+      erro: 'O PostgreSQL ainda usa uma regra legada de status para grupos. Execute npm run migrate:panel no terminal deste serviÃ§o e tente novamente.',
+      codigo: 'GRUPOS_STATUS_LEGADO',
+    });
+  }
+
+  if (isGroupModeration && error?.code === '23502') {
+    return res.status(409).json({
+      sucesso: false,
+      erro: 'A tabela de grupos possui uma coluna legada obrigatÃ³ria sem valor padrÃ£o. Execute npm run migrate:panel e tente novamente.',
+      codigo: 'GRUPOS_ESTRUTURA_LEGADA',
+    });
+  }
+
+  if (Number.isInteger(Number(error?.statusCode)) && Number(error.statusCode) >= 400 && Number(error.statusCode) < 600) {
+    return res.status(Number(error.statusCode)).json({
+      sucesso: false,
+      erro: error.message || 'NÃ£o foi possÃ­vel concluir a operaÃ§Ã£o.',
+      codigo: error.name === 'ExternalServiceError' ? 'SERVICO_EXTERNO_V14' : 'OPERACAO_V14',
+    });
+  }
+
+  if (error && error.code === '23505') {
+    const constraint = String(error.constraint || '').toLowerCase();
+    let message = 'Registro duplicado. Revise os dados informados.';
+    if (constraint.includes('app_usuarios') || constraint.includes('usuario')) message = 'Esse usuÃ¡rio de acesso jÃ¡ existe.';
+    else if (constraint.includes('candidato') || constraint.includes('telefone')) message = 'JÃ¡ existe um candidato cadastrado com esse telefone.';
+    else if (constraint.includes('prospeccao')) message = 'Esta empresa jÃ¡ existe na base de prospecÃ§Ã£o e nÃ£o foi duplicada.';
+    else if (constraint.includes('codigo')) message = 'NÃ£o foi possÃ­vel gerar um cÃ³digo automÃ¡tico exclusivo. Tente salvar novamente.';
+    return res.status(409).json({ sucesso: false, erro: message });
+  }
+
+  if (error && error.code === '23503') {
+    return res.status(400).json({
+      sucesso: false,
+      erro: 'A empresa informada nÃ£o existe ou estÃ¡ invÃ¡lida.',
+    });
+  }
+
+  if (error && ['42703', '42P01'].includes(String(error.code || ''))) {
+    return res.status(500).json({
+      sucesso: false,
+      erro: isGroupModeration
+        ? 'A estrutura de grupos estÃ¡ incompleta. Execute npm run migrate:panel no terminal do painel.'
+        : 'A estrutura do PostgreSQL estÃ¡ incompleta. Execute as migraÃ§Ãµes anteriores e faÃ§a o redeploy.',
+    });
+  }
+
+  return res.status(500).json({
+    sucesso: false,
+    erro: 'Erro interno. Consulte os logs do serviÃ§o no EasyPanel.',
+  });
+});
+
+async function start() {
+  try {
+    await pool.query('SELECT 1');
+    await ensureBootstrapAdmin();
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Genesis IA iniciado na porta ${PORT}.`);
+    });
+  } catch (error) {
+    console.error('NÃ£o foi possÃ­vel conectar ao PostgreSQL:', error);
+    process.exit(1);
+  }
+}
+
+async function shutdown(signal) {
+  console.log(`${signal} recebido. Encerrando aplicaÃ§Ã£o...`);
+  await pool.end();
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
+
+start();
