@@ -1,0 +1,10 @@
+'use strict';
+const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..');
+const read=f=>fs.readFileSync(path.join(root,f),'utf8');
+const server=read('server.js');const html=read('public/index.html');const app=read('public/app.js');const crm=read('public/crm-v1.js');const sql=read('sql/30_GENESIS_IA_PROSPECCAO_COMERCIAL_V20.sql');
+assert.match(server,/registerProspectingV20/);assert.match(html,/view-commercialChats/);assert.match(html,/prospectingBulkToolbar/);assert.match(html,/mobile-v20\.css/);assert.match(app,/commercialChats/);assert.doesNotMatch(crm,/await app\(\)\.api\('\/api\/admin\/crm\/sincronizar'.*Carregando CRM/s);assert.match(sql,/CREATE TABLE IF NOT EXISTS prospeccao_conversa_controle/);assert.match(sql,/CREATE TABLE IF NOT EXISTS prospeccao_followups_auto/);assert.match(sql,/ALTER TABLE prospeccao_leads ADD COLUMN IF NOT EXISTS oferta_sugerida/);
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);const dup=ids.filter((x,i)=>ids.indexOf(x)!==i);assert.deepEqual([...new Set(dup)],[],`IDs duplicados: ${[...new Set(dup)].join(', ')}`);
+const {offerFor}=require('../lib/prospecting-v20');
+assert.equal(offerFor({tem_trabalhe_conosco:false,portal_vagas_url:null,ats_detectado:null})[0],'PORTAL_GRATIS');assert.equal(offerFor({tem_trabalhe_conosco:true,portal_vagas_url:'https://jobs.example',ats_detectado:'Gupy',vagas_abertas_estimadas:8})[0],'DIVULGACAO_CANDIDATOS');
+console.log('V20 testes estáticos/funcionais APROVADOS:',{ids:ids.length,views:(html.match(/class="view/g)||[]).length});

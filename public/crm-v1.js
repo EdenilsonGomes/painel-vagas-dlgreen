@@ -106,8 +106,8 @@
     if (!force && state.initialized && Date.now() - state.loadedAt < 15000) { renderHeader(); renderCurrentTab(); return; }
     const root = $('crmTabContent');
     if (root) root.innerHTML = '<div class="empty-state">Carregando CRM comercial...</div>';
-    // Uma única sincronização controlada por carga evita concorrência entre Prospecção e Demonstrações.
-    await app().api('/api/admin/crm/sincronizar', { method:'POST', body:'{}' });
+    // V20: abrir o CRM nunca dispara sincronização de fontes. A sincronização continua
+    // disponível no botão próprio, evitando que uma fonte externa quebre a tela inteira.
     const [dashboard, opportunities] = await Promise.all([
       app().api('/api/admin/crm/dashboard'),
       app().api('/api/admin/crm/oportunidades'),
