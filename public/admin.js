@@ -157,7 +157,7 @@
       const options = pipelineOptions.map((status) => `<option value="${status}" ${status === lead.status ? 'selected' : ''}>${safe(statusLabels[status] || status)}</option>`).join('');
       const enrichLabel = lead.enriquecimento_status === 'CONCLUIDO' ? 'Enriquecido' : lead.enriquecimento_status === 'FALHA' ? 'Falha no enriquecimento' : 'Não enriquecido';
       const offer = lead.oferta_sugerida === 'PORTAL_GRATIS' ? 'Portal grátis' : lead.oferta_sugerida === 'DIVULGACAO_CANDIDATOS' ? 'Aquisição de candidatos' : lead.oferta_sugerida === 'AUTOMACAO_RECRUTAMENTO' ? 'Automação de RH' : '';
-      return `<tr data-lead-row="${lead.id}">
+      return `<tr data-lead-row="${lead.id}" data-prospect-open="${lead.id}">
         <td class="prospect-select-col"><input class="prospect-row-check" data-prospect-lead-id="${lead.id}" type="checkbox" aria-label="Selecionar ${safe(lead.empresa_nome)}"></td>
         <td><div class="table-primary"><strong>${safe(lead.empresa_nome)}</strong><span>${safe(lead.categoria || 'Categoria não informada')}</span><div class="lead-enrichment-line"><span class="lead-enrich-status ${lead.enriquecimento_status === 'CONCLUIDO' ? 'done' : ''}">${safe(enrichLabel)}</span>${offer ? `<span class="lead-offer-badge">${safe(offer)}</span>` : ''}${lead.ats_detectado ? `<span class="lead-ats-badge">${safe(lead.ats_detectado)}</span>` : ''}</div><div class="table-inline-links">${web}${maps}${lead.portal_vagas_url ? `<a class="text-link" href="${safe(lead.portal_vagas_url)}" target="_blank" rel="noopener">Vagas</a>` : ''}</div></div></td>
         <td><div class="table-primary"><strong>${safe(fmtPhone(lead.telefone))}</strong><span>${safe(lead.email || 'E-mail não encontrado')}</span>${reply}</div></td>
@@ -167,6 +167,8 @@
         <td><div class="table-actions">${assisted}${whatsapp}<button class="button button-ghost compact" data-admin-action="save-lead" data-id="${lead.id}" type="button">Salvar</button><button class="button button-ghost compact" data-admin-action="add-lead-note" data-id="${lead.id}" type="button">Nota</button></div></td>
       </tr>`;
     }).join('');
+    window.GenesisProspectingV20?.renderKanban?.(state.leads);
+    window.GenesisProspectingV20?.bindLeadOpeners?.();
   }
 
   async function loadConfig() {
@@ -459,6 +461,6 @@
     document.addEventListener('click', delegatedClick);
   }
 
-  window.GenesisAdmin = { loadProspecting, loadUsers, focusNewProspecting, focusNewUser };
+  window.GenesisAdmin = { loadProspecting, loadUsers, focusNewProspecting, focusNewUser, getProspectingLeads: () => state.leads };
   document.addEventListener('DOMContentLoaded', bind);
 })();
