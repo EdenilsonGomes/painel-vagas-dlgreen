@@ -303,4 +303,355 @@ function registerAdminV6({ app, pool, requireAdmin, currentUserName }) {
         RETURNING id, usuario, nome
       `, [senhaHash, id]);
       if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'UsuÃ¡rio nÃ£o encontrado.' });
-      aÛ~¼¶‰žËkºwµçMQ=I}%¥ô½ÉÕ¹Í€°ì4(€€€€€€€€€µ•Ñ¡½è€A=MPœ°4(€€€€€€€€€‰½‘äè)M=8¹ÍÑÉ¥¹¥™ä¡¥¹ÁÕÐ¤°4(€€€€€€€ô¤ì4(€€€€€€€½¹ÍÐÉÕ¸€ôÉ•ÍÁ½¹Í”¹‘…Ñ„ñðÉ•ÍÁ½¹Í”ì4(€€€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€€€UAQÁÉ½ÍÁ•…½}•á•Õ½•Ì4(€€€€€€€€€MP…Á¥™å}ÉÕ¹}¥€ô€Ä°…Á¥™å}‘…Ñ…Í•Ñ}¥€ô€È°ÍÑ…ÑÕÌ€ô€Ì°É•Ñ½É¹½}©Í½¸€ô€Ðèé)M=9°ÕÁ‘…Ñ•‘}…Ð€ô9=\ ¤4(€€€€€€€€€]!I¥€ô€Ô4(€€€€€€€€€IQUI9%9€¨4(€€€€€€€€°mÉÕ¸¹¥°ÉÕ¸¹‘•™…Õ±Ñ…Ñ…Í•Ñ%ñð¹Õ±°°ÉÕ¸¹ÍÑ…ÑÕÌñð€IU99%9œ°)M=8¹ÍÑÉ¥¹¥™ä¡ÉÕ¸¤°‘É…™Ð¹É½ÝÍlÁt¹¥‘t¤ì4(€€€€€€€…Ý…¥Ð…Õ‘¥Ð¡Á½½°°É•Ä°€AI=MA=}%9%%œ°€ÁÉ½ÍÁ•…½}•á•Õ½•Ìœ°‘É…™Ð¹É½ÝÍlÁt¹¥°ìÑ•Éµ¼èÁ…ÉÍ•¹‘…Ñ„¹Ñ•Éµ½}‰ÕÍ„°±½…±¥é……¼èÁ…ÉÍ•¹‘…Ñ„¹±½…±¥é……¼°ÅÕ…¹Ñ¥‘…‘”èÅÕ…¹Ñ¥Ñä°•ÍÑ¥µ…‘¼è•ÍÑ¥µ…Ñ•ô¤ì4(€€€€€€€É•Ì¹ÍÑ…ÑÕÌ ÈÀÄ¤¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°µ•¹Í…•´è€	ÕÍ„¥¹¥¥…‘„¹„Á¥™ä¸œ°•á•Õ…¼èÉ•ÍÕ±Ð¹É½ÝÍlÁtô¤ì4(€€€€€ô…Ñ €¡•ÉÉ½È¤ì4(€€€€€€€…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡UAQÁÉ½ÍÁ•…½}•á•Õ½•ÌMPÍÑ…ÑÕÌ€ô€%1œ°•ÉÉ¼€ô€Ä°ÕÁ‘…Ñ•‘}…Ð€ô9=\ ¤°½¹±Õ¥‘½}…Ð€ô9=\ ¤]!I¥€ô€É€°m•ÉÉ½È¹µ•ÍÍ…”°‘É…™Ð¹É½ÝÍlÁt¹¥‘t¤ì4(€€€€€€€Ñ¡É½Ü•ÉÉ½Èì4(€€€€€ô4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹Á½ÍÐ œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½•á•Õ½•Ì¼é¥½Í¥¹É½¹¥é…Èœ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€¥˜€ …A%e}A%}Q=-8¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÔÀÌ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€A%e}A%}Q=-8»¼½¹™¥ÕÉ…‘¼¸œô¤ì4(€€€€€½¹ÍÐ¥€ôÁ…ÉÍ•%¡É•Ä¹Á…É…µÌ¹¥¤ì4(€€€€€¥˜€ …¥¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÀ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€%¥¹Û…±¥‘¼¸œô¤ì4(€€€€€½¹ÍÐ±½…±I•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä M1P€¨I=4ÁÉ½ÍÁ•…½}•á•Õ½•Ì]!I¥€ô€Äœ°m¥‘t¤ì4(€€€€€¥˜€ …±½…±I•ÍÕ±Ð¹É½Ý½Õ¹Ð¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÐ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€á•×Ÿ¼»¼•¹½¹ÑÉ…‘„¸œô¤ì4(€€€€€½¹ÍÐ•á•ÕÑ¥½¸€ô±½…±I•ÍÕ±Ð¹É½ÝÍlÁtì4(€€€€€¥˜€ …•á•ÕÑ¥½¸¹…Á¥™å}ÉÕ¹}¥¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÀ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€á•×Ÿ¼Í•´%‘„Á¥™ä¸œô¤ì4(€€€€€½¹ÍÐÉ•ÍÁ½¹Í”€ô…Ý…¥Ð…Á¥™å•Ñ ¡A%e}A%}Q=-8°€½…Ñ½ÈµÉÕ¹Ì¼‘í•¹½‘•UI%½µÁ½¹•¹Ð¡•á•ÕÑ¥½¸¹…Á¥™å}ÉÕ¹}¥¥õ€°ìµ•Ñ¡½è€Pœô¤ì4(€€€€€½¹ÍÐÉÕ¸€ôÉ•ÍÁ½¹Í”¹‘…Ñ„ñðÉ•ÍÁ½¹Í”ì4(€€€€€½¹ÍÐÍÑ…ÑÕÌ€ôÉÕ¸¹ÍÑ…ÑÕÌñð•á•ÕÑ¥½¸¹ÍÑ…ÑÕÌì4(€€€€€±•Ð¥µÁ½ÉÑ•€ô9Õµ‰•È¡•á•ÕÑ¥½¸¹ÅÕ…¹Ñ¥‘…‘•}¥µÁ½ÉÑ…‘„ñð€À¤ì4(€€€€€±•Ð‘ÕÁ±¥…Ñ•€ô9Õµ‰•È¡•á•ÕÑ¥½¸¹ÅÕ…¹Ñ¥‘…‘•}‘ÕÁ±¥…‘„ñð€À¤ì4(€€€€€±•Ð™½Õ¹€ô9Õµ‰•È¡•á•ÕÑ¥½¸¹ÅÕ…¹Ñ¥‘…‘•}•¹½¹ÑÉ…‘„ñð€À¤ì4(€€€€€½¹ÍÐ‘…Ñ…Í•Ñ%€ôÉÕ¸¹‘•™…Õ±Ñ…Ñ…Í•Ñ%ñð•á•ÕÑ¥½¸¹…Á¥™å}‘…Ñ…Í•Ñ}¥ì4(€€€€€¥˜€¡ÍÑ…ÑÕÌ€ôôô€MUœ€˜˜‘…Ñ…Í•Ñ%€˜˜€…•á•ÕÑ¥½¸¹½¹±Õ¥‘½}…Ð¤ì4(€€€€€€€½¹ÍÐ‘…Ñ…Í•ÑI•ÍÁ½¹Í”€ô…Ý…¥Ð…Á¥™å•Ñ ¡A%e}A%}Q=-8°€½‘…Ñ…Í•ÑÌ¼‘í•¹½‘•UI%½µÁ½¹•¹Ð¡‘…Ñ…Í•Ñ%¥ô½¥Ñ•µÌý±•…¸õÑÉÕ”™±¥µ¥Ðô‘í9Õµ‰•È¡•á•ÕÑ¥½¸¹ÅÕ…¹Ñ¥‘…‘•}Í½±¥¥Ñ…‘„ñð€ÄÀÀ¥õ€°ìµ•Ñ¡½è€Pœô¤ì4(€€€€€€€½¹ÍÐ¥Ñ•µÌ€ôÉÉ…ä¹¥ÍÉÉ…ä¡‘…Ñ…Í•ÑI•ÍÁ½¹Í”¤€ü‘…Ñ…Í•ÑI•ÍÁ½¹Í”€è€¡‘…Ñ…Í•ÑI•ÍÁ½¹Í”¹‘…Ñ„ü¹¥Ñ•µÌñð‘…Ñ…Í•ÑI•ÍÁ½¹Í”¹¥Ñ•µÌñðmt¤ì4(€€€€€€€™½Õ¹€ô¥Ñ•µÌ¹±•¹Ñ ì4(€€€€€€€½¹ÍÐ¥µÁ½ÉÑ•‘I•ÍÕ±Ð€ô…Ý…¥Ð¥µÁ½ÉÑ…Ñ…Í•Ð¡Á½½°°•á•ÕÑ¥½¸°¥Ñ•µÌ¤ì4(€€€€€€€¥µÁ½ÉÑ•€ô¥µÁ½ÉÑ•‘I•ÍÕ±Ð¹¥µÁ½ÉÑ•ì4(€€€€€€€‘ÕÁ±¥…Ñ•€ô¥µÁ½ÉÑ•‘I•ÍÕ±Ð¹‘ÕÁ±¥…Ñ•ì4(€€€€€ô4(€€€€€½¹ÍÐ…ÑÕ…±½ÍÐ€ô•áÑÉ…ÑIÕ¹½ÍÐ¡ÉÕ¸°•á•ÕÑ¥½¸¹ÕÍÑ½}•ÍÑ¥µ…‘½}ÕÍ¤ì4(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€UAQÁÉ½ÍÁ•…½}•á•Õ½•Ì4(€€€€€€€MP…Á¥™å}‘…Ñ…Í•Ñ}¥€ô€Ä°4(€€€€€€€€€€€ÍÑ…ÑÕÌ€ô€È°4(€€€€€€€€€€€ÕÍÑ½}É•…±}ÕÍ€ô€Ì°4(€€€€€€€€€€€ÅÕ…¹Ñ¥‘…‘•}•¹½¹ÑÉ…‘„€ô€Ð°4(€€€€€€€€€€€ÅÕ…¹Ñ¥‘…‘•}¥µÁ½ÉÑ…‘„€ô€Ô°4(€€€€€€€€€€€ÅÕ…¹Ñ¥‘…‘•}‘ÕÁ±¥…‘„€ô€Ø°4(€€€€€€€€€€€É•Ñ½É¹½}©Í½¸€ô€Üèé)M=9°4(€€€€€€€€€€€•ÉÉ¼€ôM4(€€€€€€€€€€€€€]!8€ÈèéYI!H%8€ %1œ°	=IQœ°Q%5µ=UPœ¤4(€€€€€€€€€€€€€€€Q!8=1M àèéQaP°•ÉÉ¼¤4(€€€€€€€€€€€€€1M9U104(€€€€€€€€€€€9°4(€€€€€€€€€€€½¹±Õ¥‘½}…Ð€ôM]!8€ÈèéYI!H%8€ MUœ°%1œ°	=IQœ°Q%5µ=UPœ¤Q!8=1M¡½¹±Õ¥‘½}…Ð°9=\ ¤¤1M½¹±Õ¥‘½}…Ð9°4(€€€€€€€€€€€ÕÁ‘…Ñ•‘}…Ð€ô9=\ ¤4(€€€€€€€]!I¥€ô€ä4(€€€€€€€IQUI9%9€¨4(€€€€€€°m‘…Ñ…Í•Ñ%ñð¹Õ±°°ÍÑ…ÑÕÌ°…ÑÕ…±½ÍÐ°™½Õ¹°¥µÁ½ÉÑ•°‘ÕÁ±¥…Ñ•°)M=8¹ÍÑÉ¥¹¥™ä¡ÉÕ¸¤°ÉÕ¸¹ÍÑ…ÑÕÍ5•ÍÍ…”ñð¹Õ±°°¥‘t¤ì4(€€€€€É•Ì¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°µ•¹Í…•´èÍÑ…ÑÕÌ€ôôô€MUœ€ü€I•ÍÕ±Ñ…‘½ÌÍ¥¹É½¹¥é…‘½Ì”¥µÁ½ÉÑ…‘½Ì¸œ€èá•×Ÿ¼…ÑÕ…±¥é…‘„è€‘íÍÑ…ÑÕÍô¹€°•á•Õ…¼èÉ•ÍÕ±Ð¹É½ÝÍlÁtô¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹Á½ÍÐ œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½•á•Õ½•Ì¼é¥½…‰½ÉÑ…Èœ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€¥˜€ …A%e}A%}Q=-8¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÔÀÌ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€A%e}A%}Q=-8»¼½¹™¥ÕÉ…‘¼¸œô¤ì4(€€€€€½¹ÍÐ¥€ôÁ…ÉÍ•%¡É•Ä¹Á…É…µÌ¹¥¤ì4(€€€€€½¹ÍÐ±½…±I•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä M1P€¨I=4ÁÉ½ÍÁ•…½}•á•Õ½•Ì]!I¥€ô€Äœ°m¥‘t¤ì4(€€€€€¥˜€ …±½…±I•ÍÕ±Ð¹É½Ý½Õ¹Ð¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÐ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€á•×Ÿ¼»¼•¹½¹ÑÉ…‘„¸œô¤ì4(€€€€€½¹ÍÐ•á•ÕÑ¥½¸€ô±½…±I•ÍÕ±Ð¹É½ÝÍlÁtì4(€€€€€…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡UAQÁÉ½ÍÁ•…½}•á•Õ½•ÌMPÍÑ…ÑÕÌ€ô€	=IQ%9œ°ÕÁ‘…Ñ•‘}…Ð€ô9=\ ¤]!I¥€ô€Å€°m¥‘t¤ì4(€€€€€…Ý…¥Ð…Á¥™å•Ñ ¡A%e}A%}Q=-8°€½…Ñ½ÈµÉÕ¹Ì¼‘í•¹½‘•UI%½µÁ½¹•¹Ð¡•á•ÕÑ¥½¸¹…Á¥™å}ÉÕ¹}¥¥ô½…‰½ÉÑ€°ìµ•Ñ¡½è€A=MPœ°‰½‘äè€íôœô¤ì4(€€€€€…Ý…¥Ð…Õ‘¥Ð¡Á½½°°É•Ä°€AI=MA=}	=IQœ°€ÁÉ½ÍÁ•…½}•á•Õ½•Ìœ°¥°íô¤ì4(€€€€€É•Ì¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°µ•¹Í…•´è€M½±¥¥Ñ‡Ÿ¼‘”¥¹Ñ•ÉÉÕÃŸ¼•¹Ù¥…‘„ƒ€Á¥™ä¸œô¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹•Ð œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½±•…‘Ìœ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€½¹ÍÐÍÑ…ÑÕÌ€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹ÍÑ…ÑÕÌñð€Q==Lœ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐÄ€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹Äñð€œœ¤¹ÑÉ¥´ ¤ì4(€€€€€½¹ÍÐ±¥µ¥Ð€ô5…Ñ ¹µ¥¸¡5…Ñ ¹µ…à¡9Õµ‰•È¡É•Ä¹ÅÕ•Éä¹±¥µ¥Ðñð€ÌÀÀ¤°€Ä¤°€ÄÀÀÀ¤ì4(€€€€€½¹ÍÐÁ…É…µÌ€ômtì4(€€€€€½¹ÍÐ™¥±Ñ•ÉÌ€ômtì4(€€€€€¥˜€¡ÍÑ…ÑÕÌ€„ôô€Q==Lœ¤ìÁ…É…µÌ¹ÁÕÍ ¡ÍÑ…ÑÕÌ¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹ÍÑ…ÑÕÌ€ô€‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡Ä¤ì4(€€€€€€€Á…É…µÌ¹ÁÕÍ ¡€”‘íÅô•€¤ì4(€€€€€€€™¥±Ñ•ÉÌ¹ÁÕÍ ¡€¡°¹•µÁÉ•Í…}¹½µ”%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô=H°¹¥‘…‘”%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô=H°¹Ñ•±•™½¹”%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô=H°¹Ý•‰Í¥Ñ”%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô=H°¹…Ñ•½É¥„%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô¥€¤ì4(€€€€€ô4(€€€€€½¹ÍÐ…Ñ•½É¥„€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹…Ñ•½É¥„ñð€œœ¤¹ÑÉ¥´ ¤ì4(€€€€€½¹ÍÐ•ÍÑ…‘¼€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹•ÍÑ…‘¼ñð€œœ¤¹ÑÉ¥´ ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐ¥‘…‘”€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹¥‘…‘”ñð€œœ¤¹ÑÉ¥´ ¤ì4(€€€€€½¹ÍÐÁÉ¥½É¥‘…‘”€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹ÁÉ¥½É¥‘…‘”ñð€œœ¤¹ÑÉ¥´ ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐÉ•ÍÁ½ÍÑ„€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹É•ÍÁ½ÍÑ„ñð€œœ¤¹ÑÉ¥´ ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐ½¹Ñ…Ñ¼€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹½¹Ñ…Ñ¼ñð€œœ¤¹ÑÉ¥´ ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐÕ±Ñ¥µ½½¹Ñ…Ñ¼€ôMÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹Õ±Ñ¥µ½}½¹Ñ…Ñ¼ñð€œœ¤¹ÑÉ¥´ ¤¹Ñ½UÁÁ•É…Í” ¤ì4(€€€€€½¹ÍÐÉ•ÍÁ½¹Í…Ù•°€ôÁ…ÉÍ•%¡É•Ä¹ÅÕ•Éä¹É•ÍÁ½¹Í…Ù•°¤ì4(€€€€€½¹ÍÐÍ½É•5¥¸€ô9Õµ‰•È¡É•Ä¹ÅÕ•Éä¹Í½É•}µ¥¸¤ì4(€€€€€¥˜€¡…Ñ•½É¥„¤ìÁ…É…µÌ¹ÁÕÍ ¡€”‘í…Ñ•½É¥…ô•€¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡€¡°¹…Ñ•½É¥„%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô=H°¹…Ñ•½É¥…ÌèéQaP%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡ô¥€¤ìô4(€€€€€¥˜€¡•ÍÑ…‘¼¤ìÁ…É…µÌ¹ÁÕÍ ¡•ÍÑ…‘¼¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡UAAH¡=1M¡°¹•ÍÑ…‘¼°œœ¤¤ô‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡¥‘…‘”¤ìÁ…É…µÌ¹ÁÕÍ ¡€”‘í¥‘…‘•ô•€¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹¥‘…‘”%1%-€‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡l	%aœ°5%œ°1Qt¹¥¹±Õ‘•Ì¡ÁÉ¥½É¥‘…‘”¤¤ìÁ…É…µÌ¹ÁÕÍ ¡ÁÉ¥½É¥‘…‘”¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹ÁÉ¥½É¥‘…‘”ô‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡É•ÍÁ½¹Í…Ù•°¤ìÁ…É…µÌ¹ÁÕÍ ¡É•ÍÁ½¹Í…Ù•°¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹É•ÍÁ½¹Í…Ù•±}¥ô‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡9Õµ‰•È¹¥Í¥¹¥Ñ”¡Í½É•5¥¸¤€˜˜Í½É•5¥¸€ø€À¤ìÁ…É…µÌ¹ÁÕÍ ¡5…Ñ ¹µ¥¸¡Í½É•5¥¸°€ÄÀÀ¤¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹Í½É”€øô€‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡l!U59œ°UQ=5Q%œ°MMQI<œ°Yi%t¹¥¹±Õ‘•Ì¡É•ÍÁ½ÍÑ„¤¤ìÁ…É…µÌ¹ÁÕÍ ¡É•ÍÁ½ÍÑ„¤ì™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹É•ÍÁ½ÍÑ…}Ñ¥Á¼ô‘íÁ…É…µÌ¹±•¹Ñ¡õ€¤ìô4(€€€€€¥˜€¡½¹Ñ…Ñ¼€ôôô€=5}]!QMA@œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡=1M¡°¹Ñ•±•™½¹•}¹½Éµ…±¥é…‘¼±°¹Ñ•±•™½¹”¤%L9=P9U11€¤ì4(€€€€€¥˜€¡½¹Ñ…Ñ¼€ôôô€M5}]!QMA@œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡=1M¡°¹Ñ•±•™½¹•}¹½Éµ…±¥é…‘¼±°¹Ñ•±•™½¹”¤%L9U11€¤ì4(€€€€€¥˜€¡½¹Ñ…Ñ¼€ôôô€UQ=I%i<œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹½¹Ñ…Ñ½}…ÕÑ½É¥é…‘¼%LQIU€¤ì4(€€€€€¥˜€¡½¹Ñ…Ñ¼€ôôô€9=}UQ=I%i<œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹½¹Ñ…Ñ½}…ÕÑ½É¥é…‘¼%L1M€¤ì4(€€€€€¥˜€¡MÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹¹…½}½¹Ñ…Ñ…Èñð€œœ¤¹Ñ½1½Ý•É…Í” ¤€ôôô€ÑÉÕ”œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹¹…½}½¹Ñ…Ñ…È%LQIU€¤ì4(€€€€€¥˜€¡MÑÉ¥¹œ¡É•Ä¹ÅÕ•Éä¹¹…½}½¹Ñ…Ñ…Èñð€œœ¤¹Ñ½1½Ý•É…Í” ¤€ôôô€™…±Í”œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡°¹¹…½}½¹Ñ…Ñ…È%L1M€¤ì4(€€€€€¥˜€¡Õ±Ñ¥µ½½¹Ñ…Ñ¼€ôôô€M5}=9QQ<œ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡9=Pa%MQL¡M1P€ÄI=4ÁÉ½ÍÁ•…½}½¹Ñ…Ñ½ÌÁŒ]!IÁŒ¹±•…‘}¥õ°¹¥¥€¤ì4(€€€€€¥˜€¡Õ±Ñ¥µ½½¹Ñ…Ñ¼€ôôô€œÝœ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡a%MQL¡M1P€ÄI=4ÁÉ½ÍÁ•…½}½¹Ñ…Ñ½ÌÁŒ]!IÁŒ¹±•…‘}¥õ°¹¥9ÁŒ¹É•…Ñ•‘}…Ðøõ9=\ ¤µ%9QIY0€œÜ‘…åÌœ¥€¤ì4(€€€€€¥˜€¡Õ±Ñ¥µ½½¹Ñ…Ñ¼€ôôô€œÌÁœ¤™¥±Ñ•ÉÌ¹ÁÕÍ ¡a%MQL¡M1P€ÄI=4ÁÉ½ÍÁ•…½}½¹Ñ…Ñ½ÌÁŒ]!IÁŒ¹±•…‘}¥õ°¹¥9ÁŒ¹É•…Ñ•‘}…Ðøõ9=\ ¤µ%9QIY0€œÌÀ‘…åÌœ¥€¤ì4(€€€€€½¹ÍÐÝ¡•É”€ô™¥±Ñ•ÉÌ¹±•¹Ñ €ü]!I€‘í™¥±Ñ•ÉÌ¹©½¥¸ œ9€œ¥õ€€è€œœì4(€€€€€½¹ÍÐ™¥±Ñ•ÉA…É…µÌ€ôl¸¸¹Á…É…µÍtì4(€€€€€Á…É…µÌ¹ÁÕÍ ¡±¥µ¥Ð¤ì4(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€M1P°¸¨°Ô¹¹½µ”LÉ•ÍÁ½¹Í…Ù•±}¹½µ”°=1M¡¼¹•Ñ…Á„°9=Y=}1œ¤LÉµ}•Ñ…Á„°(€€€€€€€€€€€€€€€¡M1P=U9P ¨¤èé%9QHI=4ÁÉ½ÍÁ•…½}¹½Ñ…Ì¸]!I¸¹±•…‘}¥€ô°¹¥¤LÅÕ…¹Ñ¥‘…‘•}¹½Ñ…Ì°4(€€€€€€€€€€€€€€€¡M1P5`¡É•…Ñ•‘}…Ð¤I=4ÁÉ½ÍÁ•…½}½¹Ñ…Ñ½ÌŒ]!IŒ¹±•…‘}¥€ô°¹¥¤LÕ±Ñ¥µ½}½¹Ñ…Ñ½}…Ð4(€€€€€€€I=4ÁÉ½ÍÁ•…½}±•…‘Ì°(€€€€€€€1P)=%8…ÁÁ}ÕÍÕ…É¥½ÌÔ=8Ô¹¥€ô°¹É•ÍÁ½¹Í…Ù•±}¥(€€€€€€€1P)=%81QI0€¡M1P•Ñ…Á„I=4Éµ}½Á½ÉÑÕ¹¥‘…‘•Ì]!IÁÉ½ÍÁ•…½}±•…‘}¥õ°¹¥=IH	d¥M1%5%P€Ä¤¼=8QIU(€€€€€€€€‘íÝ¡•É•ô4(€€€€€€€=IH	d°¹¹…½}½¹Ñ…Ñ…ÈM°°¹Í½É”M°°¹É•…Ñ•‘}…ÐM4(€€€€€€€1%5%P€‘íÁ…É…µÌ¹±•¹Ñ¡ô4(€€€€€€°Á…É…µÌ¤ì4(€€€€€½¹ÍÐÍÕµµ…Éä€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€M1P=U9P ¨¤èé%9QHLÑ½Ñ…°°4(€€€€€€€€€€€€€€=U9P ¨¤%1QH€¡]!IÍÑ…ÑÕÌ€ô€9=Y<œ¤èé%9QHL¹½Ù½Ì°4(€€€€€€€€€€€€€€=U9P ¨¤%1QH€¡]!IÍÑ…ÑÕÌ€ô€AI=Y=}=9QQ<œ¤èé%9QHL…ÁÉ½Ù…‘½Ì°4(€€€€€€€€€€€€€€=U9P ¨¤%1QH€¡]!IÍÑ…ÑÕÌ%8€ IMA=9Tœ°IU9%<œ°AI=A=MQœ¤¤èé%9QHL½Á½ÉÑÕ¹¥‘…‘•Ì°4(€€€€€€€€€€€€€€=U9P ¨¤%1QH€¡]!IÍÑ…ÑÕÌ€ô€1%9Qœ¤èé%9QHL±¥•¹Ñ•Ì°4(€€€€€€€€€€€€€€=U9P ¨¤%1QH€¡]!I¹…½}½¹Ñ…Ñ…È%LQIU¤èé%9QHL¹…½}½¹Ñ…Ñ…È4(€€€€€€€I=4ÁÉ½ÍÁ•…½}±•…‘Ì°4(€€€€€€€€‘íÝ¡•É•ô4(€€€€€€°™¥±Ñ•ÉA…É…µÌ¤ì4(€€€€€½¹ÍÐm…Ñ•½É¥•Ì°ÍÑ…Ñ•Ì°¥Ñ¥•Ì°ÕÍ•ÉÍt€ô…Ý…¥ÐAÉ½µ¥Í”¹…±°¡l4(€€€€€€€Á½½°¹ÅÕ•Éä¡M1P%MQ%9P…Ñ•½É¥„LÙ…±½ÈI=4ÁÉ½ÍÁ•…½}±•…‘Ì]!I…Ñ•½É¥„%L9=P9U109	QI%4¡…Ñ•½É¥„¤ðøœœ=IH	dÙ…±½È1%5%P€ÄÔÁ€¤°4(€€€€€€€Á½½°¹ÅÕ•Éä¡M1P%MQ%9PUAAH¡•ÍÑ…‘¼¤LÙ…±½ÈI=4ÁÉ½ÍÁ•…½}±•…‘Ì]!I•ÍÑ…‘¼%L9=P9U109	QI%4¡•ÍÑ…‘¼¤ðøœœ=IH	dÙ…±½É€¤°4(€€€€€€€Á½½°¹ÅÕ•Éä¡M1P%MQ%9P¥‘…‘”LÙ…±½ÈI=4ÁÉ½ÍÁ•…½}±•…‘Ì]!I¥‘…‘”%L9=P9U109	QI%4¡¥‘…‘”¤ðøœœ=IH	dÙ…±½È1%5%P€ÌÀÁ€¤°4(€€€€€€€Á½½°¹ÅÕ•Éä¡M1P¥±¹½µ”I=4…ÁÁ}ÕÍÕ…É¥½Ì]!I…Ñ¥Ù¼%LQIU=IH	d¹½µ•€¤°4(€€€€€t¤ì4(€€€€€É•Ì¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°±•…‘ÌèÉ•ÍÕ±Ð¹É½ÝÌ°É•ÍÕµ¼èÍÕµµ…Éä¹É½ÝÍlÁt°™¥±ÑÉ½Ìèì4(€€€€€€€…Ñ•½É¥…Ìè…Ñ•½É¥•Ì¹É½ÝÌ¹µ…À ¡É½Ü¤€ôøÉ½Ü¹Ù…±½È¤°•ÍÑ…‘½ÌèÍÑ…Ñ•Ì¹É½ÝÌ¹µ…À ¡É½Ü¤€ôøÉ½Ü¹Ù…±½È¤°4(€€€€€€€¥‘…‘•Ìè¥Ñ¥•Ì¹É½ÝÌ¹µ…À ¡É½Ü¤€ôøÉ½Ü¹Ù…±½È¤°É•ÍÁ½¹Í…Ù•¥ÌèÕÍ•ÉÌ¹É½ÝÌ°4(€€€€€ôô¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹Á…Ñ  œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½±•…‘Ì¼é¥œ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€½¹ÍÐ¥€ôÁ…ÉÍ•%¡É•Ä¹Á…É…µÌ¹¥¤ì4(€€€€€¥˜€ …¥¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÀ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€%¥¹Û…±¥‘¼¸œô¤ì4(€€€€€½¹ÍÐÍ¡•µ„€ôè¹½‰©•Ð¡ì4(€€€€€€€ÍÑ…ÑÕÌèè¹•¹Õ´¡l9=Y<œ°5}91%Mœ°AI=Y=}=9QQ<œ°AI%5%I=}=9QQ<œ°IMA=9Tœ°IU9%<œ°AI=A=MQœ°1%9Qœ°MIQ<œ°M5}%9QIMMœ°=9QQ=}%9Y1%<œ°9=}=9QQHt¤°4(€€€€€€€ÁÉ¥½É¥‘…‘”èè¹•¹Õ´¡l	%aœ°5%œ°1Qt¤¹‘•™…Õ±Ð 5%œ¤°4(€€€€€€€¹…½}½¹Ñ…Ñ…Èèè¹‰½½±•…¸ ¤¹‘•™…Õ±Ð¡™…±Í”¤°4(€€€€€€€µ½Ñ¥Ù½}‘•Í…ÉÑ”èè¹ÍÑÉ¥¹œ ¤¹µ…à ÄÀÀÀ¤¹¹Õ±±…‰±” ¤¹½ÁÑ¥½¹…° ¤°4(€€€€€€€½‰Í•ÉÙ……¼èè¹ÍÑÉ¥¹œ ¤¹µ…à ÔÀÀÀ¤¹¹Õ±±…‰±” ¤¹½ÁÑ¥½¹…° ¤°4(€€€€€ô¤ì4(€€€€€½¹ÍÐÁ…ÉÍ•€ôÍ¡•µ„¹Í…™•A…ÉÍ”¡É•Ä¹‰½‘ä¤ì4(€€€€€¥˜€ …Á…ÉÍ•¹ÍÕ•ÍÌ¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÀ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼èÁ…ÉÍ•¹•ÉÉ½È¹¥ÍÍÕ•ÍlÁtü¹µ•ÍÍ…”ñð€…‘½Ì¥¹Û…±¥‘½Ì¸œô¤ì4(€€€€€½¹ÍÐ‘…Ñ„€ôÁ…ÉÍ•¹‘…Ñ„ì4(€€€€€½¹ÍÐ™¥¹…±MÑ…ÑÕÌ€ô‘…Ñ„¹¹…½}½¹Ñ…Ñ…È€ü€9=}=9QQHœ€è‘…Ñ„¹ÍÑ…ÑÕÌì4(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€UAQÁÉ½ÍÁ•…½}±•…‘Ì4(€€€€€€€MPÍÑ…ÑÕÌ€ô€Ä°ÁÉ¥½É¥‘…‘”€ô€È°¹…½}½¹Ñ…Ñ…È€ô€Ì°4(€€€€€€€€€€€µ½Ñ¥Ù½}‘•Í…ÉÑ”€ô€Ð°½‰Í•ÉÙ……¼€ô€Ô°4(€€€€€€€€€€€É•ÍÁ½¹Í…Ù•±}¥€ô=1M¡É•ÍÁ½¹Í…Ù•±}¥°€Ø¤°ÕÁ‘…Ñ•‘}…Ð€ô9=\ ¤4(€€€€€€€]!I¥€ô€Ü4(€€€€€€€IQUI9%9€¨4(€€€€€€°m™¥¹…±MÑ…ÑÕÌ°‘…Ñ„¹ÁÉ¥½É¥‘…‘”°‘…Ñ„¹¹…½}½¹Ñ…Ñ…È°±•…¹Q•áÐ¡‘…Ñ„¹µ½Ñ¥Ù½}‘•Í…ÉÑ”°€ÄÀÀÀ¤°±•…¹Q•áÐ¡‘…Ñ„¹½‰Í•ÉÙ……¼°€ÔÀÀÀ¤°É•Ä¹ÕÍ•È¹¥°¥‘t¤ì4(€€€€€¥˜€ …É•ÍÕ±Ð¹É½Ý½Õ¹Ð¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÐ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€1•…»¼•¹½¹ÑÉ…‘¼¸œô¤ì4(€€€€€…Ý…¥Ð…Õ‘¥Ð¡Á½½°°É•Ä°€1}AI=MA=}QU1%i<œ°€ÁÉ½ÍÁ•…½}±•…‘Ìœ°¥°ìÍÑ…ÑÕÌè™¥¹…±MÑ…ÑÕÌ°ÁÉ¥½É¥‘…‘”è‘…Ñ„¹ÁÉ¥½É¥‘…‘”°¹…½}½¹Ñ…Ñ…Èè‘…Ñ„¹¹…½}½¹Ñ…Ñ…Èô¤ì4(€€€€€É•Ì¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°µ•¹Í…•´è€1•……ÑÕ…±¥é…‘¼¸œ°±•…èÉ•ÍÕ±Ð¹É½ÝÍlÁtô¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹Á½ÍÐ œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½±•…‘Ì¼é¥½¹½Ñ…Ìœ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€½¹ÍÐ¥€ôÁ…ÉÍ•%¡É•Ä¹Á…É…µÌ¹¥¤ì4(€€€€€½¹ÍÐ¹½Ñ„€ô±•…¹Q•áÐ¡É•Ä¹‰½‘äü¹¹½Ñ„°€ÔÀÀÀ¤ì4(€€€€€¥˜€ …¥ñð€…¹½Ñ„¤É•ÑÕÉ¸É•Ì¹ÍÑ…ÑÕÌ ÐÀÀ¤¹©Í½¸¡ìÍÕ•ÍÍ¼è™…±Í”°•ÉÉ¼è€%¹™½Éµ”Õµ„¹½Ñ„Û…±¥‘„¸œô¤ì4(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€%9MIP%9Q<ÁÉ½ÍÁ•…½}¹½Ñ…Ì€¡±•…‘}¥°¹½Ñ„°É¥…‘½}Á½È°É¥…‘½}Á½É}¹½µ”¤4(€€€€€€€Y1UL€ Ä°€È°€Ì°€Ð¤4(€€€€€€€IQUI9%9€¨4(€€€€€€°m¥°¹½Ñ„°É•Ä¹ÕÍ•È¹¥°ÕÉÉ•¹ÑUÍ•É9…µ”¡É•Ä¥t¤ì4(€€€€€É•Ì¹ÍÑ…ÑÕÌ ÈÀÄ¤¹©Í½¸¡ìÍÕ•ÍÍ¼èÑÉÕ”°µ•¹Í…•´è€9½Ñ„…‘¥¥½¹…‘„¸œ°¹½Ñ„èÉ•ÍÕ±Ð¹É½ÝÍlÁtô¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4(4(€…ÁÀ¹•Ð œ½…Á¤½…‘µ¥¸½ÁÉ½ÍÁ•…¼½•áÁ½ÉÑ…È¹ÍØœ°É•ÅÕ¥É•‘µ¥¸°…Íå¹Œ€¡É•Ä°É•Ì°¹•áÐ¤€ôøì4(€€€ÑÉäì4(€€€€€½¹ÍÐÉ•ÍÕ±Ð€ô…Ý…¥ÐÁ½½°¹ÅÕ•Éä¡€4(€€€€€€€M1P•µÁÉ•Í…}¹½µ”°…Ñ•½É¥„°Ñ•±•™½¹”°•µ…¥°°Ý•‰Í¥Ñ”°•¹‘•É•¼°‰…¥ÉÉ¼°¥‘…‘”°•ÍÑ…‘¼°4(€€€€€€€€€€€€€€…Ù…±¥……¼°ÅÕ…¹Ñ¥‘…‘•}…Ù…±¥…½•Ì°Í½É”°ÍÑ…ÑÕÌ°ÁÉ¥½É¥‘…‘”°¹…½}½¹Ñ…Ñ…È°½½±•}µ…ÁÍ}ÕÉ°°É•…Ñ•‘}…Ð4(€€€€€€€I=4ÁÉ½ÍÁ•…½}±•…‘Ì4(€€€€€€€=IH	dÍ½É”M°É•…Ñ•‘}…ÐM4(€€€€€€¤ì4(€€€€€½¹ÍÐ¡•…‘•ÉÌ€ôlµÁÉ•Í„œ°…Ñ•½É¥„œ°Q•±•™½¹”œ°µµ…¥°œ°]•‰Í¥Ñ”œ°¹‘•É—¼œ°	…¥ÉÉ¼œ°¥‘…‘”œ°ÍÑ…‘¼œ°Ù…±¥‡Ÿ¼œ°EÑ¸…Ù…±¥‡ŸÕ•Ìœ°M½É”œ°MÑ…ÑÕÌœ°AÉ¥½É¥‘…‘”œ°;¼½¹Ñ…Ñ…Èœ°½½±”5…ÁÌœ°½±•Ñ…‘¼•´tì4(€€€€€½¹ÍÐÉ½ÝÌ€ôÉ•ÍÕ±Ð¹É½ÝÌ¹µ…À ¡É½Ü¤€ôømÉ½Ü¹•µÁÉ•Í…}¹½µ”±É½Ü¹…Ñ•½É¥„±É½Ü¹Ñ•±•™½¹”±É½Ü¹•µ…¥°±É½Ü¹Ý•‰Í¥Ñ”±É½Ü¹•¹‘•É•¼±É½Ü¹‰…¥ÉÉ¼±É½Ü¹¥‘…‘”±É½Ü¹•ÍÑ…‘¼±É½Ü¹…Ù…±¥……¼±É½Ü¹ÅÕ…¹Ñ¥‘…‘•}…Ù…±¥…½•Ì±É½Ü¹Í½É”±É½Ü¹ÍÑ…ÑÕÌ±É½Ü¹ÁÉ¥½É¥‘…‘”±É½Ü¹¹…½}½¹Ñ…Ñ…È€ü€M¥´œ€è€;¼œ±É½Ü¹½½±•}µ…ÁÍ}ÕÉ°±É½Ü¹É•…Ñ•‘}…Ñt¤ì4(€€€€€½¹ÍÐÍØ€ô€qÕ™•™˜œ€¬m¡•…‘•ÉÌ°€¸¸¹É½ÝÍt¹µ…À ¡É½Ü¤€ôøÉ½Ü¹µ…À¡ÍÙÍ…Á”¤¹©½¥¸ œìœ¤¤¹©½¥¸ q¸œ¤ì4(€€€€€É•Ì¹Í•Ñ!•…‘•È ½¹Ñ•¹ÐµQåÁ”œ°€Ñ•áÐ½ÍØì¡…ÉÍ•ÐõÕÑ˜´àœ¤ì4(€€€€€É•Ì¹Í•Ñ!•…‘•È ½¹Ñ•¹Ðµ¥ÍÁ½Í¥Ñ¥½¸œ°€…ÑÑ…¡µ•¹Ðì™¥±•¹…µ”ô‰ÁÉ½ÍÁ•…¼µ•¹•Í¥Ìµ¥„¹ÍØˆœ¤ì4(€€€€€É•Ì¹Í•¹¡ÍØ¤ì4(€€€ô…Ñ €¡•ÉÉ½È¤ì¹•áÐ¡•ÉÉ½È¤ìô4(€ô¤ì4)ô4(4)µ½‘Õ±”¹•áÁ½ÉÑÌ€ôìÉ•¥ÍÑ•É‘µ¥¹XØôì4
+      await audit(pool, req, 'SENHA_REDEFINIDA', 'app_usuarios', id, { usuario: result.rows[0].usuario });
+      res.json({ sucesso: true, mensagem: 'Senha redefinida com sucesso.' });
+    } catch (error) { next(error); }
+  });
+
+  // ------------------------------------------------------------
+  // ConfiguraÃ§Ã£o e orÃ§amento Apify
+  // ------------------------------------------------------------
+  app.get('/api/admin/prospeccao/configuracao', requireAdmin, async (req, res, next) => {
+    try {
+      const [config, usage] = await Promise.all([
+        pool.query('SELECT * FROM prospeccao_configuracao WHERE id = 1'),
+        monthlyUsage(pool),
+      ]);
+      const row = config.rows[0];
+      const used = Number(usage.usado_usd || 0);
+      const budget = Number(row.orcamento_mensal_usd || 0);
+      res.json({
+        sucesso: true,
+        configuracao: {
+          ...row,
+          actor_id: APIFY_ACTOR_ID,
+          token_configurado: Boolean(APIFY_API_TOKEN),
+          limites_disponiveis: ALLOWED_LIMITS.filter((value) => value <= Number(row.limite_maximo_execucao || 100)),
+          uso_mes_usd: used,
+          saldo_estimado_usd: Math.max(0, budget - used),
+          execucoes_mes: Number(usage.execucoes || 0),
+          leads_importados_mes: Number(usage.leads_importados || 0),
+        },
+      });
+    } catch (error) { next(error); }
+  });
+
+  app.patch('/api/admin/prospeccao/configuracao', requireAdmin, async (req, res, next) => {
+    try {
+      const schema = z.object({
+        orcamento_mensal_usd: z.coerce.number().min(0).max(10000),
+        custo_estimado_por_1000_usd: z.coerce.number().min(0).max(1000),
+        limite_padrao: z.coerce.number().int().min(1).max(500),
+        limite_maximo_execucao: z.coerce.number().int().min(1).max(1000),
+        ativo: z.boolean(),
+      });
+      const parsed = schema.safeParse(req.body);
+      if (!parsed.success) return res.status(400).json({ sucesso: false, erro: parsed.error.issues[0]?.message || 'ConfiguraÃ§Ã£o invÃ¡lida.' });
+      if (parsed.data.limite_padrao > parsed.data.limite_maximo_execucao) return res.status(400).json({ sucesso: false, erro: 'O limite padrÃ£o nÃ£o pode ser maior que o limite mÃ¡ximo.' });
+      const result = await pool.query(`
+        UPDATE prospeccao_configuracao
+        SET orcamento_mensal_usd = $1,
+            custo_estimado_por_1000_usd = $2,
+            limite_padrao = $3,
+            limite_maximo_execucao = $4,
+            ativo = $5,
+            updated_by = $6,
+            updated_at = NOW()
+        WHERE id = 1
+        RETURNING *
+      `, [parsed.data.orcamento_mensal_usd, parsed.data.custo_estimado_por_1000_usd, parsed.data.limite_padrao, parsed.data.limite_maximo_execucao, parsed.data.ativo, req.user.id]);
+      await audit(pool, req, 'PROSPECCAO_CONFIG_ATUALIZADA', 'prospeccao_configuracao', 1, parsed.data);
+      res.json({ sucesso: true, mensagem: 'Limites de prospecÃ§Ã£o atualizados.', configuracao: result.rows[0] });
+    } catch (error) { next(error); }
+  });
+
+  app.get('/api/admin/prospeccao/execucoes', requireAdmin, async (req, res, next) => {
+    try {
+      const result = await pool.query(`
+        SELECT * FROM prospeccao_execucoes
+        ORDER BY iniciado_at DESC
+        LIMIT 100
+      `);
+      res.json({ sucesso: true, execucoes: result.rows });
+    } catch (error) { next(error); }
+  });
+
+  app.post('/api/admin/prospeccao/execucoes', requireAdmin, async (req, res, next) => {
+    try {
+      if (!APIFY_API_TOKEN) return res.status(503).json({ sucesso: false, erro: 'APIFY_API_TOKEN ainda nÃ£o foi configurado no EasyPanel.' });
+      const schema = z.object({
+        termo_busca: z.string().trim().min(2).max(200),
+        localizacao: z.string().trim().min(2).max(250),
+        quantidade: z.coerce.number().int().min(1).max(1000),
+        confirmar_custo: z.boolean().optional().default(false),
+      });
+      const parsed = schema.safeParse(req.body);
+      if (!parsed.success) return res.status(400).json({ sucesso: false, erro: parsed.error.issues[0]?.message || 'Dados invÃ¡lidos.' });
+      const configResult = await pool.query('SELECT * FROM prospeccao_configuracao WHERE id = 1');
+      const config = configResult.rows[0];
+      if (!config.ativo) return res.status(403).json({ sucesso: false, erro: 'A prospecÃ§Ã£o estÃ¡ pausada nas configuraÃ§Ãµes administrativas.' });
+      const quantity = parsed.data.quantidade;
+      if (!ALLOWED_LIMITS.includes(quantity)) return res.status(400).json({ sucesso: false, erro: `Escolha uma quantidade permitida: ${ALLOWED_LIMITS.join(', ')}.` });
+      if (quantity > Number(config.limite_maximo_execucao)) return res.status(400).json({ sucesso: false, erro: 'A quantidade supera o limite mÃ¡ximo definido pelo administrador.' });
+      const usage = await monthlyUsage(pool);
+      const estimated = Number(config.custo_estimado_inicio_usd || 0.007) + ((quantity / 1000) * Number(config.custo_estimado_por_1000_usd || 1.5));
+      const projected = Number(usage.usado_usd || 0) + estimated;
+      if (projected > Number(config.orcamento_mensal_usd || 0)) {
+        return res.status(402).json({
+          sucesso: false,
+          erro: `A execuÃ§Ã£o ultrapassaria o orÃ§amento mensal local. Uso estimado: US$ ${Number(usage.usado_usd || 0).toFixed(2)}; nova busca: US$ ${estimated.toFixed(2)}; limite: US$ ${Number(config.orcamento_mensal_usd || 0).toFixed(2)}.`,
+        });
+      }
+      if (!parsed.data.confirmar_custo) {
+        return res.status(409).json({
+          sucesso: false,
+          requer_confirmacao: true,
+          custo_estimado_usd: estimated,
+          mensagem: `Esta busca estÃ¡ estimada em aproximadamente US$ ${estimated.toFixed(3)}. Confirme para iniciar.`,
+        });
+      }
+      const input = {
+        searchStringsArray: [parsed.data.termo_busca],
+        locationQuery: parsed.data.localizacao,
+        maxCrawledPlacesPerSearch: quantity,
+        language: 'pt-BR',
+        scrapeSocialMediaProfiles: {
+          facebooks: false,
+          instagrams: false,
+          youtubes: false,
+          tiktoks: false,
+          twitters: false,
+        },
+        // Controles de custo: desativa recursos adicionais que podem elevar o consumo.
+        maximumLeadsEnrichmentRecords: 0,
+        maxReviews: 0,
+        scrapePlaceDetailPage: false,
+        scrapeReviewsPersonalData: false,
+        maxCompetitorsToAnalyze: 0,
+      };
+      const draft = await pool.query(`
+        INSERT INTO prospeccao_execucoes (
+          actor_id, termo_busca, localizacao, quantidade_solicitada, status,
+          custo_estimado_usd, input_json, iniciado_por, iniciado_por_nome
+        ) VALUES ($1, $2, $3, $4, 'PREPARANDO', $5, $6::JSONB, $7, $8)
+        RETURNING *
+      `, [APIFY_ACTOR_ID, parsed.data.termo_busca, parsed.data.localizacao, quantity, estimated, JSON.stringify(input), req.user.id, currentUserName(req)]);
+      try {
+        const response = await apifyFetch(APIFY_API_TOKEN, `/acts/${actorApiId(APIFY_ACTOR_ID)}/runs`, {
+          method: 'POST',
+          body: JSON.stringify(input),
+        });
+        const run = response.data || response;
+        const result = await pool.query(`
+          UPDATE prospeccao_execucoes
+          SET apify_run_id = $1, apify_dataset_id = $2, status = $3, retorno_json = $4::JSONB, updated_at = NOW()
+          WHERE id = $5
+          RETURNING *
+        `, [run.id, run.defaultDatasetId || null, run.status || 'RUNNING', JSON.stringify(run), draft.rows[0].id]);
+        await audit(pool, req, 'PROSPECCAO_INICIADA', 'prospeccao_execucoes', draft.rows[0].id, { termo: parsed.data.termo_busca, localizacao: parsed.data.localizacao, quantidade: quantity, estimado: estimated });
+        res.status(201).json({ sucesso: true, mensagem: 'Busca iniciada na Apify.', execucao: result.rows[0] });
+      } catch (error) {
+        await pool.query(`UPDATE prospeccao_execucoes SET status = 'FAILED', erro = $1, updated_at = NOW(), concluido_at = NOW() WHERE id = $2`, [error.message, draft.rows[0].id]);
+        throw error;
+      }
+    } catch (error) { next(error); }
+  });
+
+  app.post('/api/admin/prospeccao/execucoes/:id/sincronizar', requireAdmin, async (req, res, next) => {
+    try {
+      if (!APIFY_API_TOKEN) return res.status(503).json({ sucesso: false, erro: 'APIFY_API_TOKEN nÃ£o configurado.' });
+      const id = parseId(req.params.id);
+      if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+      const localResult = await pool.query('SELECT * FROM prospeccao_execucoes WHERE id = $1', [id]);
+      if (!localResult.rowCount) return res.status(404).json({ sucesso: false, erro: 'ExecuÃ§Ã£o nÃ£o encontrada.' });
+      const execution = localResult.rows[0];
+      if (!execution.apify_run_id) return res.status(400).json({ sucesso: false, erro: 'ExecuÃ§Ã£o sem ID da Apify.' });
+      const response = await apifyFetch(APIFY_API_TOKEN, `/actor-runs/${encodeURIComponent(execution.apify_run_id)}`, { method: 'GET' });
+      const run = response.data || response;
+      const status = run.status || execution.status;
+      let imported = Number(execution.quantidade_importada || 0);
+      let duplicated = Number(execution.quantidade_duplicada || 0);
+      let found = Number(execution.quantidade_encontrada || 0);
+      const datasetId = run.defaultDatasetId || execution.apify_dataset_id;
+      if (status === 'SUCCEEDED' && datasetId && !execution.concluido_at) {
+        const datasetResponse = await apifyFetch(APIFY_API_TOKEN, `/datasets/${encodeURIComponent(datasetId)}/items?clean=true&limit=${Number(execution.quantidade_solicitada || 100)}`, { method: 'GET' });
+        const items = Array.isArray(datasetResponse) ? datasetResponse : (datasetResponse.data?.items || datasetResponse.items || []);
+        found = items.length;
+        const importedResult = await importDataset(pool, execution, items);
+        imported = importedResult.imported;
+        duplicated = importedResult.duplicated;
+      }
+      const actualCost = extractRunCost(run, execution.custo_estimado_usd);
+      const result = await pool.query(`
+        UPDATE prospeccao_execucoes
+        SET apify_dataset_id = $1,
+            status = $2,
+            custo_real_usd = $3,
+            quantidade_encontrada = $4,
+            quantidade_importada = $5,
+            quantidade_duplicada = $6,
+            retorno_json = $7::JSONB,
+            erro = CASE
+              WHEN $2::VARCHAR IN ('FAILED','ABORTED','TIMED-OUT')
+                THEN COALESCE($8::TEXT, erro)
+              ELSE NULL
+            END,
+            concluido_at = CASE WHEN $2::VARCHAR IN ('SUCCEEDED','FAILED','ABORTED','TIMED-OUT') THEN COALESCE(concluido_at, NOW()) ELSE concluido_at END,
+            updated_at = NOW()
+        WHERE id = $9
+        RETURNING *
+      `, [datasetId || null, status, actualCost, found, imported, duplicated, JSON.stringify(run), run.statusMessage || null, id]);
+      res.json({ sucesso: true, mensagem: status === 'SUCCEEDED' ? 'Resultados sincronizados e importados.' : `ExecuÃ§Ã£o atualizada: ${status}.`, execucao: result.rows[0] });
+    } catch (error) { next(error); }
+  });
+
+  app.post('/api/admin/prospeccao/execucoes/:id/abortar', requireAdmin, async (req, res, next) => {
+    try {
+      if (!APIFY_API_TOKEN) return res.status(503).json({ sucesso: false, erro: 'APIFY_API_TOKEN nÃ£o configurado.' });
+      const id = parseId(req.params.id);
+      const localResult = await pool.query('SELECT * FROM prospeccao_execucoes WHERE id = $1', [id]);
+      if (!localResult.rowCount) return res.status(404).json({ sucesso: false, erro: 'ExecuÃ§Ã£o nÃ£o encontrada.' });
+      const execution = localResult.rows[0];
+      await pool.query(`UPDATE prospeccao_execucoes SET status = 'ABORTING', updated_at = NOW() WHERE id = $1`, [id]);
+      await apifyFetch(APIFY_API_TOKEN, `/actor-runs/${encodeURIComponent(execution.apify_run_id)}/abort`, { method: 'POST', body: '{}' });
+      await audit(pool, req, 'PROSPECCAO_ABORTADA', 'prospeccao_execucoes', id, {});
+      res.json({ sucesso: true, mensagem: 'SolicitaÃ§Ã£o de interrupÃ§Ã£o enviada Ã  Apify.' });
+    } catch (error) { next(error); }
+  });
+
+  app.get('/api/admin/prospeccao/leads', requireAdmin, async (req, res, next) => {
+    try {
+      const status = String(req.query.status || 'TODOS').toUpperCase();
+      const q = String(req.query.q || '').trim();
+      const limit = Math.min(Math.max(Number(req.query.limit || 300), 1), 1000);
+      const params = [];
+      const filters = [];
+      if (status !== 'TODOS') { params.push(status); filters.push(`l.status = $${params.length}`); }
+      if (q) {
+        params.push(`%${q}%`);
+        filters.push(`(l.empresa_nome ILIKE $${params.length} OR l.cidade ILIKE $${params.length} OR l.telefone ILIKE $${params.length} OR l.website ILIKE $${params.length} OR l.categoria ILIKE $${params.length})`);
+      }
+      const categoria = String(req.query.categoria || '').trim();
+      const estado = String(req.query.estado || '').trim().toUpperCase();
+      const cidade = String(req.query.cidade || '').trim();
+      const prioridade = String(req.query.prioridade || '').trim().toUpperCase();
+      const resposta = String(req.query.resposta || '').trim().toUpperCase();
+      const contato = String(req.query.contato || '').trim().toUpperCase();
+      const ultimoContato = String(req.query.ultimo_contato || '').trim().toUpperCase();
+      const responsavel = parseId(req.query.responsavel);
+      const scoreMin = Number(req.query.score_min);
+      if (categoria) { params.push(`%${categoria}%`); filters.push(`(l.categoria ILIKE $${params.length} OR l.categorias::TEXT ILIKE $${params.length})`); }
+      if (estado) { params.push(estado); filters.push(`UPPER(COALESCE(l.estado,''))=$${params.length}`); }
+      if (cidade) { params.push(`%${cidade}%`); filters.push(`l.cidade ILIKE $${params.length}`); }
+      if (['BAIXA','MEDIA','ALTA'].includes(prioridade)) { params.push(prioridade); filters.push(`l.prioridade=$${params.length}`); }
+      if (responsavel) { params.push(responsavel); filters.push(`l.responsavel_id=$${params.length}`); }
+      if (Number.isFinite(scoreMin) && scoreMin > 0) { params.push(Math.min(scoreMin, 100)); filters.push(`l.score >= $${params.length}`); }
+      if (['HUMANA','AUTOMATICA','DESCADASTRO','VAZIA'].includes(resposta)) { params.push(resposta); filters.push(`l.resposta_tipo=$${params.length}`); }
+      if (contato === 'COM_WHATSAPP') filters.push(`COALESCE(l.telefone_normalizado,l.telefone) IS NOT NULL`);
+      if (contato === 'SEM_WHATSAPP') filters.push(`COALESCE(l.telefone_normalizado,l.telefone) IS NULL`);
+      if (contato === 'AUTORIZADO') filters.push(`l.contato_autorizado IS TRUE`);
+      if (contato === 'NAO_AUTORIZADO') filters.push(`l.contato_autorizado IS FALSE`);
+      if (String(req.query.nao_contatar || '').toLowerCase() === 'true') filters.push(`l.nao_contatar IS TRUE`);
+      if (String(req.query.nao_contatar || '').toLowerCase() === 'false') filters.push(`l.nao_contatar IS FALSE`);
+      if (ultimoContato === 'SEM_CONTATO') filters.push(`NOT EXISTS(SELECT 1 FROM prospeccao_contatos pc WHERE pc.lead_id=l.id)`);
+      if (ultimoContato === '7D') filters.push(`EXISTS(SELECT 1 FROM prospeccao_contatos pc WHERE pc.lead_id=l.id AND pc.created_at>=NOW()-INTERVAL '7 days')`);
+      if (ultimoContato === '30D') filters.push(`EXISTS(SELECT 1 FROM prospeccao_contatos pc WHERE pc.lead_id=l.id AND pc.created_at>=NOW()-INTERVAL '30 days')`);
+      const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+      const filterParams = [...params];
+      params.push(limit);
+      const result = await pool.query(`
+        SELECT l.*, u.nome AS responsavel_nome, COALESCE(co.etapa,'NOVO_LEAD') AS crm_etapa,
+               (SELECT COUNT(*)::INTEGER FROM prospeccao_notas n WHERE n.lead_id = l.id) AS quantidade_notas,
+               (SELECT MAX(created_at) FROM prospeccao_contatos c WHERE c.lead_id = l.id) AS ultimo_contato_at
+        FROM prospeccao_leads l
+        LEFT JOIN app_usuarios u ON u.id = l.responsavel_id
+        LEFT JOIN LATERAL (SELECT etapa FROM crm_oportunidades WHERE prospeccao_lead_id=l.id ORDER BY id DESC LIMIT 1) co ON TRUE
+        ${where}
+        ORDER BY l.nao_contatar ASC, l.score DESC, l.created_at DESC
+        LIMIT $${params.length}
+      `, params);
+      const summary = await pool.query(`
+        SELECT COUNT(*)::INTEGER AS total,
+               COUNT(*) FILTER (WHERE status = 'NOVO')::INTEGER AS novos,
+               COUNT(*) FILTER (WHERE status = 'APROVADO_CONTATO')::INTEGER AS aprovados,
+               COUNT(*) FILTER (WHERE status IN ('RESPONDEU','REUNIAO','PROPOSTA'))::INTEGER AS oportunidades,
+               COUNT(*) FILTER (WHERE status = 'CLIENTE')::INTEGER AS clientes,
+               COUNT(*) FILTER (WHERE nao_contatar IS TRUE)::INTEGER AS nao_contatar
+        FROM prospeccao_leads l
+        ${where}
+      `, filterParams);
+      const [categories, states, cities, users] = await Promise.all([
+        pool.query(`SELECT DISTINCT categoria AS valor FROM prospeccao_leads WHERE categoria IS NOT NULL AND BTRIM(categoria)<>'' ORDER BY valor LIMIT 150`),
+        pool.query(`SELECT DISTINCT UPPER(estado) AS valor FROM prospeccao_leads WHERE estado IS NOT NULL AND BTRIM(estado)<>'' ORDER BY valor`),
+        pool.query(`SELECT DISTINCT cidade AS valor FROM prospeccao_leads WHERE cidade IS NOT NULL AND BTRIM(cidade)<>'' ORDER BY valor LIMIT 300`),
+        pool.query(`SELECT id,nome FROM app_usuarios WHERE ativo IS TRUE ORDER BY nome`),
+      ]);
+      res.json({ sucesso: true, leads: result.rows, resumo: summary.rows[0], filtros: {
+        categorias: categories.rows.map((row) => row.valor), estados: states.rows.map((row) => row.valor),
+        cidades: cities.rows.map((row) => row.valor), responsaveis: users.rows,
+      } });
+    } catch (error) { next(error); }
+  });
+
+  app.patch('/api/admin/prospeccao/leads/:id', requireAdmin, async (req, res, next) => {
+    try {
+      const id = parseId(req.params.id);
+      if (!id) return res.status(400).json({ sucesso: false, erro: 'ID invÃ¡lido.' });
+      const schema = z.object({
+        status: z.enum(['NOVO','EM_ANALISE','APROVADO_CONTATO','PRIMEIRO_CONTATO','RESPONDEU','REUNIAO','PROPOSTA','CLIENTE','DESCARTADO','SEM_INTERESSE','CONTATO_INVALIDO','NAO_CONTATAR']),
+        prioridade: z.enum(['BAIXA','MEDIA','ALTA']).default('MEDIA'),
+        nao_contatar: z.boolean().default(false),
+        motivo_descarte: z.string().max(1000).nullable().optional(),
+        observacao: z.string().max(5000).nullable().optional(),
+      });
+      const parsed = schema.safeParse(req.body);
+      if (!parsed.success) return res.status(400).json({ sucesso: false, erro: parsed.error.issues[0]?.message || 'Dados invÃ¡lidos.' });
+      const data = parsed.data;
+      const finalStatus = data.nao_contatar ? 'NAO_CONTATAR' : data.status;
+      const result = await pool.query(`
+        UPDATE prospeccao_leads
+        SET status = $1, prioridade = $2, nao_contatar = $3,
+            motivo_descarte = $4, observacao = $5,
+            responsavel_id = COALESCE(responsavel_id, $6), updated_at = NOW()
+        WHERE id = $7
+        RETURNING *
+      `, [finalStatus, data.prioridade, data.nao_contatar, cleanText(data.motivo_descarte, 1000), cleanText(data.observacao, 5000), req.user.id, id]);
+      if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Lead nÃ£o encontrado.' });
+      await audit(pool, req, 'LEAD_PROSPECCAO_ATUALIZADO', 'prospeccao_leads', id, { status: finalStatus, prioridade: data.prioridade, nao_contatar: data.nao_contatar });
+      res.json({ sucesso: true, mensagem: 'Lead atualizado.', lead: result.rows[0] });
+    } catch (error) { next(error); }
+  });
+
+  app.post('/api/admin/prospeccao/leads/:id/notas', requireAdmin, async (req, res, next) => {
+    try {
+      const id = parseId(req.params.id);
+      const nota = cleanText(req.body?.nota, 5000);
+      if (!id || !nota) return res.status(400).json({ sucesso: false, erro: 'Informe uma nota vÃ¡lida.' });
+      const result = await pool.query(`
+        INSERT INTO prospeccao_notas (lead_id, nota, criado_por, criado_por_nome)
+        VALUES ($1, $2, $3, $4)
+        RETURNING *
+      `, [id, nota, req.user.id, currentUserName(req)]);
+      res.status(201).json({ sucesso: true, mensagem: 'Nota adicionada.', nota: result.rows[0] });
+    } catch (error) { next(error); }
+  });
+
+  app.get('/api/admin/prospeccao/exportar.csv', requireAdmin, async (req, res, next) => {
+    try {
+      const result = await pool.query(`
+        SELECT empresa_nome, categoria, telefone, email, website, endereco, bairro, cidade, estado,
+               avaliacao, quantidade_avaliacoes, score, status, prioridade, nao_contatar, google_maps_url, created_at
+        FROM prospeccao_leads
+        ORDER BY score DESC, created_at DESC
+      `);
+      const headers = ['Empresa','Categoria','Telefone','E-mail','Website','EndereÃ§o','Bairro','Cidade','Estado','AvaliaÃ§Ã£o','Qtd. avaliaÃ§Ãµes','Score','Status','Prioridade','NÃ£o contatar','Google Maps','Coletado em'];
+      const rows = result.rows.map((row) => [row.empresa_nome,row.categoria,row.telefone,row.email,row.website,row.endereco,row.bairro,row.cidade,row.estado,row.avaliacao,row.quantidade_avaliacoes,row.score,row.status,row.prioridade,row.nao_contatar ? 'Sim' : 'NÃ£o',row.google_maps_url,row.created_at]);
+      const csv = '\ufeff' + [headers, ...rows].map((row) => row.map(csvEscape).join(';')).join('\n');
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', 'attachment; filename="prospeccao-genesis-ia.csv"');
+      res.send(csv);
+    } catch (error) { next(error); }
+  });
+}
+
+module.exports = { registerAdminV6 };
