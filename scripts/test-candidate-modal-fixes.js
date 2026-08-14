@@ -1,0 +1,12 @@
+'use strict';
+const fs=require('node:fs');const path=require('node:path');const root=path.resolve(__dirname,'..');const read=f=>fs.readFileSync(path.join(root,f),'utf8');const ok=(c,m)=>{if(!c)throw new Error(m)};
+const server=read('server.js'),service=read('lib/atendimento-v15.js'),app=read('public/app.js'),css=read('public/v17-redesign.css');
+ok(css.includes('width:min(980px')&&css.includes('.drawer-shell{width:100%;max-width:none'),'Modal do candidato não foi compactado ou ainda mantém faixa lateral.');
+ok(app.includes('function confirmAction(')&&app.includes('genesis-confirm-dialog'),'Confirmações continuam dependentes do diálogo nativo do navegador.');
+ok(service.includes("correcao/preview', requireLogin, requireAdmin")&&service.includes("correcao', requireLogin, requireAdmin"),'Correção avançada não carrega autenticação antes de validar ADMIN.');
+const adminStart=server.indexOf("app.post('/api/admin/candidatos/:id/acao'");const adminAction=server.slice(adminStart,adminStart+9000);
+ok(adminAction.includes('FOR UPDATE OF c'),'Encerramento ainda tenta bloquear o lado nulo do LEFT JOIN.');
+ok(server.includes("app.post('/api/documentos/:id/marcar-revisado'")&&app.includes('data-document-mark-reviewed'),'Reconciliação documental manual ausente.');
+ok(server.includes("status_processamento='REVISAO_CONCLUIDA'")&&app.includes("label:'Revisão concluída'"),'Decisões não encerram a notificação documental.');
+ok(server.includes('mensagem_enviada:false'),'Ação manual documental deve afirmar que não envia mensagem.');
+console.log('Modal do candidato: layout compacto, confirmações próprias, encerramento/correção e reconciliação documental validados.');

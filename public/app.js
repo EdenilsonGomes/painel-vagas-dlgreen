@@ -392,6 +392,18 @@ function showToast(message, type = 'success') {
   showToast.timer = setTimeout(() => el.toast.classList.add('hidden'), 5000);
 }
 
+function confirmAction({title='Confirmar ação',message='',detail='',confirmLabel='Confirmar',tone='primary',inputLabel='',inputValue='',inputRequired=false}={}) {
+  let dialog=document.getElementById('genesisConfirmDialog');
+  if(!dialog){dialog=document.createElement('dialog');dialog.id='genesisConfirmDialog';dialog.className='genesis-confirm-dialog';document.body.appendChild(dialog);}
+  dialog.innerHTML=`<form method="dialog"><div class="genesis-confirm-icon ${tone}">${tone==='danger'?'!':'✓'}</div><div class="genesis-confirm-copy"><p class="eyebrow">CONFIRMAÇÃO</p><h3>${escapeHtml(title)}</h3><p>${escapeHtml(message)}</p>${detail?`<div class="genesis-confirm-detail">${escapeHtml(detail)}</div>`:''}${inputLabel?`<label class="field"><span>${escapeHtml(inputLabel)}</span><textarea id="genesisConfirmInput" rows="3" maxlength="1000">${escapeHtml(inputValue)}</textarea></label>`:''}</div><footer><button value="cancel" class="button button-ghost" type="submit">Cancelar</button><button value="confirm" class="button ${tone==='danger'?'button-danger':'button-primary'}" type="submit">${escapeHtml(confirmLabel)}</button></footer></form>`;
+  return new Promise((resolve)=>{
+    const finish=(confirmed)=>{const value=String(dialog.querySelector('#genesisConfirmInput')?.value||'').trim();if(confirmed&&inputRequired&&!value){showToast(`Informe ${inputLabel.toLocaleLowerCase('pt-BR')}.`,'error');dialog.querySelector('#genesisConfirmInput')?.focus();return;}dialog.close();resolve({confirmed,value});};
+    dialog.oncancel=(event)=>{event.preventDefault();finish(false);};
+    dialog.querySelector('form').onsubmit=(event)=>{event.preventDefault();finish(event.submitter?.value==='confirm');};
+    dialog.showModal();window.setTimeout(()=>dialog.querySelector('#genesisConfirmInput')?.focus(),50);
+  });
+}
+
 async function api(url, options = {}) {
   const response = await fetch(url, {
     headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
@@ -1819,11 +1831,8 @@ async function updateCandidate(mode = 'SOMENTE_CORRECAO') {
   const continueFlow = mode === 'CORRIGIR_E_CONTINUAR';
   if (continueFlow) {
     const preview = await api(`/api/atendimento/candidatos/${state.selectedCandidateId}/correcao/preview?status=${encodeURIComponent(status)}&etapa=${encodeURIComponent(etapa)}`);
-    const ok = window.confirm(`Aplicar a correção e continuar o atendimento?
-
-Mensagem prevista:
-${preview.mensagem_prevista}`);
-    if (!ok) return;
+    const decision=await confirmAction({title:'Aplicar e continuar atendimento?',message:'A correção será salva e a IA retomará o atendimento.',detail:`Mensagem prevista: ${preview.mensagem_prevista}`,confirmLabel:'Aplicar e continuar'});
+    if (!decision.confirmed) return;
   }
   const button = continueFlow ? el.continueCandidateButton : el.updateCandidateButton;
   const originalText = button.textContent; button.disabled = true; button.textContent = 'Aplicando...';
@@ -1890,11 +1899,8 @@ async function toggleCandidateAi() {
   const activeNow = candidate.ia_atendimento_ativo !== false;
   let reason = '';
   if (activeNow) {
-    reason = window.prompt('Motivo da pausa (opcional):', 'Atendimento assumido pelo recrutador') ?? '';
-    if (!window.confirm('Pausar a IA para este candidato? As mensagens continuarão registradas, mas a Evelyn não responderá.')) return;
-  } else if (!window.confirm('Retomar o atendimento automático da IA para este candidato?')) {
-    return;
-  }
+    const decision=await confirmAction({title:'Pausar a IA?',message:'As mensagens continuarão registradas, mas a Evelyn não responderá.',confirmLabel:'Pausar IA',inputLabel:'Motivo da pausa',inputValue:'Atendimento assumido pelo recrutador'});if(!decision.confirmed)return;reason=decision.value;
+  } else {const decision=await confirmAction({title:'Retomar atendimento automático?',message:'A Evelyn voltará a responder as próximas mensagens deste candidato.',confirmLabel:'Retomar IA'});if(!decision.confirmed)return;}
 
   const button = el.toggleCandidateAiButton;
   const original = button.textContent;
@@ -1947,7 +1953,7 @@ async function confirmAdminReject() {
   const observacao = el.adminRejectObservation.value.trim();
   if (!motivoCodigo) return showToast('Selecione o motivo da reprovação.', 'error');
   if (motivoCodigo === 'OUTRO' && !observacao) return showToast('Descreva o motivo da reprovação.', 'error');
-  if (!window.confirm('Confirmar a reprovação deste candidato nesta vaga?')) return;
+  const decision=await confirmAction({title:'Reprovar nesta vaga?',message:'A decisão será registrada no histórico do candidato.',detail:el.adminRejectSendMessage.checked?'O candidato será avisado.':'Nenhuma mensagem será enviada.',confirmLabel:'Confirmar reprovação',tone:'danger'});if(!decision.confirmed)return;
   el.confirmAdminRejectButton.disabled = true;
   try {
     await runAdminCandidateAction('REPROVAR_VAGA', {
@@ -1964,15 +1970,15 @@ async function confirmAdminReject() {
 }
 
 async function closeCandidateAdministratively() {
-  const motivo = window.prompt('Motivo do encerramento:', 'Candidatura encerrada administrativamente');
-  if (motivo === null) return;
-  if (!window.confirm('Encerrar esta candidatura? A IA será pausada e a etapa ficará encerrada.')) return;
-  try { await runAdminCandidateAction('ENCERRAR', { observacao: motivo }); }
+  const decision=await confirmAction({title:'Encerrar candidatura?',message:'A IA será pausada e a candidatura ficará encerrada.',detail:'Nenhuma mensagem será enviada ao candidato.',confirmLabel:'Encerrar candidatura',tone:'danger',inputLabel:'Motivo do encerramento',inputValue:'Candidatura encerrada administrativamente',inputRequired:true});
+  if(!decision.confirmed)return;
+  try { await runAdminCandidateAction('ENCERRAR', { observacao: decision.value }); }
   catch (error) { showToast(error.message || 'Não foi possível encerrar a candidatura.', 'error'); }
 }
 
 async function reopenCandidateAdministratively() {
-  if (!window.confirm('Reabrir esta candidatura e retomar o fluxo a partir do menu inicial?')) return;
+  const decision=await confirmAction({title:'Reabrir candidatura?',message:'O fluxo automático será retomado a partir do menu inicial.',confirmLabel:'Reabrir e retomar'});
+  if(!decision.confirmed)return;
   try { await runAdminCandidateAction('REABRIR'); }
   catch (error) { showToast(error.message || 'Não foi possível reabrir a candidatura.', 'error'); }
 }
@@ -2017,7 +2023,7 @@ async function saveCtpsManualReview(event) {
   const notify = Boolean(el.ctpsManualNotify?.checked);
   const decisionText = decisao === 'APROVAR' ? 'confirmar a aprovação' : 'reprovar o candidato pela CTPS';
   const notifyText = notify ? ' O candidato SERÁ avisado agora.' : ' Nenhuma mensagem será enviada ao candidato.';
-  if (!window.confirm(`Deseja ${decisionText}?${notifyText}`)) return;
+  const confirmation=await confirmAction({title:'Confirmar decisão da CTPS?',message:`Deseja ${decisionText}?`,detail:notifyText.trim(),confirmLabel:'Confirmar decisão',tone:decisao==='REPROVAR'?'danger':'primary'});if(!confirmation.confirmed)return;
   el.saveCtpsManualReviewButton.disabled = true;
   try {
     const result = await api(`/api/admin/candidatos/${state.selectedCandidateId}/ctps/decisao-manual`, {
@@ -2045,7 +2051,7 @@ async function saveCtpsManualReview(event) {
 }
 
 async function reprocessCandidateCtps() {
-  if (!window.confirm('Reprocessar a última CTPS armazenada? A IA será retomada e o resultado será enviado automaticamente ao candidato.')) return;
+  const decision=await confirmAction({title:'Reprocessar última CTPS?',message:'A IA será retomada e o resultado será enviado automaticamente ao candidato.',confirmLabel:'Reprocessar CTPS'});if(!decision.confirmed)return;
   const button = el.reprocessCandidateCtpsButton;
   const original = button.textContent;
   button.disabled = true;
@@ -2068,7 +2074,7 @@ async function reprocessCandidateCtps() {
 }
 
 async function deleteCandidate() {
-  if (!window.confirm('Remover este candidato e o histórico relacionado do banco?')) return;
+  const decision=await confirmAction({title:'Remover candidato?',message:'O candidato e todo o histórico relacionado serão excluídos do banco.',detail:'Esta ação não pode ser desfeita.',confirmLabel:'Remover definitivamente',tone:'danger'});if(!decision.confirmed)return;
   await api(`/api/candidatos/${state.selectedCandidateId}`, { method: 'DELETE' });
   el.candidateDrawer.close();
   showToast('Candidato removido.');
@@ -2265,11 +2271,14 @@ async function loadDocuments() {
 
 function documentProcessingMeta(doc) {
   const status = String(doc.status_processamento || '').toUpperCase();
+  if(status==='REVISAO_CONCLUIDA'||(['REPROVADO','ENCERRADO','CONTRATADO'].includes(String(doc.candidato_status||'').toUpperCase())&&documentNeedsReviewReconciliation(doc)))return {label:'Revisão concluída',tone:'ok',detail:'Decisão do processo registrada'};
   if (['ERRO', 'ERRO_PROCESSAMENTO', 'INCONCLUSIVO'].includes(status)) return { label: 'Falha no processamento', tone: 'error', detail: 'Arquivo bruto preservado' };
   if (['REVISAO'].includes(status) || String(doc.tipo || '').toUpperCase() === 'PENDENTE_REVISAO') return { label: 'Aguardando revisão', tone: 'wait', detail: 'Decisão humana necessária' };
   if (['RECEBIDO', 'ARMAZENADO', 'PROCESSANDO', 'REPROCESSAMENTO_SOLICITADO', 'PENDENTE'].includes(status)) return { label: status === 'PROCESSANDO' ? 'Processando' : 'Aguardando processamento', tone: 'wait', detail: 'Arquivo armazenado' };
   return { label: 'Analisado', tone: 'ok', detail: String(doc.tipo || '').toUpperCase() === 'CURRICULO' ? 'Dados do currículo extraídos' : 'Análise concluída' };
 }
+
+function documentNeedsReviewReconciliation(doc){const status=String(doc.status_processamento||'').toUpperCase();const type=String(doc.tipo||'').toUpperCase();return ['PENDENTE','PENDENTE_REVISAO'].includes(type)||['ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'].includes(status);}
 
 function renderDocuments() {
   const query = String(el.documentSearchInput?.value || '').trim().toLocaleLowerCase('pt-BR');
@@ -2332,6 +2341,7 @@ function renderDocuments() {
     const files = expanded ? `<div class="document-candidate-files">${docs.map((doc) => {
       const meta = documentProcessingMeta(doc);
       const canReprocess = String(doc.tipo || '').toUpperCase() === 'CTPS' && ['error', 'wait'].includes(meta.tone);
+      const canMarkReviewed=currentUserIsAdmin()&&documentNeedsReviewReconciliation(doc);
       return `<article class="document-file-row">
         <span class="document-file-icon">PDF</span>
         <div><strong>${escapeHtml(doc.nome_exibicao || doc.nome_arquivo || doc.titulo || 'Documento')}</strong><small>${escapeHtml(formatFileSize(doc.tamanho_bytes))} · ${escapeHtml(formatDate(doc.created_at))}</small></div>
@@ -2340,6 +2350,7 @@ function renderDocuments() {
         <div class="document-file-actions">
           ${doc.disponivel_download ? `<button data-document-preview="${doc.id}" data-document-name="${escapeHtml(doc.nome_exibicao || doc.titulo || 'Documento')}" type="button">Visualizar</button><a href="/api/documentos/${doc.id}/download">Baixar</a>` : ''}
           ${canReprocess ? `<button data-document-reprocess="${candidateId}" type="button">Reprocessar</button>` : ''}
+          ${canMarkReviewed ? `<button data-document-mark-reviewed="${doc.id}" type="button">Marcar analisado</button>` : ''}
         </div>
       </article>`;
     }).join('')}</div>` : '';
@@ -2363,6 +2374,8 @@ async function reprocessDocumentCandidate(candidateId) {
   showToast(result.mensagem || 'CTPS enviada para reprocessamento.');
   await loadDocuments();
 }
+
+async function markDocumentReviewed(documentId){const decision=await confirmAction({title:'Marcar documento como analisado?',message:'A pendência documental será encerrada sem alterar a decisão do candidato.',detail:'Nenhuma mensagem será enviada.',confirmLabel:'Marcar analisado'});if(!decision.confirmed)return;const result=await api(`/api/documentos/${documentId}/marcar-revisado`,{method:'POST',body:'{}'});showToast(result.mensagem||'Documento atualizado.');await loadDocuments();}
 
 async function loadMonitoring() {
   const data = await api('/api/monitoramento');
@@ -2422,7 +2435,7 @@ async function runGlobalSearch() {
 }
 
 function handleDelegatedAction(event) {
-  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess]');
+  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
   if (!target) return;
   if (target.dataset.goView) return setView(target.dataset.goView);
   if (target.dataset.documentToggle) {
@@ -2433,6 +2446,7 @@ function handleDelegatedAction(event) {
     return;
   }
   if (target.dataset.documentReprocess) return reprocessDocumentCandidate(target.dataset.documentReprocess);
+  if (target.dataset.documentMarkReviewed) return markDocumentReviewed(target.dataset.documentMarkReviewed);
   if (target.dataset.action === 'open-candidate' || target.dataset.candidateAction === 'open') return openCandidate(target.dataset.id);
   if (target.dataset.action === 'resolve-alert') return resolveAlert(target.dataset.key);
   if (target.dataset.vacancyAction === 'view') return openVacancyView(target.dataset.id);

@@ -15,7 +15,7 @@
     "test:divulgacao": "node scripts/test-divulgacao-v1.js",
     "migrate:v15": "node scripts/migrate-v15.js",
     "preflight:v15": "node scripts/preflight-v15.js",
-    "test:v15": "node scripts/test-v15.js",
+    "test:v15": "node scripts/test-v15.js && node scripts/test-candidate-modal-fixes.js",
     "test:roles": "node scripts/test-recruiter-candidate-access-v15_1.js",
     "migrate:v16": "node scripts/migrate-v16.js",
     "preflight:v16": "node scripts/preflight-v16.js",

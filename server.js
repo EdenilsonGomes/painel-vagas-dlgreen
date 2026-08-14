@@ -3267,6 +3267,7 @@ app.post('/api/revisoes/lote/decidir', async (req, res, next) => {
         error.statusCode = 409;
         throw error;
       }
+      if(['APROVAR','NAO_APROVAR'].includes(entry.decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2,'por',$3,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,entry.decisao,currentUserName(req)]);
       results.push({ revisao_id: entry.id, ...result.rows[0] });
     }
     await client.query('COMMIT');
@@ -3296,6 +3297,7 @@ app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
     await client.query('BEGIN');
     const result = await client.query(`SELECT * FROM genesis_resolver_revisao_v1($1,$2,$3,$4)`, [id, decisao, motivo, currentUserName(req)]);
     if (!result.rowCount) { await client.query('ROLLBACK'); return res.status(404).json({ sucesso:false, erro:'Revisão não encontrada ou já concluída.' }); }
+    if(['APROVAR','NAO_APROVAR'].includes(decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2,'por',$3,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,decisao,currentUserName(req)]);
     await client.query('COMMIT');
     const data=result.rows[0];
     let acionamento=null;
@@ -3382,6 +3384,21 @@ app.get('/api/entrevistas', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+app.post('/api/documentos/:id/marcar-revisado', requireAdmin, async (req, res, next) => {
+  const client=await pool.connect();
+  try {
+    const id=parseId(req.params.id);
+    const motivo=String(req.body?.motivo||'Documento analisado manualmente no painel.').trim().slice(0,1000);
+    if(!id)return res.status(400).json({sucesso:false,erro:'Documento inválido.'});
+    await client.query('BEGIN');
+    const result=await client.query(`UPDATE documentos d SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(d.resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao','ANALISADO','por',$2,'em',NOW(),'motivo',$3)),processado_at=COALESCE(d.processado_at,NOW()) FROM candidatos c WHERE d.id=$1 AND c.id=d.candidato_id RETURNING d.id,d.candidato_id`,[id,currentUserName(req),motivo]);
+    if(!result.rowCount){await client.query('ROLLBACK');return res.status(404).json({sucesso:false,erro:'Documento não encontrado.'});}
+    await client.query(`INSERT INTO eventos(candidato_id,evento,descricao,created_at) VALUES($1,'DOCUMENTO_REVISAO_ENCERRADA_MANUAL',$2,NOW())`,[result.rows[0].candidato_id,`${motivo} Por: ${currentUserName(req)}.`]);
+    await client.query('COMMIT');
+    res.json({sucesso:true,mensagem:'Documento marcado como analisado. Nenhuma mensagem foi enviada.',mensagem_enviada:false});
+  } catch(error){try{await client.query('ROLLBACK')}catch{}next(error);} finally {client.release();}
 });
 
 app.get('/api/documentos', async (req, res, next) => {
@@ -3750,7 +3767,7 @@ app.post('/api/admin/candidatos/:id/acao', requireAdmin, async (req, res, next) 
       FROM candidatos c
       LEFT JOIN vagas v ON v.id=c.vaga_id
       WHERE c.id=$1
-      FOR UPDATE
+      FOR UPDATE OF c
     `, [id]);
     if (!current.rowCount) {
       await client.query('ROLLBACK');
@@ -3797,6 +3814,7 @@ app.post('/api/admin/candidatos/:id/acao', requireAdmin, async (req, res, next) 
       message = `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}após a análise do seu perfil, neste momento não será possível continuar na vaga ${candidate.vaga_nome}. Seu cadastro poderá ser considerado em futuras oportunidades compatíveis.`;
       eventName = 'REPROVACAO_ADMINISTRATIVA_NA_VAGA';
       eventDescription = `Reprovação registrada por ${userName}. Motivo: ${reasonInfo.label}.${observation ? ` Detalhe: ${observation}` : ''}`;
+      await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao','REPROVADO','por',$2,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[id,userName]);
     }
 
     if (action === 'ENCERRAR') {
