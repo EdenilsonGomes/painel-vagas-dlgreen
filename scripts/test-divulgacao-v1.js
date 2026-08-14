@@ -39,6 +39,7 @@ const frontend = fs.readFileSync(path.join(root, 'public/divulgacao-v1.js'), 'ut
 for (const marker of ['Fazer onboarding', 'Importar e continuar', 'Sincronizar grupos', 'Concluir onboarding']) {
   if (!frontend.includes(marker)) throw new Error(`Onboarding incompleto: ${marker}`);
 }
+if (!html.includes('/divulgacao-v1.js?v=1430') || !html.includes('/divulgacao-v1.css?v=1430')) throw new Error('Versão dos assets da Divulgação não foi atualizada; navegadores podem manter a tela antiga em cache.');
 for (const marker of ['divulgacao-channel-overview', 'Precisa publicar', 'Aguardando aprovação', 'destination-history', 'status-publicado', 'status-falha']) {
   if (!frontend.includes(marker) && !fs.readFileSync(path.join(root, 'public/divulgacao-v1.css'), 'utf8').includes(marker)) throw new Error(`Organização visual da divulgação ausente: ${marker}`);
 }
