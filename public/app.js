@@ -2109,16 +2109,21 @@ function renderReviews() {
     const reprocessButton = item.tipo === 'REVISAO_DOCUMENTAL' ? `<button class="button button-ghost" data-review-decision="REPROCESSAR" data-id="${item.id}" type="button">Reprocessar</button>` : '';
     const newPdfButton = item.tipo === 'REVISAO_DOCUMENTAL' ? `<button class="button button-ghost" data-review-decision="SOLICITAR_NOVO_PDF" data-id="${item.id}" type="button">Solicitar novo PDF</button>` : '';
     const isCompatibility = item.tipo === 'INCOMPATIBILIDADE_SEXO';
-    const select = isCompatibility ? `<label class="review-select"><input data-review-select type="checkbox" value="${item.id}"> Selecionar para decisão em lote</label>` : '';
+    const select = isCompatibility ? `<label class="review-select" title="Selecionar para decisão em lote"><input data-review-select type="checkbox" value="${item.id}"><span>Selecionar</span></label>` : '';
     const compatibility = isCompatibility ? `<div class="review-compatibility"><div><span>Documento</span><strong>${escapeHtml(candidateSexText(item.candidato_sexo))}</strong></div><b>≠</b><div><span>Requisito interno da vaga</span><strong>${escapeHtml(candidateSexText(item.vaga_sexo))}</strong></div></div>` : '';
     const approveLabel = isCompatibility ? 'Manter no processo' : 'Aprovar e continuar';
     const rejectLabel = isCompatibility ? 'Confirmar incompatibilidade' : 'Não aprovar nesta vaga';
-    return `<article class="review-card">${select}<header><div><span class="review-kind">${escapeHtml(reviewTypeLabel(item.tipo))}</span><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p></div><time>${escapeHtml(formatDate(item.created_at))}</time></header>${compatibility}${metrics}${support}<p class="review-reason">${escapeHtml(item.motivo || item.titulo)}</p><footer>${documentButton}${curriculumButton}<button class="button button-primary" data-review-decision="APROVAR" data-id="${item.id}" type="button">${approveLabel}</button>${reprocessButton}${newPdfButton}<button class="button button-danger-soft" data-review-decision="NAO_APROVAR" data-id="${item.id}" type="button">${rejectLabel}</button></footer></article>`;
+    return `<article class="review-card ${select?'has-review-select':''}">${select}<header><div><span class="review-kind">${escapeHtml(reviewTypeLabel(item.tipo))}</span><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p></div><time>${escapeHtml(formatDate(item.created_at))}</time></header>${compatibility}${metrics}${support}<p class="review-reason">${escapeHtml(item.motivo || item.titulo)}</p><footer>${documentButton}${curriculumButton}<button class="button button-primary" data-review-decision="APROVAR" data-id="${item.id}" type="button">${approveLabel}</button>${reprocessButton}${newPdfButton}<button class="button button-danger-soft" data-review-decision="NAO_APROVAR" data-id="${item.id}" type="button">${rejectLabel}</button><button class="button button-ghost" data-review-decision="ENCERRAR" data-id="${item.id}" type="button">Já revisado</button></footer></article>`;
   }).join('') : emptyState('Nenhuma pendência neste filtro', 'Casos claros seguem automaticamente pelo Chatbot Estático V1.');
   window.GenesisOperationsV14?.updateReviewBatchToolbar();
 }
 
 async function decideReview(id, decision) {
+  if(decision==='ENCERRAR'){
+    if(!window.confirm('Encerrar somente esta pendência? O candidato, a vaga, a etapa e as mensagens não serão alterados.'))return;
+    const result=await api(`/api/revisoes/${id}/encerrar`,{method:'POST',body:JSON.stringify({motivo:'Pendência já revisada pela equipe.'})});
+    showToast(result.mensagem||'Revisão encerrada.');await loadReviews(true);return;
+  }
   const labels = { APROVAR: 'aprovar e continuar', NAO_APROVAR: 'não aprovar nesta vaga', REPROCESSAR: 'reprocessar o documento', SOLICITAR_NOVO_PDF: 'solicitar um novo PDF ao candidato' };
   const motivo = window.prompt(`Confirme o motivo para ${labels[decision] || decision}:`, decision === 'APROVAR' ? 'Necessidade operacional / experiência próxima do requisito' : '');
   if (motivo === null) return;

@@ -36,6 +36,7 @@
 .human-service-actions { display:flex; align-items:center; gap:8px; }
 
 .handoff-dialog { width:min(760px,calc(100vw - 28px)); max-height:90vh; }
+.handoff-dialog .modal-footer { flex-wrap:wrap; }
 .handoff-section { border:1px solid var(--border-color,#e2e8f0); border-radius:14px; padding:14px; margin-bottom:12px; }
 .handoff-section h3 { margin:0 0 5px; font-size:14px; }
 .handoff-section > p { margin:0 0 10px; color:var(--muted-text,#64748b); font-size:13px; }
@@ -81,6 +82,7 @@
   .conversation-toolbar-actions { width:100%; flex-wrap:wrap; }
   .conversation-toolbar-actions .button { flex:1 1 150px; }
   .handoff-dialog .modal-footer { position:sticky; bottom:0; background:var(--surface,#fff); }
+  .handoff-dialog .modal-footer .button { flex:1 1 220px; }
   .handoff-suggestion { grid-template-columns:24px minmax(0,1fr); }
   .handoff-doc { align-items:flex-start; }
 }

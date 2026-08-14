@@ -238,11 +238,12 @@
     dialog.innerHTML=`<form id="candidateHandoffFormV16" method="dialog">
       <header class="modal-header"><div><p class="eyebrow">PASSAGEM DE BASTÃO</p><h2>Finalizar atendimento humano</h2><span>Revise o que a Gênesis identificou antes de devolver a conversa para a Evelyn.</span></div><button type="button" class="icon-button" data-close-handoff>×</button></header>
       <div class="modal-body"><div id="candidateHandoffLoadingV16" class="empty-state compact">Analisando o atendimento...</div><div id="candidateHandoffContentV16" class="hidden"></div><div id="candidateHandoffErrorV16" class="form-error hidden"></div></div>
-      <footer class="modal-footer"><button type="button" class="button button-ghost" data-close-handoff>Continuar atendimento</button><button id="confirmCandidateHandoffV16" type="submit" class="button button-primary" disabled>Salvar e devolver para IA</button></footer>
+      <footer class="modal-footer"><button type="button" class="button button-ghost" data-close-handoff>Continuar atendimento</button><button id="releaseCandidateHandoffV16" type="button" class="button button-ghost" disabled>Salvar e liberar para atendimento humano</button><button id="confirmCandidateHandoffV16" type="submit" class="button button-primary" disabled>Salvar e devolver para IA</button></footer>
     </form>`;
     document.body.appendChild(dialog);
     dialog.querySelectorAll('[data-close-handoff]').forEach((b)=>b.addEventListener('click',()=>dialog.close()));
     dialog.querySelector('form').addEventListener('submit',submitHandoff);
+    dialog.querySelector('#releaseCandidateHandoffV16').addEventListener('click',(event)=>submitHandoff(event,'HUMANO'));
     return dialog;
   }
 
@@ -264,6 +265,7 @@
       <section class="handoff-next"><strong>Próximo passo da Evelyn</strong><span>${esc(data.proxima_acao||data.proxima_etapa||'Retomar o fluxo atual')}</span></section>`;
     box.classList.remove('hidden');
     byId('confirmCandidateHandoffV16').disabled=false;
+    byId('releaseCandidateHandoffV16').disabled=false;
   }
 
   async function returnToAi() {
@@ -279,20 +281,20 @@
     }catch(error){byId('candidateHandoffLoadingV16').classList.add('hidden');const e=byId('candidateHandoffErrorV16');e.textContent=error.message;e.classList.remove('hidden');}
   }
 
-  async function submitHandoff(event) {
+  async function submitHandoff(event, destination='IA') {
     event.preventDefault();
-    const button=byId('confirmCandidateHandoffV16');const errorBox=byId('candidateHandoffErrorV16');
+    const button=destination==='HUMANO'?byId('releaseCandidateHandoffV16'):byId('confirmCandidateHandoffV16');const errorBox=byId('candidateHandoffErrorV16');
     const confirmed={};
     document.querySelectorAll('[data-handoff-check]').forEach((check)=>{if(!check.checked)return;const field=check.dataset.handoffCheck;const input=document.querySelector(`[data-handoff-value="${CSS.escape(field)}"]`);if(input)confirmed[field]=input.value.trim();});
     let triagemConfirmada=null;
-    if(byId('candidateHandoffApplyTriageV16')?.checked){
+    if(destination==='IA'&&byId('candidateHandoffApplyTriageV16')?.checked){
       const perguntaId=Number(byId('candidateHandoffTriageQuestionIdV16')?.value||0);const resposta=String(byId('candidateHandoffTriageAnswerV16')?.value||'').trim();
       if(!resposta){errorBox.textContent='Informe a resposta da pergunta da vaga ou desmarque “Aplicar esta resposta”.';errorBox.classList.remove('hidden');return;}
       triagemConfirmada={pergunta_id:perguntaId,resposta};
     }
     button.disabled=true;errorBox.classList.add('hidden');
     try{
-      const data=await api(`/api/atendimento/candidatos/${local.candidateId}/finalizar-handoff`,{method:'POST',body:JSON.stringify({dados_confirmados:confirmed,triagem_confirmada:triagemConfirmada,resumo:byId('candidateHandoffSummaryV16')?.value.trim()||''})});
+      const data=await api(`/api/atendimento/candidatos/${local.candidateId}/finalizar-handoff`,{method:'POST',body:JSON.stringify({destino:destination,dados_confirmados:confirmed,triagem_confirmada:triagemConfirmada,resumo:byId('candidateHandoffSummaryV16')?.value.trim()||''})});
       toast(data.mensagem||'Atendimento finalizado.');byId('candidateHandoffDialogV16').close();
       await pollConversation({force:true});panel().reloadCandidates?.(true).catch?.(()=>{});window.GenesisAtendimentosV16?.load?.(true).catch?.(()=>{});
     }catch(error){errorBox.textContent=error.message;errorBox.classList.remove('hidden');}

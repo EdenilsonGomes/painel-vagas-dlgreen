@@ -3305,6 +3305,20 @@ app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
   } catch(error){ try{await client.query('ROLLBACK')}catch{} next(error); } finally { client.release(); }
 });
 
+app.post('/api/revisoes/:id/encerrar', async (req, res, next) => {
+  const client = await pool.connect();
+  try {
+    const id = parseId(req.params.id);
+    const motivo = String(req.body?.motivo || '').trim().slice(0,4000) || 'Pendência já revisada pela equipe.';
+    if (!id) return res.status(400).json({ sucesso:false, erro:'Revisão inválida.' });
+    await client.query('BEGIN');
+    const result = await client.query(`UPDATE candidato_revisoes SET status='CONCLUIDO',decisao='ENCERRADO_SEM_ACAO',decisao_motivo=$2,decidido_por=$3,decidido_em=NOW(),updated_at=NOW() WHERE id=$1 AND status='PENDENTE' RETURNING id,candidato_id,status,decisao,decidido_por,decidido_em`,[id,motivo,currentUserName(req)]);
+    if(!result.rowCount){await client.query('ROLLBACK');return res.status(409).json({sucesso:false,erro:'A revisão não está mais pendente.'});}
+    await client.query('COMMIT');
+    res.json({sucesso:true,mensagem:'Revisão encerrada sem alterar o candidato.',revisao:result.rows[0],mensagem_enviada:false,workflow_disparado:false});
+  } catch(error){try{await client.query('ROLLBACK')}catch{}next(error);} finally {client.release();}
+});
+
 app.post('/api/candidatos/:id/resgate', async (req, res, next) => {
   try {
     const candidatoId=parseId(req.params.id); const problemaId=parseId(req.body?.auditoria_problema_id);
