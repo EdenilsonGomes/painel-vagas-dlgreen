@@ -1620,7 +1620,7 @@ function setCandidateMode(mode) {
   el.candidateKanbanContainer.classList.toggle('hidden', mode !== 'kanban');
 }
 
-async function openCandidate(id) {
+async function openCandidate(id, initialTab = '') {
   state.selectedCandidateId = Number(id);
   el.candidateDrawer.showModal();
   el.candidateDrawerLoading.classList.remove('hidden');
@@ -1635,6 +1635,7 @@ async function openCandidate(id) {
     window.GenesisScreening?.loadCandidate(id).catch(() => {});
     el.candidateDrawerLoading.classList.add('hidden');
     el.candidateDrawerContent.classList.remove('hidden');
+    if (initialTab) document.querySelector(`[data-drawer-tab="${CSS.escape(initialTab)}"]`)?.click();
   } catch (error) {
     el.candidateDrawerLoading.innerHTML = emptyState('Não foi possível carregar', error.message);
   }
@@ -2119,7 +2120,7 @@ function renderReviews() {
     const compatibility = isCompatibility ? `<div class="review-compatibility"><div><span>Documento</span><strong>${escapeHtml(candidateSexText(item.candidato_sexo))}</strong></div><b>≠</b><div><span>Requisito interno da vaga</span><strong>${escapeHtml(candidateSexText(item.vaga_sexo))}</strong></div></div>` : '';
     const approveLabel = isCompatibility ? 'Manter no processo' : 'Aprovar e continuar';
     const rejectLabel = isCompatibility ? 'Confirmar incompatibilidade' : 'Não aprovar nesta vaga';
-    return `<article class="review-card ${select?'has-review-select':''}">${select}<header><div><span class="review-kind">${escapeHtml(reviewTypeLabel(item.tipo))}</span><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p></div><time>${escapeHtml(formatDate(item.created_at))}</time></header>${compatibility}${metrics}${support}<p class="review-reason">${escapeHtml(item.motivo || item.titulo)}</p><footer>${documentButton}${curriculumButton}<button class="button button-primary" data-review-decision="APROVAR" data-id="${item.id}" type="button">${approveLabel}</button>${reprocessButton}${newPdfButton}<button class="button button-danger-soft" data-review-decision="NAO_APROVAR" data-id="${item.id}" type="button">${rejectLabel}</button><button class="button button-ghost" data-review-decision="ENCERRAR" data-id="${item.id}" type="button">Já revisado</button></footer></article>`;
+    return `<article class="review-card ${select?'has-review-select':''}">${select}<header><div><span class="review-kind">${escapeHtml(reviewTypeLabel(item.tipo))}</span><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p></div><time>${escapeHtml(formatDate(item.created_at))}</time></header>${compatibility}${metrics}${support}<p class="review-reason">${escapeHtml(item.motivo || item.titulo)}</p><footer>${documentButton}${curriculumButton}<button class="button button-ghost" data-review-open-candidate="${item.candidato_id}" type="button">Ver perfil →</button><button class="button button-ghost" data-review-start-service="${item.candidato_id}" type="button">Iniciar atendimento</button><button class="button button-primary" data-review-decision="APROVAR" data-id="${item.id}" type="button">${approveLabel}</button>${reprocessButton}${newPdfButton}<button class="button button-danger-soft" data-review-decision="NAO_APROVAR" data-id="${item.id}" type="button">${rejectLabel}</button><button class="button button-ghost" data-review-decision="ENCERRAR" data-id="${item.id}" type="button">Já revisado</button></footer></article>`;
   }).join('') : emptyState('Nenhuma pendência neste filtro', 'Casos claros seguem automaticamente pelo Chatbot Estático V1.');
   window.GenesisOperationsV14?.updateReviewBatchToolbar();
 }
@@ -2276,6 +2277,20 @@ function documentProcessingMeta(doc) {
   if (['REVISAO'].includes(status) || String(doc.tipo || '').toUpperCase() === 'PENDENTE_REVISAO') return { label: 'Aguardando revisão', tone: 'wait', detail: 'Decisão humana necessária' };
   if (['RECEBIDO', 'ARMAZENADO', 'PROCESSANDO', 'REPROCESSAMENTO_SOLICITADO', 'PENDENTE'].includes(status)) return { label: status === 'PROCESSANDO' ? 'Processando' : 'Aguardando processamento', tone: 'wait', detail: 'Arquivo armazenado' };
   return { label: 'Analisado', tone: 'ok', detail: String(doc.tipo || '').toUpperCase() === 'CURRICULO' ? 'Dados do currículo extraídos' : 'Análise concluída' };
+}
+
+async function startReviewService(candidateId) {
+  const decision = await confirmAction({
+    title: 'Iniciar atendimento humano?',
+    message: 'A conversa será atribuída a você e a Evelyn ficará pausada enquanto o atendimento estiver em andamento.',
+    detail: 'A revisão continuará pendente até você escolher uma decisão ou “Já revisado”.',
+    confirmLabel: 'Iniciar atendimento',
+  });
+  if (!decision.confirmed) return;
+  const result = await api(`/api/atendimento/candidatos/${candidateId}/assumir`, { method: 'POST', body: '{}' });
+  showToast(result.mensagem || 'Atendimento iniciado.');
+  await openCandidate(candidateId, 'conversation');
+  await Promise.allSettled([loadReviews(), loadCandidates(true)]);
 }
 
 function documentNeedsReviewReconciliation(doc){const status=String(doc.status_processamento||'').toUpperCase();const type=String(doc.tipo||'').toUpperCase();return ['PENDENTE','PENDENTE_REVISAO'].includes(type)||['ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'].includes(status);}
@@ -2435,7 +2450,7 @@ async function runGlobalSearch() {
 }
 
 function handleDelegatedAction(event) {
-  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
+  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open-candidate], [data-review-start-service], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
   if (!target) return;
   if (target.dataset.goView) return setView(target.dataset.goView);
   if (target.dataset.documentToggle) {
@@ -2462,6 +2477,8 @@ function handleDelegatedAction(event) {
   if (target.dataset.auditCandidateProfile) return openAuditCandidateProfile(target.dataset.auditCandidateProfile);
   if (target.dataset.auditToggle) { const group=document.querySelector(`[data-audit-group="${target.dataset.auditToggle}"]`); if(group){ const collapsed=group.classList.toggle('is-collapsed'); target.setAttribute('aria-expanded', String(!collapsed)); } return; }
   if (target.dataset.auditRescueCandidate) return sendCandidateToRescue(target.dataset.auditRescueCandidate);
+  if (target.dataset.reviewOpenCandidate) return openCandidate(target.dataset.reviewOpenCandidate);
+  if (target.dataset.reviewStartService) return startReviewService(target.dataset.reviewStartService);
   if (target.dataset.reviewDecision) return decideReview(target.dataset.id, target.dataset.reviewDecision);
   if (target.dataset.calendarDate) { state.calendarSelectedDate=target.dataset.calendarDate; renderInterviews(); return; }
   if (target.dataset.dashboardCalendarDate) { state.dashboardCalendarSelectedDate=target.dataset.dashboardCalendarDate; renderDashboardMiniCalendar(); return; }

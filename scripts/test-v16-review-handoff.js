@@ -40,4 +40,9 @@ ok(app.includes('review-card ${select?\'has-review-select\':\'\'}'),'Card não r
 ok(css.includes('.review-card.has-review-select{position:relative')&&css.includes('.review-select{position:absolute'),'Checkbox desktop não está lateral.');
 ok(css.includes('@media(max-width:720px){.review-card.has-review-select'),'Checkbox não possui regra mobile.');
 
+// Revisões também permitem inspecionar o perfil ou iniciar o atendimento sem decidir a revisão.
+ok(app.includes('data-review-open-candidate')&&app.includes('Ver perfil →'),'Atalho para o perfil ausente nas revisões.');
+ok(app.includes('data-review-start-service')&&app.includes('startReviewService'),'Ação de iniciar atendimento ausente nas revisões.');
+ok(app.includes("openCandidate(candidateId, 'conversation')"),'Atendimento iniciado pela revisão não abre a conversa.');
+
 console.log('V16 revisões/handoff: 5 cenários validados, incluindo asserts negativos de nenhuma mensagem administrativa.');

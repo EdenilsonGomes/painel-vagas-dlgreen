@@ -59,7 +59,7 @@
     return ['USUARIO', 'CANDIDATO'].includes(author) ? 'incoming' : 'outgoing';
   }
 
-  function renderMessages() {
+  function renderMessages({ forceBottom = false } = {}) {
     const container = byId('candidateConversation');
     if (!container) return;
     const messages = [...local.messages.values()].sort((a, b) => Number(a.id) - Number(b.id));
@@ -80,17 +80,21 @@
         <p>${esc(message.mensagem || 'Mensagem sem conteúdo').replace(/\n/g, '<br>')}</p>${delivery}
       </article>`;
     }).join('');
-    if (wasNearBottom || messages.length <= 120) container.scrollTop = container.scrollHeight;
+    if (forceBottom || wasNearBottom) container.scrollTop = container.scrollHeight;
   }
 
   function mergeMessages(messages = []) {
+    const wasEmpty = local.messages.size === 0;
+    let changed = false;
     for (const message of messages) {
       const id = Number(message.id || 0);
       if (!id) continue;
+      const previous = local.messages.get(id);
       local.messages.set(id, message);
+      if (!previous || JSON.stringify(previous) !== JSON.stringify(message)) changed = true;
       local.lastMessageId = Math.max(local.lastMessageId, id);
     }
-    renderMessages();
+    if (changed) renderMessages({ forceBottom: wasEmpty });
   }
 
   async function reloadCandidateDrawer() {
