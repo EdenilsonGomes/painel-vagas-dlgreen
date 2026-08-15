@@ -3228,8 +3228,14 @@ app.get('/api/revisoes', async (req, res, next) => {
     const result = await pool.query(`
       SELECT r.*, COALESCE(c.nome,c.telefone,'Candidato #'||c.id) AS candidato_nome,
         c.telefone,c.sexo AS candidato_sexo,c.etapa,c.status AS candidato_status,
+        c.ia_atendimento_ativo,c.ia_pausada_em,c.ia_pausa_motivo,
+        c.atendimento_humano_ativo,c.atendimento_humano_usuario_id,
+        c.atendimento_humano_nome,c.atendimento_humano_assumido_em,
         COALESCE(v.titulo,c.vaga,'Sem vaga') AS vaga_nome,v.sexo AS vaga_sexo,
-        curriculo.id AS curriculo_id, curriculo.resultado AS curriculo_resultado
+        curriculo.id AS curriculo_id, curriculo.resultado AS curriculo_resultado,
+        ultima_mensagem.mensagem AS ultima_mensagem,
+        ultima_mensagem.quem AS ultima_mensagem_quem,
+        ultima_mensagem.created_at AS ultima_mensagem_em
       FROM candidato_revisoes r
       JOIN candidatos c ON c.id=r.candidato_id
       LEFT JOIN vagas v ON v.id=r.vaga_id
@@ -3238,6 +3244,12 @@ app.get('/api/revisoes', async (req, res, next) => {
         WHERE d.candidato_id=c.id AND UPPER(COALESCE(d.tipo,''))='CURRICULO'
         ORDER BY d.created_at DESC,d.id DESC LIMIT 1
       ) curriculo ON TRUE
+      LEFT JOIN LATERAL (
+        SELECT m.mensagem,m.quem,m.created_at
+        FROM mensagens m
+        WHERE m.candidato_id=c.id
+        ORDER BY m.created_at DESC,m.id DESC LIMIT 1
+      ) ultima_mensagem ON TRUE
       WHERE ($1='TODOS' OR r.status=$1)
       ORDER BY CASE r.tipo WHEN 'INCOMPATIBILIDADE_SEXO' THEN 1 WHEN 'REVISAO_DOCUMENTAL' THEN 2 WHEN 'EXCECAO_EXPERIENCIA' THEN 3 ELSE 4 END, r.created_at ASC
     `, [status]);

@@ -42,6 +42,8 @@ const state = {
   calendarSelectedDate: null,
   reviews: [],
   reviewType: 'TODAS',
+  selectedReviewId: null,
+  reviewDecision: 'ENCERRAR',
   documents: [],
   documentType: 'TODOS',
   expandedDocumentCandidates: new Set(),
@@ -186,7 +188,7 @@ const viewMeta = {
   candidates: ['PESSOAS', 'Candidatos', 'Acompanhe cada candidato em tabela ou pipeline.', '+ Novo candidato'],
   atendimentos: ['CONVERSAS', 'Chats', 'Todas as conversas em ordem de atividade, com leitura e atendimento no mesmo lugar.', 'Atualizar chats'],
   interviews: ['AGENDA', 'Entrevistas', 'Compromissos do processo seletivo sincronizados com o Google Calendar.', 'Atualizar agenda'],
-  reviews: ['DECISÃO HUMANA', 'Revisões', 'Exceções de experiência e documentos que precisam do recrutador.', 'Atualizar revisões'],
+  reviews: ['ATENDIMENTO', 'Revisões', 'Resolva exceções humanas com clareza sobre mensagens e estado da IA.', ''],
   documents: ['ARQUIVOS', 'Documentos', 'CTPS, currículos e PDFs que precisam de revisão.', 'Atualizar arquivos'],
   divulgacao: ['AQUISIÇÃO', 'Central de Divulgação', 'Facebook assistido e WhatsApp controlado, vinculados às vagas oficiais.', '+ Nova campanha'],
   monitoring: ['ADMINISTRAÇÃO', 'Monitoramento', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
@@ -203,7 +205,8 @@ const viewMeta = {
 const el = Object.fromEntries([
   'sidebar', 'sidebarBackdrop', 'mobileMenuButton', 'themeToggleButton', 'mobileMoreButton', 'pageEyebrow', 'pageTitle', 'pageSubtitle',
   'globalSearchButton', 'refreshCurrentViewButton', 'primaryActionButton',
-  'dashboardReviews', 'reviewPendingCount', 'reviewTypeSegments', 'reviewSearchInput', 'reviewsList',
+  'dashboardReviews', 'reviewPendingCount', 'reviewNavBadge', 'reviewTypeSegments', 'reviewSearchInput', 'reviewsList',
+  'reviewDetailPane', 'reviewDetailContent', 'reviewDecisionPane', 'reviewDecisionContent',
   'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar',
   'dashboardUpdatedAt', 'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
   'dashboardAttention', 'dashboardFunnel', 'dashboardJourneyStarted', 'dashboardJourneyCtps', 'dashboardJourneyApproved', 'dashboardJourneyScheduled',
@@ -437,7 +440,16 @@ function setView(name) {
   if (!currentUserIsAdmin() && ['audit', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
   state.activeView = name;
   document.body.dataset.activeView = name;
-  if (['atendimentos','reviews'].includes(name)) { const group = document.getElementById('conversationsNavGroup'); if (group) group.open = true; }
+  const groupByView = {
+    dashboard: 'recruitmentNavGroup', vacancies: 'recruitmentNavGroup', candidates: 'recruitmentNavGroup',
+    interviews: 'recruitmentNavGroup', documents: 'recruitmentNavGroup', divulgacao: 'recruitmentNavGroup',
+    atendimentos: 'conversationsNavGroup', reviews: 'conversationsNavGroup',
+    crm: 'commercialNavGroup', prospecting: 'commercialNavGroup', commercialChats: 'commercialNavGroup', demos: 'commercialNavGroup',
+    publications: 'administrationNavGroup', brands: 'administrationNavGroup', monitoring: 'administrationNavGroup', audit: 'administrationNavGroup', users: 'administrationNavGroup',
+  };
+  const activeGroup = document.getElementById(groupByView[name]);
+  if (activeGroup) activeGroup.open = true;
+  if (name === 'reviews') document.getElementById('view-reviews')?.setAttribute('data-review-mobile-pane', 'queue');
   document.querySelectorAll('.view').forEach((view) => view.classList.toggle('hidden', view.id !== `view-${name}`));
   document.querySelectorAll('.nav-item').forEach((button) => button.classList.toggle('active', button.dataset.view === name));
   document.querySelectorAll('[data-mobile-view]').forEach((button) => button.classList.toggle('active', button.dataset.mobileView === name));
@@ -447,6 +459,7 @@ function setView(name) {
   el.pageSubtitle.textContent = meta[2];
   el.primaryActionButton.textContent = meta[3] || '';
   el.primaryActionButton.classList.toggle('hidden', !meta[3]);
+  el.refreshCurrentViewButton?.classList.toggle('hidden', name === 'reviews');
   el.dashboardUpdatedAt?.classList.toggle('hidden', name !== 'dashboard');
   el.sidebar.classList.remove('open');
   loadCurrentView();
@@ -2102,37 +2115,219 @@ function renderDashboardReviews() {
 function renderReviews() {
   const q = String(el.reviewSearchInput?.value || '').trim().toLocaleLowerCase('pt-BR');
   const type = state.reviewType || 'TODAS';
-  const items = state.reviews.filter((item) => (type === 'TODAS' || item.tipo === type) && (!q || [item.candidato_nome,item.vaga_nome,item.titulo,item.motivo].join(' ').toLocaleLowerCase('pt-BR').includes(q)));
+  const matchesType = (item) => type === 'TODAS'
+    || item.tipo === type
+    || (type === 'OUTRAS' && !['REVISAO_DOCUMENTAL','SUPORTE_FLUXO'].includes(item.tipo));
+  const items = state.reviews.filter((item) => matchesType(item) && (!q || [item.candidato_nome,item.vaga_nome,item.titulo,item.motivo].join(' ').toLocaleLowerCase('pt-BR').includes(q)));
   el.reviewPendingCount.textContent = state.reviews.length;
-  el.reviewsList.innerHTML = items.length ? items.map((item) => {
-    const months = Math.round(Number(item.experiencia_comprovada_dias || 0) / 30 * 10) / 10;
-    const metrics = item.tipo === 'EXCECAO_EXPERIENCIA' ? `<div class="review-metrics"><span><b>${months}</b> meses comprovados</span><span><b>${Number(item.experiencia_exigida_meses || 0)}</b> meses exigidos</span></div>` : '';
-    const data = item.dados && typeof item.dados === 'object' ? item.dados : {};
-    const documentSummary = [data.cargo_vinculo_utilizado && `Cargo: ${data.cargo_vinculo_utilizado}`, data.periodo_vinculo_utilizado && `Período: ${data.periodo_vinculo_utilizado}`, data.maior_experiencia_compativel_texto && `Tempo: ${data.maior_experiencia_compativel_texto}`].filter(Boolean);
-    const curriculumExperiences = Array.isArray(item.curriculo_resultado?.experiencias) ? item.curriculo_resultado.experiencias.length : 0;
-    const support = documentSummary.length || curriculumExperiences ? `<div class="review-support">${documentSummary.map((line)=>`<span>${escapeHtml(line)}</span>`).join('')}${curriculumExperiences ? `<span>Currículo: ${curriculumExperiences} experiência(s) declarada(s)</span>` : ''}</div>` : '';
-    const documentButton = item.documento_id ? `<a class="button button-ghost" href="/api/documentos/${item.documento_id}/download" target="_blank" rel="noopener">Abrir CTPS</a>` : '';
-    const curriculumButton = item.curriculo_id ? `<a class="button button-ghost" href="/api/documentos/${item.curriculo_id}/download" target="_blank" rel="noopener">Abrir currículo</a>` : '';
-    const reprocessButton = item.tipo === 'REVISAO_DOCUMENTAL' ? `<button class="button button-ghost" data-review-decision="REPROCESSAR" data-id="${item.id}" type="button">Reprocessar</button>` : '';
-    const newPdfButton = item.tipo === 'REVISAO_DOCUMENTAL' ? `<button class="button button-ghost" data-review-decision="SOLICITAR_NOVO_PDF" data-id="${item.id}" type="button">Solicitar novo PDF</button>` : '';
-    const isCompatibility = item.tipo === 'INCOMPATIBILIDADE_SEXO';
-    const select = isCompatibility ? `<label class="review-select" title="Selecionar para decisão em lote"><input data-review-select type="checkbox" value="${item.id}"><span>Selecionar</span></label>` : '';
-    const compatibility = isCompatibility ? `<div class="review-compatibility"><div><span>Documento</span><strong>${escapeHtml(candidateSexText(item.candidato_sexo))}</strong></div><b>≠</b><div><span>Requisito interno da vaga</span><strong>${escapeHtml(candidateSexText(item.vaga_sexo))}</strong></div></div>` : '';
-    const approveLabel = isCompatibility ? 'Manter no processo' : 'Aprovar e continuar';
-    const rejectLabel = isCompatibility ? 'Confirmar incompatibilidade' : 'Não aprovar nesta vaga';
-    return `<article class="review-card ${select?'has-review-select':''}">${select}<header><div><span class="review-kind">${escapeHtml(reviewTypeLabel(item.tipo))}</span><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p></div><time>${escapeHtml(formatDate(item.created_at))}</time></header>${compatibility}${metrics}${support}<p class="review-reason">${escapeHtml(item.motivo || item.titulo)}</p><footer>${documentButton}${curriculumButton}<button class="button button-ghost" data-review-open-candidate="${item.candidato_id}" type="button">Ver perfil →</button><button class="button button-ghost" data-review-start-service="${item.candidato_id}" type="button">Iniciar atendimento</button><button class="button button-primary" data-review-decision="APROVAR" data-id="${item.id}" type="button">${approveLabel}</button>${reprocessButton}${newPdfButton}<button class="button button-danger-soft" data-review-decision="NAO_APROVAR" data-id="${item.id}" type="button">${rejectLabel}</button><button class="button button-ghost" data-review-decision="ENCERRAR" data-id="${item.id}" type="button">Já revisado</button></footer></article>`;
-  }).join('') : emptyState('Nenhuma pendência neste filtro', 'Casos claros seguem automaticamente pelo Chatbot Estático V1.');
+  if (el.reviewNavBadge) {
+    el.reviewNavBadge.textContent = String(state.reviews.length);
+    el.reviewNavBadge.classList.toggle('hidden', !state.reviews.length);
+  }
+  document.querySelectorAll('[data-review-count]').forEach((node) => {
+    const key = node.dataset.reviewCount;
+    const count = key === 'TODAS'
+      ? state.reviews.length
+      : key === 'OUTRAS'
+        ? state.reviews.filter((item) => !['REVISAO_DOCUMENTAL','SUPORTE_FLUXO'].includes(item.tipo)).length
+        : state.reviews.filter((item) => item.tipo === key).length;
+    node.textContent = String(count);
+  });
+
+  if (!items.some((item) => Number(item.id) === Number(state.selectedReviewId))) {
+    state.selectedReviewId = items[0]?.id || null;
+    state.reviewDecision = 'ENCERRAR';
+  }
+
+  const selected = items.find((item) => Number(item.id) === Number(state.selectedReviewId)) || null;
+  el.reviewsList.innerHTML = items.length ? items.map((item) => reviewQueueItem(item, selected)).join('') : emptyState('Nenhuma pendência neste filtro', 'Casos claros seguem automaticamente pelo fluxo configurado.');
+  renderReviewDetail(selected);
+  renderReviewDecision(selected);
   window.GenesisOperationsV14?.updateReviewBatchToolbar();
 }
 
-async function decideReview(id, decision) {
+function reviewQueueItem(item, selected) {
+  const isCompatibility = item.tipo === 'INCOMPATIBILIDADE_SEXO';
+  const waitMinutes = Math.max(0, Math.floor((Date.now() - new Date(item.created_at).getTime()) / 60000));
+  const waitLabel = waitMinutes < 60 ? `${Math.max(1, waitMinutes)} min` : waitMinutes < 1440 ? `${Math.floor(waitMinutes / 60)} h` : `${Math.floor(waitMinutes / 1440)} d`;
+  const urgency = waitMinutes >= 120 ? ['high','Alta'] : waitMinutes >= 30 ? ['medium','Média'] : ['low','Baixa'];
+  const checkbox = isCompatibility
+    ? `<label class="review-queue-check" title="Selecionar para decisão em lote"><input data-review-select type="checkbox" value="${item.id}" aria-label="Selecionar ${escapeHtml(item.candidato_nome)}"></label>`
+    : '<span class="review-queue-check is-placeholder" aria-hidden="true"></span>';
+  return `<article class="review-queue-item ${Number(item.id) === Number(selected?.id) ? 'selected' : ''}" data-review-open="${item.id}" role="button" tabindex="0" aria-pressed="${Number(item.id) === Number(selected?.id)}">
+    ${checkbox}
+    <span class="review-queue-avatar">${escapeHtml(initials(item.candidato_nome))}</span>
+    <span class="review-queue-copy"><strong>${escapeHtml(item.candidato_nome)}</strong><span>${escapeHtml(reviewTypeLabel(item.tipo))}</span><small>${escapeHtml(item.vaga_nome || 'Sem vaga')}</small></span>
+    <span class="review-queue-meta"><time>${escapeHtml(waitLabel)}</time><em class="review-urgency ${urgency[0]}">${urgency[1]}</em></span>
+  </article>`;
+}
+
+function maskedReviewPhone(value) {
+  const formatted = formatPhone(value);
+  return formatted.replace(/(\d{4,5})-(\d{4})$/, '$1-••••');
+}
+
+function reviewAiMeta(item) {
+  if (item?.atendimento_humano_ativo) return { label: `Humano · ${item.atendimento_humano_nome || 'equipe'}`, badge: 'badge-warning', detail: 'A IA permanece pausada durante o atendimento.' };
+  if (item?.ia_atendimento_ativo === false) return { label: 'IA pausada', badge: 'badge-warning', detail: item.ia_pausa_motivo || 'Aguardando decisão humana.' };
+  return { label: 'IA ativa', badge: 'badge-active', detail: 'O fluxo automático está liberado.' };
+}
+
+function renderReviewDetail(item) {
+  if (!item) {
+    el.reviewDetailContent.innerHTML = '<div class="empty-state"><strong>Selecione uma revisão</strong><span>Os dados do candidato e o motivo da pendência aparecerão aqui.</span></div>';
+    return;
+  }
+  const ai = reviewAiMeta(item);
+  const data = item.dados && typeof item.dados === 'object' ? item.dados : {};
+  const months = Math.round(Number(item.experiencia_comprovada_dias || 0) / 30 * 10) / 10;
+  const latestMessage = String(item.ultima_mensagem || '').trim();
+  const documentId = item.documento_id || item.curriculo_id || null;
+  const firstName = String(item.candidato_nome || 'Candidato').trim().split(/\s+/)[0];
+  const documentName = item.documento_id ? `${firstName} - CTPS.pdf` : `${firstName} - Curriculo.pdf`;
+  const documentCard = documentId ? `<section class="review-detail-section"><h4>Documento enviado</h4><article class="review-document-card"><span class="review-document-icon" data-icon="file" aria-hidden="true"></span><span><strong>${escapeHtml(item.documento_id ? 'CTPS para conferência' : 'Currículo do candidato')}</strong><small>${escapeHtml(documentName)}</small></span><div><button class="button button-ghost compact" data-document-preview="${documentId}" data-document-name="${escapeHtml(documentName)}" type="button">Visualizar</button><a class="button button-ghost compact" href="/api/documentos/${documentId}/download" target="_blank" rel="noopener">Baixar</a></div></article></section>` : '';
+  const facts = [
+    ['Etapa atual', stageLabels[item.etapa] || String(item.etapa || 'Não informada').replaceAll('_', ' ')],
+    ['Tipo de revisão', reviewTypeLabel(item.tipo)],
+    ['Responsável', item.atendimento_humano_nome || 'Não atribuído'],
+    ['Última atividade', formatDate(item.ultima_mensagem_em || item.created_at)],
+  ];
+  if (item.tipo === 'EXCECAO_EXPERIENCIA') {
+    facts.splice(2, 0, ['Experiência', `${months} de ${Number(item.experiencia_exigida_meses || 0)} meses`]);
+  }
+  if (data.cargo_vinculo_utilizado) facts.push(['Vínculo utilizado', data.cargo_vinculo_utilizado]);
+  el.reviewDetailContent.innerHTML = `
+    <header class="review-detail-header">
+      <span class="review-detail-avatar">${escapeHtml(initials(item.candidato_nome))}</span>
+      <div class="review-detail-identity"><h3>${escapeHtml(item.candidato_nome)}</h3><p>${escapeHtml(maskedReviewPhone(item.telefone))}</p><p>${escapeHtml(item.vaga_nome || 'Sem vaga vinculada')}</p><div class="review-state-line"><span class="badge ${ai.badge}">${escapeHtml(ai.label)}</span><small>${escapeHtml(ai.detail)}</small></div></div>
+      <div class="review-detail-actions"><button class="button button-ghost review-mobile-back" data-review-mobile-pane="queue" type="button">Voltar</button><button class="button button-ghost" data-review-open-candidate="${item.candidato_id}" type="button">Ver perfil</button><button class="button button-primary review-mobile-decide" data-review-mobile-pane="decision" type="button">Concluir revisão</button></div>
+    </header>
+    <div class="review-detail-body">
+      <section class="review-detail-section"><h4>Motivo da revisão</h4><div class="review-reason-block">${escapeHtml(item.motivo || item.titulo || 'Revisão humana solicitada.')}</div></section>
+      <section class="review-detail-section"><h4>Linha do tempo</h4><div class="review-timeline">
+        ${latestMessage ? `<article class="review-timeline-item"><span class="review-timeline-icon" data-icon="messages"></span><span class="review-timeline-copy"><strong>Última mensagem na conversa</strong><span>${escapeHtml(latestMessage)}</span></span><time>${escapeHtml(formatDate(item.ultima_mensagem_em))}</time></article>` : ''}
+        <article class="review-timeline-item"><span class="review-timeline-icon" data-icon="clipboard-check"></span><span class="review-timeline-copy"><strong>Revisão humana criada</strong><span>${escapeHtml(reviewTypeLabel(item.tipo))}: ${escapeHtml(item.motivo || item.titulo || 'confirmação necessária')}</span></span><time>${escapeHtml(formatDate(item.created_at))}</time></article>
+        <article class="review-timeline-item"><span class="review-timeline-icon" data-icon="activity"></span><span class="review-timeline-copy"><strong>${escapeHtml(ai.label)}</strong><span>${escapeHtml(ai.detail)}</span></span><time>${escapeHtml(formatDate(item.ia_pausada_em || item.atendimento_humano_assumido_em || item.created_at))}</time></article>
+      </div></section>${documentCard}
+      <section class="review-detail-section"><h4>Resumo de fatos</h4><div class="review-support-grid">${facts.map(([label,value]) => `<article><span>${escapeHtml(label)}</span><strong>${escapeHtml(value || 'Não informado')}</strong></article>`).join('')}</div></section>
+    </div>`;
+}
+
+function reviewDecisionOptions(item) {
+  const isCompatibility = item.tipo === 'INCOMPATIBILIDADE_SEXO';
+  const isDocument = item.tipo === 'REVISAO_DOCUMENTAL';
+  const currentUserId = Number(state.currentUser?.id || 0);
+  const canFinishHandoff = item.atendimento_humano_ativo === true
+    && (currentUserIsAdmin() || Number(item.atendimento_humano_usuario_id || 0) === currentUserId);
+  const options = [
+    { value:'ENCERRAR', title:'Já resolvido — encerrar sem mensagem', description:'Encerra somente esta pendência. Candidato, etapa, IA e mensagens permanecem como estão.' },
+    { value:'APROVAR', title:isCompatibility ? 'Manter no processo — aprovar exceção' : 'Aprovar e continuar', description:'Registra a aprovação. O fluxo configurado pode retomar e enviar a mensagem prevista para esta revisão.' },
+    { value:'NAO_APROVAR', title:isCompatibility ? 'Confirmar incompatibilidade nesta vaga' : 'Não aprovar nesta vaga', description:'Registra a decisão negativa e pode acionar a mensagem configurada para o candidato.' },
+  ];
+  if (isDocument) options.splice(1, 0,
+    { value:'REPROCESSAR', title:'Reprocessar o documento', description:'Mantém a revisão controlada enquanto uma nova análise técnica é solicitada.' },
+    { value:'SOLICITAR_NOVO_PDF', title:'Solicitar um novo PDF', description:'Aciona a solicitação configurada para que o candidato envie outro arquivo.' },
+  );
+  if (!item.atendimento_humano_ativo) options.splice(1, 0, { value:'ATENDER_HUMANO', title:'Atender agora — manter IA pausada', description:'Atribui a conversa a você e mantém a IA pausada durante o atendimento.' });
+  if (canFinishHandoff) options.splice(1, 0,
+    { value:'DEVOLVER_IA', title:'Devolver à IA — salvar contexto e retomar', description:'Finaliza o atendimento humano e reativa a IA. Documentos pendentes podem voltar ao processamento.' },
+    { value:'LIBERAR_EQUIPE', title:'Liberar para a equipe — manter IA pausada', description:'Remove o responsável atual e mantém a conversa disponível para outro recrutador, sem reativar a IA.' },
+  );
+  return options;
+}
+
+function reviewDecisionImpact(decision) {
+  const impacts = {
+    ENCERRAR: ['Sem mensagem e sem alteração da IA', 'Somente a pendência será encerrada.'],
+    ATENDER_HUMANO: ['Sem mensagem automática', 'A IA será pausada e a conversa ficará atribuída a você.'],
+    DEVOLVER_IA: ['A IA será reativada', 'Nenhuma mensagem imediata é enviada por esta ação; o fluxo volta a processar futuras interações.'],
+    LIBERAR_EQUIPE: ['A IA continuará pausada', 'A conversa ficará sem responsável e disponível para a equipe.'],
+    REPROCESSAR: ['Pode acionar processamento técnico', 'Nenhuma aprovação é registrada nesta ação.'],
+    SOLICITAR_NOVO_PDF: ['Pode enviar mensagem ao candidato', 'Será utilizada a comunicação configurada para solicitar outro PDF.'],
+    APROVAR: ['Pode retomar o fluxo e enviar mensagem', 'A ação exata é definida pela revisão e pelo Chatbot Estático.'],
+    NAO_APROVAR: ['Pode enviar mensagem ao candidato', 'A decisão negativa será registrada para esta vaga.'],
+  };
+  return impacts[decision] || ['Revise antes de confirmar', 'A ação selecionada será registrada no histórico.'];
+}
+
+function renderReviewDecision(item) {
+  if (!item) {
+    el.reviewDecisionContent.innerHTML = '<div class="empty-state compact"><strong>Nenhuma revisão selecionada</strong><span>Escolha um item da fila para ver as decisões disponíveis.</span></div>';
+    return;
+  }
+  const options = reviewDecisionOptions(item);
+  if (!options.some((option) => option.value === state.reviewDecision)) state.reviewDecision = options[0].value;
+  const impact = reviewDecisionImpact(state.reviewDecision);
+  el.reviewDecisionContent.innerHTML = `
+    <header class="review-decision-header"><div><h3>Concluir revisão</h3><p>Escolha uma decisão e confira o impacto antes de confirmar.</p></div><button class="button button-ghost review-mobile-back" data-review-mobile-pane="detail" type="button">Voltar</button></header>
+    <div class="review-decision-options">${options.map((option) => `<label class="review-decision-option"><input name="reviewDecisionChoice" type="radio" value="${option.value}" ${option.value === state.reviewDecision ? 'checked' : ''}><span><strong>${escapeHtml(option.title)}</strong><small>${escapeHtml(option.description)}</small></span></label>`).join('')}</div>
+    <label class="review-decision-note">Contexto para o próximo atendimento (opcional)<textarea id="reviewDecisionNote" maxlength="2000" placeholder="Registre somente o contexto necessário para a equipe ou para a retomada da IA."></textarea></label>
+    <div id="reviewDecisionImpact" class="review-decision-impact"><strong>${escapeHtml(impact[0])}</strong><span>${escapeHtml(impact[1])}</span></div>
+    <footer class="review-decision-footer"><button id="confirmReviewDecisionButton" class="button button-primary" data-review-confirm type="button">${escapeHtml(reviewDecisionPrimaryLabel(state.reviewDecision))}</button><button class="button button-ghost" data-review-mobile-pane="queue" type="button">Cancelar</button></footer>`;
+}
+
+function reviewDecisionPrimaryLabel(decision) {
+  return ({ ENCERRAR:'Confirmar: já resolvido', ATENDER_HUMANO:'Iniciar atendimento', DEVOLVER_IA:'Salvar e devolver à IA', LIBERAR_EQUIPE:'Liberar para a equipe', REPROCESSAR:'Reprocessar documento', SOLICITAR_NOVO_PDF:'Solicitar novo PDF', APROVAR:'Confirmar aprovação', NAO_APROVAR:'Confirmar decisão negativa' })[decision] || 'Confirmar decisão';
+}
+
+function syncReviewDecisionUi(decision) {
+  state.reviewDecision = decision;
+  const impact = reviewDecisionImpact(decision);
+  const impactNode = document.getElementById('reviewDecisionImpact');
+  if (impactNode) impactNode.innerHTML = `<strong>${escapeHtml(impact[0])}</strong><span>${escapeHtml(impact[1])}</span>`;
+  const button = document.getElementById('confirmReviewDecisionButton');
+  if (button) button.textContent = reviewDecisionPrimaryLabel(decision);
+}
+
+function setReviewMobilePane(pane) {
+  const view = document.getElementById('view-reviews');
+  if (view && ['queue','detail','decision'].includes(pane)) view.dataset.reviewMobilePane = pane;
+  if (pane !== 'decision') el.reviewDecisionPane?.classList.remove('is-open');
+  if (pane === 'decision') el.reviewDecisionPane?.classList.add('is-open');
+}
+
+function selectReview(id) {
+  state.selectedReviewId = Number(id) || null;
+  state.reviewDecision = 'ENCERRAR';
+  renderReviews();
+  setReviewMobilePane('detail');
+}
+
+async function confirmSelectedReviewDecision() {
+  const item = state.reviews.find((review) => Number(review.id) === Number(state.selectedReviewId));
+  if (!item) return;
+  const decision = state.reviewDecision;
+  const note = String(document.getElementById('reviewDecisionNote')?.value || '').trim();
+  const impact = reviewDecisionImpact(decision);
+  const confirmation = await confirmAction({ title: reviewDecisionPrimaryLabel(decision), message: impact[0], detail: impact[1], confirmLabel: reviewDecisionPrimaryLabel(decision), tone: decision === 'NAO_APROVAR' ? 'danger' : 'primary' });
+  if (!confirmation.confirmed) return;
+  if (decision === 'ATENDER_HUMANO') {
+    const result = await api(`/api/atendimento/candidatos/${item.candidato_id}/assumir`, { method:'POST', body:'{}' });
+    showToast(result.mensagem || 'Atendimento iniciado.');
+    await Promise.allSettled([loadReviews(true), loadCandidates(true)]);
+    setReviewMobilePane('detail');
+    return;
+  }
+  if (['DEVOLVER_IA','LIBERAR_EQUIPE'].includes(decision)) {
+    const result = await api(`/api/atendimento/candidatos/${item.candidato_id}/finalizar-handoff`, { method:'POST', body:JSON.stringify({ destino:decision === 'DEVOLVER_IA' ? 'IA' : 'HUMANO', resumo:note, dados_confirmados:{} }) });
+    showToast(result.mensagem || 'Atendimento finalizado.');
+    await Promise.allSettled([loadReviews(true), loadCandidates(true)]);
+    setReviewMobilePane('queue');
+    return;
+  }
+  const defaultReasons = { ENCERRAR:'Pendência já resolvida pela equipe.', APROVAR:'Compatibilidade confirmada pelo recrutador.', NAO_APROVAR:'Incompatibilidade operacional confirmada em revisão interna.', REPROCESSAR:'Reprocessamento solicitado pelo recrutador.', SOLICITAR_NOVO_PDF:'Novo PDF solicitado pelo recrutador.' };
+  await decideReview(item.id, decision, { confirmed:true, motivo:note || defaultReasons[decision] });
+  setReviewMobilePane('queue');
+}
+
+async function decideReview(id, decision, options = {}) {
   if(decision==='ENCERRAR'){
-    if(!window.confirm('Encerrar somente esta pendência? O candidato, a vaga, a etapa e as mensagens não serão alterados.'))return;
-    const result=await api(`/api/revisoes/${id}/encerrar`,{method:'POST',body:JSON.stringify({motivo:'Pendência já revisada pela equipe.'})});
+    if(!options.confirmed && !window.confirm('Encerrar somente esta pendência? O candidato, a vaga, a etapa e as mensagens não serão alterados.'))return;
+    const result=await api(`/api/revisoes/${id}/encerrar`,{method:'POST',body:JSON.stringify({motivo:options.motivo || 'Pendência já revisada pela equipe.'})});
     showToast(result.mensagem||'Revisão encerrada.');await loadReviews(true);return;
   }
   const labels = { APROVAR: 'aprovar e continuar', NAO_APROVAR: 'não aprovar nesta vaga', REPROCESSAR: 'reprocessar o documento', SOLICITAR_NOVO_PDF: 'solicitar um novo PDF ao candidato' };
-  const motivo = window.prompt(`Confirme o motivo para ${labels[decision] || decision}:`, decision === 'APROVAR' ? 'Necessidade operacional / experiência próxima do requisito' : '');
+  const motivo = options.motivo ?? window.prompt(`Confirme o motivo para ${labels[decision] || decision}:`, decision === 'APROVAR' ? 'Necessidade operacional / experiência próxima do requisito' : '');
   if (motivo === null) return;
   const result = await api(`/api/revisoes/${id}/decidir`, { method: 'POST', body: JSON.stringify({ decisao: decision, motivo }) });
   showToast(result.mensagem || 'Decisão registrada.');
@@ -2450,7 +2645,7 @@ async function runGlobalSearch() {
 }
 
 function handleDelegatedAction(event) {
-  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open-candidate], [data-review-start-service], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
+  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open], [data-review-open-candidate], [data-review-start-service], [data-review-mobile-pane], [data-review-confirm], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
   if (!target) return;
   if (target.dataset.goView) return setView(target.dataset.goView);
   if (target.dataset.documentToggle) {
@@ -2477,8 +2672,14 @@ function handleDelegatedAction(event) {
   if (target.dataset.auditCandidateProfile) return openAuditCandidateProfile(target.dataset.auditCandidateProfile);
   if (target.dataset.auditToggle) { const group=document.querySelector(`[data-audit-group="${target.dataset.auditToggle}"]`); if(group){ const collapsed=group.classList.toggle('is-collapsed'); target.setAttribute('aria-expanded', String(!collapsed)); } return; }
   if (target.dataset.auditRescueCandidate) return sendCandidateToRescue(target.dataset.auditRescueCandidate);
+  if (target.dataset.reviewOpen) {
+    if (event.target.closest('[data-review-select]')) return;
+    return selectReview(target.dataset.reviewOpen);
+  }
   if (target.dataset.reviewOpenCandidate) return openCandidate(target.dataset.reviewOpenCandidate);
   if (target.dataset.reviewStartService) return startReviewService(target.dataset.reviewStartService);
+  if (target.dataset.reviewMobilePane) return setReviewMobilePane(target.dataset.reviewMobilePane);
+  if (target.hasAttribute('data-review-confirm')) return confirmSelectedReviewDecision();
   if (target.dataset.reviewDecision) return decideReview(target.dataset.id, target.dataset.reviewDecision);
   if (target.dataset.calendarDate) { state.calendarSelectedDate=target.dataset.calendarDate; renderInterviews(); return; }
   if (target.dataset.dashboardCalendarDate) { state.dashboardCalendarSelectedDate=target.dataset.dashboardCalendarDate; renderDashboardMiniCalendar(); return; }
@@ -2693,6 +2894,8 @@ function bindEvents() {
   el.calendarTodayButton?.addEventListener('click', () => { state.calendarCursor=new Date(); state.calendarSelectedDate=localDateKey(new Date()); renderInterviews(); });
   el.reviewSearchInput?.addEventListener('input', renderReviews);
   el.reviewTypeSegments?.addEventListener('click', (event) => { const button=event.target.closest('[data-review-type]'); if(!button)return; state.reviewType=button.dataset.reviewType; el.reviewTypeSegments.querySelectorAll('button').forEach((item)=>item.classList.toggle('active',item===button)); renderReviews(); });
+  el.reviewsList?.addEventListener('keydown', (event) => { const item=event.target.closest('[data-review-open]'); if(!item || !['Enter',' '].includes(event.key))return; event.preventDefault(); selectReview(item.dataset.reviewOpen); });
+  document.addEventListener('change', (event) => { if (event.target.matches('input[name="reviewDecisionChoice"]')) syncReviewDecisionUi(event.target.value); });
   el.openAuditCandidateProfileButton?.addEventListener('click', () => openAuditCandidateProfile());
   document.querySelectorAll('[data-audit-review]').forEach((button) => button.addEventListener('click', () => reviewAuditProblem(button.dataset.auditReview)));
   el.closeVacancyDialogButton.addEventListener('click', () => el.vacancyDialog.close());
