@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-  const POLL_QUEUE_MS = 12000;
-  const POLL_CHAT_MS = 5000;
+  const POLL_QUEUE_MS = 30000;
+  const POLL_CHAT_MS = 8000;
   const MAX_OPEN = 3;
   const local = {
     initialized: false,
@@ -12,6 +12,7 @@
     currentUser: null,
     queueTimer: null,
     menuOpen: false,
+    filter: 'ACAO',
   };
 
   const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[char]));
@@ -41,7 +42,7 @@
     const menu=document.createElement('section');
     menu.id='genesisFloatingChatMenu';
     menu.className='genesis-floating-chat-menu hidden';
-    menu.innerHTML='<header><div><strong>Conversas</strong><small>Conversas que precisam de atenção</small></div><span class="gfc-menu-actions"><button type="button" data-gfc-refresh data-icon="refresh" class="icon-button" title="Atualizar" aria-label="Atualizar"></button><button type="button" data-gfc-menu-close data-icon="close" class="icon-button" title="Fechar" aria-label="Fechar conversas"></button></span></header><div id="genesisFloatingChatMenuList" class="genesis-floating-chat-menu-list"></div>';
+    menu.innerHTML='<header><div><strong>Conversas</strong><small>Ação humana e pausas da IA</small></div><span class="gfc-menu-actions"><button type="button" data-gfc-refresh data-icon="refresh" class="icon-button" title="Atualizar" aria-label="Atualizar"></button><button type="button" data-gfc-menu-close data-icon="close" class="icon-button" title="Fechar" aria-label="Fechar conversas"></button></span></header><nav class="gfc-menu-filters" aria-label="Filtrar conversas"><button type="button" data-gfc-filter="ACAO" class="active">Ação agora <b data-gfc-count="ACAO">0</b></button><button type="button" data-gfc-filter="PAUSADAS">IA pausada <b data-gfc-count="PAUSADAS">0</b></button></nav><div id="genesisFloatingChatMenuList" class="genesis-floating-chat-menu-list"></div>';
     const stack=document.createElement('div');
     stack.id='genesisFloatingChatStack';
     stack.className='genesis-floating-chat-stack';
@@ -49,10 +50,19 @@
     launcher.addEventListener('click',()=>{local.menuOpen=!local.menuOpen;menu.classList.toggle('hidden',!local.menuOpen);renderMenu();});
     menu.querySelector('[data-gfc-refresh]').addEventListener('click',()=>pollQueue({force:true}));
     menu.querySelector('[data-gfc-menu-close]').addEventListener('click',()=>{local.menuOpen=false;menu.classList.add('hidden');});
+    menu.querySelector('.gfc-menu-filters').addEventListener('click',(event)=>{const button=event.target.closest('[data-gfc-filter]');if(!button)return;local.filter=button.dataset.gfcFilter;menu.querySelectorAll('[data-gfc-filter]').forEach((item)=>item.classList.toggle('active',item===button));renderMenu();});
     menu.addEventListener('click',(event)=>{const button=event.target.closest('[data-gfc-open]');if(button)openChat(Number(button.dataset.gfcOpen));});
   }
 
   function actionable(item){return ['AGUARDANDO_ATENDIMENTO','AGUARDANDO_RECRUTADOR'].includes(String(item.atendimento_estado||''));}
+  function paused(item){return item.ia_atendimento_ativo===false;}
+  function reasonMeta(item){
+    if(String(item.atendimento_estado)==='AGUARDANDO_RECRUTADOR')return ['Respondeu você','urgent'];
+    if(item.atendimento_humano_solicitado===true)return [String(item.ia_pausa_motivo||'').toLowerCase().includes('falha')?'Falha técnica':'Pediu ajuda','urgent'];
+    if(item.revisao_pendente===true)return ['Revisão pendente','paused'];
+    if(paused(item))return ['IA pausada','paused'];
+    return ['Em acompanhamento','neutral'];
+  }
   function renderLauncher(){
     const badge=document.getElementById('genesisFloatingChatBadge');
     if(!badge)return;
@@ -62,8 +72,14 @@
   }
   function renderMenu(){
     const box=document.getElementById('genesisFloatingChatMenuList');if(!box)return;
-    const items=[...local.queue.values()].filter(actionable).sort((a,b)=>new Date(a.ultima_mensagem_em||0)-new Date(b.ultima_mensagem_em||0));
-    box.innerHTML=items.length?items.map(item=>`<button class="genesis-floating-chat-menu-item" data-gfc-open="${Number(item.id)}" type="button"><span class="avatar">${esc(initials(item.nome))}</span><span class="copy"><strong>${esc(item.nome||`Candidato #${item.id}`)}</strong><span>${esc(item.ultima_mensagem||item.vaga_nome||'Aguardando atendimento')}</span></span><time>${esc(formatTime(item.ultima_mensagem_em))}</time></button>`).join(''):'<div class="genesis-floating-chat-empty">Nenhuma conversa aguardando sua ação agora.</div>';
+    const all=[...local.queue.values()];
+    const actionCount=all.filter(actionable).length,pausedCount=all.filter(paused).length;
+    document.querySelector('[data-gfc-count="ACAO"]')?.replaceChildren(String(actionCount));
+    document.querySelector('[data-gfc-count="PAUSADAS"]')?.replaceChildren(String(pausedCount));
+    const predicate=local.filter==='PAUSADAS'?paused:actionable;
+    const items=all.filter(predicate).sort((a,b)=>new Date(a.ultima_mensagem_em||0)-new Date(b.ultima_mensagem_em||0));
+    const empty=local.filter==='PAUSADAS'?'Nenhuma conversa com a IA pausada.':'Nenhuma conversa precisa da sua ação agora.';
+    box.innerHTML=items.length?items.map(item=>{const [reason,tone]=reasonMeta(item);return `<button class="genesis-floating-chat-menu-item" data-gfc-open="${Number(item.id)}" type="button"><span class="avatar">${esc(initials(item.nome))}</span><span class="copy"><span class="gfc-reason ${tone}">${esc(reason)}</span><strong>${esc(item.nome||`Candidato #${item.id}`)}</strong><span>${esc(item.ultima_mensagem||item.vaga_nome||'Aguardando atendimento')}</span></span><time>${esc(formatTime(item.ultima_mensagem_em||item.ia_pausada_em))}</time></button>`;}).join(''):`<div class="genesis-floating-chat-empty">${esc(empty)}</div>`;
   }
 
   function shouldNotify(item, previousId){
@@ -131,17 +147,18 @@
     catch(error){toast(error.message,'error');}finally{button.disabled=false;}
   }
   async function send(chat){
+    if(chat.sending)return;
     const textarea=chat.element.querySelector('textarea');const text=String(textarea.value||'').trim();if(!text)return;
-    const button=chat.element.querySelector('[data-gfc-send]');button.disabled=true;
+    const button=chat.element.querySelector('[data-gfc-send]');chat.sending=true;button.disabled=true;
     try{await api(`/api/atendimento/candidatos/${chat.id}/mensagens`,{method:'POST',body:JSON.stringify({mensagem:text,client_message_id:crypto.randomUUID()})});textarea.value='';await pollConversation(chat);await pollQueue();}
-    catch(error){toast(error.message,'error');}finally{button.disabled=!owned(chat.candidate);}
+    catch(error){toast(error.message,'error');}finally{chat.sending=false;button.disabled=!owned(chat.candidate);}
   }
   function closeChat(id){const chat=local.open.get(id);if(!chat)return;if(chat.timer)clearInterval(chat.timer);chat.element.remove();local.open.delete(id);}
   function createChat(item){
     const id=Number(item.id);const element=document.createElement('section');element.className='genesis-floating-chat-window';element.dataset.candidateId=String(id);
     element.innerHTML=`<header class="gfc-header"><span class="gfc-avatar">${esc(initials(item.nome))}</span><span class="gfc-person"><strong data-gfc-name>${esc(item.nome||`Candidato #${id}`)}</strong><small data-gfc-subtitle>${esc(item.vaga_nome||'Conversa')}</small></span><span class="gfc-header-actions"><button type="button" data-gfc-profile data-icon="external" title="Abrir perfil completo" aria-label="Abrir perfil completo"></button><button type="button" data-gfc-min data-icon="minus" title="Minimizar" aria-label="Minimizar conversa"></button><button type="button" data-gfc-close data-icon="close" title="Fechar" aria-label="Fechar"></button></span></header><div class="gfc-status"><span data-gfc-status-text>Carregando atendimento...</span><button type="button" data-gfc-assume>Assumir</button></div><div class="gfc-messages" data-gfc-messages><div class="gfc-loading">Carregando conversa...</div></div><div class="gfc-composer"><textarea rows="2" maxlength="4000" disabled></textarea><button type="button" data-gfc-send data-icon="send" disabled title="Enviar" aria-label="Enviar mensagem"></button></div>`;
     document.getElementById('genesisFloatingChatStack').appendChild(element);
-    const chat={id,item,candidate:item,element,messages:new Map(),lastId:0,timer:null,polling:false};
+    const chat={id,item,candidate:item,element,messages:new Map(),lastId:0,timer:null,polling:false,sending:false};
     element.querySelector('[data-gfc-close]').addEventListener('click',()=>closeChat(id));
     const minimizeButton=element.querySelector('[data-gfc-min]');
     minimizeButton.addEventListener('click',()=>{
@@ -167,14 +184,14 @@
     if(local.open.size>=MAX_OPEN){const first=local.open.keys().next().value;closeChat(first);}
     const source=item||local.queue.get(Number(id))||{id:Number(id),nome:`Candidato #${id}`};
     const chat=createChat(source);local.menuOpen=false;document.getElementById('genesisFloatingChatMenu')?.classList.add('hidden');
-    await pollConversation(chat,{full:true});chat.timer=setInterval(()=>pollConversation(chat),POLL_CHAT_MS);
+    await pollConversation(chat,{full:true});chat.timer=setInterval(()=>{if(!document.hidden)pollConversation(chat);},POLL_CHAT_MS);
   }
 
   async function init(){
     if(window.innerWidth<=900)return;
     ensureUi();
     try{const me=await api('/api/auth/me');local.currentUser=me.usuario||window.GenesisApp?.state?.currentUser||null;}catch{return;}
-    await pollQueue({force:true});local.queueTimer=setInterval(()=>pollQueue(),POLL_QUEUE_MS);
+    await pollQueue({force:true});local.queueTimer=setInterval(()=>{if(!document.hidden)pollQueue();},POLL_QUEUE_MS);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)pollQueue();});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();

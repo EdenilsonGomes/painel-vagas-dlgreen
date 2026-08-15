@@ -18,6 +18,7 @@
       AGUARDANDO_ATENDIMENTO:['waiting-owner','Aguardando alguém assumir'],
       AGUARDANDO_RECRUTADOR:['waiting-recruiter','Aguardando recrutador'],
       AGUARDANDO_CANDIDATO:['waiting-candidate','Aguardando candidato'],
+      IA_PAUSADA:['ia-paused','IA pausada'],
       EM_CONVERSA:['conversation','Em conversa'],
     };return map[state]||map.EM_CONVERSA;
   }
@@ -52,7 +53,7 @@
     byId('humanServiceSearch')?.addEventListener('input',(e)=>{local.search=e.target.value;render();});
     byId('humanServiceList')?.addEventListener('click',async(e)=>{const b=e.target.closest('[data-open-human]');if(!b)return;try{await panel().openCandidate?.(Number(b.dataset.openHuman));document.querySelector('[data-drawer-tab="conversation"]')?.click();}catch(err){panel().toast?.(err.message,'error');}});
     refreshBadge();
-    local.timer=setInterval(()=>{refreshBadge();if(window.GenesisApp?.state?.activeView==='atendimentos')load().catch(()=>{});},15000);local.timer.unref?.();
+    local.timer=setInterval(()=>{if(document.hidden)return;refreshBadge();if(window.GenesisApp?.state?.activeView==='atendimentos')load().catch(()=>{});},30000);local.timer.unref?.();
   }
   window.GenesisAtendimentosV16={load,refreshBadge};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();

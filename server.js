@@ -73,6 +73,7 @@ const CHATBOT_REPROCESS_TOKEN = String(
   process.env.CHATBOT_REPROCESS_TOKEN || DIVULGACAO_API_TOKEN || '',
 ).trim();
 const CHATBOT_WAHA_SESSION = String(process.env.CHATBOT_WAHA_SESSION || 'whats_junior').trim();
+const PANEL_RATE_LIMIT_MAX = Math.min(Math.max(Number(process.env.PANEL_RATE_LIMIT_MAX || 2400), 500), 10000);
 const WAHA_BASE_URL = String(process.env.WAHA_BASE_URL || '').trim();
 const WAHA_API_KEY = String(process.env.WAHA_API_KEY || '').trim();
 const DIVULGACAO_WAHA_SESSION = String(process.env.DIVULGACAO_WAHA_SESSION || '').trim();
@@ -171,10 +172,15 @@ app.use(helmet({
 
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 500,
+  limit: PANEL_RATE_LIMIT_MAX,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   skip: (req) => req.path === '/health',
+  handler: (_req, res) => res.status(429).json({
+    sucesso: false,
+    erro: 'O painel recebeu muitas atualizações em pouco tempo. Aguarde alguns segundos e tente novamente.',
+    codigo: 'PAINEL_LIMITE_TEMPORARIO',
+  }),
 }));
 
 app.use(express.json({ limit: '1mb' }));

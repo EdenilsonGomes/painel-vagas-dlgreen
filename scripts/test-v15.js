@@ -65,7 +65,7 @@ assert(!/data-candidate-action="whatsapp"/.test(app), 'Ação antiga de WhatsApp
 
 const chat = read('public/atendimento-v15.js');
 for (const token of [
-  'POLL_INTERVAL_MS = 5000', 'Assumir atendimento', 'Finalizar atendimento',
+  'POLL_INTERVAL_MS = 8000', 'Assumir atendimento', 'Finalizar atendimento',
   'client_message_id', 'Editar dados do candidato', 'Propor novo horário',
 ]) assert(chat.includes(token), `Chat UI sem comportamento obrigatório: ${token}`);
 

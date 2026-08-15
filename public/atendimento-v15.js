@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const POLL_INTERVAL_MS = 5000;
+  const POLL_INTERVAL_MS = 8000;
   const quickReplies = [
     'Olá! Sou a recrutadora responsável pelo seu processo.',
     'Recebi sua mensagem e estou verificando as informações.',
@@ -23,6 +23,7 @@
     activeTab: 'summary',
     pollingTimer: null,
     polling: false,
+    sendingMessage: false,
     lastMessageId: 0,
     messages: new Map(),
     previewTimer: null,
@@ -317,10 +318,12 @@
 
   async function sendMessage(event) {
     event.preventDefault();
+    if (local.sendingMessage) return;
     const textarea = byId('candidateChatMessage');
     const button = byId('sendCandidateChatButton');
     const message = String(textarea.value || '').trim();
     if (!message) return;
+    local.sendingMessage = true;
     button.disabled = true;
     textarea.disabled = true;
     try {
@@ -334,6 +337,7 @@
       await pollConversation({ force: true });
     } catch (error) { toast(error.message, 'error'); }
     finally {
+      local.sendingMessage = false;
       textarea.disabled = false;
       button.disabled = false;
       textarea.focus();

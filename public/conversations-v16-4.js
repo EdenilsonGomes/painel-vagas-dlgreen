@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-  const POLL_LIST_MS = 10000;
-  const POLL_CHAT_MS = 4000;
+  const POLL_LIST_MS = 30000;
+  const POLL_CHAT_MS = 8000;
   const STORE_KEY = 'genesis_conversations_v164_read';
   const SEEDED_KEY = 'genesis_conversations_v164_seeded';
   const local = {
@@ -20,6 +20,7 @@
     chatTimer: null,
     loadingList: false,
     loadingChat: false,
+    sendingMessage: false,
   };
 
   const byId = (id) => document.getElementById(id);
@@ -231,7 +232,7 @@
     byId('allChatsMessages').innerHTML = '<div class="empty-state compact">Carregando conversa...</div>';
     await pollSelected({full:true});
     if (local.chatTimer) clearInterval(local.chatTimer);
-    local.chatTimer = setInterval(()=>pollSelected(),POLL_CHAT_MS);
+    local.chatTimer = setInterval(()=>{if(!document.hidden&&window.GenesisApp?.state?.activeView==='atendimentos')pollSelected();},POLL_CHAT_MS);
   }
 
   function closeMobileConversation() {
@@ -252,17 +253,17 @@
 
   async function sendSelected(event) {
     event?.preventDefault?.();
-    if (!local.selectedId) return;
+    if (!local.selectedId || local.sendingMessage) return;
     const input = byId('allChatsMessageInput');
     const text = String(input.value || '').trim(); if (!text) return;
-    const button = byId('allChatsSendButton'); button.disabled = true;
+    const button = byId('allChatsSendButton'); local.sendingMessage = true; button.disabled = true;
     try {
       const clientMessageId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random()}`;
       await api(`/api/atendimento/candidatos/${local.selectedId}/mensagens`,{method:'POST',body:JSON.stringify({mensagem:text,client_message_id:clientMessageId})});
       input.value = '';
       await Promise.all([pollSelected(),load(true)]);
     } catch (error) { toast(error.message,'error'); }
-    finally { syncHeader(); }
+    finally { local.sendingMessage = false; syncHeader(); }
   }
 
   function bind() {
@@ -275,9 +276,9 @@
     byId('allChatsAssumeButton')?.addEventListener('click',assumeSelected);
     byId('allChatsComposer')?.addEventListener('submit',sendSelected);
     byId('allChatsMessageInput')?.addEventListener('keydown',(event)=>{if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendSelected(event);}});
-    local.listTimer = setInterval(()=>load(),POLL_LIST_MS);
-    document.addEventListener('visibilitychange',()=>{if(!document.hidden)load();});
-    api('/api/auth/me').then((data)=>{local.currentUser=data.usuario||panel().getCurrentUser?.()||null;loadReadState();load(true);}).catch(()=>{});
+    local.listTimer = setInterval(()=>{if(!document.hidden&&window.GenesisApp?.state?.activeView==='atendimentos')load();},POLL_LIST_MS);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden&&window.GenesisApp?.state?.activeView==='atendimentos')load();});
+    api('/api/auth/me').then((data)=>{local.currentUser=data.usuario||panel().getCurrentUser?.()||null;loadReadState();if(window.GenesisApp?.state?.activeView==='atendimentos')load(true);}).catch(()=>{});
   }
 
   window.GenesisConversationsV164 = { load, openConversation };

@@ -30,6 +30,7 @@
 .human-state.waiting-owner { color:#b45309; background:#fffbeb; }
 .human-state.waiting-recruiter { color:#b91c1c; background:#fef2f2; }
 .human-state.waiting-candidate { color:#047857; background:#ecfdf5; }
+.human-state.ia-paused { color:#475569; background:#f1f5f9; }
 .human-state.conversation { color:#1d4ed8; background:#eff6ff; }
 .human-service-time { font-size:12px; font-weight:700; color:var(--muted-text,#64748b); }
 .human-service-time.attention { color:#b91c1c; }
