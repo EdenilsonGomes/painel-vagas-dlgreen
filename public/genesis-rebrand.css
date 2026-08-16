@@ -399,3 +399,222 @@ body.genesis-rebrand .crm-pipeline-shell{max-width:100%;scrollbar-gutter:stable}
 body.genesis-rebrand #view-interviews[data-calendar-mode="DAY"] .calendar-panel,body.genesis-rebrand #view-interviews[data-calendar-mode="LIST"] .calendar-panel{display:none}body.genesis-rebrand #view-interviews[data-calendar-mode="DAY"] .calendar-layout,body.genesis-rebrand #view-interviews[data-calendar-mode="LIST"] .calendar-layout{grid-template-columns:1fr}body.genesis-rebrand #view-interviews[data-calendar-mode="WEEK"] .interview-calendar{grid-template-rows:1fr}body.genesis-rebrand .calendar-view-mode{flex:0 0 auto}
 @media(max-width:900px){body.genesis-rebrand .dashboard-topbar-welcome{min-width:0}body.genesis-rebrand .dashboard-topbar-welcome p:last-child{display:none}body.genesis-rebrand .dashboard-topbar-welcome h2{font-size:16px}body.genesis-rebrand .candidate-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}body.genesis-rebrand .calendar-day{min-height:72px}}
 @media(max-width:640px){body.genesis-rebrand .dashboard-topbar-welcome h2{max-width:132px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}body.genesis-rebrand .dashboard-topbar-welcome .dashboard-welcome-eyebrow{display:none}body.genesis-rebrand .candidate-kpis{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}body.genesis-rebrand .candidate-kpis .kpi-card{min-width:150px;scroll-snap-align:start}body.genesis-rebrand .candidate-toolbar{display:grid;gap:10px}body.genesis-rebrand .candidate-toolbar .toolbar-right{display:grid;grid-template-columns:1fr auto;width:100%}body.genesis-rebrand .candidate-toolbar .inline-search{width:100%}body.genesis-rebrand .vacancy-filter-single-row{display:grid;grid-template-columns:1fr}body.genesis-rebrand .vacancy-toolbar-right{display:grid;grid-template-columns:1fr auto;width:100%}body.genesis-rebrand .compact-field{min-width:0}body.genesis-rebrand .vacancy-kanban-board{grid-template-columns:repeat(4,82vw);scroll-snap-type:x mandatory}body.genesis-rebrand .vacancy-kanban-column{scroll-snap-align:start}body.genesis-rebrand .calendar-controls{display:grid;grid-template-columns:auto auto auto;width:100%}body.genesis-rebrand #openAgendaSettingsButton{grid-column:1/-1;width:100%}body.genesis-rebrand .calendar-layout{grid-template-columns:1fr}body.genesis-rebrand .calendar-panel{overflow-x:auto}body.genesis-rebrand .calendar-weekdays,body.genesis-rebrand .interview-calendar{min-width:560px}body.genesis-rebrand .crm-pipeline-shell{grid-template-columns:repeat(7,82vw);scroll-snap-type:x mandatory}body.genesis-rebrand .crm-pipeline-column{scroll-snap-align:start}}
+
+/* Product Design correction pass — 2026-08-16 */
+body.genesis-rebrand .nav-context-items {
+  margin-left: 18px;
+  padding-left: 8px;
+}
+body.genesis-rebrand .nav-context-items::before,
+body.genesis-rebrand .nav-context-items .nav-item::before { display: none; }
+
+body.genesis-rebrand .dashboard-command-layout {
+  grid-template-columns: minmax(0, 1.18fr) minmax(380px, .82fr);
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "journey journey"
+    "funnel agenda"
+    "attention attention";
+  gap: 14px;
+}
+body.genesis-rebrand .dashboard-journey-panel { grid-area: journey; min-height: 142px; }
+body.genesis-rebrand .dashboard-funnel-panel,
+body.genesis-rebrand .dashboard-agenda-panel { min-height: 360px; }
+body.genesis-rebrand .dashboard-attention-panel { min-height: 230px; }
+body.genesis-rebrand .dashboard-journey-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  height: auto;
+  padding: 12px 14px 14px;
+}
+
+body.genesis-rebrand .dashboard-funnel-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  min-height: 285px;
+  padding: 18px 28px 24px;
+}
+body.genesis-rebrand .dashboard-funnel-stage {
+  width: var(--funnel-width);
+  min-width: 54%;
+  min-height: 46px;
+  margin-top: -1px;
+  padding: 0 clamp(16px, 4vw, 34px);
+  clip-path: polygon(0 0, 100% 0, 94% 100%, 6% 100%);
+  border-top: 1px solid rgba(255,255,255,.28);
+  background: linear-gradient(90deg, #087fb3, #0eaea0);
+}
+body.genesis-rebrand .dashboard-funnel-stage:nth-child(2n) {
+  background: linear-gradient(90deg, #087fb3, #0eaea0);
+}
+body.genesis-rebrand .dashboard-funnel-stage:first-child {
+  margin-top: 0;
+  border-radius: 10px 10px 0 0;
+}
+body.genesis-rebrand .dashboard-funnel-stage:last-child { border-radius: 0 0 10px 10px; }
+body.genesis-rebrand .dashboard-funnel-stage span {
+  font-size: 11px;
+  letter-spacing: -.01em;
+}
+body.genesis-rebrand .dashboard-funnel-stage strong { font-size: 15px; }
+
+body.genesis-rebrand .dashboard-mini-calendar-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  gap: 8px;
+  height: auto;
+  padding: 12px 16px 16px;
+}
+body.genesis-rebrand .dashboard-mini-weekdays,
+body.genesis-rebrand .dashboard-mini-calendar { grid-column: 1; }
+body.genesis-rebrand .dashboard-mini-calendar {
+  grid-auto-rows: auto;
+  gap: 7px;
+}
+body.genesis-rebrand .dashboard-mini-day {
+  aspect-ratio: 1;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 750;
+}
+body.genesis-rebrand .dashboard-calendar-day-summary { display: none; }
+
+body.genesis-rebrand .vacancy-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  padding: 14px;
+}
+body.genesis-rebrand .vacancy-card-grid.hidden { display: none; }
+body.genesis-rebrand .vacancy-grid-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: 0 6px 20px rgba(11,47,58,.06);
+}
+body.genesis-rebrand .vacancy-grid-card > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+body.genesis-rebrand .vacancy-grid-card > header > div { display: flex; align-items: center; gap: 8px; }
+body.genesis-rebrand .vacancy-grid-card > header small,
+body.genesis-rebrand .vacancy-grid-card > p,
+body.genesis-rebrand .vacancy-grid-card > span { color: var(--muted); }
+body.genesis-rebrand .vacancy-grid-card > p { margin: 0; font-weight: 750; }
+body.genesis-rebrand .vacancy-grid-card-title {
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 850;
+  cursor: pointer;
+}
+body.genesis-rebrand .vacancy-grid-card-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 3px;
+}
+body.genesis-rebrand .vacancy-grid-card-metrics > span {
+  display: grid;
+  gap: 2px;
+  padding: 9px;
+  border-radius: 9px;
+  background: var(--surface-2);
+}
+body.genesis-rebrand .vacancy-grid-card-metrics strong { font-size: 15px; }
+body.genesis-rebrand .vacancy-grid-card-metrics small { color: var(--muted); font-size: 8px; }
+body.genesis-rebrand .vacancy-grid-card > footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 10px;
+}
+
+body.genesis-rebrand .calendar-panel { align-self: start; }
+body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day { min-height: 112px; }
+body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day i {
+  width: 34px;
+  height: 34px;
+  font-size: 13px;
+}
+
+@media (max-width: 1180px) {
+  body.genesis-rebrand .dashboard-command-layout {
+    grid-template-columns: 1fr;
+    grid-template-areas: "journey" "funnel" "agenda" "attention";
+  }
+  body.genesis-rebrand .vacancy-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 720px) {
+  body.genesis-rebrand .dashboard-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.genesis-rebrand .dashboard-funnel-list { min-height: 260px; padding-inline: 12px; }
+  body.genesis-rebrand .dashboard-funnel-stage { min-height: 48px; padding-inline: 22px; }
+  body.genesis-rebrand .dashboard-mini-day { min-height: 42px; font-size: 13px; }
+  body.genesis-rebrand .vacancy-card-grid { grid-template-columns: 1fr; padding: 10px; }
+  body.genesis-rebrand .vacancy-filter-single-row {
+    min-width: 0;
+    overflow: visible;
+  }
+  body.genesis-rebrand .vacancy-filter-single-row > .compact-field {
+    width: 100%;
+    min-width: 0;
+  }
+  body.genesis-rebrand .vacancy-filter-single-row .vacancy-toolbar-right {
+    grid-template-columns: minmax(0, 1fr) auto;
+    width: 100%;
+    min-width: 0;
+  }
+  body.genesis-rebrand .calendar-view-mode { width: 100%; overflow-x: auto; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-panel { overflow: hidden; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-weekdays,
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .interview-calendar { min-width: 0; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-weekdays { padding-inline: 4px; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day {
+    aspect-ratio: 1;
+    min-height: 0;
+    padding: 4px;
+  }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day i {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day > div {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 3px;
+  }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-event {
+    display: block;
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border-radius: 50%;
+    background: var(--genesis-teal-600);
+    font-size: 0;
+  }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day > div small { font-size: 7px; }
+}
+
