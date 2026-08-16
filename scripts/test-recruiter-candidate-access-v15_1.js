@@ -24,7 +24,7 @@ assert(documentsSection && !documentsSection.includes('data-admin-only'), 'O con
 assert(timelineButton.includes('data-admin-only'), 'Histórico deve continuar exclusivo de ADMIN.');
 assert(adminButton.includes('data-admin-only'), 'Administração deve continuar exclusiva de ADMIN.');
 assert(!css.includes('body[data-user-role="RECRUTADOR"] .drawer-tabs { display: none; }'), 'CSS não pode esconder as abas do recrutador.');
-assert(server.includes('FROM documentos\n      WHERE candidato_id = $1\n      ORDER BY created_at DESC, id DESC\n      LIMIT 200'), 'Detalhes do candidato devem carregar todos os documentos para usuário autenticado.');
+assert(/FROM documentos\s+WHERE candidato_id = \$1\s+ORDER BY created_at DESC, id DESC\s+LIMIT 200/.test(server), 'Detalhes do candidato devem carregar todos os documentos para usuário autenticado.');
 assert(!server.includes("Este documento está disponível somente para administradores."), 'Download de documentos não deve bloquear RECRUTADOR por tipo.');
 
 console.log('V15.1: RECRUTADOR possui Resumo + Conversa/Chat UI + Documentos; Histórico/Administração permanecem restritos.');
