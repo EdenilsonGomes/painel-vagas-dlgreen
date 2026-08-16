@@ -19,6 +19,7 @@ const state = {
   vacancyStatus: 'ATIVA',
   vacancyCompany: 'TODAS',
   vacancyLocation: 'TODOS',
+  vacancyMode: 'table',
   companies: [],
   candidates: [],
   candidateSummary: { total: 0, em_processo: 0, aprovados: 0, em_admissao: 0, contratados: 0, reprovados: 0 },
@@ -32,6 +33,7 @@ const state = {
   candidateReallocation: 'TODOS',
   candidateDistance: 'TODAS',
   candidateDistanceSort: 'RECENTES',
+  candidateActivitySort: 'DESC',
   candidateMode: 'table',
   selectedCandidateId: null,
   selectedCandidate: null,
@@ -40,6 +42,7 @@ const state = {
   interviewPeriod: 'TODAS',
   calendarCursor: new Date(),
   calendarSelectedDate: null,
+  calendarMode: 'WEEK',
   reviews: [],
   reviewType: 'TODAS',
   selectedReviewId: null,
@@ -207,17 +210,17 @@ const el = Object.fromEntries([
   'globalSearchButton', 'refreshCurrentViewButton', 'primaryActionButton',
   'dashboardReviews', 'reviewPendingCount', 'reviewNavBadge', 'reviewTypeSegments', 'reviewSearchInput', 'reviewsList',
   'reviewDetailPane', 'reviewDetailContent', 'reviewDecisionPane', 'reviewDecisionContent',
-  'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar',
+  'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar', 'calendarViewMode',
   'dashboardUpdatedAt', 'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
   'dashboardAttention', 'dashboardFunnel', 'dashboardJourneyStarted', 'dashboardJourneyCtps', 'dashboardJourneyApproved', 'dashboardJourneyScheduled',
   'dashboardCalendarPrevButton', 'dashboardCalendarTodayButton', 'dashboardCalendarNextButton', 'dashboardCalendarMonthLabel', 'dashboardInterviewCalendar', 'dashboardCalendarDaySummary',
-  'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
+  'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancyStatusSelect', 'vacancyPeriodSelect', 'vacancyTableMode', 'vacancyKanbanMode', 'vacanciesKanbanContainer', 'vacancyActiveKpiCard', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
   'vacancyKpiInProcess', 'vacancyKpiApproved', 'vacancyKpiTop', 'vacancyKpiTopCount', 'vacanciesLoading', 'vacanciesEmpty',
-  'vacanciesTableWrapper', 'vacanciesTableBody', 'candidateStatusSegments', 'candidatePeriodSegments', 'candidateSearchInput',
+  'vacanciesTableWrapper', 'vacanciesTableBody', 'candidateStatusSegments', 'candidatePeriodSegments', 'candidatePeriodSelect', 'candidateActivitySortButton', 'candidateSearchInput',
   'candidateFilterToggleButton', 'candidateFilterPanel', 'candidateVacancyFilter', 'candidateStageFilter', 'candidateDocumentFilter', 'candidateInterviewFilter', 'candidateSexFilter', 'candidateReallocationFilter', 'candidateDistanceFilter', 'candidateDistanceSort', 'clearCandidateFiltersButton',
   'candidateTableMode', 'candidateKanbanMode', 'candidateKpiTotal', 'candidateKpiProcess',
   'candidateKpiApproved', 'candidateKpiAdmission', 'candidateKpiHired', 'candidateKpiRejected', 'candidateTableContainer', 'candidateKanbanContainer',
-  'candidatesLoading', 'candidatesEmpty', 'candidatesTableWrapper', 'candidatesTableBody',
+  'candidatesLoading', 'candidatesEmpty', 'candidatesTableWrapper', 'candidatesTableBody', 'sidebarLogoutButton',
   'interviewPeriodSegments', 'interviewsList', 'documentTypeSegments', 'documentSearchInput', 'documentAuditExportButton',
   'documentAuditExportDialog', 'documentAuditResult', 'documentAuditLimit', 'documentAuditVacancy', 'documentAuditStart', 'documentAuditEnd', 'closeDocumentAuditExportButton', 'cancelDocumentAuditExportButton', 'confirmDocumentAuditExportButton',
   'documentsList', 'documentsKpiCandidates', 'documentsKpiReview', 'documentsKpiFailures', 'documentsKpiToday', 'monitorKpiEntries', 'monitorKpiErrors', 'monitorKpiDocs',
@@ -545,7 +548,8 @@ function renderDashboard() {
   el.dashboardFunnel.innerHTML = funnel.length ? funnel.map((item) => {
     const quantity = Number(item.quantidade || 0);
     const width = Math.max(8, Math.round((quantity / funnelMax) * 100));
-    return `<div class="dashboard-funnel-row"><span>${escapeHtml(stageLabels[item.etapa] || String(item.etapa || '').replaceAll('_', ' '))}</span><div><i style="width:${width}%"></i></div><strong>${quantity}</strong></div>`;
+    const label = stageLabels[item.etapa] || String(item.etapa || '').replaceAll('_', ' ');
+    return `<button class="dashboard-funnel-stage" style="--funnel-width:${width}%" data-go-view="candidates" type="button" title="${escapeHtml(label)}: ${quantity} candidato(s)"><span>${escapeHtml(label)}</span><strong>${quantity}</strong></button>`;
   }).join('') : emptyState('Funil sem movimentação', 'Os candidatos ativos aparecerão aqui.');
 
   el.dashboardJourneyStarted.textContent = Number(movement.iniciaram || 0);
@@ -641,12 +645,12 @@ function renderVacancyFilterOptions() {
 
   if (!companies.includes(state.vacancyCompany)) state.vacancyCompany = 'TODAS';
   if (!locations.includes(state.vacancyLocation)) state.vacancyLocation = 'TODOS';
-  el.vacancyCompanyFilter.innerHTML = `<option value="TODAS">Todas</option>${companies.map((item) => `<option value="${escapeHtml(item)}" ${item === state.vacancyCompany ? 'selected' : ''}>${escapeHtml(item)}</option>`).join('')}`;
-  el.vacancyLocationFilter.innerHTML = `<option value="TODOS">Todos</option>${locations.map((item) => `<option value="${escapeHtml(item)}" ${item === state.vacancyLocation ? 'selected' : ''}>${escapeHtml(item)}</option>`).join('')}`;
+  if (el.vacancyCompanyFilter) el.vacancyCompanyFilter.innerHTML = `<option value="TODAS">Todas</option>${companies.map((item) => `<option value="${escapeHtml(item)}" ${item === state.vacancyCompany ? 'selected' : ''}>${escapeHtml(item)}</option>`).join('')}`;
+  if (el.vacancyLocationFilter) el.vacancyLocationFilter.innerHTML = `<option value="TODOS">Todos</option>${locations.map((item) => `<option value="${escapeHtml(item)}" ${item === state.vacancyLocation ? 'selected' : ''}>${escapeHtml(item)}</option>`).join('')}`;
 }
 
 function filteredVacancies() {
-  const q = String(el.vacancySearchInput.value || '').trim().toLocaleLowerCase('pt-BR');
+  const q = String(el.vacancySearchInput?.value || '').trim().toLocaleLowerCase('pt-BR');
   return state.vacancies.filter((vacancy) => {
     const statusMatches = state.vacancyStatus === 'TODAS' || vacancy.status === state.vacancyStatus;
     const companyMatches = state.vacancyCompany === 'TODAS' || String(vacancy.empresa_nome || '') === state.vacancyCompany;
@@ -685,9 +689,9 @@ function renderVacancies() {
   el.vacancyKpiInterested.textContent = totalCandidates;
   el.vacancyKpiInProcess.textContent = newCandidates;
   el.vacancyKpiApproved.textContent = `${conversionRate.toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 1 })}%`;
-  el.vacancyKpiTop.textContent = state.vacancySummary?.vaga_mais_escolhida_nome || 'Sem dados no período';
+  if (el.vacancyKpiTop) el.vacancyKpiTop.textContent = state.vacancySummary?.vaga_mais_escolhida_nome || 'Sem dados no período';
   const topCount = Number(state.vacancySummary?.vaga_mais_escolhida_quantidade || 0);
-  el.vacancyKpiTopCount.textContent = `${topCount} escolha${topCount === 1 ? '' : 's'} em ${state.vacancyPeriod}`;
+  if (el.vacancyKpiTopCount) el.vacancyKpiTopCount.textContent = `${topCount} escolha${topCount === 1 ? '' : 's'} em ${state.vacancyPeriod}`;
 
   const kpiCards = [
     [el.vacancyKpiActive, 'Total de vagas ativas', 'Oportunidades disponíveis agora'],
@@ -700,6 +704,7 @@ function renderVacancies() {
   if (!vacancies.length) {
     el.vacanciesEmpty.classList.remove('hidden');
     el.vacanciesTableWrapper.classList.add('hidden');
+    el.vacanciesKanbanContainer?.classList.add('hidden');
     return;
   }
   el.vacanciesEmpty.classList.add('hidden');
@@ -724,6 +729,25 @@ function renderVacancies() {
       <div class="vacancy-card-actions">${primaryAction}<details class="vacancy-more"><summary aria-label="Mais ações">•••</summary><div class="vacancy-more-menu"><button data-vacancy-action="view" data-id="${v.id}" type="button">Resumo da vaga</button><button data-vacancy-action="edit" data-id="${v.id}" type="button">Editar</button><button data-vacancy-action="promote" data-id="${v.id}" type="button">Divulgar</button>${portalLink}<button data-vacancy-action="duplicate" data-id="${v.id}" type="button">Duplicar</button>${v.status === 'ATIVA' ? `<button data-vacancy-action="status" data-status="PAUSADA" data-id="${v.id}" type="button">Pausar</button>` : ''}<button class="danger" data-vacancy-action="delete" data-id="${v.id}" type="button">Excluir</button></div></details></div>
     </article>`;
   }).join('');
+  renderVacancyKanban(vacancies);
+  setVacancyMode(state.vacancyMode);
+}
+
+function renderVacancyKanban(vacancies) {
+  if (!el.vacanciesKanbanContainer) return;
+  const columns = [['ATIVA', 'Ativas'], ['RASCUNHO', 'Rascunhos'], ['PAUSADA', 'Pausadas'], ['ENCERRADA', 'Encerradas']];
+  el.vacanciesKanbanContainer.innerHTML = columns.map(([status, label]) => {
+    const items = vacancies.filter((item) => item.status === status);
+    return `<article class="vacancy-kanban-column"><header><strong>${label}</strong><span>${items.length}</span></header><div>${items.map((item) => `<button class="vacancy-kanban-card" data-vacancy-action="view" data-id="${item.id}" type="button"><strong>${escapeHtml(item.titulo || item.cargo)}</strong><span>${escapeHtml(item.empresa_nome || 'Empresa não informada')}</span><small>${Number(item.total_interessados || 0)} candidato(s)</small></button>`).join('') || '<p class="vacancy-kanban-empty">Nenhuma vaga neste status.</p>'}</div></article>`;
+  }).join('');
+}
+
+function setVacancyMode(mode) {
+  state.vacancyMode = mode === 'kanban' ? 'kanban' : 'table';
+  el.vacancyTableMode?.classList.toggle('active', state.vacancyMode === 'table');
+  el.vacancyKanbanMode?.classList.toggle('active', state.vacancyMode === 'kanban');
+  el.vacanciesTableWrapper?.classList.toggle('hidden', state.vacancyMode !== 'table');
+  el.vacanciesKanbanContainer?.classList.toggle('hidden', state.vacancyMode !== 'kanban');
 }
 
 function slugifyPublicVacancy(value) {
@@ -1492,10 +1516,10 @@ function updateCandidateFilterToggle() {
   el.candidateFilterToggleButton.classList.toggle('has-active-filters', count > 0);
 }
 
-function candidateMatches(candidate) {
+function candidateMatches(candidate, ignoreStatus = false) {
   const q = String(el.candidateSearchInput.value || '').trim().toLocaleLowerCase('pt-BR');
   const status = String(candidate.status || '').toUpperCase();
-  const statusMatch = state.candidateStatus === 'TODOS'
+  const statusMatch = ignoreStatus || state.candidateStatus === 'TODOS'
     || (state.candidateStatus === 'EM_PROCESSO' && ['NOVO', 'EM_PROCESSO'].includes(status))
     || (state.candidateStatus === 'APROVADO' && status === 'APROVADO')
     || status === state.candidateStatus;
@@ -1537,7 +1561,8 @@ function candidateMatches(candidate) {
 }
 
 function renderCandidates() {
-  const candidates = state.candidates.filter(candidateMatches);
+  const baseCandidates = state.candidates.filter((candidate) => candidateMatches(candidate, true));
+  const candidates = baseCandidates.filter(candidateMatches);
   if (state.candidateDistanceSort === 'PROXIMIDADE') {
     candidates.sort((a, b) => {
       const va = a.distancia_km !== null && a.distancia_km !== undefined && a.distancia_km !== '' && Number.isFinite(Number(a.distancia_km));
@@ -1548,14 +1573,18 @@ function renderCandidates() {
       if (vb) return 1;
       return 0;
     });
+  } else {
+    const direction = state.candidateActivitySort === 'ASC' ? 1 : -1;
+    candidates.sort((a, b) => direction * (new Date(a.updated_at || 0) - new Date(b.updated_at || 0)));
   }
-  const count = (predicate) => candidates.filter(predicate).length;
-  el.candidateKpiTotal.textContent = candidates.length;
+  const count = (predicate) => baseCandidates.filter(predicate).length;
+  el.candidateKpiTotal.textContent = baseCandidates.length;
   el.candidateKpiProcess.textContent = count((item) => ['NOVO', 'EM_PROCESSO'].includes(String(item.status || '').toUpperCase()));
   el.candidateKpiApproved.textContent = count((item) => String(item.status || '').toUpperCase() === 'APROVADO');
   el.candidateKpiAdmission.textContent = count((item) => String(item.status || '').toUpperCase() === 'EM_ADMISSAO');
   el.candidateKpiHired.textContent = count((item) => String(item.status || '').toUpperCase() === 'CONTRATADO');
   el.candidateKpiRejected.textContent = count((item) => String(item.status || '').toUpperCase() === 'REPROVADO');
+  document.querySelectorAll('[data-candidate-kpi-filter]').forEach((card) => card.classList.toggle('active-filter', card.dataset.candidateKpiFilter === state.candidateStatus));
   el.candidatesLoading.classList.add('hidden');
 
   updateCandidateFilterToggle();
@@ -2363,14 +2392,28 @@ function renderCalendarDayList(dateKey) {
   }).join('') : emptyState('Nenhuma entrevista neste dia', 'Selecione outro dia no calendário.');
 }
 
+function renderCalendarAgendaList() {
+  const items = [...state.interviews].sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
+  el.calendarSelectedDayLabel.textContent = 'Próximas entrevistas';
+  el.interviewsList.innerHTML = items.length ? items.map((item) => {
+    const meet = item.meet_link || item.google_event_url;
+    return `<article class="calendar-agenda-item"><time>${escapeHtml(formatDate(item.inicio))}</time><div><strong>${escapeHtml(item.candidato_nome)}</strong><span>${escapeHtml(item.vaga_nome)}</span><small>${escapeHtml(item.telefone ? formatPhone(item.telefone) : '')}</small></div><div class="calendar-agenda-actions"><button class="button button-ghost" data-action="open-candidate" data-id="${item.candidato_id}" type="button">Candidato</button>${meet ? `<a class="button button-primary" href="${escapeHtml(meet)}" target="_blank" rel="noopener">Abrir Meet</a>` : '<span class="badge badge-warning">Sem link</span>'}</div></article>`;
+  }).join('') : emptyState('Nenhuma entrevista agendada', 'Novos compromissos aparecerão aqui.');
+}
+
 function renderInterviews() {
+  if (!state.calendarSelectedDate) state.calendarSelectedDate = localDateKey(new Date());
   const cursor = new Date(state.calendarCursor);
   cursor.setHours(12,0,0,0);
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
-  el.calendarMonthLabel.textContent = calendarMonthTitle(cursor);
-  const first = new Date(year, month, 1, 12);
-  const last = new Date(year, month + 1, 0, 12);
+  el.calendarMonthLabel.textContent = state.calendarMode === 'DAY'
+    ? new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(new Date(`${state.calendarSelectedDate}T12:00:00`))
+    : state.calendarMode === 'LIST' ? 'Todas as entrevistas' : calendarMonthTitle(cursor);
+  const selected = new Date(`${state.calendarSelectedDate || localDateKey(new Date())}T12:00:00`);
+  const first = state.calendarMode === 'WEEK' ? new Date(selected) : new Date(year, month, 1, 12);
+  const last = state.calendarMode === 'WEEK' ? new Date(selected) : new Date(year, month + 1, 0, 12);
+  if (state.calendarMode === 'WEEK') { first.setDate(first.getDate() - first.getDay()); last.setTime(first.getTime()); last.setDate(last.getDate() + 6); }
   const gridStart = new Date(first);
   gridStart.setDate(first.getDate() - first.getDay());
   const gridEnd = new Date(last);
@@ -2389,10 +2432,25 @@ function renderInterviews() {
     cells.push(`<button class="${classes.join(' ')}" data-calendar-date="${key}" type="button"><i>${d.getDate()}</i><div>${events}${more}</div></button>`);
   }
   el.interviewCalendar.innerHTML = cells.join('');
-  renderCalendarDayList(state.calendarSelectedDate);
+  document.getElementById('view-interviews')?.setAttribute('data-calendar-mode', state.calendarMode);
+  if (state.calendarMode === 'LIST') renderCalendarAgendaList(); else renderCalendarDayList(state.calendarSelectedDate);
+}
+
+function setCalendarMode(mode) {
+  state.calendarMode = ['DAY', 'WEEK', 'LIST'].includes(mode) ? mode : 'WEEK';
+  el.calendarViewMode?.querySelectorAll('[data-calendar-mode]').forEach((button) => button.classList.toggle('active', button.dataset.calendarMode === state.calendarMode));
+  renderInterviews();
 }
 
 function moveCalendarMonth(offset) {
+  if (state.calendarMode === 'DAY' || state.calendarMode === 'WEEK') {
+    const selected = new Date(`${state.calendarSelectedDate || localDateKey(new Date())}T12:00:00`);
+    selected.setDate(selected.getDate() + offset * (state.calendarMode === 'WEEK' ? 7 : 1));
+    state.calendarSelectedDate = localDateKey(selected);
+    state.calendarCursor = selected;
+    renderInterviews();
+    return;
+  }
   const date = new Date(state.calendarCursor);
   date.setDate(1); date.setMonth(date.getMonth()+offset); state.calendarCursor=date;
   const monthKey = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
@@ -2806,6 +2864,7 @@ function bindEvents() {
   el.themeToggleButton?.addEventListener('click', toggleTheme);
   window.addEventListener('genesis:geo-distances-updated', () => { if (state.activeView === 'candidates') renderCandidates(); if (state.selectedCandidate && el.candidateDrawer?.open) updateCandidateDistanceSummary(state.selectedCandidate); });
   el.logoutButton.addEventListener('click', logout);
+  el.sidebarLogoutButton?.addEventListener('click', logout);
   el.refreshCurrentViewButton.addEventListener('click', () => loadCurrentView(true));
   el.primaryActionButton.addEventListener('click', handlePrimaryAction);
   el.globalSearchButton.addEventListener('click', openGlobalSearch);
@@ -2824,25 +2883,30 @@ function bindEvents() {
     else if (button.dataset.searchType === 'DOCUMENTO') { setView('documents'); if (button.dataset.candidateId) openCandidate(button.dataset.candidateId); }
   });
 
-  el.vacancyPeriodSegments.addEventListener('click', (event) => {
+  el.vacancyPeriodSegments?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-vacancy-period]'); if (!button) return;
     state.vacancyPeriod = button.dataset.vacancyPeriod;
     el.vacancyPeriodSegments.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === button));
     loadVacancies(true);
   });
 
-  el.vacancyStatusSegments.addEventListener('click', (event) => {
+  el.vacancyStatusSegments?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-vacancy-status]'); if (!button) return;
     state.vacancyStatus = button.dataset.vacancyStatus;
     el.vacancyStatusSegments.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === button));
     renderVacancies();
   });
-  el.vacancySearchInput.addEventListener('input', renderVacancies);
-  el.vacancyCompanyFilter.addEventListener('change', (event) => {
+  el.vacancyStatusSelect?.addEventListener('change', (event) => { state.vacancyStatus = event.target.value; renderVacancies(); });
+  el.vacancyPeriodSelect?.addEventListener('change', (event) => { state.vacancyPeriod = event.target.value; loadVacancies(true); });
+  el.vacancyTableMode?.addEventListener('click', () => setVacancyMode('table'));
+  el.vacancyKanbanMode?.addEventListener('click', () => setVacancyMode('kanban'));
+  el.vacancyActiveKpiCard?.addEventListener('click', () => { state.vacancyStatus = 'ATIVA'; if (el.vacancyStatusSelect) el.vacancyStatusSelect.value = 'ATIVA'; renderVacancies(); });
+  el.vacancySearchInput?.addEventListener('input', renderVacancies);
+  el.vacancyCompanyFilter?.addEventListener('change', (event) => {
     state.vacancyCompany = event.target.value;
     renderVacancies();
   });
-  el.vacancyLocationFilter.addEventListener('change', (event) => {
+  el.vacancyLocationFilter?.addEventListener('change', (event) => {
     state.vacancyLocation = event.target.value;
     renderVacancies();
   });
@@ -2892,6 +2956,7 @@ function bindEvents() {
   el.calendarPrevButton?.addEventListener('click', () => moveCalendarMonth(-1));
   el.calendarNextButton?.addEventListener('click', () => moveCalendarMonth(1));
   el.calendarTodayButton?.addEventListener('click', () => { state.calendarCursor=new Date(); state.calendarSelectedDate=localDateKey(new Date()); renderInterviews(); });
+  el.calendarViewMode?.addEventListener('click', (event) => { const button = event.target.closest('[data-calendar-mode]'); if (button) setCalendarMode(button.dataset.calendarMode); });
   el.reviewSearchInput?.addEventListener('input', renderReviews);
   el.reviewTypeSegments?.addEventListener('click', (event) => { const button=event.target.closest('[data-review-type]'); if(!button)return; state.reviewType=button.dataset.reviewType; el.reviewTypeSegments.querySelectorAll('button').forEach((item)=>item.classList.toggle('active',item===button)); renderReviews(); });
   el.reviewsList?.addEventListener('keydown', (event) => { const item=event.target.closest('[data-review-open]'); if(!item || !['Enter',' '].includes(event.key))return; event.preventDefault(); selectReview(item.dataset.reviewOpen); });
@@ -2912,7 +2977,7 @@ function bindEvents() {
   el.copyFacebookPromotionButton.addEventListener('click', () => copyText(el.promotionFacebookText.value));
   el.downloadPrimaryPromotionButton.addEventListener('click', () => { if (state.promotion?.imagem_png_url) window.location.assign(state.promotion.imagem_png_url); else downloadSvgAsPng(state.promotion?.imagem_data_url, String(state.promotion?.nome_arquivo || 'vaga').replace(/\.svg$/i, '.png')); });
 
-  el.candidateStatusSegments.addEventListener('click', (event) => {
+  el.candidateStatusSegments?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-candidate-status]'); if (!button) return;
     state.candidateStatus = button.dataset.candidateStatus;
     el.candidateStatusSegments.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === button));
@@ -2922,6 +2987,19 @@ function bindEvents() {
     const button = event.target.closest('[data-candidate-period]'); if (!button) return;
     state.candidatePeriod = button.dataset.candidatePeriod;
     el.candidatePeriodSegments.querySelectorAll('button').forEach((item) => item.classList.toggle('active', item === button));
+    renderCandidates();
+  });
+  el.candidatePeriodSelect?.addEventListener('change', (event) => { state.candidatePeriod = event.target.value; renderCandidates(); });
+  document.querySelectorAll('[data-candidate-kpi-filter]').forEach((card) => {
+    const apply = () => { state.candidateStatus = card.dataset.candidateKpiFilter || 'TODOS'; renderCandidates(); };
+    card.addEventListener('click', apply);
+    card.addEventListener('keydown', (event) => { if (['Enter', ' '].includes(event.key)) { event.preventDefault(); apply(); } });
+  });
+  el.candidateActivitySortButton?.addEventListener('click', () => {
+    state.candidateActivitySort = state.candidateActivitySort === 'DESC' ? 'ASC' : 'DESC';
+    const ascending = state.candidateActivitySort === 'ASC';
+    el.candidateActivitySortButton.querySelector('span').textContent = ascending ? '↑' : '↓';
+    el.candidateActivitySortButton.setAttribute('aria-label', `Ordenar por última atividade, ${ascending ? 'mais antigas' : 'mais recentes'} primeiro`);
     renderCandidates();
   });
   el.candidateSearchInput.addEventListener('input', renderCandidates);

@@ -95,7 +95,7 @@ html[data-theme="dark"] .genesis-v18 .kpi-card.danger .v18-metric-icon{backgroun
 .genesis-v18 .theme-switch-track{position:relative;width:58px;height:28px;display:grid;grid-template-columns:1fr 1fr;align-items:center;border-radius:999px;background:var(--v18-card-2);overflow:hidden}
 .genesis-v18 .theme-switch-symbol{position:relative;z-index:2;width:28px;height:28px;font-size:13px;color:var(--v18-muted-2);transition:color .22s ease,transform .22s ease}
 .genesis-v18 .theme-switch-symbol .g-icon{width:13px;height:13px}
-.genesis-v18 .theme-switch-thumb{position:absolute;z-index:1;left:2px;top:2px;width:24px;height:24px;border-radius:50%;background:#8257ef;box-shadow:0 4px 12px rgba(90,55,180,.28);transition:transform .28s cubic-bezier(.22,.8,.24,1),background .2s ease}
+.genesis-v18 .theme-switch-thumb{position:absolute;z-index:1;left:2px;top:2px;width:24px;height:24px;border-radius:50%;background:#0eaea0;box-shadow:0 4px 12px rgba(14,174,160,.28);transition:transform .28s cubic-bezier(.22,.8,.24,1),background .2s ease}
 .genesis-v18 .theme-switch[aria-checked="false"] .theme-switch-symbol.light{color:#fff}
 .genesis-v18 .theme-switch[aria-checked="true"] .theme-switch-thumb{transform:translateX(30px);background:#234349;box-shadow:0 4px 12px rgba(0,0,0,.24)}
 .genesis-v18 .theme-switch[aria-checked="true"] .theme-switch-symbol.dark{color:#e9fbf7}

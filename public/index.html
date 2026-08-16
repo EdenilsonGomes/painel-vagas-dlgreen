@@ -52,10 +52,10 @@
       </div>
 
       <nav class="sidebar-nav sidebar-context-nav" aria-label="Navegação principal">
+        <button class="nav-item active nav-overview sidebar-main-overview" data-view="dashboard" type="button"><span class="nav-icon" data-icon="layout"></span><b>Visão geral</b></button>
         <details id="recruitmentNavGroup" class="nav-context" open>
           <summary><span class="nav-icon" data-icon="users"></span><b>Recrutamento</b><i class="nav-chevron" data-icon="chevron-down"></i></summary>
           <div class="nav-context-items">
-            <button class="nav-item active nav-overview" data-view="dashboard" type="button"><span class="nav-icon" data-icon="layout"></span><b>Visão geral</b></button>
             <button class="nav-item" data-view="vacancies" type="button"><span class="nav-icon" data-icon="briefcase"></span><b>Vagas</b></button>
             <button class="nav-item" data-view="candidates" type="button"><span class="nav-icon" data-icon="users"></span><b>Candidatos</b></button>
             <button class="nav-item" data-view="interviews" type="button"><span class="nav-icon" data-icon="calendar"></span><b>Agenda</b></button>
@@ -95,7 +95,7 @@
       </nav>
 
       <div class="sidebar-footer sidebar-status-footer">
-        <div class="sidebar-status-card"><span class="status-dot"></span><div><strong>Gênesis operacional</strong><small>Automações monitoradas</small></div></div>
+        <button id="sidebarLogoutButton" class="sidebar-logout-button" type="button" aria-label="Sair" title="Sair"><span data-icon="logout"></span><span>Sair</span></button>
       </div>
     </aside>
     <button id="sidebarBackdrop" class="sidebar-backdrop" type="button" aria-label="Fechar menu"></button>
@@ -108,6 +108,7 @@
           <h1 id="pageTitle">Visão geral</h1>
           <span id="pageSubtitle">Operação previsível, decisões humanas nas exceções e automação onde realmente importa.</span>
         </div>
+        <div class="dashboard-topbar-welcome"><p class="dashboard-welcome-eyebrow">VISÃO E CONTROLE</p><h2>Olá, <span id="dashboardGreetingName">Recrutador</span>.</h2><p id="dashboardGreetingText">Aqui está o resumo da sua operação de recrutamento.</p></div>
         <div class="topbar-actions">
           <button id="themeToggleButton" class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar modo escuro" title="Alternar tema">
             <span class="theme-switch-track" aria-hidden="true"><span class="theme-switch-symbol light" data-icon="sun"></span><span class="theme-switch-thumb"></span><span class="theme-switch-symbol dark" data-icon="moon"></span></span>
@@ -135,15 +136,11 @@
 
       <main class="main-content" aria-label="Conteúdo principal">
         <section id="view-dashboard" class="view active dashboard-command-center">
-          <section class="dashboard-welcome">
-            <div><p class="dashboard-welcome-eyebrow">VISÃO E CONTROLE</p><h2>Olá, <span id="dashboardGreetingName">Recrutador</span>.</h2><p id="dashboardGreetingText">Aqui está o resumo da sua operação de recrutamento.</p></div>
-            <div class="dashboard-welcome-mark" data-icon="sparkles" aria-hidden="true"></div>
-          </section>
           <section class="dashboard-command-kpis dashboard-primary-kpis">
-            <article class="dashboard-command-kpi"><span>Candidatos ativos</span><strong id="kpiCandidatesActive">0</strong><small>pessoas acompanhadas no workspace</small></article>
-            <article class="dashboard-command-kpi"><span>Vagas ativas</span><strong id="kpiActiveVacancies">0</strong><small>oportunidades disponíveis</small></article>
-            <article class="dashboard-command-kpi"><span>Entrevistas hoje</span><strong id="kpiInterviewsToday">0</strong><small>compromissos na agenda</small></article>
-            <article class="dashboard-command-kpi warning"><span>Aguardando sua ação</span><strong id="kpiHumanPending">0</strong><small>decisões que dependem do recrutador</small></article>
+            <article class="dashboard-command-kpi actionable-card" data-go-view="candidates" tabindex="0"><span>Candidatos ativos</span><strong id="kpiCandidatesActive">0</strong><small>pessoas acompanhadas no workspace</small></article>
+            <article class="dashboard-command-kpi actionable-card" data-go-view="vacancies" tabindex="0"><span>Vagas ativas</span><strong id="kpiActiveVacancies">0</strong><small>oportunidades disponíveis</small></article>
+            <article class="dashboard-command-kpi actionable-card" data-go-view="interviews" tabindex="0"><span>Entrevistas hoje</span><strong id="kpiInterviewsToday">0</strong><small>compromissos na agenda</small></article>
+            <article class="dashboard-command-kpi warning actionable-card" data-go-view="reviews" tabindex="0"><span>Aguardando sua ação</span><strong id="kpiHumanPending">0</strong><small>revisões e atendimentos humanos</small></article>
           </section>
 
           <section class="dashboard-command-layout">
@@ -197,73 +194,46 @@
 
         <section id="view-vacancies" class="view hidden">
           <section class="section-toolbar vacancy-filter-bar vacancy-filter-single-row">
-            <div class="segmented" id="vacancyStatusSegments">
-              <button data-vacancy-status="TODAS" type="button">Todas</button>
-              <button class="active" data-vacancy-status="ATIVA" type="button">Ativas</button>
-              <button data-vacancy-status="RASCUNHO" type="button">Rascunhos</button>
-              <button data-vacancy-status="PAUSADA" type="button">Pausadas</button>
-              <button data-vacancy-status="ENCERRADA" type="button">Encerradas</button>
-            </div>
-            <div class="toolbar-right vacancy-toolbar-right">
-              <label class="compact-field vacancy-filter-select"><span>Empresa</span><select id="vacancyCompanyFilter"><option value="TODAS">Todas</option></select></label>
-              <label class="compact-field vacancy-filter-select"><span>Local</span><select id="vacancyLocationFilter"><option value="TODOS">Todos</option></select></label>
-              <div class="period-filter"><span>Período</span><div class="segmented" id="vacancyPeriodSegments"><button class="active" data-vacancy-period="1D" type="button">1D</button><button data-vacancy-period="7D" type="button">7D</button><button data-vacancy-period="30D" type="button">30D</button></div></div>
-              <label class="inline-search"><span>⌕</span><input id="vacancySearchInput" type="search" placeholder="Buscar por cargo, bairro ou código"></label>
-            </div>
+            <label class="compact-field"><span>Status</span><select id="vacancyStatusSelect"><option value="TODAS">Todas</option><option value="ATIVA" selected>Ativas</option><option value="RASCUNHO">Rascunhos</option><option value="PAUSADA">Pausadas</option><option value="ENCERRADA">Encerradas</option></select></label>
+            <div class="toolbar-right vacancy-toolbar-right"><label class="compact-field"><span>Período</span><select id="vacancyPeriodSelect"><option value="1D">Hoje</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option></select></label><div class="segmented view-toggle"><button id="vacancyTableMode" class="active" type="button">Tabela</button><button id="vacancyKanbanMode" type="button">Kanban</button></div></div>
           </section>
 
           <section class="kpi-grid compact-kpis vacancy-period-kpis">
-            <article class="kpi-card"><span>Total de vagas ativas</span><strong id="vacancyKpiActive">0</strong><small>Oportunidades disponíveis agora</small></article>
+            <article class="kpi-card actionable-card" id="vacancyActiveKpiCard" tabindex="0"><span>Total de vagas ativas</span><strong id="vacancyKpiActive">0</strong><small>Filtrar oportunidades ativas</small></article>
             <article class="kpi-card"><span>Total de candidatos</span><strong id="vacancyKpiInterested">0</strong><small>Pessoas vinculadas às vagas</small></article>
             <article class="kpi-card info"><span>Candidatos novos</span><strong id="vacancyKpiInProcess">0</strong><small>Aguardando início ou análise</small></article>
             <article class="kpi-card success"><span>Taxa de conversão</span><strong id="vacancyKpiApproved">0%</strong><small>Aprovados sobre o total</small></article>
           </section>
 
           <section class="panel vacancy-list-panel">
-            <header class="vacancy-list-header"><div><strong>Vagas</strong><span>Prioridades, funil e publicação em uma única visão.</span></div><div class="vacancy-inline-insight"><span>Mais escolhida</span><strong id="vacancyKpiTop">Sem dados</strong><small id="vacancyKpiTopCount">0 escolhas</small></div></header>
+            <header class="vacancy-list-header"><div><strong>Vagas</strong><span>Prioridades, funil e publicação em uma única visão.</span></div></header>
             <div id="vacanciesLoading" class="empty-state">Carregando vagas...</div>
             <div id="vacanciesEmpty" class="empty-state hidden"><strong>Nenhuma vaga encontrada</strong><span>Ajuste os filtros ou crie uma nova oportunidade.</span></div>
             <div class="vacancy-operational-list hidden" id="vacanciesTableWrapper">
               <div class="vacancy-list-columns" aria-hidden="true"><span>Vaga</span><span>Funil</span><span>Prioridade</span><span>Ações</span></div>
               <div id="vacanciesTableBody"></div>
             </div>
+            <div id="vacanciesKanbanContainer" class="vacancy-kanban-board hidden"></div>
           </section>
         </section>
 
         <section id="view-candidates" class="view hidden">
+          <section class="kpi-grid compact-kpis candidate-kpis">
+            <article class="kpi-card actionable-card" data-candidate-kpi-filter="TODOS" tabindex="0"><span>Total</span><strong id="candidateKpiTotal">0</strong></article>
+            <article class="kpi-card actionable-card" data-candidate-kpi-filter="EM_PROCESSO" tabindex="0"><span>Em processo</span><strong id="candidateKpiProcess">0</strong></article>
+            <article class="kpi-card actionable-card" data-candidate-kpi-filter="APROVADO" tabindex="0"><span>Aprovados na triagem</span><strong id="candidateKpiApproved">0</strong></article>
+            <article class="kpi-card warning actionable-card" data-candidate-kpi-filter="EM_ADMISSAO" tabindex="0"><span>Em admissão</span><strong id="candidateKpiAdmission">0</strong></article>
+            <article class="kpi-card success actionable-card" data-candidate-kpi-filter="CONTRATADO" tabindex="0"><span>Contratados</span><strong id="candidateKpiHired">0</strong></article>
+            <article class="kpi-card actionable-card" data-candidate-kpi-filter="REPROVADO" tabindex="0"><span>Reprovados</span><strong id="candidateKpiRejected">0</strong></article>
+          </section>
           <section class="section-toolbar stack-mobile candidate-toolbar">
-            <div class="candidate-toolbar-groups">
-              <div class="segmented" id="candidateStatusSegments" role="group" aria-label="Filtrar candidatos por status">
-                <button class="active" data-candidate-status="TODOS" type="button">Todos</button>
-                <button data-candidate-status="EM_PROCESSO" type="button">Em processo</button>
-                <button data-candidate-status="APROVADO" type="button">Aprovados</button>
-                <button data-candidate-status="EM_ADMISSAO" type="button">Em admissão</button>
-                <button data-candidate-status="CONTRATADO" type="button">Contratados</button>
-                <button data-candidate-status="REPROVADO" type="button">Reprovados</button>
-              </div>
-              <div class="segmented candidate-period-segments" id="candidatePeriodSegments" role="group" aria-label="Filtrar candidatos por período">
-                <button data-candidate-period="HOJE" type="button">Hoje</button>
-                <button data-candidate-period="ONTEM" type="button">Ontem</button>
-                <button data-candidate-period="7D" type="button">7 dias</button>
-                <button data-candidate-period="30D" type="button">30 dias</button>
-                <button class="active" data-candidate-period="TODOS" type="button">Todo período</button>
-              </div>
-            </div>
+            <label class="compact-field"><span>Período</span><select id="candidatePeriodSelect"><option value="HOJE">Hoje</option><option value="ONTEM">Ontem</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option><option value="TODOS" selected>Todo período</option></select></label>
             <div class="toolbar-right">
               <label class="inline-search"><span>⌕</span><input id="candidateSearchInput" type="search" placeholder="Nome, telefone ou vaga"></label>
               <div class="segmented view-toggle"><button id="candidateTableMode" class="active" type="button">Tabela</button><button id="candidateKanbanMode" type="button">Pipeline</button></div>
             </div>
           </section>
 
-
-          <section class="kpi-grid compact-kpis">
-            <article class="kpi-card"><span>Total</span><strong id="candidateKpiTotal">0</strong></article>
-            <article class="kpi-card"><span>Em processo</span><strong id="candidateKpiProcess">0</strong></article>
-            <article class="kpi-card"><span>Aprovados na triagem</span><strong id="candidateKpiApproved">0</strong></article>
-            <article class="kpi-card warning"><span>Em admissão</span><strong id="candidateKpiAdmission">0</strong></article>
-            <article class="kpi-card success"><span>Contratados</span><strong id="candidateKpiHired">0</strong></article>
-            <article class="kpi-card"><span>Reprovados</span><strong id="candidateKpiRejected">0</strong></article>
-          </section>
 
           <section id="candidateTableContainer" class="panel table-panel">
             <div id="candidatesLoading" class="empty-state">Carregando candidatos...</div>
@@ -277,7 +247,7 @@
                   <th><details class="table-filter-menu"><summary>Etapa <span>⌄</span></summary><div class="table-filter-popover"><label>Filtrar por etapa<select id="candidateStageFilter"><option value="TODAS">Todas as etapas</option></select></label></div></details></th>
                   <th><details class="table-filter-menu"><summary>Documentos <span>⌄</span></summary><div class="table-filter-popover"><label>Situação dos documentos<select id="candidateDocumentFilter"><option value="TODOS">Todos</option><option value="CTPS">Com CTPS</option><option value="CURRICULO">Com currículo</option><option value="PROCESSANDO">Em processamento</option><option value="PENDENTE_REVISAO">Pendentes de revisão</option><option value="SEM_DOCUMENTOS">Sem documentos</option></select></label></div></details></th>
                   <th><details class="table-filter-menu"><summary>Entrevista <span>⌄</span></summary><div class="table-filter-popover"><label>Situação da entrevista<select id="candidateInterviewFilter"><option value="TODAS">Todas</option><option value="AGENDADA">Agendada</option><option value="NAO_AGENDADA">Não agendada</option></select></label></div></details></th>
-                  <th>Última atividade</th>
+                  <th><button id="candidateActivitySortButton" class="table-sort-button" type="button" title="Ordenar por última atividade" aria-label="Ordenar por última atividade, mais recentes primeiro">Última atividade <span>↓</span></button></th>
                 </tr></thead>
                 <tbody id="candidatesTableBody"></tbody>
               </table>
@@ -324,7 +294,7 @@
         <section id="view-interviews" class="view hidden">
           <section class="calendar-command panel">
             <div><p class="eyebrow">GOOGLE CALENDAR</p><h2>Agenda de entrevistas</h2><span>Visualização mensal das entrevistas on-line com link do Google Meet.</span></div>
-            <div class="calendar-controls"><button id="openAgendaSettingsButton" class="button button-primary" type="button">Minha disponibilidade</button><button id="calendarPrevButton" class="icon-button" type="button" aria-label="Mês anterior">‹</button><button id="calendarTodayButton" class="button button-ghost" type="button">Hoje</button><button id="calendarNextButton" class="icon-button" type="button" aria-label="Próximo mês">›</button><strong id="calendarMonthLabel">Mês atual</strong></div>
+            <div class="calendar-controls"><div id="calendarViewMode" class="segmented calendar-view-mode" aria-label="Visualização da agenda"><button data-calendar-mode="DAY" type="button">Dia</button><button class="active" data-calendar-mode="WEEK" type="button">Semana</button><button data-calendar-mode="LIST" type="button">Lista</button></div><button id="openAgendaSettingsButton" class="button button-primary" type="button">Alterar minha disponibilidade</button><button id="calendarPrevButton" class="icon-button" type="button" aria-label="Período anterior">‹</button><button id="calendarTodayButton" class="button button-ghost" type="button">Hoje</button><button id="calendarNextButton" class="icon-button" type="button" aria-label="Próximo período">›</button><strong id="calendarMonthLabel">Período atual</strong></div>
           </section>
           <section class="calendar-layout">
             <article class="panel calendar-panel"><div class="calendar-weekdays"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div><div id="interviewCalendar" class="interview-calendar"><div class="empty-state">Carregando calendário...</div></div></article>
