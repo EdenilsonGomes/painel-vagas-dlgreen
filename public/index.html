@@ -195,7 +195,7 @@
         <section id="view-vacancies" class="view hidden">
           <section class="section-toolbar vacancy-filter-bar vacancy-filter-single-row">
             <label class="compact-field"><span>Status</span><select id="vacancyStatusSelect"><option value="TODAS">Todas</option><option value="ATIVA" selected>Ativas</option><option value="RASCUNHO">Rascunhos</option><option value="PAUSADA">Pausadas</option><option value="ENCERRADA">Encerradas</option></select></label>
-            <div class="toolbar-right vacancy-toolbar-right"><label class="compact-field"><span>Período</span><select id="vacancyPeriodSelect"><option value="1D">Hoje</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option></select></label><div class="segmented view-toggle"><button id="vacancyTableMode" class="active" type="button">Tabela</button><button id="vacancyKanbanMode" type="button">Kanban</button></div></div>
+            <div class="toolbar-right vacancy-toolbar-right"><label class="compact-field"><span>Período</span><select id="vacancyPeriodSelect"><option value="1D">Hoje</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option></select></label><div class="segmented view-toggle"><button id="vacancyTableMode" class="active" type="button">Tabela</button><button id="vacancyKanbanMode" type="button">Lado a lado</button></div></div>
           </section>
 
           <section class="kpi-grid compact-kpis vacancy-period-kpis">
@@ -213,7 +213,7 @@
               <div class="vacancy-list-columns" aria-hidden="true"><span>Vaga</span><span>Funil</span><span>Prioridade</span><span>Ações</span></div>
               <div id="vacanciesTableBody"></div>
             </div>
-            <div id="vacanciesKanbanContainer" class="vacancy-kanban-board hidden"></div>
+            <div id="vacanciesKanbanContainer" class="vacancy-card-grid hidden"></div>
           </section>
         </section>
 
@@ -294,7 +294,7 @@
         <section id="view-interviews" class="view hidden">
           <section class="calendar-command panel">
             <div><p class="eyebrow">GOOGLE CALENDAR</p><h2>Agenda de entrevistas</h2><span>Visualização mensal das entrevistas on-line com link do Google Meet.</span></div>
-            <div class="calendar-controls"><div id="calendarViewMode" class="segmented calendar-view-mode" aria-label="Visualização da agenda"><button data-calendar-mode="DAY" type="button">Dia</button><button class="active" data-calendar-mode="WEEK" type="button">Semana</button><button data-calendar-mode="LIST" type="button">Lista</button></div><button id="openAgendaSettingsButton" class="button button-primary" type="button">Alterar minha disponibilidade</button><button id="calendarPrevButton" class="icon-button" type="button" aria-label="Período anterior">‹</button><button id="calendarTodayButton" class="button button-ghost" type="button">Hoje</button><button id="calendarNextButton" class="icon-button" type="button" aria-label="Próximo período">›</button><strong id="calendarMonthLabel">Período atual</strong></div>
+            <div class="calendar-controls"><div id="calendarViewMode" class="segmented calendar-view-mode" aria-label="Visualização da agenda"><button class="active" data-calendar-mode="MONTH" type="button">Mês</button><button data-calendar-mode="DAY" type="button">Dia</button><button data-calendar-mode="WEEK" type="button">Semana</button><button data-calendar-mode="LIST" type="button">Lista</button></div><button id="openAgendaSettingsButton" class="button button-primary" type="button">Alterar minha disponibilidade</button><button id="calendarPrevButton" class="icon-button" type="button" aria-label="Período anterior">‹</button><button id="calendarTodayButton" class="button button-ghost" type="button">Hoje</button><button id="calendarNextButton" class="icon-button" type="button" aria-label="Próximo período">›</button><strong id="calendarMonthLabel">Período atual</strong></div>
           </section>
           <section class="calendar-layout">
             <article class="panel calendar-panel"><div class="calendar-weekdays"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div><div id="interviewCalendar" class="interview-calendar"><div class="empty-state">Carregando calendário...</div></div></article>
@@ -1136,3 +1136,4 @@
   <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
 </body>
 </html>
+
