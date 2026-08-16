@@ -42,7 +42,7 @@ const state = {
   interviewPeriod: 'TODAS',
   calendarCursor: new Date(),
   calendarSelectedDate: null,
-  calendarMode: 'WEEK',
+  calendarMode: 'MONTH',
   reviews: [],
   reviewType: 'TODAS',
   selectedReviewId: null,
@@ -547,7 +547,8 @@ function renderDashboard() {
   const funnelMax = Math.max(1, ...funnel.map((item) => Number(item.quantidade || 0)));
   el.dashboardFunnel.innerHTML = funnel.length ? funnel.map((item) => {
     const quantity = Number(item.quantidade || 0);
-    const width = Math.max(8, Math.round((quantity / funnelMax) * 100));
+    const ratio = quantity / funnelMax;
+    const width = Math.round(54 + ratio * 46);
     const label = stageLabels[item.etapa] || String(item.etapa || '').replaceAll('_', ' ');
     return `<button class="dashboard-funnel-stage" style="--funnel-width:${width}%" data-go-view="candidates" type="button" title="${escapeHtml(label)}: ${quantity} candidato(s)"><span>${escapeHtml(label)}</span><strong>${quantity}</strong></button>`;
   }).join('') : emptyState('Funil sem movimentação', 'Os candidatos ativos aparecerão aqui.');
@@ -735,19 +736,25 @@ function renderVacancies() {
 
 function renderVacancyKanban(vacancies) {
   if (!el.vacanciesKanbanContainer) return;
-  const columns = [['ATIVA', 'Ativas'], ['RASCUNHO', 'Rascunhos'], ['PAUSADA', 'Pausadas'], ['ENCERRADA', 'Encerradas']];
-  el.vacanciesKanbanContainer.innerHTML = columns.map(([status, label]) => {
-    const items = vacancies.filter((item) => item.status === status);
-    return `<article class="vacancy-kanban-column"><header><strong>${label}</strong><span>${items.length}</span></header><div>${items.map((item) => `<button class="vacancy-kanban-card" data-vacancy-action="view" data-id="${item.id}" type="button"><strong>${escapeHtml(item.titulo || item.cargo)}</strong><span>${escapeHtml(item.empresa_nome || 'Empresa não informada')}</span><small>${Number(item.total_interessados || 0)} candidato(s)</small></button>`).join('') || '<p class="vacancy-kanban-empty">Nenhuma vaga neste status.</p>'}</div></article>`;
+  el.vacanciesKanbanContainer.innerHTML = vacancies.map((item) => {
+    const op = vacancyOperationalData(item);
+    const location = [item.bairro, item.cidade, item.estado].filter(Boolean).join(' · ') || 'Local não informado';
+    return `<article class="vacancy-grid-card">
+      <header><div><span class="badge ${badgeClass(item.status)}">${escapeHtml(vacancyStatusLabels[item.status] || item.status)}</span><small>${escapeHtml(item.codigo || '')}</small></div><button class="icon-button compact" data-vacancy-action="view" data-id="${item.id}" type="button" aria-label="Abrir ${escapeHtml(item.titulo || item.cargo)}"><span data-icon="chevron-right"></span></button></header>
+      <button class="vacancy-grid-card-title" data-vacancy-action="view" data-id="${item.id}" type="button">${escapeHtml(item.titulo || item.cargo)}</button>
+      <p>${escapeHtml(item.empresa_nome || 'Empresa não informada')}</p><span>${escapeHtml(location)}</span>
+      <div class="vacancy-grid-card-metrics"><span><strong>${Number(item.total_interessados || 0)}</strong><small>Candidatos</small></span><span><strong>${Number(item.candidatos_novos || 0)}</strong><small>Novos</small></span><span><strong>${Number(item.candidatos_entrevista || 0)}</strong><small>Entrevistas</small></span></div>
+      <footer class="${op.tone}"><span class="priority-icon">${op.icon}</span><strong>${escapeHtml(op.message)}</strong></footer>
+    </article>`;
   }).join('');
 }
 
 function setVacancyMode(mode) {
-  state.vacancyMode = mode === 'kanban' ? 'kanban' : 'table';
+  state.vacancyMode = ['kanban', 'cards'].includes(mode) ? 'cards' : 'table';
   el.vacancyTableMode?.classList.toggle('active', state.vacancyMode === 'table');
-  el.vacancyKanbanMode?.classList.toggle('active', state.vacancyMode === 'kanban');
+  el.vacancyKanbanMode?.classList.toggle('active', state.vacancyMode === 'cards');
   el.vacanciesTableWrapper?.classList.toggle('hidden', state.vacancyMode !== 'table');
-  el.vacanciesKanbanContainer?.classList.toggle('hidden', state.vacancyMode !== 'kanban');
+  el.vacanciesKanbanContainer?.classList.toggle('hidden', state.vacancyMode !== 'cards');
 }
 
 function slugifyPublicVacancy(value) {
@@ -2437,7 +2444,7 @@ function renderInterviews() {
 }
 
 function setCalendarMode(mode) {
-  state.calendarMode = ['DAY', 'WEEK', 'LIST'].includes(mode) ? mode : 'WEEK';
+  state.calendarMode = ['MONTH', 'DAY', 'WEEK', 'LIST'].includes(mode) ? mode : 'MONTH';
   el.calendarViewMode?.querySelectorAll('[data-calendar-mode]').forEach((button) => button.classList.toggle('active', button.dataset.calendarMode === state.calendarMode));
   renderInterviews();
 }
@@ -2899,7 +2906,7 @@ function bindEvents() {
   el.vacancyStatusSelect?.addEventListener('change', (event) => { state.vacancyStatus = event.target.value; renderVacancies(); });
   el.vacancyPeriodSelect?.addEventListener('change', (event) => { state.vacancyPeriod = event.target.value; loadVacancies(true); });
   el.vacancyTableMode?.addEventListener('click', () => setVacancyMode('table'));
-  el.vacancyKanbanMode?.addEventListener('click', () => setVacancyMode('kanban'));
+  el.vacancyKanbanMode?.addEventListener('click', () => setVacancyMode('cards'));
   el.vacancyActiveKpiCard?.addEventListener('click', () => { state.vacancyStatus = 'ATIVA'; if (el.vacancyStatusSelect) el.vacancyStatusSelect.value = 'ATIVA'; renderVacancies(); });
   el.vacancySearchInput?.addEventListener('input', renderVacancies);
   el.vacancyCompanyFilter?.addEventListener('change', (event) => {
@@ -3101,3 +3108,4 @@ async function init() {
 }
 
 init().catch((error) => showToast(error.message, 'error'));
+
