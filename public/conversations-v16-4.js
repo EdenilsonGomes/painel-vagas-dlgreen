@@ -81,8 +81,16 @@
       if (owned(item)) return ['badge-warning','Humano · você'];
       return ['badge-warning',`Humano · ${item.atendimento_responsavel_nome || item.atendimento_humano_nome || 'equipe'}`];
     }
+    if (item?.revisao_pendente === true) return ['badge-warning','Revisão pendente'];
+    if (item?.atendimento_humano_solicitado === true) return ['badge-warning','Aguardando humano'];
     if (item?.ia_atendimento_ativo === false) return ['badge-warning','IA pausada'];
     return ['badge-approved','IA ativa'];
+  }
+
+  function needsAction(item) {
+    return ['AGUARDANDO_ATENDIMENTO','AGUARDANDO_RECRUTADOR'].includes(String(item?.atendimento_estado || ''))
+      || item?.atendimento_humano_solicitado === true
+      || item?.revisao_pendente === true;
   }
 
   function filteredItems() {
@@ -90,7 +98,10 @@
     return local.items.filter((item) => {
       const unread = isUnread(item);
       const filterOk = local.filter === 'TODOS'
+        || (local.filter === 'ACAO' && needsAction(item))
         || (local.filter === 'NAO_LIDOS' && unread)
+        || (local.filter === 'PAUSADAS' && item.ia_atendimento_ativo === false)
+        || (local.filter === 'REVISAO' && item.revisao_pendente === true)
         || (local.filter === 'HUMANO' && humanActive(item))
         || (local.filter === 'IA' && !humanActive(item) && item.ia_atendimento_ativo !== false);
       if (!filterOk) return false;
@@ -167,8 +178,11 @@
     }
     box.innerHTML = messages.map((message) => {
       const incoming = isIncoming(message.quem);
-      const author = !incoming && message.autor_nome ? `<span class="conversation-center-author">${esc(message.autor_nome)}</span>` : '';
-      return `<div class="conversation-center-message ${incoming ? 'incoming' : 'outgoing'}">${author}<div>${esc(stripAuthor(message.mensagem)).replace(/\n/g,'<br>')}</div><small>${esc(formatMessageTime(message.created_at))}${message.status_envio ? ` · ${esc(String(message.status_envio).toLowerCase())}` : ''}</small></div>`;
+      const who = String(message.quem || '').toUpperCase();
+      const ai = who === 'IA';
+      const authorName = incoming ? (local.selectedItem?.nome || 'Candidato') : ai ? 'Evelyn · IA Gênesis' : (message.autor_nome || 'Equipe de recrutamento');
+      const author = `<span class="conversation-center-author">${esc(authorName)}</span>`;
+      return `<div class="conversation-center-message ${incoming ? 'incoming' : 'outgoing'} ${ai ? 'ai' : 'human'}">${author}<div>${esc(stripAuthor(message.mensagem)).replace(/\n/g,'<br>')}</div><small>${esc(formatMessageTime(message.created_at))}${message.status_envio ? ` · ${esc(String(message.status_envio).toLowerCase())}` : ''}</small></div>`;
     }).join('');
     box.scrollTop = box.scrollHeight;
   }

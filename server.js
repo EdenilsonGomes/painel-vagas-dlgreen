@@ -19,6 +19,7 @@ const { registerOperationsV14 } = require('./lib/operations-v14');
 const { registerDivulgacaoV1 } = require('./lib/divulgacao-v1');
 const { registerAtendimentoV15 } = require('./lib/atendimento-v15');
 const { registerAtendimentosV16 } = require('./lib/atendimentos-v16');
+const { registerNotificationsV23 } = require('./lib/notifications-v23');
 const { registerGeoV1 } = require('./lib/geo-v1');
 const { registerCrmV1 } = require('./lib/crm-v1');
 const { registerProspectingV20 } = require('./lib/prospecting-v20');
@@ -1695,6 +1696,8 @@ registerAtendimentosV16({
   handoffAnalysisWebhookToken: HANDOFF_ANALYSIS_WEBHOOK_TOKEN,
   handoffAnalysisTimeoutMs: HANDOFF_ANALYSIS_TIMEOUT_MS,
 });
+
+registerNotificationsV23({ app, pool, requireLogin });
 
 app.use(requireLogin);
 

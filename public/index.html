@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="/mobile-v20.css?v=2000">
   <link rel="stylesheet" href="/v21-workspace.css?v=2100">
   <link rel="stylesheet" href="/genesis-rebrand.css?v=2200">
+  <link rel="stylesheet" href="/experience-v23.css?v=2300">
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/demos-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=1800" defer></script>
@@ -35,6 +36,7 @@
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
   <script src="/floating-chat-v16-3.js?v=2111" defer></script>
+  <script src="/experience-v23.js?v=2300" defer></script>
   <script src="/admin.js?v=1410" defer></script>
   <script src="/portal-publicacoes.js?v=1510" defer></script>
   <script src="/operations-v14.js?v=1610" defer></script>
@@ -114,6 +116,15 @@
             <span class="theme-switch-track" aria-hidden="true"><span class="theme-switch-symbol light" data-icon="sun"></span><span class="theme-switch-thumb"></span><span class="theme-switch-symbol dark" data-icon="moon"></span></span>
           </button>
           <button id="globalSearchButton" class="search-trigger" type="button"><span data-icon="search"></span><span>Buscar candidato, vaga ou documento</span><kbd>Ctrl K</kbd></button>
+          <div class="notification-center" id="notificationCenter">
+            <button id="notificationCenterButton" class="icon-button notification-center-button" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="notificationCenterPanel" aria-label="Abrir notificações">
+              <span data-icon="bell" aria-hidden="true"></span><b id="notificationCenterBadge" class="notification-center-badge hidden">0</b>
+            </button>
+            <section id="notificationCenterPanel" class="notification-center-panel hidden" role="dialog" aria-label="Central de notificações" aria-modal="false">
+              <header><div><strong>Notificações</strong><small id="notificationCenterSummary">Ações que precisam da sua atenção</small></div><button id="notificationMarkAllButton" class="text-button" type="button">Marcar lidas</button></header>
+              <div id="notificationCenterList" class="notification-center-list"><div class="notification-center-empty">Carregando notificações...</div></div>
+            </section>
+          </div>
           <span id="dashboardUpdatedAt" class="dashboard-updated-at">Atualizando...</span>
           <button id="refreshCurrentViewButton" class="button button-ghost" type="button">Atualizar</button>
           <button id="primaryActionButton" class="button button-primary hidden" type="button">+ Nova vaga</button>
@@ -230,9 +241,14 @@
             <label class="compact-field"><span>Período</span><select id="candidatePeriodSelect"><option value="HOJE">Hoje</option><option value="ONTEM">Ontem</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option><option value="TODOS" selected>Todo período</option></select></label>
             <div class="toolbar-right">
               <label class="inline-search"><span>⌕</span><input id="candidateSearchInput" type="search" placeholder="Nome, telefone ou vaga"></label>
+              <div class="candidate-filter-center">
+                <button id="candidateFiltersButton" class="button button-ghost candidate-filters-button" type="button" aria-expanded="false" aria-controls="candidateFiltersPopover"><span data-icon="filter" aria-hidden="true"></span><span>Filtros</span><b id="candidateFiltersCount">0</b></button>
+                <section id="candidateFiltersPopover" class="candidate-filters-popover hidden" role="dialog" aria-label="Filtros de candidatos" aria-modal="false"><header><div><strong>Filtros</strong><small>Refine a lista sem ocupar a tela</small></div><button id="candidateFiltersCloseButton" class="icon-button" type="button" aria-label="Fechar filtros"><span data-icon="close"></span></button></header><div id="candidateFiltersFields" class="candidate-filters-fields"></div><footer><button id="candidateFiltersClearButton" class="button button-ghost" type="button">Limpar</button><button id="candidateFiltersApplyButton" class="button button-primary" type="button">Aplicar filtros</button></footer></section>
+              </div>
               <div class="segmented view-toggle"><button id="candidateTableMode" class="active" type="button">Tabela</button><button id="candidateKanbanMode" type="button">Pipeline</button></div>
             </div>
           </section>
+          <div id="candidateFilterChips" class="active-filter-chips" aria-live="polite"></div>
 
 
           <section id="candidateTableContainer" class="panel table-panel">
@@ -277,7 +293,7 @@
             <aside class="conversation-center-list">
               <header class="conversation-center-list-header"><div><p class="eyebrow">CONVERSAS</p><h2>Todos os chats</h2></div><button id="allChatsRefreshButton" class="icon-button" type="button" title="Atualizar conversas" aria-label="Atualizar conversas"><span data-icon="refresh"></span></button></header>
               <label class="conversation-center-search"><span data-icon="search"></span><input id="allChatsSearch" type="search" placeholder="Pesquisar conversa"></label>
-              <div class="conversation-center-filters segmented" id="allChatsFilters"><button class="active" data-chat-filter="TODOS" type="button">Todos</button><button data-chat-filter="NAO_LIDOS" type="button">Não lidos</button><button data-chat-filter="HUMANO" type="button">Humano</button><button data-chat-filter="IA" type="button">IA</button></div>
+              <div class="conversation-center-filters segmented" id="allChatsFilters"><button class="active" data-chat-filter="TODOS" type="button">Todos</button><button data-chat-filter="ACAO" type="button">Ação agora</button><button data-chat-filter="NAO_LIDOS" type="button">Não lidos</button><button data-chat-filter="PAUSADAS" type="button">IA pausada</button><button data-chat-filter="REVISAO" type="button">Revisão</button><button data-chat-filter="HUMANO" type="button">Humano</button><button data-chat-filter="IA" type="button">IA ativa</button></div>
               <div id="allChatsList" class="conversation-center-items"><div class="empty-state compact">Carregando conversas...</div></div>
             </aside>
             <section class="conversation-center-chat">

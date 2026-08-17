@@ -1,0 +1,375 @@
+/* Gênesis UI V23 — linguagem operacional inspirada nas referências 21st.dev.
+   Camada aditiva: não altera os fluxos, endpoints ou estados do Recruiting OS. */
+
+body.genesis-rebrand {
+  --gx-navy-950: #04131d;
+  --gx-navy-900: #082330;
+  --gx-navy-800: #0b3442;
+  --gx-teal-700: #087d78;
+  --gx-teal-600: #0e9b91;
+  --gx-cyan-500: #1ec8c8;
+  --gx-cyan-300: #72e4df;
+  --gx-focus: #22c8c4;
+  --gx-danger: #d34655;
+  --gx-warning: #d58b20;
+  --gx-radius: 16px;
+  --gx-shadow: 0 22px 58px rgba(4, 29, 41, .18);
+}
+
+body.genesis-rebrand button:focus-visible,
+body.genesis-rebrand a:focus-visible,
+body.genesis-rebrand input:focus-visible,
+body.genesis-rebrand select:focus-visible,
+body.genesis-rebrand textarea:focus-visible,
+body.genesis-rebrand summary:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--gx-focus) 54%, transparent);
+  outline-offset: 2px;
+}
+
+body.genesis-rebrand .topbar {
+  isolation: isolate;
+  box-shadow: 0 1px 0 var(--line), 0 10px 30px rgba(4, 31, 43, .045);
+}
+
+/* Central de notificações */
+.notification-center { position: relative; flex: 0 0 auto; }
+.notification-center-button { position: relative; }
+.notification-center-button .g-icon { width: 18px; height: 18px; }
+.notification-center-badge {
+  position: absolute;
+  top: -5px;
+  right: -6px;
+  min-width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  padding: 0 5px;
+  border: 2px solid var(--surface);
+  border-radius: 999px;
+  color: #fff;
+  background: var(--gx-danger);
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+}
+.notification-center-badge.hidden { display: none; }
+.notification-center-panel {
+  position: absolute;
+  z-index: 1300;
+  top: calc(100% + 11px);
+  right: 0;
+  width: min(390px, calc(100vw - 28px));
+  max-height: min(610px, calc(100dvh - 92px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 97%, var(--gx-cyan-500) 3%);
+  box-shadow: var(--gx-shadow);
+  transform-origin: top right;
+  animation: gx-pop .16s ease-out;
+}
+.notification-center-panel.hidden { display: none; }
+.notification-center-panel > header {
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 15px;
+  border-bottom: 1px solid var(--line);
+}
+.notification-center-panel > header > div { min-width: 0; display: grid; gap: 2px; }
+.notification-center-panel > header strong { font-size: 14px; }
+.notification-center-panel > header small { color: var(--muted); font-size: 10px; }
+.notification-center-panel .text-button { font-size: 10px; }
+.notification-center-list { min-height: 90px; overflow-y: auto; padding: 7px; overscroll-behavior: contain; }
+.notification-item {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 8px;
+  gap: 10px;
+  align-items: start;
+  padding: 11px 9px;
+  border: 0;
+  border-radius: 12px;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+.notification-item:hover { background: var(--surface-2); }
+.notification-item.unread { background: color-mix(in srgb, var(--primary) 8%, var(--surface)); }
+.notification-item-icon {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--gx-teal-700);
+  background: color-mix(in srgb, var(--gx-cyan-300) 26%, var(--surface));
+}
+.notification-item-icon .g-icon { width: 17px; height: 17px; }
+.notification-item.warning .notification-item-icon { color: #9a5d08; background: #fff0d5; }
+.notification-item.danger .notification-item-icon { color: #ad3040; background: #ffe7ea; }
+.notification-item-copy { min-width: 0; display: grid; gap: 2px; }
+.notification-item-copy strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+.notification-item-copy span { color: var(--text); font-size: 10px; line-height: 1.42; }
+.notification-item-copy small { margin-top: 2px; color: var(--muted); font-size: 9px; }
+.notification-unread-dot { width: 7px; height: 7px; margin-top: 6px; border-radius: 50%; background: var(--gx-cyan-500); }
+.notification-center-empty { display: grid; place-items: center; min-height: 130px; padding: 24px; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.5; }
+
+/* Botão copiar */
+.gx-copy-button {
+  position: relative;
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 10px !important;
+  color: var(--text) !important;
+  background: var(--surface) !important;
+  box-shadow: 0 3px 12px rgba(4, 31, 43, .06);
+}
+.gx-copy-button:hover { border-color: color-mix(in srgb, var(--primary) 42%, var(--line)) !important; background: var(--surface-2) !important; }
+.gx-copy-button .g-icon { width: 15px; height: 15px; transition: transform .15s ease, opacity .15s ease; }
+.gx-copy-button.is-copied { color: var(--gx-teal-600) !important; }
+.gx-copy-button.is-copied .g-icon { transform: scale(1.08); }
+.gx-copy-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 1400;
+  right: 0;
+  bottom: calc(100% + 7px);
+  width: max-content;
+  max-width: 160px;
+  padding: 6px 8px;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--gx-navy-950);
+  box-shadow: 0 8px 22px rgba(0,0,0,.2);
+  font-size: 9px;
+  font-weight: 750;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity .15s ease, transform .15s ease;
+}
+.gx-copy-button:hover::after,
+.gx-copy-button:focus-visible::after { opacity: 1; transform: translateY(0); }
+.gx-copy-label { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap !important; }
+
+/* Filtros compactos */
+.candidate-filter-center { position: relative; }
+.candidate-filters-button { display: inline-flex !important; align-items: center; gap: 7px; }
+.candidate-filters-button .g-icon { width: 15px; height: 15px; }
+.candidate-filters-button b {
+  min-width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  padding: 0 5px;
+  border-radius: 999px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-size: 9px;
+}
+.candidate-filters-button b:empty,
+.candidate-filters-button b[data-empty="true"] { display: none; }
+.candidate-filters-popover {
+  position: absolute;
+  z-index: 1200;
+  top: calc(100% + 9px);
+  right: 0;
+  width: min(340px, calc(100vw - 28px));
+  max-height: min(650px, calc(100dvh - 110px));
+  display: grid;
+  grid-template-rows: auto minmax(0,1fr) auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  color: var(--text);
+  background: var(--surface);
+  box-shadow: var(--gx-shadow);
+  animation: gx-pop .16s ease-out;
+}
+.candidate-filters-popover.hidden { display: none; }
+.candidate-filters-popover > header,
+.candidate-filters-popover > footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; }
+.candidate-filters-popover > header { border-bottom: 1px solid var(--line); }
+.candidate-filters-popover > header > div { display: grid; gap: 2px; }
+.candidate-filters-popover > header strong { font-size: 13px; }
+.candidate-filters-popover > header small { color: var(--muted); font-size: 9px; }
+.candidate-filters-popover > footer { border-top: 1px solid var(--line); }
+.candidate-filters-fields { min-height: 0; display: grid; gap: 11px; padding: 13px 14px; overflow-y: auto; }
+.candidate-filters-fields label { display: grid; gap: 5px; color: var(--muted); font-size: 9px; font-weight: 850; text-transform: uppercase; letter-spacing: .05em; }
+.candidate-filters-fields select { width: 100%; min-height: 40px; padding: 0 32px 0 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--text); background: var(--surface-2); font-size: 11px; text-transform: none; }
+.active-filter-chips { min-height: 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: -3px 0 9px; }
+.active-filter-chips:empty { display: none; }
+.active-filter-chip { display: inline-flex; align-items: center; gap: 5px; min-height: 27px; padding: 0 9px; border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--line)); border-radius: 999px; color: var(--primary); background: var(--primary-soft); font-size: 9px; font-weight: 800; }
+.active-filter-chip button { width: 19px; height: 19px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; color: inherit; background: transparent; cursor: pointer; }
+
+body.genesis-rebrand .table-filter-menu > summary { min-height: 28px; padding: 0 5px; border-radius: 7px; }
+body.genesis-rebrand .table-filter-menu > summary:hover { background: var(--surface-2); }
+body.genesis-rebrand .table-filter-popover { border-radius: 14px; box-shadow: var(--gx-shadow); }
+
+/* Conversas: duas colunas, estados explícitos e leitura mais confortável */
+body.genesis-rebrand #view-atendimentos .conversation-center {
+  grid-template-columns: minmax(300px, 35%) minmax(0, 1fr) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 18px 50px rgba(5, 33, 45, .1);
+}
+body.genesis-rebrand .conversation-center-list-header { min-height: 70px; }
+body.genesis-rebrand .conversation-center-search { min-height: 42px; margin-inline: 12px; border: 1px solid var(--line); background: var(--surface-2); }
+body.genesis-rebrand .conversation-center-filters { display: flex; gap: 5px; margin: 8px 11px 10px; padding-bottom: 2px; overflow-x: auto; scrollbar-width: none; }
+body.genesis-rebrand .conversation-center-filters::-webkit-scrollbar { display: none; }
+body.genesis-rebrand .conversation-center-filters button { flex: 0 0 auto; min-height: 31px; border: 1px solid transparent; border-radius: 9px; }
+body.genesis-rebrand .conversation-center-filters button.active { border-color: color-mix(in srgb, var(--primary) 22%, var(--line)); background: var(--primary-soft); }
+body.genesis-rebrand .conversation-center-item { min-height: 76px; padding: 11px 12px; }
+body.genesis-rebrand .conversation-center-item.selected { box-shadow: inset 3px 0 0 var(--gx-cyan-500); }
+body.genesis-rebrand .conversation-center-item.unread::after { content: "Nova"; position: absolute; right: 11px; bottom: 8px; color: var(--gx-teal-700); font-size: 7px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; }
+body.genesis-rebrand .conversation-center-item-title strong { font-size: 11px; }
+body.genesis-rebrand .conversation-center-item-preview { margin-top: 3px; font-size: 10px; }
+body.genesis-rebrand .conversation-center-item-copy small { margin-top: 4px; font-size: 8.5px; }
+body.genesis-rebrand .conversation-center-chat-header { min-height: 70px; }
+body.genesis-rebrand .conversation-center-messages {
+  gap: 8px;
+  padding: 22px clamp(16px, 4vw, 44px) !important;
+  background:
+    radial-gradient(circle at 100% 0, color-mix(in srgb, var(--gx-cyan-500) 8%, transparent), transparent 35%),
+    var(--surface-2) !important;
+}
+body.genesis-rebrand .conversation-center-message { position: relative; max-width: min(76%, 620px); padding: 9px 11px; border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 3px 10px rgba(4, 32, 43, .05); font-size: 11px; line-height: 1.48; }
+body.genesis-rebrand .conversation-center-message.incoming { border-bottom-left-radius: 5px; background: var(--surface); }
+body.genesis-rebrand .conversation-center-message.outgoing { border-color: color-mix(in srgb, var(--primary) 20%, var(--line)); border-bottom-right-radius: 5px; background: color-mix(in srgb, var(--primary) 11%, var(--surface)); }
+body.genesis-rebrand .conversation-center-message.ai { border-color: color-mix(in srgb, var(--gx-cyan-500) 24%, var(--line)); background: color-mix(in srgb, var(--gx-cyan-300) 10%, var(--surface)); }
+body.genesis-rebrand .conversation-center-author { display: block; margin-bottom: 4px; color: var(--gx-teal-700); font-size: 8px; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; }
+body.genesis-rebrand .conversation-center-message small { font-size: 8px; }
+body.genesis-rebrand .conversation-center-composer { min-height: 68px; padding: 11px 13px !important; }
+body.genesis-rebrand .conversation-center-composer textarea { min-height: 44px; padding: 12px 14px; border-radius: 13px; font-size: 11px; }
+
+/* Chat flutuante */
+body.genesis-rebrand .genesis-floating-chat-launcher { width: 54px; height: 54px; border-radius: 17px; background: linear-gradient(145deg, var(--gx-navy-800), var(--gx-teal-600)); box-shadow: 0 16px 38px rgba(5, 50, 62, .3); }
+body.genesis-rebrand .genesis-floating-chat-menu,
+body.genesis-rebrand .genesis-floating-chat-window { border: 1px solid color-mix(in srgb, var(--gx-cyan-500) 15%, var(--line)); border-radius: 19px; box-shadow: 0 25px 70px rgba(3, 26, 37, .26); }
+body.genesis-rebrand .genesis-floating-chat-window { width: min(380px, calc(100vw - 32px)); height: min(560px, calc(100dvh - 105px)); }
+body.genesis-rebrand .gfc-header { min-height: 62px; padding: 10px 12px; background: linear-gradient(135deg, var(--gx-navy-950), var(--gx-navy-800)); color: #efffff; }
+body.genesis-rebrand .gfc-header .gfc-person small { color: #9fd3d5; }
+body.genesis-rebrand .gfc-header-actions button { color: #dff8f8; }
+body.genesis-rebrand .gfc-avatar { color: #052d34; background: var(--gx-cyan-300); box-shadow: 0 0 0 3px rgba(114, 228, 223, .14); }
+body.genesis-rebrand .gfc-status { min-height: 40px; background: var(--surface); }
+body.genesis-rebrand .gfc-messages { gap: 8px; padding: 14px; background: radial-gradient(circle at 100% 0, color-mix(in srgb, var(--gx-cyan-500) 9%, transparent), transparent 40%), var(--surface-2); }
+body.genesis-rebrand .gfc-message { position: relative; max-width: 86%; padding: 9px 10px; border-radius: 14px; box-shadow: 0 2px 8px rgba(4, 31, 43, .04); font-size: 11px; }
+body.genesis-rebrand .gfc-message.incoming { border-bottom-left-radius: 5px; background: var(--surface); }
+body.genesis-rebrand .gfc-message.outgoing { border-bottom-right-radius: 5px; background: color-mix(in srgb, var(--primary) 12%, var(--surface)); }
+body.genesis-rebrand .gfc-message.ai { border-color: color-mix(in srgb, var(--gx-cyan-500) 28%, var(--line)); background: color-mix(in srgb, var(--gx-cyan-300) 11%, var(--surface)); }
+body.genesis-rebrand .gfc-message-author { display: block; margin-bottom: 3px; color: var(--gx-teal-700); font-size: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
+body.genesis-rebrand .gfc-message-status { display: inline-flex; align-items: center; gap: 3px; }
+body.genesis-rebrand .gfc-composer { min-height: 63px; padding: 9px 10px; }
+body.genesis-rebrand .gfc-composer textarea { min-height: 43px; border-radius: 13px; padding: 11px 12px; font-size: 11px; }
+
+/* Agenda como seletor compacto de compromisso */
+body.genesis-rebrand .calendar-command { max-width: 1060px; margin-inline: auto; padding: 16px 18px; border-radius: 18px; }
+body.genesis-rebrand .calendar-command h2 { font-size: 18px; }
+body.genesis-rebrand .calendar-layout {
+  width: min(1060px, 100%);
+  grid-template-columns: minmax(0, 720px) minmax(260px, 330px) !important;
+  gap: 0 !important;
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: var(--surface);
+  box-shadow: 0 16px 44px rgba(5, 33, 45, .08);
+}
+body.genesis-rebrand .calendar-layout > .panel { border: 0; border-radius: 0 !important; box-shadow: none; }
+body.genesis-rebrand .calendar-panel { width: 100%; }
+body.genesis-rebrand .calendar-day-panel { position: static; align-self: stretch; border-left: 1px solid var(--line) !important; background: var(--surface-2); }
+body.genesis-rebrand .calendar-weekdays { padding: 10px 12px; }
+body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day { min-height: 70px; padding: 6px; }
+body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day i { width: 27px; height: 27px; font-size: 10px; }
+body.genesis-rebrand .calendar-event { height: 6px; width: 6px; display: inline-block; padding: 0; border-radius: 50%; color: transparent; background: var(--gx-cyan-500); }
+body.genesis-rebrand .calendar-day > div { display: flex; align-items: center; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+body.genesis-rebrand .calendar-day-list { gap: 7px; padding: 0 12px 14px; }
+body.genesis-rebrand .calendar-agenda-item { grid-template-columns: 53px minmax(0,1fr); gap: 10px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+body.genesis-rebrand .calendar-agenda-item > time { min-height: 34px; display: grid; place-items: center; border-radius: 9px; color: var(--gx-teal-700); background: var(--primary-soft); font-size: 11px; }
+
+/* Calendário compacto no dashboard */
+body.genesis-rebrand .dashboard-agenda-panel { min-height: 350px; }
+body.genesis-rebrand .dashboard-mini-calendar-shell { grid-template-columns: minmax(0, 1fr) minmax(170px, .8fr); grid-template-rows: 20px auto; gap: 7px 13px; }
+body.genesis-rebrand .dashboard-mini-calendar { gap: 4px; }
+body.genesis-rebrand .dashboard-mini-day { min-height: 31px; aspect-ratio: 1; border-radius: 9px; font-size: 9px; }
+body.genesis-rebrand .dashboard-calendar-day-summary { display: block; grid-column: 2; grid-row: 1 / 3; padding-left: 12px; border-left: 1px solid var(--line); }
+body.genesis-rebrand .dashboard-calendar-interview { grid-template-columns: 42px minmax(0, 1fr); padding: 7px 0; }
+
+@keyframes gx-pop { from { opacity: 0; transform: translateY(-5px) scale(.985); } to { opacity: 1; transform: none; } }
+
+html[data-theme="dark"] .notification-item.warning .notification-item-icon { color: #ffd68c; background: #493419; }
+html[data-theme="dark"] .notification-item.danger .notification-item-icon { color: #ffb5bf; background: #4d242c; }
+html[data-theme="dark"] body.genesis-rebrand .conversation-center-messages,
+html[data-theme="dark"] body.genesis-rebrand .gfc-messages { background: radial-gradient(circle at 100% 0, rgba(30, 200, 200, .08), transparent 38%), var(--surface-2) !important; }
+
+@media (max-width: 1180px) {
+  body.genesis-rebrand .calendar-command,
+  body.genesis-rebrand .calendar-layout { width: 100%; max-width: none; }
+  body.genesis-rebrand .calendar-layout { grid-template-columns: minmax(0, 1fr) 300px !important; }
+}
+
+@media (max-width: 900px) {
+  .notification-center-panel {
+    position: fixed;
+    inset: auto 8px 8px 8px;
+    width: auto;
+    max-height: min(72dvh, 650px);
+    transform-origin: bottom center;
+    border-radius: 20px;
+  }
+  body.genesis-rebrand #view-atendimentos .conversation-center { grid-template-columns: 1fr !important; height: calc(100dvh - 132px) !important; min-height: 480px !important; }
+  body.genesis-rebrand .conversation-center.chat-open-mobile { position: fixed; inset: 0; z-index: 1500; height: 100dvh !important; border-radius: 0 !important; }
+  body.genesis-rebrand .conversation-center.chat-open-mobile .conversation-center-chat { display: block; height: 100%; }
+  body.genesis-rebrand .conversation-center-chat-header { padding-top: max(10px, env(safe-area-inset-top)); }
+  body.genesis-rebrand .conversation-center-message { max-width: 88%; }
+  body.genesis-rebrand .calendar-layout { grid-template-columns: 1fr !important; border-radius: 16px; }
+  body.genesis-rebrand .calendar-day-panel { border-top: 1px solid var(--line) !important; border-left: 0 !important; }
+  body.genesis-rebrand .dashboard-mini-calendar-shell { grid-template-columns: 1fr; grid-template-rows: 20px auto auto; }
+  body.genesis-rebrand .dashboard-calendar-day-summary { grid-column: 1; grid-row: 3; padding: 10px 0 0; border-top: 1px solid var(--line); border-left: 0; }
+}
+
+@media (max-width: 640px) {
+  .candidate-filters-popover {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-height: 82dvh;
+    border-radius: 22px 22px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+    transform-origin: bottom center;
+  }
+  body.genesis-rebrand .candidate-toolbar .toolbar-right { grid-template-columns: minmax(0,1fr) auto auto !important; }
+  body.genesis-rebrand .candidate-filters-button > span:nth-child(2) { display: none; }
+  body.genesis-rebrand .conversation-center-messages { padding: 14px 10px !important; }
+  body.genesis-rebrand .conversation-center-message { max-width: 92%; font-size: 11px; }
+  body.genesis-rebrand .calendar-command { padding: 13px; }
+  body.genesis-rebrand .calendar-controls { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  body.genesis-rebrand .calendar-view-mode { grid-column: 1 / -1; width: 100%; overflow-x: auto; }
+  body.genesis-rebrand .calendar-weekdays,
+  body.genesis-rebrand .interview-calendar { min-width: 0 !important; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day { min-height: 49px; padding: 3px; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="MONTH"] .calendar-day i { width: 24px; height: 24px; font-size: 9px; }
+  body.genesis-rebrand .calendar-event { width: 4px; height: 4px; }
+  .gx-copy-button::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notification-center-panel,
+  .candidate-filters-popover { animation: none; }
+  .gx-copy-button .g-icon { transition: none; }
+}

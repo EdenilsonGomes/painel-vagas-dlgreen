@@ -48,6 +48,9 @@
     arrowdown: '<path d="M12 5v14M18 13l-6 6-6-6"/>',
     pause: '<path d="M8 5v14M16 5v14"/>',
     pin: '<path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+    bell: '<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>',
+    copy: '<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/>',
+    filter: '<path d="M4 6h16M7 12h10M10 18h4"/>',
   };
 
   function icon(name, className = '') {
