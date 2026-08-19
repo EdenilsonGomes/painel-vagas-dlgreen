@@ -1,0 +1,1145 @@
+/*
+ * Gênesis UI V24 — consolidação visual e camada final de design system.
+ * Escopo: somente apresentação/UX. Não altera endpoints, APIs, banco, Meta,
+ * n8n, Google Calendar/Meet, CTPS, Evelyn ou regras de atendimento.
+ *
+ * Carregar DEPOIS de experience-v23.css.
+ */
+
+/* ========================================================================== */
+/* 1. TOKENS ÚNICOS                                                          */
+/* ========================================================================== */
+
+:root {
+  /* Estrutura — light */
+  --gx24-bg: #F5F8F9;
+  --gx24-surface: #FFFFFF;
+  --gx24-surface-raised: #F8FBFC;
+  --gx24-surface-strong: #EEF4F5;
+  --gx24-border: #D8E2E5;
+  --gx24-border-strong: #C5D3D7;
+  --gx24-text: #0B1F2A;
+  --gx24-text-muted: #64748B;
+
+  /* Marca */
+  --gx24-primary: #0EAEA0;
+  --gx24-primary-hover: #078F85;
+  --gx24-accent: #22D3EE;
+
+  /* Semântica */
+  --gx24-success: #0E9F6E;
+  --gx24-warning: #D97706;
+  --gx24-danger: #DC2626;
+
+  /* Derivações — não são novas cores de marca */
+  --gx24-primary-soft: color-mix(in srgb, var(--gx24-primary) 10%, var(--gx24-surface));
+  --gx24-accent-soft: color-mix(in srgb, var(--gx24-accent) 9%, var(--gx24-surface));
+  --gx24-success-soft: color-mix(in srgb, var(--gx24-success) 10%, var(--gx24-surface));
+  --gx24-warning-soft: color-mix(in srgb, var(--gx24-warning) 10%, var(--gx24-surface));
+  --gx24-danger-soft: color-mix(in srgb, var(--gx24-danger) 10%, var(--gx24-surface));
+
+  --gx24-shadow-sm: 0 1px 2px rgba(7, 24, 32, .04), 0 6px 18px rgba(7, 24, 32, .045);
+  --gx24-shadow-md: 0 18px 48px rgba(7, 24, 32, .12);
+  --gx24-radius-sm: 10px;
+  --gx24-radius: 14px;
+  --gx24-radius-lg: 18px;
+}
+
+html[data-theme="dark"] {
+  --gx24-bg: #071820;
+  --gx24-surface: #0B2530;
+  --gx24-surface-raised: #10333F;
+  --gx24-surface-strong: #0D2C37;
+  --gx24-border: #1D4652;
+  --gx24-border-strong: #285865;
+  --gx24-text: #F0FBFC;
+  --gx24-text-muted: #A9BEC4;
+  --gx24-shadow-sm: 0 1px 2px rgba(0, 0, 0, .16), 0 8px 22px rgba(0, 0, 0, .12);
+  --gx24-shadow-md: 0 22px 60px rgba(0, 0, 0, .30);
+}
+
+/* Compatibilidade com tokens das camadas antigas. A V24 passa a ser a
+   autoridade visual final sem remover CSS legado antes dos testes. */
+body.genesis-rebrand {
+  --bg: var(--gx24-bg);
+  --surface: var(--gx24-surface);
+  --surface-2: var(--gx24-surface-raised);
+  --surface-soft: var(--gx24-surface-raised);
+  --surface-elevated: var(--gx24-surface-raised);
+  --line: var(--gx24-border);
+  --line-strong: var(--gx24-border-strong);
+  --border: var(--gx24-border);
+  --text: var(--gx24-text);
+  --muted: var(--gx24-text-muted);
+  --subtle: var(--gx24-text-muted);
+  --text-muted: var(--gx24-text-muted);
+  --text-soft: var(--gx24-text-muted);
+  --primary: var(--gx24-primary);
+  --primary-strong: var(--gx24-primary-hover);
+  --primary-soft: var(--gx24-primary-soft);
+  --cyan: var(--gx24-accent);
+  --success: var(--gx24-success);
+  --success-soft: var(--gx24-success-soft);
+  --warning: var(--gx24-warning);
+  --warning-soft: var(--gx24-warning-soft);
+  --danger: var(--gx24-danger);
+  --danger-soft: var(--gx24-danger-soft);
+
+  /* aliases v18/v21 */
+  --v18-bg: var(--gx24-bg);
+  --v18-card: var(--gx24-surface);
+  --v18-card-2: var(--gx24-surface-raised);
+  --v18-line: var(--gx24-border);
+  --v18-line-soft: color-mix(in srgb, var(--gx24-border) 64%, transparent);
+  --v18-text: var(--gx24-text);
+  --v18-muted: var(--gx24-text-muted);
+  --v18-muted-2: var(--gx24-text-muted);
+  --v18-accent: var(--gx24-primary);
+  --v18-accent-soft: var(--gx24-primary-soft);
+  --v18-success: var(--gx24-success);
+  --v18-warning: var(--gx24-warning);
+  --v18-danger: var(--gx24-danger);
+
+  /* aliases v23 */
+  --gx-navy-950: #071820;
+  --gx-navy-900: #0B2530;
+  --gx-navy-800: #10333F;
+  --gx-teal-700: var(--gx24-primary-hover);
+  --gx-teal-600: var(--gx24-primary);
+  --gx-cyan-500: var(--gx24-accent);
+  --gx-cyan-300: var(--gx24-accent);
+  --gx-focus: var(--gx24-accent);
+  --gx-danger: var(--gx24-danger);
+  --gx-warning: var(--gx24-warning);
+  --gx-shadow: var(--gx24-shadow-md);
+}
+
+/* ========================================================================== */
+/* 2. BASE / SHELL                                                            */
+/* ========================================================================== */
+
+body.genesis-rebrand {
+  color: var(--gx24-text);
+  background: var(--gx24-bg) !important;
+}
+
+body.genesis-rebrand .workspace,
+body.genesis-rebrand .main-content {
+  background: transparent;
+}
+
+body.genesis-rebrand .sidebar {
+  background: #071820 !important;
+  border-right: 1px solid #12333D;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand .brand-logo {
+  filter: none !important;
+}
+
+body.genesis-rebrand .nav-context,
+body.genesis-rebrand .sidebar-status-footer {
+  border-color: rgba(240, 251, 252, .07) !important;
+}
+
+body.genesis-rebrand .nav-context > summary {
+  color: #89A5AC !important;
+}
+
+body.genesis-rebrand .nav-context > summary:hover,
+body.genesis-rebrand .nav-item:hover {
+  color: #F0FBFC !important;
+  background: rgba(255, 255, 255, .045) !important;
+}
+
+body.genesis-rebrand .nav-item {
+  color: #B4C8CD !important;
+}
+
+body.genesis-rebrand .nav-item.active {
+  color: #F0FBFC !important;
+  background: rgba(14, 174, 160, .105) !important;
+  box-shadow: inset 3px 0 0 var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand .nav-item.active .nav-icon {
+  color: var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand .topbar {
+  border-bottom: 1px solid var(--gx24-border) !important;
+  background: color-mix(in srgb, var(--gx24-surface) 94%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px) saturate(115%);
+}
+
+body.genesis-rebrand .page-heading p,
+body.genesis-rebrand .eyebrow {
+  color: var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand .page-heading h1,
+body.genesis-rebrand .page-heading span {
+  color: var(--gx24-text);
+}
+
+body.genesis-rebrand .page-heading span {
+  color: var(--gx24-text-muted);
+}
+
+/* ========================================================================== */
+/* 3. SUPERFÍCIES / CONTROLES                                                 */
+/* ========================================================================== */
+
+body.genesis-rebrand :where(
+  .panel,
+  .kpi-card,
+  .dashboard-command-kpi,
+  .section-toolbar,
+  .vacancy-list-panel,
+  .candidate-card,
+  .review-workspace-card,
+  .document-candidate-card,
+  .monitor-card,
+  .crm-card,
+  .prospecting-card,
+  .operational-card,
+  .detail-block
+) {
+  color: var(--gx24-text) !important;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: var(--gx24-shadow-sm) !important;
+}
+
+body.genesis-rebrand :where(input, textarea, select),
+body.genesis-rebrand :where(.inline-search, .compact-field, .search-trigger, .conversation-center-search) {
+  color: var(--gx24-text) !important;
+  border-color: var(--gx24-border) !important;
+}
+
+body.genesis-rebrand :where(input, textarea, select) {
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand :where(input, textarea, select)::placeholder {
+  color: color-mix(in srgb, var(--gx24-text-muted) 78%, transparent);
+}
+
+body.genesis-rebrand :where(button, a, input, select, textarea, summary):focus-visible {
+  outline: 0 !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gx24-accent) 26%, transparent) !important;
+}
+
+body.genesis-rebrand :where(.button, .btn) {
+  border-radius: var(--gx24-radius-sm) !important;
+}
+
+body.genesis-rebrand :where(.button-primary, .btn-primary) {
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+  background: var(--gx24-primary) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand :where(.button-primary, .btn-primary):hover:not(:disabled) {
+  background: var(--gx24-primary-hover) !important;
+  transform: translateY(-1px);
+}
+
+body.genesis-rebrand :where(.button-ghost, .btn-ghost, .icon-button, .theme-switch, .search-trigger, .profile-menu-button) {
+  color: var(--gx24-text) !important;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand :where(.button-ghost, .btn-ghost, .icon-button):hover:not(:disabled) {
+  border-color: var(--gx24-border-strong) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+/* Badges: cor apenas quando o estado tem significado operacional. */
+body.genesis-rebrand .badge {
+  border: 1px solid var(--gx24-border);
+  color: var(--gx24-text-muted);
+  background: var(--gx24-surface-raised);
+  box-shadow: none;
+}
+
+body.genesis-rebrand :where(.badge-approved, .badge-success, .badge.hired, .badge.contratado) {
+  color: var(--gx24-success) !important;
+  border-color: color-mix(in srgb, var(--gx24-success) 28%, var(--gx24-border)) !important;
+  background: var(--gx24-success-soft) !important;
+}
+
+body.genesis-rebrand :where(.badge-warning, .badge.pending, .badge.review) {
+  color: var(--gx24-warning) !important;
+  border-color: color-mix(in srgb, var(--gx24-warning) 28%, var(--gx24-border)) !important;
+  background: var(--gx24-warning-soft) !important;
+}
+
+body.genesis-rebrand :where(.badge-rejected, .badge-danger, .badge.error) {
+  color: var(--gx24-danger) !important;
+  border-color: color-mix(in srgb, var(--gx24-danger) 28%, var(--gx24-border)) !important;
+  background: var(--gx24-danger-soft) !important;
+}
+
+body.genesis-rebrand .nav-count-badge {
+  color: #F0FBFC !important;
+  background: #21444F !important;
+}
+
+body.genesis-rebrand #reviewNavBadge,
+body.genesis-rebrand .notification-center-badge {
+  color: #FFFFFF !important;
+  background: var(--gx24-danger) !important;
+}
+
+/* ========================================================================== */
+/* 4. CANDIDATOS — VISÃO OPERACIONAL                                          */
+/* ========================================================================== */
+
+body.genesis-rebrand #view-candidates {
+  gap: 14px;
+}
+
+body.genesis-rebrand #view-candidates .candidate-kpis {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 2px;
+}
+
+body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card {
+  min-height: 94px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 16px;
+  border-radius: var(--gx24-radius) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card span {
+  color: var(--gx24-text-muted) !important;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card strong {
+  color: var(--gx24-text) !important;
+  font-size: 24px;
+  letter-spacing: -.04em;
+}
+
+body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card.active-filter {
+  border-color: color-mix(in srgb, var(--gx24-primary) 44%, var(--gx24-border)) !important;
+  background: var(--gx24-primary-soft) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gx24-primary) 16%, transparent) !important;
+}
+
+body.genesis-rebrand #view-candidates .candidate-toolbar {
+  min-height: 64px;
+  gap: 10px;
+  padding: 10px 12px !important;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: var(--gx24-radius) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #view-candidates .candidate-toolbar .inline-search {
+  min-width: min(360px, 34vw);
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-candidates .candidate-filters-popover {
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: var(--gx24-shadow-md) !important;
+}
+
+body.genesis-rebrand #view-candidates .active-filter-chip {
+  color: var(--gx24-primary) !important;
+  border-color: color-mix(in srgb, var(--gx24-primary) 26%, var(--gx24-border)) !important;
+  background: var(--gx24-primary-soft) !important;
+}
+
+body.genesis-rebrand #candidateTableContainer {
+  overflow: hidden;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: var(--gx24-radius-lg) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidatesTableWrapper {
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gx24-border-strong) transparent;
+}
+
+body.genesis-rebrand .candidate-data-table {
+  min-width: 980px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--gx24-surface);
+}
+
+body.genesis-rebrand .candidate-data-table thead th {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  height: 46px;
+  padding: 0 12px;
+  color: var(--gx24-text-muted) !important;
+  border-bottom: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .055em;
+}
+
+body.genesis-rebrand .candidate-data-table tbody td {
+  height: 68px;
+  padding: 10px 12px;
+  color: var(--gx24-text);
+  border-bottom: 1px solid color-mix(in srgb, var(--gx24-border) 72%, transparent) !important;
+  background: transparent;
+  vertical-align: middle;
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row] {
+  position: relative;
+  transition: background .14s ease, box-shadow .14s ease;
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row]:hover {
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row]:focus-visible {
+  outline: 0 !important;
+  box-shadow: inset 3px 0 0 var(--gx24-primary), inset 0 0 0 1px color-mix(in srgb, var(--gx24-primary) 28%, transparent) !important;
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row].gx24-success {
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--gx24-success) 68%, transparent);
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row].gx24-warning {
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--gx24-warning) 72%, transparent);
+}
+
+body.genesis-rebrand .candidate-data-table tbody tr[data-candidate-row].gx24-danger {
+  box-shadow: inset 2px 0 0 color-mix(in srgb, var(--gx24-danger) 72%, transparent);
+}
+
+body.genesis-rebrand .candidate-person-cell {
+  gap: 10px;
+}
+
+body.genesis-rebrand .candidate-row-avatar {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+  color: var(--gx24-text) !important;
+  border: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand .candidate-person-copy strong,
+body.genesis-rebrand .candidate-vacancy-cell strong {
+  color: var(--gx24-text) !important;
+  font-size: 11px;
+}
+
+body.genesis-rebrand .candidate-person-copy span,
+body.genesis-rebrand .candidate-vacancy-cell span,
+body.genesis-rebrand .candidate-stage-text,
+body.genesis-rebrand .candidate-activity,
+body.genesis-rebrand .candidate-doc-count,
+body.genesis-rebrand .geo-mini-status {
+  color: var(--gx24-text-muted) !important;
+  font-size: 9px;
+}
+
+body.genesis-rebrand .candidate-status-stack {
+  align-items: flex-start;
+  gap: 4px;
+}
+
+body.genesis-rebrand .candidate-interview-chip {
+  color: var(--gx24-success) !important;
+  border: 1px solid color-mix(in srgb, var(--gx24-success) 24%, var(--gx24-border));
+  background: var(--gx24-success-soft) !important;
+}
+
+body.genesis-rebrand .candidate-interview-chip.pending {
+  color: var(--gx24-text-muted) !important;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+/* ========================================================================== */
+/* 5. DRAWER DO CANDIDATO — “FONTE DA VERDADE” VISUAL                        */
+/* ========================================================================== */
+
+body.genesis-rebrand #candidateDrawer[open] {
+  inset: 0 0 0 auto !important;
+  width: min(460px, 100vw) !important;
+  max-width: min(460px, 100vw) !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-left: 1px solid var(--gx24-border) !important;
+  border-radius: 0 !important;
+  color: var(--gx24-text) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: -18px 0 60px rgba(0, 0, 0, .18) !important;
+}
+
+body.genesis-rebrand #candidateDrawer::backdrop {
+  background: rgba(2, 12, 17, .34);
+  backdrop-filter: blur(2px);
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-shell {
+  width: 100% !important;
+  height: 100% !important;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-header {
+  min-height: 72px;
+  padding: 15px 16px 13px;
+  border-bottom: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-header .eyebrow {
+  margin-bottom: 2px;
+  font-size: 8px;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-header h2 {
+  color: var(--gx24-text) !important;
+  font-size: 17px;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-header span {
+  color: var(--gx24-text-muted) !important;
+  font-size: 9px;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-content {
+  min-height: 0;
+  padding: 0 14px 22px;
+  overflow-y: auto;
+  background: var(--gx24-surface) !important;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gx24-border-strong) transparent;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-hero {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  gap: 11px;
+  align-items: center;
+  margin: 0 -14px;
+  padding: 15px 14px;
+  border-bottom: 1px solid var(--gx24-border);
+  background: var(--gx24-surface-raised);
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-avatar {
+  width: 44px;
+  height: 44px;
+  color: var(--gx24-text) !important;
+  border: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-identity h3 {
+  margin: 0;
+  color: var(--gx24-text) !important;
+  font-size: 15px;
+  letter-spacing: -.02em;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-phone-text {
+  color: var(--gx24-text-muted) !important;
+  font-size: 9px;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-hero-actions {
+  display: flex;
+  gap: 6px;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-hero-actions .button {
+  min-height: 34px;
+  padding-inline: 10px;
+  font-size: 9px;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tabs {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  display: flex;
+  gap: 2px;
+  margin: 0 -14px 12px;
+  padding: 0 10px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  scrollbar-width: none;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tabs::-webkit-scrollbar { display: none; }
+
+body.genesis-rebrand #candidateDrawer .drawer-tabs button {
+  position: relative;
+  flex: 0 0 auto;
+  min-height: 42px;
+  padding: 0 9px;
+  color: var(--gx24-text-muted) !important;
+  border: 0 !important;
+  background: transparent !important;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tabs button.active {
+  color: var(--gx24-text) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tabs button.active::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  bottom: -1px;
+  left: 8px;
+  height: 2px;
+  border-radius: 999px 999px 0 0;
+  background: var(--gx24-primary);
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tab {
+  display: grid;
+  gap: 10px;
+}
+
+body.genesis-rebrand #candidateDrawer .drawer-tab.hidden { display: none !important; }
+
+body.genesis-rebrand #candidateDrawer .candidate-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-summary-grid article {
+  min-height: 72px;
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  padding: 11px;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 12px !important;
+  background: var(--gx24-surface-raised) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-summary-grid article > span,
+body.genesis-rebrand #candidateDrawer .candidate-summary-grid article > small {
+  color: var(--gx24-text-muted) !important;
+  font-size: 8px;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-summary-grid article > strong {
+  color: var(--gx24-text) !important;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+body.genesis-rebrand #candidateDrawer .detail-block {
+  margin: 0;
+  padding: 13px;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 12px !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidateDrawer .block-title {
+  color: var(--gx24-text) !important;
+  font-size: 10px;
+}
+
+body.genesis-rebrand #candidateDrawer .helper-text,
+body.genesis-rebrand #candidateDrawer .detail-block p,
+body.genesis-rebrand #candidateDrawer .detail-block small {
+  color: var(--gx24-text-muted);
+}
+
+body.genesis-rebrand #candidateDrawer .danger-block {
+  border-color: color-mix(in srgb, var(--gx24-danger) 30%, var(--gx24-border)) !important;
+  background: var(--gx24-danger-soft) !important;
+}
+
+/* Timeline do drawer */
+body.genesis-rebrand #candidateDrawer .timeline-item {
+  position: relative;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 8px;
+}
+
+body.genesis-rebrand #candidateDrawer .timeline-marker {
+  width: 9px;
+  height: 9px;
+  margin: 9px auto 0;
+  border: 2px solid var(--gx24-surface);
+  border-radius: 50%;
+  background: var(--gx24-primary);
+  box-shadow: 0 0 0 1px var(--gx24-primary);
+}
+
+body.genesis-rebrand #candidateDrawer .timeline-card {
+  padding: 10px 11px;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 10px !important;
+  background: var(--gx24-surface-raised) !important;
+  box-shadow: none !important;
+}
+
+/* ========================================================================== */
+/* 6. CONVERSA DO PERFIL                                                      */
+/* ========================================================================== */
+
+body.genesis-rebrand #candidateDrawer .conversation-workspace {
+  min-height: 560px;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 12px !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-toolbar {
+  padding: 12px;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .candidate-conversation {
+  gap: 8px;
+  padding: 14px;
+  background: var(--gx24-bg) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message {
+  max-width: 82%;
+  padding: 9px 10px;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 13px !important;
+  color: var(--gx24-text);
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message.incoming,
+body.genesis-rebrand #candidateDrawer .conversation-message.gx24-from-candidate {
+  border-bottom-left-radius: 5px !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message.outgoing.gx24-from-ai {
+  border-color: var(--gx24-border) !important;
+  border-bottom-right-radius: 5px !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message.outgoing.gx24-from-human {
+  border-color: color-mix(in srgb, var(--gx24-accent) 22%, var(--gx24-border)) !important;
+  border-bottom-right-radius: 5px !important;
+  background: var(--gx24-accent-soft) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message.gx24-from-ai strong {
+  color: var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .conversation-message.gx24-from-human strong {
+  color: color-mix(in srgb, var(--gx24-accent) 72%, var(--gx24-text)) !important;
+}
+
+body.genesis-rebrand .message-delivery.enviada { color: var(--gx24-success) !important; }
+body.genesis-rebrand .message-delivery.enviando,
+body.genesis-rebrand .message-delivery.pendente { color: var(--gx24-warning) !important; }
+body.genesis-rebrand .message-delivery.falha { color: var(--gx24-danger) !important; }
+
+body.genesis-rebrand #candidateDrawer .chat-composer {
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #candidateDrawer .chat-composer textarea {
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+/* ========================================================================== */
+/* 7. CENTRAL DE CONVERSAS                                                    */
+/* ========================================================================== */
+
+body.genesis-rebrand #view-atendimentos .conversation-center {
+  height: calc(100dvh - 112px);
+  min-height: 620px;
+  grid-template-columns: minmax(300px, 34%) minmax(0, 1fr) !important;
+  overflow: hidden;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: var(--gx24-radius-lg) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-list {
+  border-right: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-list-header,
+body.genesis-rebrand #view-atendimentos .conversation-center-chat-header {
+  min-height: 68px;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-search {
+  min-height: 42px;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-filters {
+  gap: 4px;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-filters button {
+  min-height: 30px;
+  color: var(--gx24-text-muted) !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-filters button:hover {
+  color: var(--gx24-text) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-filters button.active {
+  color: var(--gx24-text) !important;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+  box-shadow: inset 0 -2px 0 var(--gx24-primary);
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-item {
+  min-height: 76px;
+  border-color: color-mix(in srgb, var(--gx24-border) 72%, transparent) !important;
+  background: transparent !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-item:hover {
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-item.selected {
+  background: var(--gx24-surface-raised) !important;
+  box-shadow: inset 3px 0 0 var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-item.unread::after {
+  color: var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-avatar {
+  color: var(--gx24-text) !important;
+  border: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-messages {
+  gap: 9px;
+  padding: 22px clamp(16px, 4vw, 46px) !important;
+  background: var(--gx24-bg) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-message {
+  max-width: min(72%, 620px);
+  padding: 9px 11px;
+  color: var(--gx24-text) !important;
+  border: 1px solid var(--gx24-border) !important;
+  border-radius: 14px !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-message.incoming,
+body.genesis-rebrand #view-atendimentos .conversation-center-message.gx24-from-candidate {
+  border-bottom-left-radius: 5px !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-message.ai,
+body.genesis-rebrand #view-atendimentos .conversation-center-message.gx24-from-ai {
+  border-color: var(--gx24-border) !important;
+  border-bottom-right-radius: 5px !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-message.outgoing:not(.ai),
+body.genesis-rebrand #view-atendimentos .conversation-center-message.gx24-from-human {
+  border-color: color-mix(in srgb, var(--gx24-accent) 24%, var(--gx24-border)) !important;
+  border-bottom-right-radius: 5px !important;
+  background: var(--gx24-accent-soft) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-message.ai strong,
+body.genesis-rebrand #view-atendimentos .conversation-center-message.gx24-from-ai strong {
+  color: var(--gx24-primary) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-composer {
+  padding: 11px 12px;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand #view-atendimentos .conversation-center-composer textarea {
+  min-height: 48px;
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface-raised) !important;
+}
+
+/* O botão flutuante não deve disputar espaço com o composer da central. */
+body.genesis-rebrand[data-active-view="atendimentos"] .floating-chat-button,
+body.genesis-rebrand[data-active-view="atendimentos"] .floating-chat-launcher,
+body.genesis-rebrand[data-active-view="atendimentos"] #floatingChatButton {
+  display: none !important;
+}
+
+/* Na central, a ação de atualização já existe na lista. */
+body.genesis-rebrand[data-active-view="atendimentos"] #primaryActionButton {
+  display: none !important;
+}
+
+/* ========================================================================== */
+/* 8. DASHBOARD / VAGAS / DOCUMENTOS / REVISÕES                              */
+/* ========================================================================== */
+
+body.genesis-rebrand .dashboard-command-kpis,
+body.genesis-rebrand .kpi-grid {
+  gap: 10px;
+}
+
+body.genesis-rebrand .dashboard-command-kpi,
+body.genesis-rebrand .kpi-card {
+  border: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand .dashboard-command-kpi.warning,
+body.genesis-rebrand .kpi-card.warning {
+  border-color: color-mix(in srgb, var(--gx24-warning) 24%, var(--gx24-border)) !important;
+  background: var(--gx24-warning-soft) !important;
+}
+
+body.genesis-rebrand .kpi-card.success {
+  border-color: color-mix(in srgb, var(--gx24-success) 24%, var(--gx24-border)) !important;
+  background: var(--gx24-success-soft) !important;
+}
+
+body.genesis-rebrand .vacancy-operational-list,
+body.genesis-rebrand .documents-summary-card,
+body.genesis-rebrand .document-card {
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand .review-workspace {
+  border: 1px solid var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+  box-shadow: none !important;
+}
+
+body.genesis-rebrand .review-queue-pane,
+body.genesis-rebrand .review-detail-header,
+body.genesis-rebrand .review-decision-pane {
+  border-color: var(--gx24-border) !important;
+  background: var(--gx24-surface) !important;
+}
+
+body.genesis-rebrand .review-detail-pane {
+  background: var(--gx24-bg) !important;
+}
+
+body.genesis-rebrand .review-queue-item {
+  color: var(--gx24-text) !important;
+  border-color: color-mix(in srgb, var(--gx24-border) 70%, transparent) !important;
+}
+
+body.genesis-rebrand .review-queue-item:hover,
+body.genesis-rebrand .review-queue-item.selected {
+  background: var(--gx24-surface-raised) !important;
+}
+
+body.genesis-rebrand .review-queue-item.selected {
+  box-shadow: inset 3px 0 0 var(--gx24-primary) !important;
+}
+
+/* ========================================================================== */
+/* 9. LIGHT / DARK — AJUSTES DE CONTRASTE                                     */
+/* ========================================================================== */
+
+html:not([data-theme="dark"]) body.genesis-rebrand .sidebar {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body.genesis-rebrand :where(.table-filter-popover, .candidate-filters-popover, .notification-center-panel, .profile-menu, .profile-edit-panel) {
+  background: var(--gx24-surface-raised) !important;
+}
+
+html[data-theme="dark"] body.genesis-rebrand .candidate-data-table thead th {
+  background: #0D2C37 !important;
+}
+
+/* ========================================================================== */
+/* 10. RESPONSIVO                                                             */
+/* ========================================================================== */
+
+@media (max-width: 1220px) {
+  body.genesis-rebrand #view-candidates .candidate-kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  body.genesis-rebrand #view-atendimentos .conversation-center {
+    grid-template-columns: minmax(280px, 38%) minmax(0, 1fr) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  body.genesis-rebrand #view-candidates .candidate-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.genesis-rebrand #view-candidates .candidate-toolbar {
+    align-items: stretch;
+  }
+
+  body.genesis-rebrand #view-candidates .candidate-toolbar .inline-search {
+    min-width: 0;
+    width: 100%;
+  }
+
+  body.genesis-rebrand #candidateDrawer[open] {
+    width: min(520px, 100vw) !important;
+    max-width: 100vw !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body.genesis-rebrand #view-candidates .candidate-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card {
+    min-height: 82px;
+    padding: 12px;
+  }
+
+  body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card strong {
+    font-size: 20px;
+  }
+
+  body.genesis-rebrand #candidateDrawer[open] {
+    inset: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-left: 0 !important;
+  }
+
+  body.genesis-rebrand #candidateDrawer .candidate-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.genesis-rebrand #candidateDrawer .candidate-hero {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  body.genesis-rebrand #candidateDrawer .candidate-hero-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  body.genesis-rebrand #candidateDrawer .candidate-hero-actions .button {
+    flex: 1;
+  }
+
+  body.genesis-rebrand #view-atendimentos .conversation-center {
+    height: calc(100dvh - 150px);
+    min-height: 520px;
+  }
+
+  body.genesis-rebrand #view-atendimentos .conversation-center-message {
+    max-width: 88%;
+  }
+}
+
+@media (max-width: 480px) {
+  body.genesis-rebrand #view-candidates .candidate-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body.genesis-rebrand #view-candidates .candidate-kpis .kpi-card span {
+    font-size: 9px;
+  }
+
+  body.genesis-rebrand #candidateDrawer .drawer-content {
+    padding-inline: 10px;
+  }
+
+  body.genesis-rebrand #candidateDrawer .candidate-hero,
+  body.genesis-rebrand #candidateDrawer .drawer-tabs {
+    margin-inline: -10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.genesis-rebrand *,
+  body.genesis-rebrand *::before,
+  body.genesis-rebrand *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
