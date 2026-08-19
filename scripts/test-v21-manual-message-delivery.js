@@ -23,12 +23,13 @@ assert.match(backend, /created_at < NOW\(\)-INTERVAL '90 seconds'/, 'A reconcili
 assert.match(backend, /'reenvio_automatico',FALSE/, 'O backend não registra a proibição de reenvio automático.');
 assert.doesNotMatch(
   backend.slice(backend.indexOf('async function reconcileStaleManualMessages'), backend.indexOf('let notificationWorkerBusy')),
-  /wahaRequest|triggerManualCandidateMessage/,
+  /triggerManualCandidateMessage/,
   'A reconciliação não pode reenviar mensagens antigas.',
 );
 assert.match(sendRoute, /'ENVIANDO'/, 'Novo envio não usa um estado transitório explícito.');
-assert.match(sendRoute, /status_envio='ENVIADA'/, 'Confirmação do WAHA não conclui o envio.');
-assert.match(sendRoute, /status_envio='FALHA'/, 'Falha do WAHA não encerra o envio.');
+assert.doesNotMatch(sendRoute, /wahaRequest\('\\/api\\/sendText'/, 'A conversa humana ainda envia diretamente pelo WAHA.');
+assert.match(sendRoute, /status_envio='ENVIADA'/, 'Confirmação do workflow não conclui o envio.');
+assert.match(sendRoute, /status_envio='FALHA'/, 'Falha do workflow não encerra o envio.');
 
 for (const [name, source, guard] of [
   ['perfil do candidato', drawer, /if \(local\.sendingMessage\) return/],
