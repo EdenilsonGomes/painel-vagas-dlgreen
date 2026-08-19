@@ -3318,6 +3318,7 @@ app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
     const id = parseId(req.params.id);
     const decisao = String(req.body?.decisao || '').toUpperCase();
     const motivo = String(req.body?.motivo || '').trim().slice(0,4000) || null;
+    const enviarMensagem = req.body?.enviar_mensagem === true;
     if (!id || !['APROVAR','NAO_APROVAR','REPROCESSAR','SOLICITAR_NOVO_PDF'].includes(decisao)) return res.status(400).json({ sucesso:false, erro:'Decisão inválida.' });
     await client.query('BEGIN');
     const result = await client.query(`SELECT * FROM genesis_resolver_revisao_v1($1,$2,$3,$4)`, [id, decisao, motivo, currentUserName(req)]);
@@ -3325,10 +3326,42 @@ app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
     if(['APROVAR','NAO_APROVAR'].includes(decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2,'por',$3,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,decisao,currentUserName(req)]);
     await client.query('COMMIT');
     const data=result.rows[0];
-    let acionamento=null;
-    try { acionamento=await triggerStaticChatbotAction({ candidatoId:data.candidato_id, revisaoId:id, action:data.action, mensagem:data.mensagem_whatsapp || '', origem:'PAINEL_REVISAO_CHATBOT_ESTATICO_V1' }); }
-    catch(error){ acionamento={acionado:false,aviso:error.message}; }
-    res.json({ sucesso:true, mensagem:data.mensagem_painel || 'Decisão registrada.', resultado:data, acionamento });
+
+const comunicacaoOpcional = ['APROVAR','NAO_APROVAR'].includes(decisao);
+const deveAcionar = comunicacaoOpcional ? enviarMensagem : true;
+
+let acionamento=null;
+
+if (deveAcionar) {
+  try {
+    acionamento=await triggerStaticChatbotAction({
+      candidatoId:data.candidato_id,
+      revisaoId:id,
+      action:data.action,
+      mensagem:data.mensagem_whatsapp || '',
+      origem:'PAINEL_REVISAO_CHATBOT_ESTATICO_V1'
+    });
+  } catch(error) {
+    acionamento={
+      acionado:false,
+      aviso:error.message
+    };
+  }
+} else {
+  acionamento={
+    acionado:false,
+    suprimido:true,
+    motivo:'Decisão interna registrada sem comunicação ao candidato.'
+  };
+}
+
+res.json({
+  sucesso:true,
+  mensagem:data.mensagem_painel || 'Decisão registrada.',
+  resultado:data,
+  acionamento,
+  mensagem_enviada:comunicacaoOpcional ? enviarMensagem : null
+});
   } catch(error){ try{await client.query('ROLLBACK')}catch{} next(error); } finally { client.release(); }
 });
 
@@ -3729,7 +3762,7 @@ app.post('/api/admin/candidatos/:id/ctps/decisao-manual', requireAdmin, async (r
           UPDATE candidatos SET
             aprovado=TRUE,status='APROVADO',etapa=$2,
             motivo_reprovacao=NULL,motivo_reprovacao_codigo=NULL,motivo_reprovacao_categoria=NULL,motivo_reprovacao_detalhe=NULL,
-            reprovacao_realocavel=NULL,reprovacao_vaga_id=NULL,revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,
+            reprovacao_realocavel=TRUE,reprovacao_vaga_id=NULL,revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,,
             ia_atendimento_ativo=CASE WHEN atendimento_humano_ativo IS TRUE THEN FALSE ELSE TRUE END,
             ia_retomada_em=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_em ELSE NOW() END,
             ia_retomada_por=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_por ELSE $3 END,
