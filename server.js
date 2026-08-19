@@ -260,10 +260,13 @@ async function triggerManualCandidateMessage(payload) {
   const timer = setTimeout(() => controller.abort(), ATENDIMENTO_MANUAL_WEBHOOK_TIMEOUT_MS);
   try {
     const response = await fetch(ATENDIMENTO_MANUAL_WEBHOOK_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        token: ATENDIMENTO_MANUAL_WEBHOOK_TOKEN,
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Genesis-Webhook-Token': ATENDIMENTO_MANUAL_WEBHOOK_TOKEN,
+  },
+  body: JSON.stringify({
+    token: ATENDIMENTO_MANUAL_WEBHOOK_TOKEN,
         candidato_id: payload.candidatoId,
         mensagem: payload.mensagem,
         evento: payload.evento || 'ATENDIMENTO_CONTINUADO_PELO_PAINEL',
