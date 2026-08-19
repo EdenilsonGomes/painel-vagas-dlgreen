@@ -280,6 +280,7 @@ async function triggerManualCandidateMessage(payload) {
     return {
       configurado: true,
       enviado: body.enviado !== false,
+      mensagem_id: String(body.mensagem_id || body.message_id || body.wamid || body.id || '').trim() || null,
       aviso: body.aviso || null,
     };
   } finally {
