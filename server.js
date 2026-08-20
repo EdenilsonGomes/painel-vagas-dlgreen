@@ -3762,7 +3762,7 @@ app.post('/api/admin/candidatos/:id/ctps/decisao-manual', requireAdmin, async (r
           UPDATE candidatos SET
             aprovado=TRUE,status='APROVADO',etapa=$2,
             motivo_reprovacao=NULL,motivo_reprovacao_codigo=NULL,motivo_reprovacao_categoria=NULL,motivo_reprovacao_detalhe=NULL,
-            reprovacao_realocavel=TRUE,reprovacao_vaga_id=NULL,revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,,
+            reprovacao_realocavel=TRUE,reprovacao_vaga_id=NULL,revisao_pendente=FALSE,revisao_tipo=NULL,revisao_motivo=NULL,
             ia_atendimento_ativo=CASE WHEN atendimento_humano_ativo IS TRUE THEN FALSE ELSE TRUE END,
             ia_retomada_em=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_em ELSE NOW() END,
             ia_retomada_por=CASE WHEN atendimento_humano_ativo IS TRUE THEN ia_retomada_por ELSE $3 END,
