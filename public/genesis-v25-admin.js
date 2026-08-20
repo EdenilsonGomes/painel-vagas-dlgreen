@@ -323,13 +323,13 @@
     if (button) button.disabled = !candidates.length || !fields.length;
   }
 
-  async function openCandidateExport() {
+  async function openCandidateExport(presetIds = []) {
     if (!isAdmin()) return toast('Exportação disponível somente para administradores.', 'error');
     ensureExportDialog();
     try {
       const result = await API('/api/candidatos');
       exportCandidates = Array.isArray(result.candidatos) ? result.candidatos : [];
-      selectedIds = new Set();
+      selectedIds = new Set((Array.isArray(presetIds) ? presetIds : []).map(String));
       document.getElementById('candidateExportV25Search').value = '';
       document.querySelector('input[name="candidateExportV25Scope"][value="SELECTED"]').checked = true;
       renderExportCandidateList();
@@ -360,7 +360,7 @@
 
     const button = document.createElement('button');
     button.id = 'candidateExportV25Button';
-    button.className = 'button button-ghost candidate-export-v25-button hidden';
+    button.className = 'button button-ghost candidate-export-v25-button';
     button.type = 'button';
     button.innerHTML = '<span aria-hidden="true">⇩</span><span>Exportar</span>';
     button.addEventListener('click', openCandidateExport);
@@ -369,180 +369,17 @@
   }
 
   function syncAdminVisibility() {
-    document.getElementById('candidateExportV25Button')?.classList.toggle('hidden', !isAdmin());
-  }
-
-  function reviewCommunicationApplicable(decision) {
-    return ['APROVAR', 'NAO_APROVAR'].includes(String(decision || '').toUpperCase());
-  }
-
-  function selectedReviewDecision() {
-    return String(document.querySelector('input[name="reviewDecisionChoice"]:checked')?.value || '').toUpperCase();
-  }
-
-  function ensureReviewCommunicationControl() {
-    const root = document.getElementById('reviewDecisionContent');
-    if (!root) return;
-
-    const decision = selectedReviewDecision();
-    const existing = document.getElementById('reviewCommunicationV25');
-
-    if (!reviewCommunicationApplicable(decision)) {
-      existing?.remove();
-      return;
-    }
-
-    if (!existing) {
-      const note = root.querySelector('.review-decision-note');
-      if (!note) return;
-
-      const box = document.createElement('section');
-      box.id = 'reviewCommunicationV25';
-      box.className = 'review-communication-v25';
-      box.innerHTML = `
-        <div class="review-communication-v25-head">
-          <div>
-            <strong>Comunicação com o candidato</strong>
-            <small>A decisão interna e o envio de mensagem são ações separadas.</small>
-          </div>
-          <label class="review-communication-v25-switch">
-            <input id="reviewSendMessageV25" type="checkbox">
-            <span>Enviar mensagem</span>
-          </label>
-        </div>
-        <div id="reviewCommunicationV25State" class="review-communication-v25-state is-internal">
-          <strong>Somente interno</strong>
-          <span>Nenhuma mensagem será enviada ao candidato.</span>
-        </div>`;
-      note.after(box);
-      box.querySelector('#reviewSendMessageV25').addEventListener('change', syncReviewCommunicationUi);
-    }
-
-    syncReviewCommunicationUi();
-  }
-
-  function syncReviewCommunicationUi() {
-    const checkbox = document.getElementById('reviewSendMessageV25');
-    const stateNode = document.getElementById('reviewCommunicationV25State');
-    const button = document.getElementById('confirmReviewDecisionButton');
-    if (!checkbox || !stateNode) return;
-
-    const willSend = checkbox.checked;
-    const nextMode = willSend ? 'send' : 'internal';
-
-    // Evita loop de MutationObserver: só altera o DOM quando o estado realmente mudou.
-    if (stateNode.dataset.mode !== nextMode) {
-      stateNode.dataset.mode = nextMode;
-      stateNode.classList.toggle('is-internal', !willSend);
-      stateNode.classList.toggle('will-send', willSend);
-      stateNode.innerHTML = willSend
-        ? '<strong>WhatsApp</strong><span>O fluxo configurado poderá enviar a mensagem prevista ao candidato após salvar.</span>'
-        : '<strong>Somente interno</strong><span>Nenhuma mensagem será enviada ao candidato.</span>';
-    }
-
-    if (button && reviewCommunicationApplicable(selectedReviewDecision())) {
-      const nextLabel = willSend ? 'Salvar e enviar mensagem' : 'Salvar decisão';
-      if (button.textContent !== nextLabel) button.textContent = nextLabel;
-    }
-  }
-
-  async function handleReviewConfirmCapture(event) {
-    const button = event.target.closest('[data-review-confirm]');
-    if (!button) return;
-
-    const decision = selectedReviewDecision();
-    if (!reviewCommunicationApplicable(decision)) return;
-
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-
-    const selected = document.querySelector('.review-queue-item.selected[data-review-open]');
-    const reviewId = Number(selected?.dataset?.reviewOpen || 0);
-    if (!reviewId) return toast('Não foi possível identificar a revisão selecionada.', 'error');
-
-    const note = String(document.getElementById('reviewDecisionNote')?.value || '').trim();
-    const enviarMensagem = Boolean(document.getElementById('reviewSendMessageV25')?.checked);
-    const actionLabel = decision === 'APROVAR' ? 'aprovação' : 'decisão negativa';
-    const confirmationText = enviarMensagem
-      ? `Salvar a ${actionLabel} e permitir a comunicação configurada com o candidato?`
-      : `Salvar a ${actionLabel} somente internamente, sem enviar mensagem ao candidato?`;
-
-    if (!window.confirm(confirmationText)) return;
-
-    button.disabled = true;
-    const original = button.textContent;
-    button.textContent = 'Salvando...';
-
-    try {
-      const defaultReasons = {
-        APROVAR: 'Compatibilidade confirmada pelo recrutador.',
-        NAO_APROVAR: 'Incompatibilidade operacional confirmada em revisão interna.',
-      };
-      const result = await API(`/api/revisoes/${reviewId}/decidir`, {
-        method: 'POST',
-        body: JSON.stringify({
-          decisao: decision,
-          motivo: note || defaultReasons[decision],
-          enviar_mensagem: enviarMensagem,
-        }),
-      });
-
-      const suffix = enviarMensagem
-        ? ' A comunicação configurada foi liberada.'
-        : ' Nenhuma mensagem foi enviada ao candidato.';
-      toast((result.mensagem || 'Decisão registrada.') + suffix);
-
-      if (typeof window.loadReviews === 'function') {
-        await window.loadReviews(true);
-      } else {
-        document.getElementById('refreshCurrentViewButton')?.click();
-      }
-      window.GenesisPanel?.reloadCandidates?.(true);
-    } catch (error) {
-      toast(error.message || 'Não foi possível concluir a revisão.', 'error');
-    } finally {
-      button.disabled = false;
-      button.textContent = original;
-      setTimeout(ensureReviewCommunicationControl, 0);
-    }
-  }
-
-  function watchReviewDecision() {
-    const root = document.getElementById('reviewDecisionContent');
-    if (!root || root.dataset.v25Observed === 'true') return;
-    root.dataset.v25Observed = 'true';
-
-    const observer = new MutationObserver(() => {
-      queueMicrotask(ensureReviewCommunicationControl);
-    });
-    observer.observe(root, { childList: true, subtree: false });
-
-    document.addEventListener('change', (event) => {
-      if (event.target.matches('input[name="reviewDecisionChoice"]')) {
-        setTimeout(ensureReviewCommunicationControl, 0);
-      }
-    });
-    document.addEventListener('click', handleReviewConfirmCapture, true);
+    const button = document.getElementById('candidateExportV25Button');
+    if (isAdmin()) ensureCandidateExportButton();
+    else button?.remove();
   }
 
   function boot() {
-    ensureCandidateExportButton();
-    watchReviewDecision();
     syncAdminVisibility();
-
-    const bodyObserver = new MutationObserver(() => {
-      ensureCandidateExportButton();
-      watchReviewDecision();
-      syncAdminVisibility();
-    });
-    bodyObserver.observe(document.body, {
-      subtree: true,
-      childList: true,
-      attributes: true,
-      attributeFilter: ['data-user-role'],
-    });
+    window.addEventListener('genesis:user-ready', syncAdminVisibility);
   }
+
+  window.GenesisV25 = Object.assign(window.GenesisV25 || {}, { openCandidateExport });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot, { once: true });

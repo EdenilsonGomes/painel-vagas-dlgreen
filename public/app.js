@@ -34,7 +34,7 @@ const state = {
   candidateDistance: 'TODAS',
   candidateDistanceSort: 'RECENTES',
   candidateActivitySort: 'DESC',
-  candidateMode: 'table',
+  selectedCandidateIds: new Set(),
   selectedCandidateId: null,
   selectedCandidate: null,
   selectedCandidateExtras: { selectedTags: [] },
@@ -217,9 +217,9 @@ const el = Object.fromEntries([
   'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancyStatusSelect', 'vacancyPeriodSelect', 'vacancyTableMode', 'vacancyKanbanMode', 'vacanciesKanbanContainer', 'vacancyActiveKpiCard', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
   'vacancyKpiInProcess', 'vacancyKpiApproved', 'vacancyKpiTop', 'vacancyKpiTopCount', 'vacanciesLoading', 'vacanciesEmpty',
   'vacanciesTableWrapper', 'vacanciesTableBody', 'candidateStatusSegments', 'candidatePeriodSegments', 'candidatePeriodSelect', 'candidateActivitySortButton', 'candidateSearchInput',
-  'candidateFilterToggleButton', 'candidateFilterPanel', 'candidateVacancyFilter', 'candidateStageFilter', 'candidateDocumentFilter', 'candidateInterviewFilter', 'candidateSexFilter', 'candidateReallocationFilter', 'candidateDistanceFilter', 'candidateDistanceSort', 'clearCandidateFiltersButton',
-  'candidateTableMode', 'candidateKanbanMode', 'candidateKpiTotal', 'candidateKpiProcess',
-  'candidateKpiApproved', 'candidateKpiAdmission', 'candidateKpiHired', 'candidateKpiRejected', 'candidateTableContainer', 'candidateKanbanContainer',
+  'candidateFilterToggleButton', 'candidateFilterPanel', 'candidateVacancyFilter', 'candidateStageFilter', 'candidateDocumentFilter', 'candidateInterviewFilter', 'candidateSexFilter', 'candidateReallocationFilter', 'candidateDistanceFilter', 'candidateDistanceSort',
+  'candidateKpiTotal', 'candidateKpiProcess',
+  'candidateKpiApproved', 'candidateKpiHired', 'candidateKpiRejected', 'candidateTableContainer',
   'candidatesLoading', 'candidatesEmpty', 'candidatesTableWrapper', 'candidatesTableBody', 'sidebarLogoutButton',
   'interviewPeriodSegments', 'interviewsList', 'documentTypeSegments', 'documentSearchInput', 'documentAuditExportButton',
   'documentAuditExportDialog', 'documentAuditResult', 'documentAuditLimit', 'documentAuditVacancy', 'documentAuditStart', 'documentAuditEnd', 'closeDocumentAuditExportButton', 'cancelDocumentAuditExportButton', 'confirmDocumentAuditExportButton',
@@ -465,6 +465,7 @@ function setView(name) {
   el.refreshCurrentViewButton?.classList.toggle('hidden', name === 'reviews');
   el.dashboardUpdatedAt?.classList.toggle('hidden', name !== 'dashboard');
   el.sidebar.classList.remove('open');
+  window.scrollTo(0, 0);
   loadCurrentView();
 }
 
@@ -1588,7 +1589,6 @@ function renderCandidates() {
   el.candidateKpiTotal.textContent = baseCandidates.length;
   el.candidateKpiProcess.textContent = count((item) => ['NOVO', 'EM_PROCESSO'].includes(String(item.status || '').toUpperCase()));
   el.candidateKpiApproved.textContent = count((item) => String(item.status || '').toUpperCase() === 'APROVADO');
-  el.candidateKpiAdmission.textContent = count((item) => String(item.status || '').toUpperCase() === 'EM_ADMISSAO');
   el.candidateKpiHired.textContent = count((item) => String(item.status || '').toUpperCase() === 'CONTRATADO');
   el.candidateKpiRejected.textContent = count((item) => String(item.status || '').toUpperCase() === 'REPROVADO');
   document.querySelectorAll('[data-candidate-kpi-filter]').forEach((card) => card.classList.toggle('active-filter', card.dataset.candidateKpiFilter === state.candidateStatus));
@@ -1596,7 +1596,21 @@ function renderCandidates() {
 
   updateCandidateFilterToggle();
   renderCandidateTable(candidates);
-  renderCandidateKanban(candidates);
+  syncCandidateBulkUi(candidates);
+}
+
+function syncCandidateBulkUi(visibleCandidates = state.candidates.filter(candidateMatches)) {
+  const visibleIds = visibleCandidates.map((candidate) => String(candidate.id));
+  const selectedVisible = visibleIds.filter((id) => state.selectedCandidateIds.has(id));
+  const bar = document.getElementById('candidateBulkBar');
+  const count = document.getElementById('candidateBulkCount');
+  const selectAll = document.getElementById('candidateSelectAll');
+  bar?.classList.toggle('hidden', state.selectedCandidateIds.size === 0);
+  if (count) count.textContent = String(state.selectedCandidateIds.size);
+  if (selectAll) {
+    selectAll.checked = Boolean(visibleIds.length && selectedVisible.length === visibleIds.length);
+    selectAll.indeterminate = Boolean(selectedVisible.length && selectedVisible.length < visibleIds.length);
+  }
 }
 
 function candidateHumanServiceBadge(candidate) {
@@ -1624,49 +1638,17 @@ function renderCandidateTable(candidates) {
     const interview = c.entrevista_inicio ? `${formatDate(c.entrevista_inicio)}` : 'Não agendada';
     const interviewClass = c.entrevista_inicio ? '' : ' pending';
     const lastActivity = formatRelativeTime(c.updated_at);
-    return `<tr data-candidate-row="${c.id}" tabindex="0" role="button" aria-label="Abrir perfil de ${escapeHtml(c.nome || 'candidato')}">
+    const selected = state.selectedCandidateIds.has(String(c.id));
+    return `<tr data-candidate-row="${c.id}" class="${selected ? 'is-selected' : ''}" tabindex="0" role="button" aria-label="Abrir perfil de ${escapeHtml(c.nome || 'candidato')}">
+      <td class="candidate-select-column"><input data-candidate-select="${c.id}" type="checkbox" ${selected ? 'checked' : ''} aria-label="Selecionar ${escapeHtml(c.nome || 'candidato')}"></td>
       <td><div class="candidate-person-cell"><span class="candidate-row-avatar">${escapeHtml(initials(c.nome || c.telefone))}</span><div class="candidate-person-copy"><strong>${escapeHtml(c.nome || 'Nome não informado')}</strong><span>${escapeHtml(formatPhone(c.telefone))}</span></div></div></td>
       <td><div class="candidate-vacancy-cell"><strong>${escapeHtml(c.vaga_nome || c.vaga_legacy || 'Não vinculada')}</strong><span>${escapeHtml(c.vaga_codigo || 'Sem código')}</span></div></td>
-      <td>${window.GenesisGeoV1?.candidateDistanceHtml?.(c) || '<span class="geo-mini-status">—</span>'}</td>
-      <td><div class="candidate-status-stack"><span class="badge ${badgeClass(c.status)}">${escapeHtml(statusLabels[c.status] || c.status || 'Não informado')}</span>${candidateHumanServiceBadge(c)}</div><span class="candidate-stage-text">${escapeHtml(stageLabels[c.etapa] || c.etapa || 'Etapa não informada')}</span></td>
-      <td><span class="candidate-doc-count">▤ ${docs} arquivo${docs === 1 ? '' : 's'}</span></td>
-      <td><span class="candidate-interview-chip${interviewClass}">${escapeHtml(interview)}</span></td>
-      <td><span class="candidate-activity">${escapeHtml(lastActivity)}</span></td>
+      <td><span class="candidate-stage-text">${escapeHtml(stageLabels[c.etapa] || c.etapa || 'Etapa não informada')}</span></td>
+      <td><div class="candidate-status-stack"><span class="badge ${badgeClass(c.status)}">${escapeHtml(statusLabels[c.status] || c.status || 'Não informado')}</span>${candidateHumanServiceBadge(c)}</div></td>
+      <td><span class="candidate-activity">${escapeHtml(lastActivity)}</span><small class="candidate-activity-detail">${docs} documento${docs === 1 ? '' : 's'} · ${escapeHtml(interview)}</small></td>
+      <td><div class="candidate-row-actions"><button class="icon-button" data-candidate-action="open" data-id="${c.id}" type="button" aria-label="Abrir perfil">•••</button></div></td>
     </tr>`;
   }).join('');
-}
-
-function kanbanGroup(candidate) {
-  if (candidate.status === 'REPROVADO') return 'rejected';
-  if (candidate.status === 'CONTRATADO') return 'hired';
-  if (candidate.status === 'EM_ADMISSAO') return 'admission';
-  if (['ENTREVISTA_AGENDADA', 'AGUARDANDO_ENTREVISTA'].includes(candidate.etapa)) return 'interview';
-  if (candidate.status === 'APROVADO') return 'approved';
-  if (['AGUARDANDO_CTPS_CEP', 'AGUARDANDO_CTPS', 'AGUARDANDO_CEP', 'ANALISANDO_DOCUMENTOS'].includes(candidate.etapa)) return 'documents';
-  if (candidate.etapa === 'ESCOLHENDO_VAGA') return 'vacancy';
-  return 'new';
-}
-
-function renderCandidateKanban(candidates) {
-  const columns = [
-    ['new', 'Novos'], ['vacancy', 'Escolhendo vaga'], ['documents', 'Documentos'],
-    ['approved', 'Aprovados na triagem'], ['interview', 'Entrevista'], ['admission', 'Em admissão'],
-    ['hired', 'Contratados'], ['rejected', 'Reprovados'],
-  ];
-  el.candidateKanbanContainer.innerHTML = columns.map(([key, title]) => {
-    const items = candidates.filter((candidate) => kanbanGroup(candidate) === key);
-    return `<article class="kanban-column"><header class="kanban-head">${escapeHtml(title)}<span>${items.length}</span></header><div class="kanban-cards">${items.map((candidate) => `
-      <article class="kanban-card" data-candidate-action="open" data-id="${candidate.id}"><strong>${escapeHtml(candidate.nome || 'Nome não informado')}</strong><span>${escapeHtml(candidate.vaga_nome || candidate.vaga_legacy || 'Sem vaga')}</span><div>${candidateHumanServiceBadge(candidate)}</div><small>${escapeHtml(stageLabels[candidate.etapa] || candidate.etapa || '')}</small></article>
-    `).join('') || '<div class="empty-state compact">Nenhum candidato</div>'}</div></article>`;
-  }).join('');
-}
-
-function setCandidateMode(mode) {
-  state.candidateMode = mode;
-  el.candidateTableMode.classList.toggle('active', mode === 'table');
-  el.candidateKanbanMode.classList.toggle('active', mode === 'kanban');
-  el.candidateTableContainer.classList.toggle('hidden', mode !== 'table');
-  el.candidateKanbanContainer.classList.toggle('hidden', mode !== 'kanban');
 }
 
 async function openCandidate(id, initialTab = '') {
@@ -1684,7 +1666,7 @@ async function openCandidate(id, initialTab = '') {
     window.GenesisScreening?.loadCandidate(id).catch(() => {});
     el.candidateDrawerLoading.classList.add('hidden');
     el.candidateDrawerContent.classList.remove('hidden');
-    if (initialTab) document.querySelector(`[data-drawer-tab="${CSS.escape(initialTab)}"]`)?.click();
+    if (initialTab) setDrawerTab(initialTab);
   } catch (error) {
     el.candidateDrawerLoading.innerHTML = emptyState('Não foi possível carregar', error.message);
   }
@@ -1857,7 +1839,11 @@ function renderCandidateTimeline(items) {
 }
 
 function setDrawerTab(name) {
-  document.querySelectorAll('[data-drawer-tab]').forEach((button) => button.classList.toggle('active', button.dataset.drawerTab === name));
+  document.querySelectorAll('[data-drawer-quick-tab]').forEach((button) => {
+    const active = button.dataset.drawerQuickTab === name;
+    button.classList.toggle('active', active);
+    button.setAttribute('aria-pressed', String(active));
+  });
   document.querySelectorAll('.drawer-tab').forEach((section) => section.classList.toggle('hidden', section.id !== `drawer-tab-${name}`));
   window.GenesisAtendimentoV15?.tabChanged?.(name);
 }
@@ -2295,15 +2281,18 @@ function renderReviewDecision(item) {
   if (!options.some((option) => option.value === state.reviewDecision)) state.reviewDecision = options[0].value;
   const impact = reviewDecisionImpact(state.reviewDecision);
   el.reviewDecisionContent.innerHTML = `
-    <header class="review-decision-header"><div><h3>Concluir revisão</h3><p>Escolha uma decisão e confira o impacto antes de confirmar.</p></div><button class="button button-ghost review-mobile-back" data-review-mobile-pane="detail" type="button">Voltar</button></header>
-    <div class="review-decision-options">${options.map((option) => `<label class="review-decision-option"><input name="reviewDecisionChoice" type="radio" value="${option.value}" ${option.value === state.reviewDecision ? 'checked' : ''}><span><strong>${escapeHtml(option.title)}</strong><small>${escapeHtml(option.description)}</small></span></label>`).join('')}</div>
-    <label class="review-decision-note">Contexto para o próximo atendimento (opcional)<textarea id="reviewDecisionNote" maxlength="2000" placeholder="Registre somente o contexto necessário para a equipe ou para a retomada da IA."></textarea></label>
+    <header class="review-decision-header"><div><h3>Concluir revisão</h3></div><button class="button button-ghost review-mobile-back" data-review-mobile-pane="detail" type="button">Voltar</button></header>
+    <div class="review-decision-options">${options.map((option) => `<label class="review-decision-option"><input name="reviewDecisionChoice" type="radio" value="${option.value}" ${option.value === state.reviewDecision ? 'checked' : ''}><span><strong>${escapeHtml(option.title)}</strong></span></label>`).join('')}</div>
+    <label class="review-decision-reason">Motivo<select id="reviewDecisionReason"><option value="">Selecione um motivo</option><option value="COMPATIBILIDADE_CONFIRMADA">Compatibilidade confirmada</option><option value="EXPERIENCIA_INSUFICIENTE">Experiência insuficiente para a vaga</option><option value="DOCUMENTO_INCONSISTENTE">Documento inconsistente</option><option value="REQUISITO_NAO_ATENDIDO">Requisito obrigatório não atendido</option><option value="OUTRO">Outro motivo</option></select></label>
+    <label class="review-decision-note">Observação (opcional)<textarea id="reviewDecisionNote" maxlength="2000" placeholder="Registre apenas o contexto necessário para a equipe."></textarea></label>
+    <label id="reviewCommunicationControl" class="review-communication-control ${['APROVAR','NAO_APROVAR'].includes(state.reviewDecision) ? '' : 'hidden'}"><input id="reviewSendMessage" type="checkbox"><span><strong>Enviar mensagem</strong><small>Desmarcado por padrão. A decisão interna será salva sem contato com o candidato.</small></span></label>
     <div id="reviewDecisionImpact" class="review-decision-impact"><strong>${escapeHtml(impact[0])}</strong><span>${escapeHtml(impact[1])}</span></div>
     <footer class="review-decision-footer"><button id="confirmReviewDecisionButton" class="button button-primary" data-review-confirm type="button">${escapeHtml(reviewDecisionPrimaryLabel(state.reviewDecision))}</button><button class="button button-ghost" data-review-mobile-pane="queue" type="button">Cancelar</button></footer>`;
 }
 
 function reviewDecisionPrimaryLabel(decision) {
-  return ({ ENCERRAR:'Confirmar: já resolvido', ATENDER_HUMANO:'Iniciar atendimento', DEVOLVER_IA:'Salvar e devolver à IA', LIBERAR_EQUIPE:'Liberar para a equipe', REPROCESSAR:'Reprocessar documento', SOLICITAR_NOVO_PDF:'Solicitar novo PDF', APROVAR:'Confirmar aprovação', NAO_APROVAR:'Confirmar decisão negativa' })[decision] || 'Confirmar decisão';
+  if (['APROVAR','NAO_APROVAR'].includes(decision)) return document.getElementById('reviewSendMessage')?.checked ? 'Salvar e enviar mensagem' : 'Salvar decisão';
+  return ({ ENCERRAR:'Confirmar: já resolvido', ATENDER_HUMANO:'Iniciar atendimento', DEVOLVER_IA:'Salvar e devolver à IA', LIBERAR_EQUIPE:'Liberar para a equipe', REPROCESSAR:'Reprocessar documento', SOLICITAR_NOVO_PDF:'Solicitar novo PDF' })[decision] || 'Confirmar decisão';
 }
 
 function syncReviewDecisionUi(decision) {
@@ -2311,6 +2300,9 @@ function syncReviewDecisionUi(decision) {
   const impact = reviewDecisionImpact(decision);
   const impactNode = document.getElementById('reviewDecisionImpact');
   if (impactNode) impactNode.innerHTML = `<strong>${escapeHtml(impact[0])}</strong><span>${escapeHtml(impact[1])}</span>`;
+  document.getElementById('reviewCommunicationControl')?.classList.toggle('hidden', !['APROVAR','NAO_APROVAR'].includes(decision));
+  const sendMessage = document.getElementById('reviewSendMessage');
+  if (sendMessage) sendMessage.checked = false;
   const button = document.getElementById('confirmReviewDecisionButton');
   if (button) button.textContent = reviewDecisionPrimaryLabel(decision);
 }
@@ -2334,6 +2326,9 @@ async function confirmSelectedReviewDecision() {
   if (!item) return;
   const decision = state.reviewDecision;
   const note = String(document.getElementById('reviewDecisionNote')?.value || '').trim();
+  const reasonSelect = document.getElementById('reviewDecisionReason');
+  const reason = reasonSelect?.value ? String(reasonSelect.selectedOptions?.[0]?.textContent || '').trim() : '';
+  const sendMessage = Boolean(document.getElementById('reviewSendMessage')?.checked);
   const impact = reviewDecisionImpact(decision);
   const confirmation = await confirmAction({ title: reviewDecisionPrimaryLabel(decision), message: impact[0], detail: impact[1], confirmLabel: reviewDecisionPrimaryLabel(decision), tone: decision === 'NAO_APROVAR' ? 'danger' : 'primary' });
   if (!confirmation.confirmed) return;
@@ -2352,7 +2347,7 @@ async function confirmSelectedReviewDecision() {
     return;
   }
   const defaultReasons = { ENCERRAR:'Pendência já resolvida pela equipe.', APROVAR:'Compatibilidade confirmada pelo recrutador.', NAO_APROVAR:'Incompatibilidade operacional confirmada em revisão interna.', REPROCESSAR:'Reprocessamento solicitado pelo recrutador.', SOLICITAR_NOVO_PDF:'Novo PDF solicitado pelo recrutador.' };
-  await decideReview(item.id, decision, { confirmed:true, motivo:note || defaultReasons[decision] });
+  await decideReview(item.id, decision, { confirmed:true, motivo:[reason, note].filter(Boolean).join(' — ') || defaultReasons[decision], enviarMensagem:sendMessage });
   setReviewMobilePane('queue');
 }
 
@@ -2365,7 +2360,7 @@ async function decideReview(id, decision, options = {}) {
   const labels = { APROVAR: 'aprovar e continuar', NAO_APROVAR: 'não aprovar nesta vaga', REPROCESSAR: 'reprocessar o documento', SOLICITAR_NOVO_PDF: 'solicitar um novo PDF ao candidato' };
   const motivo = options.motivo ?? window.prompt(`Confirme o motivo para ${labels[decision] || decision}:`, decision === 'APROVAR' ? 'Necessidade operacional / experiência próxima do requisito' : '');
   if (motivo === null) return;
-  const result = await api(`/api/revisoes/${id}/decidir`, { method: 'POST', body: JSON.stringify({ decisao: decision, motivo }) });
+  const result = await api(`/api/revisoes/${id}/decidir`, { method: 'POST', body: JSON.stringify({ decisao: decision, motivo, enviar_mensagem: Boolean(options.enviarMensagem) }) });
   showToast(result.mensagem || 'Decisão registrada.');
   await loadReviews(true);
   await loadCandidates(true);
@@ -2710,9 +2705,22 @@ async function runGlobalSearch() {
 }
 
 function handleDelegatedAction(event) {
+  const quickTab = event.target.closest('[data-drawer-quick-tab]');
+  if (quickTab) return setDrawerTab(quickTab.classList.contains('active') ? 'summary' : quickTab.dataset.drawerQuickTab);
+  const candidateSelect = event.target.closest('[data-candidate-select]');
+  if (candidateSelect) {
+    event.stopPropagation();
+    const id = String(candidateSelect.dataset.candidateSelect);
+    if (candidateSelect.checked) state.selectedCandidateIds.add(id); else state.selectedCandidateIds.delete(id);
+    renderCandidates();
+    return;
+  }
   const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open], [data-review-open-candidate], [data-review-start-service], [data-review-mobile-pane], [data-review-confirm], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
   if (!target) return;
-  if (target.dataset.goView) return setView(target.dataset.goView);
+  if (target.dataset.goView) {
+    if (target.closest('#candidateDrawer')) el.candidateDrawer?.close();
+    return setView(target.dataset.goView);
+  }
   if (target.dataset.documentToggle) {
     const key = String(target.dataset.documentToggle);
     if (state.expandedDocumentCandidates.has(key)) state.expandedDocumentCandidates.delete(key);
@@ -2821,6 +2829,7 @@ async function loadCurrentUser() {
   if (el.currentUserRole) el.currentUserRole.textContent = role === 'ADMIN' ? 'Administrador' : 'Recrutador';
   window.GenesisUIV18?.setUser?.(data.usuario || null);
   document.body.dataset.userRole = role;
+  window.dispatchEvent(new CustomEvent('genesis:user-ready', { detail: { role } }));
   document.querySelectorAll('.nav-item[data-admin-only]').forEach((item) => item.classList.toggle('hidden', role !== 'ADMIN'));
   document.querySelectorAll('[data-admin-only]').forEach((item) => {
     if (item.classList.contains('nav-item')) return;
@@ -2968,6 +2977,12 @@ function bindEvents() {
   el.reviewTypeSegments?.addEventListener('click', (event) => { const button=event.target.closest('[data-review-type]'); if(!button)return; state.reviewType=button.dataset.reviewType; el.reviewTypeSegments.querySelectorAll('button').forEach((item)=>item.classList.toggle('active',item===button)); renderReviews(); });
   el.reviewsList?.addEventListener('keydown', (event) => { const item=event.target.closest('[data-review-open]'); if(!item || !['Enter',' '].includes(event.key))return; event.preventDefault(); selectReview(item.dataset.reviewOpen); });
   document.addEventListener('change', (event) => { if (event.target.matches('input[name="reviewDecisionChoice"]')) syncReviewDecisionUi(event.target.value); });
+  document.addEventListener('change', (event) => {
+    if (event.target.id === 'reviewSendMessage') {
+      const button = document.getElementById('confirmReviewDecisionButton');
+      if (button) button.textContent = reviewDecisionPrimaryLabel(state.reviewDecision);
+    }
+  });
   el.openAuditCandidateProfileButton?.addEventListener('click', () => openAuditCandidateProfile());
   document.querySelectorAll('[data-audit-review]').forEach((button) => button.addEventListener('click', () => reviewAuditProblem(button.dataset.auditReview)));
   el.closeVacancyDialogButton.addEventListener('click', () => el.vacancyDialog.close());
@@ -3023,12 +3038,6 @@ function bindEvents() {
   el.candidateReallocationFilter?.addEventListener('change', () => { state.candidateReallocation = el.candidateReallocationFilter.value; el.candidateReallocationFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
   el.candidateDistanceFilter?.addEventListener('change', () => { state.candidateDistance = el.candidateDistanceFilter.value; el.candidateDistanceFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
   el.candidateDistanceSort?.addEventListener('change', () => { state.candidateDistanceSort = el.candidateDistanceSort.value; el.candidateDistanceSort.closest('details')?.removeAttribute('open'); renderCandidates(); });
-  el.clearCandidateFiltersButton?.addEventListener('click', () => {
-    state.candidateVacancy = 'TODAS'; state.candidateStage = 'TODAS'; state.candidateDocument = 'TODOS'; state.candidateInterview = 'TODAS'; state.candidateSex = 'TODOS'; state.candidateReallocation = 'TODOS'; state.candidateDistance = 'TODAS'; state.candidateDistanceSort = 'RECENTES';
-    el.candidateVacancyFilter.value = 'TODAS'; el.candidateStageFilter.value = 'TODAS'; el.candidateDocumentFilter.value = 'TODOS'; el.candidateInterviewFilter.value = 'TODAS'; el.candidateSexFilter.value = 'TODOS'; el.candidateReallocationFilter.value = 'TODOS'; if (el.candidateDistanceFilter) el.candidateDistanceFilter.value = 'TODAS'; if (el.candidateDistanceSort) el.candidateDistanceSort.value = 'RECENTES';
-    el.candidateSearchInput.value = ''; updateCandidateFilterToggle(); renderCandidates();
-  });
-
   document.addEventListener('toggle', (event) => {
     const current = event.target.closest?.('.table-filter-menu');
     if (!current?.open) return;
@@ -3039,10 +3048,16 @@ function bindEvents() {
     document.querySelectorAll('.table-filter-menu[open]').forEach((item) => item.removeAttribute('open'));
   });
 
-  el.candidateTableMode.addEventListener('click', () => setCandidateMode('table'));
-  el.candidateKanbanMode.addEventListener('click', () => setCandidateMode('kanban'));
   el.closeCandidateDrawerButton.addEventListener('click', () => el.candidateDrawer.close());
-  document.querySelectorAll('[data-drawer-tab]').forEach((button) => button.addEventListener('click', () => setDrawerTab(button.dataset.drawerTab)));
+  document.getElementById('candidateSelectAll')?.addEventListener('change', (event) => {
+    state.candidates.filter(candidateMatches).forEach((candidate) => {
+      const id = String(candidate.id);
+      if (event.target.checked) state.selectedCandidateIds.add(id); else state.selectedCandidateIds.delete(id);
+    });
+    renderCandidates();
+  });
+  document.getElementById('candidateBulkClear')?.addEventListener('click', () => { state.selectedCandidateIds.clear(); renderCandidates(); });
+  document.getElementById('candidateBulkExport')?.addEventListener('click', () => window.GenesisV25?.openCandidateExport?.([...state.selectedCandidateIds]));
   el.updateCandidateButton?.addEventListener('click', () => updateCandidate('SOMENTE_CORRECAO'));
   el.continueCandidateButton?.addEventListener('click', () => updateCandidate('CORRIGIR_E_CONTINUAR'));
   el.toggleCandidateAiButton?.addEventListener('click', toggleCandidateAi);
@@ -3104,7 +3119,6 @@ async function init() {
   await loadCurrentUser();
   await Promise.allSettled([loadCompanies(), loadCandidates()]);
   await Promise.all([loadDashboard(), loadReviews()]);
-  setCandidateMode('table');
 }
 
 init().catch((error) => showToast(error.message, 'error'));

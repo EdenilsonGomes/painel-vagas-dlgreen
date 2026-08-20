@@ -141,7 +141,7 @@
     ['candidateDistanceFilter', 'Distância', 'TODAS'],
     ['candidateDistanceSort', 'Ordenação', 'RECENTES'],
   ];
-  const candidateFilters = { open:false, drafts:new Map() };
+  const candidateFilters = { open:false };
 
   function filterLabel(select) {
     return select?.selectedOptions?.[0]?.textContent?.trim() || select?.value || '';
@@ -160,54 +160,28 @@
     if (count) { count.textContent = String(active.length); count.dataset.empty = String(active.length === 0); }
     const chips = $('candidateFilterChips');
     if (chips) chips.innerHTML = active.map((item) => `<span class="active-filter-chip">${escapeHtml(item.text)}<button type="button" data-remove-candidate-filter="${escapeHtml(item.id)}" aria-label="Remover filtro ${escapeHtml(item.label)}">×</button></span>`).join('');
-    document.querySelectorAll('.table-filter-menu').forEach((details) => {
-      const select = details.querySelector('select');
-      const def = select && filterDefinitions.find(([id]) => id === select.id);
-      details.classList.toggle('has-active-filter', Boolean(def && String(select.value) !== String(def[2])));
-    });
-  }
-
-  function buildCandidateFilterFields() {
-    const fields = $('candidateFiltersFields');
-    if (!fields) return;
-    fields.replaceChildren();
-    candidateFilters.drafts.clear();
-    filterDefinitions.forEach(([id, label]) => {
-      const source = $(id);
-      if (!source) return;
-      const wrapper = document.createElement('label');
-      const title = document.createElement('span');
-      const clone = source.cloneNode(true);
-      clone.id = `${id}V23Clone`;
-      clone.removeAttribute('name');
-      clone.value = source.value;
-      title.textContent = label;
-      wrapper.append(title, clone);
-      fields.append(wrapper);
-      candidateFilters.drafts.set(id, clone);
-    });
   }
 
   function setCandidateFiltersOpen(open) {
     candidateFilters.open = Boolean(open);
     $('candidateFiltersPopover')?.classList.toggle('hidden', !candidateFilters.open);
     $('candidateFiltersButton')?.setAttribute('aria-expanded', String(candidateFilters.open));
-    if (candidateFilters.open) { buildCandidateFilterFields(); requestAnimationFrame(() => $('candidateFiltersFields')?.querySelector('select')?.focus()); }
+    if (candidateFilters.open) requestAnimationFrame(() => $('candidateFiltersFields')?.querySelector('select')?.focus());
   }
 
   function applyCandidateFilters() {
-    candidateFilters.drafts.forEach((clone, id) => {
-      const source = $(id);
-      if (!source || source.value === clone.value) return;
-      source.value = clone.value;
-      source.dispatchEvent(new Event('change', { bubbles:true }));
-    });
     renderCandidateFilterState();
     setCandidateFiltersOpen(false);
   }
 
   function clearCandidateFilters() {
-    filterDefinitions.forEach(([id,,fallback]) => { const clone = candidateFilters.drafts.get(id); if (clone) clone.value = fallback; });
+    filterDefinitions.forEach(([id,,fallback]) => {
+      const source = $(id);
+      if (!source || String(source.value) === String(fallback)) return;
+      source.value = fallback;
+      source.dispatchEvent(new Event('change', { bubbles:true }));
+    });
+    renderCandidateFilterState();
   }
 
   function bindCandidateFilters() {

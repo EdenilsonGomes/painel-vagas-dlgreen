@@ -29,7 +29,8 @@
     "test:release": "node scripts/test-v16.js && node scripts/test-v16_1.js && node scripts/test-recruiter-candidate-access-v15_1.js && node scripts/test-ui-v23.js",
     "migrate:v23": "node scripts/migrate-v23.js",
     "preflight:v23": "node scripts/preflight-v23.js",
-    "test:v23": "node scripts/test-ui-v23.js"
+    "test:v23": "node scripts/test-ui-v23.js",
+    "test:v26": "node scripts/test-ui-v26.js"
   },
   "engines": {
     "node": ">=22"

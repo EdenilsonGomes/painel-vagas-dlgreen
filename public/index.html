@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="/experience-v23.css?v=2300">
 <link rel="stylesheet" href="/genesis-v24.css?v=2400">
   <link rel="stylesheet" href="/genesis-v25-admin.css?v=2500">
+  <link rel="stylesheet" href="/genesis-v26.css?v=2600">
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/demos-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=1800" defer></script>
@@ -47,6 +48,7 @@
   <script src="/experience-v23.js?v=2300" defer></script>
 <script src="/genesis-v24.js?v=2400" defer></script>
   <script src="/genesis-v25-admin.js?v=2501" defer></script>
+  <script src="/genesis-v26.js?v=2600" defer></script>
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -239,7 +241,6 @@
             <article class="kpi-card actionable-card" data-candidate-kpi-filter="TODOS" tabindex="0"><span>Total</span><strong id="candidateKpiTotal">0</strong></article>
             <article class="kpi-card actionable-card" data-candidate-kpi-filter="EM_PROCESSO" tabindex="0"><span>Em processo</span><strong id="candidateKpiProcess">0</strong></article>
             <article class="kpi-card actionable-card" data-candidate-kpi-filter="APROVADO" tabindex="0"><span>Aprovados na triagem</span><strong id="candidateKpiApproved">0</strong></article>
-            <article class="kpi-card warning actionable-card" data-candidate-kpi-filter="EM_ADMISSAO" tabindex="0"><span>Em admissão</span><strong id="candidateKpiAdmission">0</strong></article>
             <article class="kpi-card success actionable-card" data-candidate-kpi-filter="CONTRATADO" tabindex="0"><span>Contratados</span><strong id="candidateKpiHired">0</strong></article>
             <article class="kpi-card actionable-card" data-candidate-kpi-filter="REPROVADO" tabindex="0"><span>Reprovados</span><strong id="candidateKpiRejected">0</strong></article>
           </section>
@@ -249,33 +250,45 @@
               <label class="inline-search"><span>⌕</span><input id="candidateSearchInput" type="search" placeholder="Nome, telefone ou vaga"></label>
               <div class="candidate-filter-center">
                 <button id="candidateFiltersButton" class="button button-ghost candidate-filters-button" type="button" aria-expanded="false" aria-controls="candidateFiltersPopover"><span data-icon="filter" aria-hidden="true"></span><span>Filtros</span><b id="candidateFiltersCount">0</b></button>
-                <section id="candidateFiltersPopover" class="candidate-filters-popover hidden" role="dialog" aria-label="Filtros de candidatos" aria-modal="false"><header><div><strong>Filtros</strong><small>Refine a lista sem ocupar a tela</small></div><button id="candidateFiltersCloseButton" class="icon-button" type="button" aria-label="Fechar filtros"><span data-icon="close"></span></button></header><div id="candidateFiltersFields" class="candidate-filters-fields"></div><footer><button id="candidateFiltersClearButton" class="button button-ghost" type="button">Limpar</button><button id="candidateFiltersApplyButton" class="button button-primary" type="button">Aplicar filtros</button></footer></section>
+                <section id="candidateFiltersPopover" class="candidate-filters-popover hidden" role="dialog" aria-label="Filtros de candidatos" aria-modal="false"><header><div><strong>Filtros</strong><small>Refine a lista sem ocupar a tela</small></div><button id="candidateFiltersCloseButton" class="icon-button" type="button" aria-label="Fechar filtros"><span data-icon="close"></span></button></header><div id="candidateFiltersFields" class="candidate-filters-fields">
+                  <label><span>Vaga</span><select id="candidateVacancyFilter"><option value="TODAS">Todas as vagas</option></select></label>
+                  <label><span>Etapa</span><select id="candidateStageFilter"><option value="TODAS">Todas as etapas</option></select></label>
+                  <label><span>Documentos</span><select id="candidateDocumentFilter"><option value="TODOS">Todos</option><option value="CTPS">Com CTPS</option><option value="CURRICULO">Com currículo</option><option value="PROCESSANDO">Em processamento</option><option value="PENDENTE_REVISAO">Pendentes de revisão</option><option value="SEM_DOCUMENTOS">Sem documentos</option></select></label>
+                  <label><span>Entrevista</span><select id="candidateInterviewFilter"><option value="TODAS">Todas</option><option value="AGENDADA">Agendada</option><option value="NAO_AGENDADA">Não agendada</option></select></label>
+                  <label><span>Sexo informado</span><select id="candidateSexFilter"><option value="TODOS">Todos</option><option value="MASCULINO">Masculino</option><option value="FEMININO">Feminino</option><option value="NAO_INFORMADO">Não informado</option><option value="REVISAO">Revisão da vaga</option></select></label>
+                  <label><span>Realocação</span><select id="candidateReallocationFilter"><option value="TODOS">Todos</option><option value="REALOCAVEIS">Reprovados realocáveis</option><option value="NAO_REALOCAVEIS">Reprovados não realocáveis</option></select></label>
+                  <label><span>Distância</span><select id="candidateDistanceFilter"><option value="TODAS">Todas</option><option value="ATE_5">Até 5 km</option><option value="ATE_10">Até 10 km</option><option value="ATE_15">Até 15 km</option><option value="ATE_25">Até 25 km</option><option value="ATE_50">Até 50 km</option><option value="ACIMA_50">Acima de 50 km</option><option value="INDISPONIVEL">Indisponível</option></select></label>
+                  <label><span>Ordenação</span><select id="candidateDistanceSort"><option value="RECENTES">Mais recentes</option><option value="PROXIMIDADE">Mais próximos</option></select></label>
+                </div><footer><button id="candidateFiltersClearButton" class="button button-ghost" type="button">Limpar</button><button id="candidateFiltersApplyButton" class="button button-primary" type="button">Concluir</button></footer></section>
               </div>
-              <div class="segmented view-toggle"><button id="candidateTableMode" class="active" type="button">Tabela</button><button id="candidateKanbanMode" type="button">Pipeline</button></div>
             </div>
           </section>
           <div id="candidateFilterChips" class="active-filter-chips" aria-live="polite"></div>
-
-
           <section id="candidateTableContainer" class="panel table-panel">
+            <div id="candidateBulkBar" class="candidate-bulk-bar hidden" aria-live="polite">
+              <span><strong id="candidateBulkCount">0</strong> selecionado(s)</span>
+              <div>
+                <button id="candidateBulkExport" class="button button-ghost compact hidden" data-admin-only type="button">Exportar selecionados</button>
+                <button id="candidateBulkClear" class="button button-ghost compact" type="button">Limpar seleção</button>
+              </div>
+            </div>
             <div id="candidatesLoading" class="empty-state">Carregando candidatos...</div>
             <div id="candidatesEmpty" class="empty-state hidden"><strong>Nenhum candidato encontrado</strong><span>Altere os filtros ou aguarde novos atendimentos.</span></div>
             <div class="data-table-wrapper hidden" id="candidatesTableWrapper">
               <table class="data-table filterable-table candidate-data-table">
                 <thead><tr>
-                  <th><details class="table-filter-menu"><summary>Candidato <span>⌄</span></summary><div class="table-filter-popover wide"><label>Sexo informado<select id="candidateSexFilter"><option value="TODOS">Todos</option><option value="MASCULINO">Masculino</option><option value="FEMININO">Feminino</option><option value="NAO_INFORMADO">Não informado</option><option value="REVISAO">Revisão da vaga</option></select></label><label>Realocação<select id="candidateReallocationFilter"><option value="TODOS">Todos</option><option value="REALOCAVEIS">Reprovados realocáveis</option><option value="NAO_REALOCAVEIS">Reprovados não realocáveis</option></select></label><button id="clearCandidateFiltersButton" class="button button-ghost compact" type="button">Limpar filtros da tabela</button></div></details></th>
-                  <th><details class="table-filter-menu"><summary>Vaga <span>⌄</span></summary><div class="table-filter-popover"><label>Filtrar por vaga<select id="candidateVacancyFilter"><option value="TODAS">Todas as vagas</option></select></label></div></details></th>
-                  <th><details class="table-filter-menu"><summary>Distância <span>⌄</span></summary><div class="table-filter-popover"><label>Distância da vaga<select id="candidateDistanceFilter"><option value="TODAS">Todas</option><option value="ATE_5">Até 5 km</option><option value="ATE_10">Até 10 km</option><option value="ATE_15">Até 15 km</option><option value="ATE_25">Até 25 km</option><option value="ATE_50">Até 50 km</option><option value="ACIMA_50">Acima de 50 km</option><option value="INDISPONIVEL">Indisponível</option></select></label><label>Ordenação<select id="candidateDistanceSort"><option value="RECENTES">Padrão atual</option><option value="PROXIMIDADE">Mais próximos primeiro</option></select></label></div></details></th>
-                  <th><details class="table-filter-menu"><summary>Etapa <span>⌄</span></summary><div class="table-filter-popover"><label>Filtrar por etapa<select id="candidateStageFilter"><option value="TODAS">Todas as etapas</option></select></label></div></details></th>
-                  <th><details class="table-filter-menu"><summary>Documentos <span>⌄</span></summary><div class="table-filter-popover"><label>Situação dos documentos<select id="candidateDocumentFilter"><option value="TODOS">Todos</option><option value="CTPS">Com CTPS</option><option value="CURRICULO">Com currículo</option><option value="PROCESSANDO">Em processamento</option><option value="PENDENTE_REVISAO">Pendentes de revisão</option><option value="SEM_DOCUMENTOS">Sem documentos</option></select></label></div></details></th>
-                  <th><details class="table-filter-menu"><summary>Entrevista <span>⌄</span></summary><div class="table-filter-popover"><label>Situação da entrevista<select id="candidateInterviewFilter"><option value="TODAS">Todas</option><option value="AGENDADA">Agendada</option><option value="NAO_AGENDADA">Não agendada</option></select></label></div></details></th>
+                  <th class="candidate-select-column"><label class="candidate-select-all-control"><input id="candidateSelectAll" type="checkbox" aria-label="Selecionar candidatos visíveis"><span>Selecionar todos</span></label></th>
+                  <th>Candidato</th>
+                  <th>Vaga</th>
+                  <th>Etapa</th>
+                  <th>Status</th>
                   <th><button id="candidateActivitySortButton" class="table-sort-button" type="button" title="Ordenar por última atividade" aria-label="Ordenar por última atividade, mais recentes primeiro">Última atividade <span>↓</span></button></th>
+                  <th>Ações</th>
                 </tr></thead>
                 <tbody id="candidatesTableBody"></tbody>
               </table>
             </div>
           </section>
-          <section id="candidateKanbanContainer" class="kanban-board hidden"></section>
         </section>
 
         <section id="view-crm" class="view hidden admin-view crm-view" data-admin-only>
@@ -875,9 +888,13 @@
       <header class="drawer-header" aria-label="Cabeçalho do perfil do candidato"><div><p class="eyebrow">CANDIDATO</p><h2 id="candidateDrawerTitle">Detalhes</h2><span id="candidateDrawerSubtitle"></span></div><button id="closeCandidateDrawerButton" class="icon-button" type="button" aria-label="Fechar perfil do candidato">×</button></header>
       <div id="candidateDrawerLoading" class="empty-state">Carregando candidato...</div>
       <div id="candidateDrawerContent" class="drawer-content hidden">
-        <div class="candidate-hero"><div class="candidate-avatar" id="candidateAvatar">?</div><div class="candidate-identity"><h3 id="candidateName">Candidato</h3><span id="candidatePhone" class="candidate-phone-text">Telefone do candidato</span><div id="candidateLabels" class="tag-row"></div></div><div class="candidate-hero-actions"><button id="editCandidateDataButton" class="button button-ghost" type="button">Editar dados</button><button id="deleteCandidateButton" class="button button-danger hidden" data-admin-only type="button">Remover</button></div></div>
-        <nav class="drawer-tabs" aria-label="Seções do candidato"><button class="active" data-drawer-tab="summary" type="button">Resumo</button><button data-drawer-tab="conversation" type="button">Conversa</button><button data-drawer-tab="documents" type="button">Documentos</button><button class="hidden" data-drawer-tab="timeline" data-admin-only type="button">Histórico</button><button class="hidden" data-drawer-tab="admin" data-admin-only type="button">Administração</button></nav>
-
+        <div class="candidate-hero"><div class="candidate-avatar" id="candidateAvatar">?</div><div class="candidate-identity"><h3 id="candidateName">Candidato</h3><span id="candidatePhone" class="candidate-phone-text">Telefone do candidato</span><div id="candidateLabels" class="tag-row"></div></div><div class="candidate-hero-actions"><button id="editCandidateDataButton" class="button button-ghost" type="button">Editar dados</button><button class="button button-ghost" data-drawer-quick-tab="admin" data-admin-only type="button">Administração</button></div></div>
+        <nav class="candidate-quick-actions" aria-label="Ações do candidato">
+          <button data-drawer-quick-tab="conversation" type="button"><span data-icon="message"></span>Conversar</button>
+          <button data-go-view="interviews" type="button"><span data-icon="calendar"></span>Agendar</button>
+          <button data-drawer-quick-tab="documents" type="button"><span data-icon="file"></span>Documentos</button>
+          <button data-drawer-quick-tab="timeline" data-admin-only type="button"><span data-icon="activity"></span>Histórico</button>
+        </nav>
         <section id="drawer-tab-summary" class="drawer-tab active">
           <div class="summary-grid candidate-summary-grid"><article><span>Vaga</span><strong id="candidateVacancy"></strong></article><article><span>Situação atual</span><strong id="candidateStage"></strong></article><article><span>CEP</span><strong id="candidateCep"></strong></article><article class="candidate-distance-summary"><span>Distância da vaga</span><strong id="candidateDistance">—</strong><small id="candidateDistanceHint">Cadastre o CEP da vaga para calcular.</small></article><article><span>Sexo documental</span><strong id="candidateSex"></strong><small id="candidateSexSource"></small></article><article><span>Compatibilidade da vaga</span><strong id="candidateSexCompatibility"></strong><small>Quando houver divergência explícita na CTPS, o caso aguarda confirmação interna antes de continuar.</small></article><article><span>Entrevista</span><strong id="candidateInterview"></strong><a id="candidateMeetLink" class="text-link hidden" href="#" target="_blank">Abrir Google Meet</a></article></div>
 
@@ -939,6 +956,7 @@
               <button id="adminCloseCandidateButton" class="button button-ghost" type="button">Encerrar candidatura</button>
               <button id="adminReopenCandidateButton" class="button button-primary hidden" type="button">Reabrir candidatura</button>
               <button id="reprocessCandidateCtpsButton" class="button button-warning" type="button">Reprocessar última CTPS</button>
+              <button id="deleteCandidateButton" class="button button-danger" type="button">Remover candidato</button>
             </div>
           </section>
 
