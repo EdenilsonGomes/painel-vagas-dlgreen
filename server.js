@@ -3292,7 +3292,7 @@ app.post('/api/revisoes/lote/decidir', async (req, res, next) => {
         error.statusCode = 409;
         throw error;
       }
-      if(['APROVAR','NAO_APROVAR'].includes(entry.decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2,'por',$3,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,entry.decisao,currentUserName(req)]);
+      if(['APROVAR','NAO_APROVAR'].includes(entry.decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT(   'decisao',$2::TEXT,   'por',$3::TEXT,   'em',NOW() )),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,entry.decisao,currentUserName(req)]);
       results.push({ revisao_id: entry.id, ...result.rows[0] });
     }
     await client.query('COMMIT');
@@ -3323,7 +3323,7 @@ app.post('/api/revisoes/:id/decidir', async (req, res, next) => {
     await client.query('BEGIN');
     const result = await client.query(`SELECT * FROM genesis_resolver_revisao_v1($1,$2,$3,$4)`, [id, decisao, motivo, currentUserName(req)]);
     if (!result.rowCount) { await client.query('ROLLBACK'); return res.status(404).json({ sucesso:false, erro:'Revisão não encontrada ou já concluída.' }); }
-    if(['APROVAR','NAO_APROVAR'].includes(decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2,'por',$3,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,decisao,currentUserName(req)]);
+    if(['APROVAR','NAO_APROVAR'].includes(decisao))await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao',$2::TEXT,'por',$3::TEXT,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[result.rows[0].candidato_id,decisao,currentUserName(req)]);
     await client.query('COMMIT');
     const data=result.rows[0];
 
@@ -3872,7 +3872,7 @@ app.post('/api/admin/candidatos/:id/acao', requireAdmin, async (req, res, next) 
       message = `${candidateFirstName(candidate) ? `${candidateFirstName(candidate)}, ` : ''}após a análise do seu perfil, neste momento não será possível continuar na vaga ${candidate.vaga_nome}. Seu cadastro poderá ser considerado em futuras oportunidades compatíveis.`;
       eventName = 'REPROVACAO_ADMINISTRATIVA_NA_VAGA';
       eventDescription = `Reprovação registrada por ${userName}. Motivo: ${reasonInfo.label}.${observation ? ` Detalhe: ${observation}` : ''}`;
-      await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao','REPROVADO','por',$2,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[id,userName]);
+      await client.query(`UPDATE documentos SET status_processamento='REVISAO_CONCLUIDA',resultado=COALESCE(resultado,'{}'::JSONB)||JSONB_BUILD_OBJECT('revisao_humana',JSONB_BUILD_OBJECT('decisao','REPROVADO','por',$2::TEXT,'em',NOW())),processado_at=COALESCE(processado_at,NOW()) WHERE candidato_id=$1 AND (UPPER(COALESCE(tipo,'')) IN ('PENDENTE','PENDENTE_REVISAO') OR UPPER(COALESCE(status_processamento,'')) IN ('ERRO','ERRO_PROCESSAMENTO','INCONCLUSIVO','REVISAO','PENDENTE'))`,[id,userName]);
     }
 
     if (action === 'ENCERRAR') {
