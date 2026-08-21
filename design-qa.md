@@ -1,4 +1,4 @@
-# Design QA — Gênesis V26
+# Design QA — Gênesis V26 + Sales V27
 
 - Fonte visual: `C:\Users\User\Downloads\Imagem do Codex 20 de ago. de 2026, 15_58_49.png` (1536 × 1024)
 - Implementação validada: `public/index.html` com os estilos e scripts V24/V25/V26 reais e APIs simuladas apenas no teste de navegador
@@ -46,6 +46,24 @@ As capturas foram feitas com a página de produção e comparadas lado a lado co
 - `scripts/test-ui-v23.js`.
 - Navegador funcional em 390 × 844, 768 × 1024 e 1536 × 1024, sem erros de console.
 - O `npm test` completo continua bloqueado por duas pendências anteriores à V26: ausência de `scripts/migrate-v16.js` e expressão regular inválida em `scripts/test-v21-manual-message-delivery.js` no Node 24.
+
+## Sales V27 — 21/08/2026
+
+- Fonte visual: `C:\Users\User\AppData\Local\Temp\codex-clipboard-ded0c59b-5c09-4d92-9a85-ad8f9aa0dda7.png` (970 × 328).
+- Implementação: `public/genesis-v27.js` e `public/genesis-v27.css`, renderizados com dados representativos e os estilos reais do painel.
+- Evidência desktop: `..\work\qa-sales-desktop.png`, viewport padrão do navegador, densidade 1.
+- Evidência mobile: `..\work\qa-sales-mobile.png`, viewport 390 × 844, densidade 1.
+- Comparação conjunta: `..\work\qa-sales-comparison.png`.
+- Estado: dark, Kanban principal, filtros, alternância Pipeline e cartões com ação de WhatsApp.
+
+### Comparação e interações
+
+- P1 do cabeçalho duplicado corrigido: a área interna redundante foi removida.
+- P1 do filtro superdimensionado corrigido: status limitado a 180 px no desktop e compacto no mobile.
+- P1 de navegação corrigido: Kanban/Pipeline permanece visível e Kanban inicia selecionado.
+- P2 mobile corrigido: colunas usam 82% da largura da tela, scroll horizontal e encaixe por coluna.
+- Modal, cópia, enriquecimento e link WhatsApp foram cobertos por testes de estrutura/comportamento; o preview visual confirmou hierarquia, espaçamento, tokens, tipografia e conteúdo.
+- Sem erros de console no preview. Não há imagens raster ou ativos novos nesta tela; ícones reutilizam o sistema existente.
 
 ## Resultado
 
