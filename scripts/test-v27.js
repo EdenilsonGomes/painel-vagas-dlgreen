@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs');const path=require('node:path');const root=path.resolve(__dirname,'..');const read=(f)=>fs.readFileSync(path.join(root,f),'utf8');const ok=(v,m)=>{if(!v)throw new Error(m);};
-const server=read('server.js'),html=read('public/index.html'),app=read('public/app.js'),sales=read('lib/sales-v27.js'),talent=read('lib/talent-flows-v27.js'),ui=read('public/genesis-v27.js'),css=read('public/genesis-v27.css'),sql=read('sql/32_GENESIS_SALES_TALENT_FLOWS.sql'),operations=read('lib/operations-v14.js'),portal=read('portal-publicacoes.js');
+const server=read('server.js'),html=read('public/index.html'),app=read('public/app.js'),sales=read('lib/sales-v27.js'),talent=read('lib/talent-flows-v27.js'),ui=read('public/genesis-v27.js'),css=read('public/genesis-v27.css'),salesCss=read('public/genesis-v30-sales.css'),sql=read('sql/32_GENESIS_SALES_TALENT_FLOWS.sql'),operations=read('lib/operations-v14.js'),portal=read('portal-publicacoes.js');
 ok(server.includes('registerSalesV27')&&server.includes('registerTalentFlowsV27'),'Módulos V27 não registrados.');
 ok(html.includes('data-view="sales"')&&!html.includes('>Pipeline comercial</b>')&&!html.includes('>Prospecção</b>'),'Menus comerciais antigos ainda visíveis.');
 ok(html.includes('candidateTalentBlock')&&html.includes('candidateTalentFilter'),'Talent deve ficar no candidato e no filtro.');
@@ -16,6 +16,6 @@ ok(sql.includes('ADD COLUMN IF NOT EXISTS')&&sql.includes('candidato_talento_aud
 ok(operations.includes('legacyWahaEnabled = false')&&operations.includes("if (legacyWahaEnabled) app.get('/api/admin/prospeccao/contato/session/qr'"),'QR WAHA deve permanecer sem registro por padrão.');
 ok(portal.includes('groupsEnabled = false')&&portal.includes("if (groupsEnabled) app.get('/api/portal-publicacoes/grupos'"),'Rotas do Portal de Grupos devem permanecer sem registro por padrão.');
 ok(css.includes('@media(max-width:760px)')&&!/#[0-9a-f]{3,8}\b/i.test(css),'V27 deve reutilizar tokens e ser responsiva.');
-ok(css.includes('82vw')&&css.includes('grid-template-columns:minmax(220px,420px) 180px'),'Kanban mobile e filtro compacto devem ser preservados.');
+ok(salesCss.includes('grid-template-columns:repeat(8,300px)')&&salesCss.includes('.sales-stage-nav')&&salesCss.includes('overflow-y:auto!important'),'Kanban profissional e experiência mobile por estágio devem ser preservados.');
 ok(app.includes("candidateTalent: 'TODOS'")&&app.includes('talentMatch'),'Filtro Talent não integrado.');
 console.log('V27: Sales manual, Talent embutido, Flow isolado e WAHA legado desativado validados.');
