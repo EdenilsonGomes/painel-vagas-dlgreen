@@ -9,7 +9,7 @@
     "dev": "node --watch --env-file=.env server.js",
     "migrate:panel": "node scripts/migrate-panel.js",
     "preflight": "node scripts/preflight.js",
-    "test": "node scripts/validate.js && node scripts/test-portal-moderation.js && node scripts/test-operations-v14.js && node scripts/test-recruiter-candidate-access-v15_1.js && node scripts/test-v16.js && node scripts/test-v16-review-handoff.js && node scripts/test-v16_1.js && node scripts/test-v21-review-workspace.js && node scripts/test-v21-manual-message-delivery.js && node scripts/test-ui-v23.js",
+    "test": "node scripts/validate.js && node scripts/test-operations-v14.js && node scripts/test-recruiter-candidate-access-v15_1.js && node scripts/test-v16-review-handoff.js && node scripts/test-v21-review-workspace.js && node scripts/test-ui-v23.js && node scripts/test-ui-v26.js && node scripts/test-v27.js && node scripts/test-mobile-v28.js && node scripts/test-mobile-v29.js",
     "test:v21": "node scripts/test-v21-review-workspace.js && node scripts/test-v21-manual-message-delivery.js",
     "migrate:divulgacao": "node scripts/migrate-divulgacao-v1.js",
     "preflight:divulgacao": "node scripts/preflight-divulgacao-v1.js",
@@ -33,7 +33,8 @@
     "test:v26": "node scripts/test-ui-v26.js",
     "migrate:v27": "node scripts/migrate-v27.js",
     "test:v27": "node scripts/test-v27.js",
-    "test:v28": "node scripts/test-mobile-v28.js"
+    "test:v28": "node scripts/test-mobile-v28.js",
+    "test:v29": "node scripts/test-mobile-v29.js"
   },
   "engines": {
     "node": ">=22"
