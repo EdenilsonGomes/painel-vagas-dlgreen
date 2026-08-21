@@ -38,7 +38,7 @@ function validationMessage(error) {
   return error?.issues?.map((item) => item.message).join(' ') || 'Dados inválidos.';
 }
 
-function registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl = '' }) {
+function registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl = '', groupsEnabled = false }) {
   app.get('/api/portal-publicacoes/resumo', requireAdmin, async (_req, res, next) => {
     try {
       const result = await pool.query(`
@@ -56,7 +56,7 @@ function registerPortalPublications({ app, pool, requireAdmin, currentUserName, 
     } catch (error) { return next(error); }
   });
 
-  app.get('/api/portal-publicacoes/grupos', requireAdmin, async (req, res, next) => {
+  if (groupsEnabled) app.get('/api/portal-publicacoes/grupos', requireAdmin, async (req, res, next) => {
     try {
       const page = toInt(req.query.pagina, 1, 1, 100000);
       const limit = toInt(req.query.limite, 30, 1, 100);
@@ -87,7 +87,7 @@ function registerPortalPublications({ app, pool, requireAdmin, currentUserName, 
     } catch (error) { return next(error); }
   });
 
-  app.patch('/api/portal-publicacoes/grupos/:id', requireAdmin, async (req, res, next) => {
+  if (groupsEnabled) app.patch('/api/portal-publicacoes/grupos/:id', requireAdmin, async (req, res, next) => {
     try {
       const groupId = positiveId(req.params.id);
       if (!groupId) return res.status(400).json({ sucesso: false, erro: 'ID de grupo inválido.' });

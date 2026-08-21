@@ -31,6 +31,7 @@ const state = {
   candidateInterview: 'TODAS',
   candidateSex: 'TODOS',
   candidateReallocation: 'TODOS',
+  candidateTalent: 'TODOS',
   candidateDistance: 'TODAS',
   candidateDistanceSort: 'RECENTES',
   candidateActivitySort: 'DESC',
@@ -197,6 +198,7 @@ const viewMeta = {
   monitoring: ['ADMINISTRAÇÃO', 'Monitoramento', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
   audit: ['ADMINISTRAÇÃO', 'Auditoria da IA', 'Valide estados, documentos, resgates e agendamentos do fluxo determinístico.', 'Sincronizar'],
   prospecting: ['COMERCIAL', 'Prospecção', 'Encontre, enriqueça e prepare empresas para uma abordagem comercial controlada.', 'Nova busca'],
+  sales: ['COMERCIAL', 'Sales', 'Prospecção manual organizada, sem disparos automáticos.', ''],
   commercialChats: ['COMERCIAL', 'Conversas comerciais', 'Respostas e negociações do número dedicado de prospecção.', 'Atualizar conversas'],
   brands: ['WHITE-LABEL', 'Empresas e marcas', 'Configure a identidade que será aplicada às artes e canais de cada cliente.', ''],
   publications: ['CONTEÚDO', 'Portal e comunidades', 'Modere grupos e vagas recebidas e acompanhe as contas públicas.', ''],
@@ -440,14 +442,14 @@ function badgeClass(status) {
 }
 
 function setView(name) {
-  if (!currentUserIsAdmin() && ['audit', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
+  if (!currentUserIsAdmin() && ['audit', 'sales', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
   state.activeView = name;
   document.body.dataset.activeView = name;
   const groupByView = {
     dashboard: 'recruitmentNavGroup', vacancies: 'recruitmentNavGroup', candidates: 'recruitmentNavGroup',
     interviews: 'recruitmentNavGroup', documents: 'recruitmentNavGroup', divulgacao: 'recruitmentNavGroup',
     atendimentos: 'conversationsNavGroup', reviews: 'conversationsNavGroup',
-    crm: 'commercialNavGroup', prospecting: 'commercialNavGroup', commercialChats: 'commercialNavGroup', demos: 'commercialNavGroup',
+    crm: 'commercialNavGroup', sales: 'commercialNavGroup', prospecting: 'commercialNavGroup', commercialChats: 'commercialNavGroup', demos: 'commercialNavGroup',
     publications: 'administrationNavGroup', brands: 'administrationNavGroup', monitoring: 'administrationNavGroup', audit: 'administrationNavGroup', users: 'administrationNavGroup',
   };
   const activeGroup = document.getElementById(groupByView[name]);
@@ -1554,6 +1556,9 @@ function candidateMatches(candidate, ignoreStatus = false) {
   const reallocationMatch = state.candidateReallocation === 'TODOS'
     || (state.candidateReallocation === 'REALOCAVEIS' && rejected && candidate.reprovacao_realocavel !== false)
     || (state.candidateReallocation === 'NAO_REALOCAVEIS' && rejected && candidate.reprovacao_realocavel === false);
+  const talentMatch = state.candidateTalent === 'TODOS'
+    || (state.candidateTalent === 'ACEITOU' && candidate.banco_talentos_aceite === true)
+    || (state.candidateTalent === 'NAO_ACEITOU' && candidate.banco_talentos_aceite === false);
   const hasDistance = candidate.distancia_km !== null && candidate.distancia_km !== undefined && candidate.distancia_km !== '' && Number.isFinite(Number(candidate.distancia_km));
   const distance = hasDistance ? Number(candidate.distancia_km) : null;
   const distanceMatch = state.candidateDistance === 'TODAS'
@@ -1565,7 +1570,7 @@ function candidateMatches(candidate, ignoreStatus = false) {
     || (state.candidateDistance === 'ACIMA_50' && hasDistance && distance > 50)
     || (state.candidateDistance === 'INDISPONIVEL' && !hasDistance);
   const haystack = [candidate.nome, candidate.telefone, candidate.vaga_nome, candidate.vaga_codigo, candidate.etapa].join(' ').toLocaleLowerCase('pt-BR');
-  return statusMatch && vacancyMatch && stageMatch && documentMatch && interviewMatch && sexMatch && reallocationMatch && distanceMatch && candidatePeriodMatches(candidate) && (!q || haystack.includes(q));
+  return statusMatch && vacancyMatch && stageMatch && documentMatch && interviewMatch && sexMatch && reallocationMatch && talentMatch && distanceMatch && candidatePeriodMatches(candidate) && (!q || haystack.includes(q));
 }
 
 function renderCandidates() {
@@ -1707,6 +1712,12 @@ function renderCandidateDrawer(details) {
   el.candidateMeetLink.classList.toggle('hidden', !meet);
   el.candidateMeetLink.href = meet || '#';
   el.candidateTriage.textContent = c.observacao_triagem || c.motivo_reprovacao || 'Ainda não analisado.';
+  const talentDecided = c.banco_talentos_decidido_em != null;
+  const talentAccepted = c.banco_talentos_aceite === true;
+  document.getElementById('candidateTalentDecision').textContent = !talentDecided ? 'Ainda não respondeu' : talentAccepted ? 'Sim' : 'Não';
+  document.getElementById('candidateTalentBadge').textContent = !talentDecided ? 'Sem decisão' : talentAccepted ? 'Aceitou' : 'Não aceitou';
+  document.getElementById('candidateTalentMeta').textContent = talentDecided ? `${formatDate(c.banco_talentos_decidido_em)} · ${c.banco_talentos_origem || 'Origem não informada'}` : 'A Evelyn perguntará uma única vez após o processo, quando adequado.';
+  document.getElementById('candidateTalentRevokeButton')?.classList.toggle('hidden', !isAdmin || !talentAccepted);
   const requiredMonths = Number(c.experiencia_minima_meses || 0);
   const provenDays = Number(c.maior_experiencia_compativel_dias || 0);
   const provenMonths = Math.floor(provenDays / 30);
@@ -3036,6 +3047,8 @@ function bindEvents() {
   el.candidateInterviewFilter?.addEventListener('change', () => { state.candidateInterview = el.candidateInterviewFilter.value; el.candidateInterviewFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
   el.candidateSexFilter?.addEventListener('change', () => { state.candidateSex = el.candidateSexFilter.value; el.candidateSexFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
   el.candidateReallocationFilter?.addEventListener('change', () => { state.candidateReallocation = el.candidateReallocationFilter.value; el.candidateReallocationFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
+  document.getElementById('candidateTalentFilter')?.addEventListener('change', (event) => { state.candidateTalent = event.target.value; renderCandidates(); });
+  document.getElementById('candidateTalentRevokeButton')?.addEventListener('click', async () => { if (!state.selectedCandidateId || !confirm('Revogar o consentimento para novas oportunidades?')) return; await api(`/api/admin/candidatos/${state.selectedCandidateId}/banco-talentos`, { method:'PATCH', body:JSON.stringify({aceite:false}) }); showToast('Consentimento revogado.'); await loadCandidates(); await openCandidate(state.selectedCandidateId); });
   el.candidateDistanceFilter?.addEventListener('change', () => { state.candidateDistance = el.candidateDistanceFilter.value; el.candidateDistanceFilter.closest('details')?.removeAttribute('open'); renderCandidates(); });
   el.candidateDistanceSort?.addEventListener('change', () => { state.candidateDistanceSort = el.candidateDistanceSort.value; el.candidateDistanceSort.closest('details')?.removeAttribute('open'); renderCandidates(); });
   document.addEventListener('toggle', (event) => {

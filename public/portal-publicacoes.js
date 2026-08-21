@@ -3,7 +3,7 @@
 (function () {
   const state = {
     loaded: false,
-    tab: 'groups',
+    tab: 'jobs',
     groupStatus: 'pending',
     jobStatus: 'PENDENTE',
     leadStatus: 'NOVO',
@@ -184,7 +184,7 @@
     try {
       await api(`/api/portal-publicacoes/grupos/${id}`, { method: 'PATCH', body: JSON.stringify(payload) });
       toast(payload.status === 'approved' ? 'Grupo aprovado e publicado.' : payload.status === 'rejected' ? 'Correção solicitada ao publicador.' : 'Revisão do grupo salva.');
-      await Promise.all([loadSummary(), loadGroups()]);
+      await Promise.all([loadSummary(), loadJobs()]);
     } finally {
       buttons.forEach((button) => { button.disabled = false; });
     }

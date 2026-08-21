@@ -49,6 +49,8 @@
 <script src="/genesis-v24.js?v=2400" defer></script>
   <script src="/genesis-v25-admin.js?v=2501" defer></script>
   <script src="/genesis-v26.js?v=2600" defer></script>
+  <link rel="stylesheet" href="/genesis-v27.css?v=2700">
+  <script src="/genesis-v27.js?v=2700" defer></script>
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -85,17 +87,14 @@
         <details id="commercialNavGroup" class="nav-context hidden" data-admin-only>
           <summary><span class="nav-icon" data-icon="chart"></span><b>Comercial</b><em id="commercialUnreadNavBadge" class="nav-count-badge hidden">0</em><i class="nav-chevron" data-icon="chevron-down"></i></summary>
           <div class="nav-context-items">
-            <button class="nav-item" data-view="crm" type="button"><span class="nav-icon" data-icon="chart"></span><b>Pipeline comercial</b></button>
-            <button class="nav-item" data-view="prospecting" type="button"><span class="nav-icon" data-icon="target"></span><b>Prospecção</b></button>
-            <button class="nav-item" data-view="commercialChats" type="button"><span class="nav-icon" data-icon="messages"></span><b>Conversas comerciais</b></button>
-            <button class="nav-item" data-view="demos" type="button"><span class="nav-icon" data-icon="monitor"></span><b>Demonstrações</b></button>
+            <button class="nav-item" data-view="sales" type="button"><span class="nav-icon" data-icon="target"></span><b>Sales</b></button>
           </div>
         </details>
 
         <details id="administrationNavGroup" class="nav-context hidden" data-admin-only>
           <summary><span class="nav-icon" data-icon="user-cog"></span><b>Administração</b><i class="nav-chevron" data-icon="chevron-down"></i></summary>
           <div class="nav-context-items">
-            <button class="nav-item" data-view="publications" type="button"><span class="nav-icon" data-icon="globe"></span><b>Portal e comunidades</b></button>
+            <button class="nav-item" data-view="publications" type="button"><span class="nav-icon" data-icon="globe"></span><b>Portal de Vagas</b></button>
             <button class="nav-item" data-view="brands" type="button"><span class="nav-icon" data-icon="building"></span><b>Empresas e marcas</b></button>
             <button class="nav-item" data-view="monitoring" type="button"><span class="nav-icon" data-icon="activity"></span><b>Monitoramento</b></button>
             <button class="nav-item" data-view="audit" type="button"><span class="nav-icon" data-icon="shield-check"></span><b>Auditoria da IA</b></button>
@@ -253,6 +252,7 @@
                 <section id="candidateFiltersPopover" class="candidate-filters-popover hidden" role="dialog" aria-label="Filtros de candidatos" aria-modal="false"><header><div><strong>Filtros</strong><small>Refine a lista sem ocupar a tela</small></div><button id="candidateFiltersCloseButton" class="icon-button" type="button" aria-label="Fechar filtros"><span data-icon="close"></span></button></header><div id="candidateFiltersFields" class="candidate-filters-fields">
                   <label><span>Vaga</span><select id="candidateVacancyFilter"><option value="TODAS">Todas as vagas</option></select></label>
                   <label><span>Etapa</span><select id="candidateStageFilter"><option value="TODAS">Todas as etapas</option></select></label>
+                  <label><span>Banco de talentos</span><select id="candidateTalentFilter"><option value="TODOS">Todos</option><option value="ACEITOU">Aceitou</option><option value="NAO_ACEITOU">Não aceitou</option></select></label>
                   <label><span>Documentos</span><select id="candidateDocumentFilter"><option value="TODOS">Todos</option><option value="CTPS">Com CTPS</option><option value="CURRICULO">Com currículo</option><option value="PROCESSANDO">Em processamento</option><option value="PENDENTE_REVISAO">Pendentes de revisão</option><option value="SEM_DOCUMENTOS">Sem documentos</option></select></label>
                   <label><span>Entrevista</span><select id="candidateInterviewFilter"><option value="TODAS">Todas</option><option value="AGENDADA">Agendada</option><option value="NAO_AGENDADA">Não agendada</option></select></label>
                   <label><span>Sexo informado</span><select id="candidateSexFilter"><option value="TODOS">Todos</option><option value="MASCULINO">Masculino</option><option value="FEMININO">Feminino</option><option value="NAO_INFORMADO">Não informado</option><option value="REVISAO">Revisão da vaga</option></select></label>
@@ -467,6 +467,7 @@
           </section>
         </section>
 
+        <section id="view-sales" class="view hidden admin-view" data-admin-only></section>
         <section id="view-prospecting" class="view hidden admin-view" data-admin-only>
           <section class="admin-hero">
             <div><p class="eyebrow light">ADMIN · APIFY</p><h2>Prospecção de empresas com orçamento controlado</h2><p>Busque empresas no Google Maps, importe os resultados e trabalhe os leads em um funil comercial sem ultrapassar o limite mensal definido.</p></div>
@@ -552,26 +553,25 @@
 
         <section id="view-publications" class="view hidden admin-view portal-publications-view" data-admin-only>
           <section class="admin-hero portal-publications-hero">
-            <div><p class="eyebrow light">CONTEÚDO · PORTAL</p><h2>Portal e comunidades</h2><p>Revise grupos e vagas enviados pelo público, acompanhe contas e publique somente o conteúdo que passou pela equipe.</p></div>
+            <div><p class="eyebrow light">CONTEÚDO · PORTAL</p><h2>Portal de Vagas</h2><p>Revise vagas enviadas pelo público, acompanhe contas e publique somente o conteúdo aprovado pela equipe.</p></div>
             <a id="openPublicPortalButton" class="button button-ghost" href="#" target="_blank" rel="noopener">Abrir portal público ↗</a>
           </section>
 
           <section class="kpi-grid compact-kpis portal-publications-kpis">
-            <article class="kpi-card warning"><span>Grupos pendentes</span><strong id="portalKpiPendingGroups">0</strong><small>Aguardando moderação</small></article>
+            <article class="kpi-card warning hidden"><span>Grupos pendentes</span><strong id="portalKpiPendingGroups">0</strong><small>Aguardando moderação</small></article>
             <article class="kpi-card info"><span>Vagas recebidas</span><strong id="portalKpiPendingJobs">0</strong><small>Submissões não convertidas</small></article>
             <article class="kpi-card"><span>Novos leads</span><strong id="portalKpiNewLeads">0</strong><small>Recrutadores e empresas</small></article>
             <article class="kpi-card danger"><span>Denúncias</span><strong id="portalKpiReports">0</strong><small>Precisam de revisão</small></article>
-            <article class="kpi-card success"><span>Acessos em grupos</span><strong id="portalKpiClicks">0</strong><small>Últimos 30 dias</small></article>
+            <article class="kpi-card success hidden"><span>Acessos em grupos</span><strong id="portalKpiClicks">0</strong><small>Últimos 30 dias</small></article>
           </section>
 
           <section class="panel portal-publications-panel">
             <div class="portal-publications-tabs" role="tablist" aria-label="Conteúdo do portal">
-              <button class="active" data-portal-tab="groups" type="button">Grupos</button>
-              <button data-portal-tab="jobs" type="button">Vagas enviadas</button>
+              <button class="active" data-portal-tab="jobs" type="button">Vagas enviadas</button>
               <button data-portal-tab="accounts" type="button">Contas e leads</button>
             </div>
 
-            <section id="portalPublicationsGroups" class="portal-publications-tab active">
+            <section id="portalPublicationsGroups" class="portal-publications-tab hidden">
               <div class="section-toolbar stack-mobile">
                 <div class="segmented" id="portalGroupStatusFilter"><button class="active" data-portal-group-status="pending" type="button">Pendentes</button><button data-portal-group-status="approved" type="button">Publicados</button><button data-portal-group-status="rejected" type="button">Rejeitados</button><button data-portal-group-status="" type="button">Todos</button></div>
                 <label class="inline-search"><span>⌕</span><input id="portalGroupSearch" type="search" placeholder="Grupo, cidade, categoria ou responsável"></label>
@@ -579,7 +579,7 @@
               <div id="portalGroupsList" class="portal-publication-list"><div class="empty-state">Carregando grupos...</div></div>
             </section>
 
-            <section id="portalPublicationsJobs" class="portal-publications-tab hidden">
+            <section id="portalPublicationsJobs" class="portal-publications-tab active">
               <div class="section-toolbar stack-mobile">
                 <div class="segmented" id="portalJobStatusFilter"><button class="active" data-portal-job-status="PENDENTE" type="button">Pendentes</button><button data-portal-job-status="EM_REVISAO" type="button">Em revisão</button><button data-portal-job-status="APROVADA" type="button">Aprovadas</button><button data-portal-job-status="CONVERTIDA" type="button">Convertidas</button><button data-portal-job-status="" type="button">Todas</button></div>
                 <label class="inline-search"><span>⌕</span><input id="portalJobSearch" type="search" placeholder="Vaga, cargo, empresa ou publicador"></label>
@@ -904,6 +904,7 @@
             <div class="candidate-admin-actions"><button id="confirmCandidateInterviewButton" class="button button-primary" type="button">Confirmar horário</button><button id="rescheduleCandidateInterviewButton" class="button button-ghost" type="button">Propor reagendamento</button></div>
           </section>
 
+          <section id="candidateTalentBlock" class="detail-block candidate-talent-block"><div class="block-title"><span>Banco de Talentos</span><span id="candidateTalentBadge" class="badge badge-neutral">Sem decisão</span></div><div class="talent-decision-row"><div><span>Receber novas oportunidades pelo WhatsApp</span><strong id="candidateTalentDecision">Ainda não respondeu</strong><small id="candidateTalentMeta">A Evelyn perguntará uma única vez após o processo, quando adequado.</small></div><button id="candidateTalentRevokeButton" class="button button-ghost compact hidden" data-admin-only type="button">Revogar consentimento</button></div></section>
           <section id="candidateTriageSection" class="detail-block ctps-analysis-card"><div class="block-title"><span>Análise da CTPS</span><div class="ctps-title-actions"><span class="badge badge-neutral">Documento</span><button id="openCtpsManualReviewButton" class="button button-ghost compact hidden" data-admin-only type="button">Revisar manualmente</button></div></div><div id="candidateCtpsMetrics" class="ctps-metrics"></div><p id="candidateTriage"></p><div id="candidateExperiences" class="experience-list"></div><div id="candidateCtpsDocumentActions" class="ctps-document-actions"></div></section>
           <section id="candidateScreeningSection" class="detail-block candidate-screening-card hidden"><div class="block-title"><span>Perguntas da vaga</span><span id="candidateScreeningStatus" class="badge badge-neutral">Triagem</span></div><div id="candidateScreeningSummary" class="screening-result-summary"></div><div id="candidateScreeningAnswers" class="screening-answer-list"></div></section>
           <section id="candidateRejectionSection" class="detail-block danger-block hidden" data-admin-only><div class="block-title"><span>Análise da reprovação</span><span id="candidateRejectionCategory" class="badge badge-warning"></span></div><p id="candidateRejectionReason"></p><small id="candidateRejectionObservation"></small><div id="candidateReallocationStatus" class="reallocation-status"></div></section>

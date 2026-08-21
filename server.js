@@ -21,8 +21,8 @@ const { registerAtendimentoV15 } = require('./lib/atendimento-v15');
 const { registerAtendimentosV16 } = require('./lib/atendimentos-v16');
 const { registerNotificationsV23 } = require('./lib/notifications-v23');
 const { registerGeoV1 } = require('./lib/geo-v1');
-const { registerCrmV1 } = require('./lib/crm-v1');
-const { registerProspectingV20 } = require('./lib/prospecting-v20');
+const { registerSalesV27 } = require('./lib/sales-v27');
+const { registerTalentFlowsV27 } = require('./lib/talent-flows-v27');
 
 const PORT = Number(process.env.PORT || 3000);
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -1702,13 +1702,13 @@ registerAtendimentosV16({
 });
 
 registerNotificationsV23({ app, pool, requireLogin });
+registerTalentFlowsV27({ app, pool, requireLogin, requireAdmin, currentUserName });
 
 app.use(requireLogin);
 
 // Gênesis V19 — módulos aditivos. Não alteram o fluxo da Evelyn, CTPS, WAHA ou agenda.
 registerGeoV1({ app, pool });
-registerCrmV1({ app, pool, requireAdmin, currentUserName });
-registerProspectingV20({ app, pool, requireAdmin, currentUserName, wahaBaseUrl: WAHA_BASE_URL, wahaApiKey: WAHA_API_KEY });
+registerSalesV27({ app, pool, requireAdmin, currentUserName });
 
 // Gênesis UI V18 — conta do próprio usuário.
 // Usa somente colunas já existentes em app_usuarios; nenhuma migration nova é necessária.
