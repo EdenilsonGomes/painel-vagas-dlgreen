@@ -1,0 +1,141 @@
+/* Gênesis V28 — camada final mobile. Sem novos tokens ou dependências. */
+body.genesis-rebrand .dashboard-command-layout-compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  html, body { max-width: 100%; overflow-x: clip; }
+  body.genesis-rebrand :where(.app-shell, .content-shell, .main-content, .view, .panel) { min-width: 0; max-width: 100%; }
+  body.genesis-rebrand .main-content { width: 100%; overflow-x: clip; }
+  body.genesis-rebrand .view { width: 100%; overflow-x: clip; }
+  body.genesis-rebrand :where(.section-toolbar, .toolbar-right, .panel-header, .audit-list-head, .audit-sync-controls, .calendar-controls) { min-width: 0; max-width: 100%; }
+  body.genesis-rebrand :where(input, select, textarea, button) { max-width: 100%; }
+  body.genesis-rebrand :where(.admin-two-column, .users-layout, .monitor-grid, .audit-overview-grid, .brand-onboarding-grid, .demo-admin-grid) { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand :where(.data-table-wrapper, .sales-kanban, .crm-pipeline, .segmented, .portal-publications-tabs, .review-type-tabs) { overscroll-behavior-inline: contain; -webkit-overflow-scrolling: touch; }
+}
+
+@media (max-width: 760px) {
+  :root { --gx28-bottom-space: calc(var(--v20-bottom-nav, 78px) + env(safe-area-inset-bottom)); }
+  html { width: 100%; }
+  body.genesis-rebrand { width: 100%; min-width: 0; }
+  body.genesis-rebrand .main-content { padding: 10px 10px calc(var(--gx28-bottom-space) + 12px) !important; }
+  body.genesis-rebrand .view { gap: 10px; }
+
+  body.genesis-rebrand :where(.button, .icon-button, .text-button, .segmented button, .nav-item, [role="button"]) { min-height: 44px; }
+  body.genesis-rebrand :where(.inline-search, .compact-field, .field) { min-width: 0 !important; width: 100%; }
+  body.genesis-rebrand :where(.inline-search input, .compact-field select, .compact-field input, .field input, .field select, .field textarea) { min-width: 0; width: 100%; font-size: 16px !important; }
+  body.genesis-rebrand :where(.section-toolbar, .section-toolbar.stack-mobile, .documents-toolbar) { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; align-items: stretch !important; gap: 8px !important; padding: 8px !important; }
+  body.genesis-rebrand :where(.section-toolbar .toolbar-right, .documents-toolbar > *) { width: 100%; min-width: 0; }
+  body.genesis-rebrand .section-toolbar .toolbar-right { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; align-items: stretch; gap: 8px; }
+  body.genesis-rebrand :where(.segmented, .crm-tabs, .portal-publications-tabs, .review-type-tabs) { width: 100%; max-width: 100%; overflow-x: auto !important; scrollbar-width: none; }
+  body.genesis-rebrand :where(.segmented, .crm-tabs, .portal-publications-tabs, .review-type-tabs)::-webkit-scrollbar { display: none; }
+  body.genesis-rebrand :where(.segmented, .crm-tabs, .portal-publications-tabs, .review-type-tabs) button { flex: 0 0 auto !important; white-space: nowrap; }
+
+  body.genesis-rebrand .dashboard-primary-kpis,
+  body.genesis-rebrand .vacancy-period-kpis,
+  body.genesis-rebrand .candidate-kpis,
+  body.genesis-rebrand .documents-summary-grid,
+  body.genesis-rebrand .monitoring-kpis,
+  body.genesis-rebrand .audit-kpis,
+  body.genesis-rebrand .portal-publications-kpis {
+    display: flex !important; grid-template-columns: none !important; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  }
+  body.genesis-rebrand .dashboard-primary-kpis::-webkit-scrollbar,
+  body.genesis-rebrand .vacancy-period-kpis::-webkit-scrollbar,
+  body.genesis-rebrand .candidate-kpis::-webkit-scrollbar,
+  body.genesis-rebrand .documents-summary-grid::-webkit-scrollbar,
+  body.genesis-rebrand .monitoring-kpis::-webkit-scrollbar,
+  body.genesis-rebrand .audit-kpis::-webkit-scrollbar,
+  body.genesis-rebrand .portal-publications-kpis::-webkit-scrollbar { display: none; }
+  body.genesis-rebrand .dashboard-command-kpi,
+  body.genesis-rebrand .kpi-card,
+  body.genesis-rebrand .documents-summary-card { flex: 0 0 min(68vw, 220px) !important; width: min(68vw, 220px) !important; min-width: 0 !important; min-height: 82px; scroll-snap-align: start; }
+  body.genesis-rebrand .dashboard-command-layout { display: grid; grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand .dashboard-journey-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  body.genesis-rebrand .dashboard-journey-grid > div { min-height: 76px; padding: 10px; }
+
+  body.genesis-rebrand .vacancy-filter-single-row > .compact-field { width: 100%; }
+  body.genesis-rebrand .vacancy-toolbar-right { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; min-width: 0 !important; }
+  body.genesis-rebrand .vacancy-operational-card { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand :where(.vacancy-card-actions, .portal-review-actions, .audit-command-actions) { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.genesis-rebrand :where(.vacancy-card-actions, .portal-review-actions, .audit-command-actions) .button { width: 100%; min-width: 0; }
+
+  body.genesis-rebrand #view-candidates .candidate-toolbar > .compact-field { max-width: none; }
+  body.genesis-rebrand #view-candidates .candidate-toolbar .toolbar-right { grid-template-columns: minmax(0, 1fr) auto !important; }
+  body.genesis-rebrand .candidate-filters-popover { position: fixed !important; inset: 0 !important; z-index: 130 !important; width: 100vw !important; max-width: 100vw !important; height: 100dvh !important; max-height: 100dvh !important; border-radius: 0 !important; }
+  body.genesis-rebrand .candidate-filters-fields { grid-template-columns: minmax(0, 1fr) !important; overflow-y: auto; }
+  body.genesis-rebrand #candidateDrawer[open] { inset: 0 !important; width: 100vw !important; max-width: 100vw !important; height: 100dvh !important; max-height: 100dvh !important; margin: 0 !important; border-radius: 0 !important; }
+  body.genesis-rebrand #candidateDrawer .drawer-shell { height: 100dvh; max-height: 100dvh; overflow: hidden; }
+  body.genesis-rebrand #candidateDrawer .drawer-content { min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  body.genesis-rebrand #candidateDrawer .drawer-tabs { overflow-x: auto; scrollbar-width: none; }
+  body.genesis-rebrand #candidateDrawer .drawer-tabs button { flex: 0 0 auto; min-height: 44px; }
+  body.genesis-rebrand .candidate-quick-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  body.genesis-rebrand .calendar-command { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px !important; }
+  body.genesis-rebrand .calendar-controls { display: grid !important; grid-template-columns: 44px minmax(0, 1fr) 44px; width: 100%; gap: 7px; }
+  body.genesis-rebrand .calendar-view-mode,
+  body.genesis-rebrand #openAgendaSettingsButton,
+  body.genesis-rebrand .calendar-controls > strong { grid-column: 1 / -1; width: 100%; min-width: 0; }
+  body.genesis-rebrand #calendarPrevButton { grid-column: 1; }
+  body.genesis-rebrand #calendarTodayButton { grid-column: 2; }
+  body.genesis-rebrand #calendarNextButton { grid-column: 3; }
+  body.genesis-rebrand .calendar-controls > strong { grid-row: 4; text-align: left; }
+  body.genesis-rebrand .calendar-layout { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand #view-interviews[data-calendar-mode="LIST"] .calendar-day-panel { width: 100%; min-width: 0; }
+  body.genesis-rebrand .calendar-agenda-item { grid-template-columns: 54px minmax(0, 1fr) !important; }
+  body.genesis-rebrand .calendar-agenda-item .button { grid-column: 1 / -1; width: 100%; }
+
+  body.genesis-rebrand .documents-toolbar .segmented { order: 2; }
+  body.genesis-rebrand .document-candidate-header { grid-template-columns: 36px minmax(0, 1fr) 34px !important; gap: 9px; }
+  body.genesis-rebrand .document-candidate-files { padding: 7px !important; }
+  body.genesis-rebrand .document-file-row { grid-template-columns: 32px minmax(0, 1fr) !important; gap: 8px; }
+  body.genesis-rebrand .document-file-actions { grid-column: 2; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.genesis-rebrand .document-file-actions :where(a, button) { min-height: 40px; justify-content: center; }
+
+  body.genesis-rebrand .audit-command-bar { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 14px !important; }
+  body.genesis-rebrand :where(.audit-sync-controls, .audit-custom-range, .audit-filters) { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; width: 100%; }
+  body.genesis-rebrand .audit-list-head { display: grid !important; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  body.genesis-rebrand .audit-command-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.genesis-rebrand .audit-review-actions { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand .audit-review-actions .audit-review-spacer { display: none; }
+
+  body.genesis-rebrand .portal-publications-tab { padding: 8px !important; }
+  body.genesis-rebrand :where(.portal-job-facts, .portal-contact-grid, .portal-review-grid) { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand .portal-publication-head { gap: 8px; }
+  body.genesis-rebrand .brand-onboarding-grid { gap: 10px; }
+  body.genesis-rebrand .brand-editor-layout { grid-template-columns: minmax(0, 1fr) !important; }
+  body.genesis-rebrand .users-list :where(article, .user-row) { min-width: 0; }
+
+  body.genesis-rebrand[data-active-view="atendimentos"] .main-content,
+  body.genesis-rebrand[data-active-view="reviews"] .main-content { height: calc(100dvh - 64px - var(--gx28-bottom-space)) !important; max-height: calc(100dvh - 64px - var(--gx28-bottom-space)) !important; padding: 7px !important; overflow: hidden !important; }
+  body.genesis-rebrand :where(.conversation-center, .review-workspace) { min-height: 0; max-width: 100%; }
+  body.genesis-rebrand .conversation-center-chat-header { grid-template-columns: auto minmax(0, 1fr); gap: 8px; }
+  body.genesis-rebrand .conversation-center-chat-actions { grid-column: 1 / -1; width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  body.genesis-rebrand .conversation-center-composer { grid-template-columns: minmax(0, 1fr) auto; }
+
+  body.genesis-rebrand dialog.modal[open],
+  body.genesis-rebrand dialog.drawer-dialog[open],
+  body.genesis-rebrand dialog[class*="-dialog"][open]:not(.genesis-confirm-dialog) {
+    position: fixed !important; inset: 0 !important; box-sizing: border-box !important; width: 100% !important; max-width: 100% !important; height: 100dvh !important; max-height: 100dvh !important; margin: 0 !important; padding: 0 !important; border-radius: 0 !important; overflow: hidden !important;
+  }
+  body.genesis-rebrand dialog.modal[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+  body.genesis-rebrand dialog[open] :where(.modal-shell, form.modal-shell, .candidate-export-v25-shell, .profile-dialog-shell) { width: 100%; height: 100dvh; max-height: 100dvh !important; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
+  body.genesis-rebrand dialog[open] :where(.modal-header, .drawer-header, .candidate-export-v25-header) { min-height: 60px; padding: 10px 12px !important; }
+  body.genesis-rebrand dialog[open] :where(.modal-header h2, .drawer-header h2, .candidate-export-v25-header h2) { font-size: 17px !important; line-height: 1.15; }
+  body.genesis-rebrand dialog[open] :where(.modal-header span, .drawer-header span, .candidate-export-v25-header span) { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 10px !important; }
+  body.genesis-rebrand dialog[open] :where(.modal-body, .candidate-export-v25-body, .profile-tab-panel.active) { min-height: 0; max-height: none !important; overflow-y: auto !important; overscroll-behavior: contain; padding: 12px !important; }
+  body.genesis-rebrand dialog[open] :where(.modal-footer, .candidate-export-v25-footer, .profile-panel-footer) { position: static !important; width: 100%; display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)) !important; }
+  body.genesis-rebrand dialog[open] :where(.modal-footer, .candidate-export-v25-footer, .profile-panel-footer) :where(.button, a) { width: 100%; min-width: 0; justify-content: center; }
+  body.genesis-rebrand .sales-dialog .modal-shell { overflow: hidden; }
+  body.genesis-rebrand .sales-lead-body { overflow-y: auto; }
+
+  body.genesis-rebrand .genesis-confirm-dialog[open] { width: calc(100vw - 20px) !important; max-width: 440px !important; max-height: calc(100dvh - 20px) !important; margin: auto !important; overflow-y: auto; }
+  body.genesis-rebrand .genesis-confirm-dialog form { grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  body.genesis-rebrand .genesis-confirm-dialog footer { grid-column: 1; display: grid; grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 420px) {
+  body.genesis-rebrand .section-toolbar .toolbar-right { grid-template-columns: minmax(0, 1fr); }
+  body.genesis-rebrand :where(.vacancy-card-actions, .portal-review-actions, .audit-command-actions) { grid-template-columns: minmax(0, 1fr); }
+  body.genesis-rebrand dialog[open] :where(.modal-footer, .candidate-export-v25-footer, .profile-panel-footer) { grid-template-columns: minmax(0, 1fr); }
+}

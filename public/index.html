@@ -26,7 +26,6 @@
   <link rel="stylesheet" href="/v21-workspace.css?v=2100">
   <link rel="stylesheet" href="/genesis-rebrand.css?v=2200">
   <link rel="stylesheet" href="/experience-v23.css?v=2300">
-  <link rel="stylesheet" href="/experience-v23.css?v=2300">
 <link rel="stylesheet" href="/genesis-v24.css?v=2400">
   <link rel="stylesheet" href="/genesis-v25-admin.css?v=2500">
   <link rel="stylesheet" href="/genesis-v26.css?v=2600">
@@ -40,7 +39,6 @@
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
   <script src="/floating-chat-v16-3.js?v=2111" defer></script>
-  <script src="/experience-v23.js?v=2300" defer></script>
   <script src="/admin.js?v=1410" defer></script>
   <script src="/portal-publicacoes.js?v=1510" defer></script>
   <script src="/operations-v14.js?v=1610" defer></script>
@@ -51,6 +49,7 @@
   <script src="/genesis-v26.js?v=2600" defer></script>
   <link rel="stylesheet" href="/genesis-v27.css?v=2700">
   <script src="/genesis-v27.js?v=2700" defer></script>
+  <link rel="stylesheet" href="/genesis-v28-mobile.css?v=2800">
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -161,15 +160,7 @@
             <article class="dashboard-command-kpi warning actionable-card" data-go-view="reviews" tabindex="0"><span>Aguardando sua ação</span><strong id="kpiHumanPending">0</strong><small>revisões e atendimentos humanos</small></article>
           </section>
 
-          <section class="dashboard-command-layout">
-            <article class="panel dashboard-funnel-panel">
-              <div class="panel-header dashboard-compact-header">
-                <div><p class="eyebrow">FUNIL ATUAL</p><h3>Recrutamento em andamento</h3></div>
-                <button class="text-button" data-go-view="candidates" type="button">Ver candidatos</button>
-              </div>
-              <div id="dashboardFunnel" class="dashboard-funnel-list"><div class="empty-state compact">Carregando funil...</div></div>
-            </article>
-
+          <section class="dashboard-command-layout dashboard-command-layout-compact">
             <article class="panel dashboard-journey-panel">
               <div class="panel-header dashboard-compact-header">
                 <div><p class="eyebrow">MOVIMENTO DO DIA</p><h3>O que avançou hoje</h3></div>
@@ -183,30 +174,6 @@
               </div>
             </article>
 
-            <article class="panel dashboard-attention-panel">
-              <div class="panel-header dashboard-compact-header">
-                <div><p class="eyebrow">AÇÕES PENDENTES</p><h3>O que você precisa fazer agora</h3><span class="dashboard-header-help">Cada item mostra a ação recomendada.</span></div>
-                <button class="text-button" data-go-view="reviews" type="button">Abrir revisões</button>
-              </div>
-              <div id="dashboardAttention" class="dashboard-attention-list"><div class="empty-state compact">Carregando ações...</div></div>
-            </article>
-
-            <article class="panel dashboard-agenda-panel">
-              <div class="panel-header dashboard-compact-header dashboard-calendar-header">
-                <div><p class="eyebrow">AGENDA DE ENTREVISTAS</p><h3 id="dashboardCalendarMonthLabel">Mês atual</h3></div>
-                <div class="dashboard-calendar-actions">
-                  <button id="dashboardCalendarPrevButton" class="icon-button compact" type="button" aria-label="Mês anterior">‹</button>
-                  <button id="dashboardCalendarTodayButton" class="text-button" type="button">Hoje</button>
-                  <button id="dashboardCalendarNextButton" class="icon-button compact" type="button" aria-label="Próximo mês">›</button>
-                  <button class="text-button" data-go-view="interviews" type="button">Agenda completa</button>
-                </div>
-              </div>
-              <div class="dashboard-mini-calendar-shell">
-                <div class="dashboard-mini-weekdays" aria-hidden="true"><span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span></div>
-                <div id="dashboardInterviewCalendar" class="dashboard-mini-calendar"><div class="empty-state compact">Carregando agenda...</div></div>
-                <div id="dashboardCalendarDaySummary" class="dashboard-calendar-day-summary"></div>
-              </div>
-            </article>
           </section>
         </section>
 

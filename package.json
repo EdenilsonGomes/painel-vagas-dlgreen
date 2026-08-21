@@ -32,7 +32,8 @@
     "test:v23": "node scripts/test-ui-v23.js",
     "test:v26": "node scripts/test-ui-v26.js",
     "migrate:v27": "node scripts/migrate-v27.js",
-    "test:v27": "node scripts/test-v27.js"
+    "test:v27": "node scripts/test-v27.js",
+    "test:v28": "node scripts/test-mobile-v28.js"
   },
   "engines": {
     "node": ">=22"

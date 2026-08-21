@@ -47,21 +47,23 @@ function checkDollarQuotes(sql) {
 
 const html = checkHtmlIds('public/index.html');
 for (const token of [
-  'dashboardInterviewCalendar', 'dashboardCalendarDaySummary', 'Agenda de entrevistas',
-  'dashboardFunnel', 'dashboardJourneyStarted', 'O que você precisa fazer agora',
+  'Agenda de entrevistas', 'dashboardJourneyStarted',
   'vacancy-filter-single-row', 'Total de vagas ativas', 'Total de candidatos', 'Candidatos novos', 'Taxa de conversão',
   'candidateVacancyFilter', 'candidateStageFilter', 'table-filter-menu',
   'prospectCategoryFilter', 'prospectOwnerFilter', 'prospectStateFilter', 'clearProspectFiltersButton',
 ]) assert(html.includes(token), `HTML principal sem ${token}.`);
+for (const removed of ['dashboardInterviewCalendar', 'dashboardCalendarDaySummary', 'dashboardFunnel', 'O que você precisa fazer agora']) {
+  assert(!html.includes(removed), `Bloco removido da Visão geral ainda existe: ${removed}.`);
+}
 assert(!/id="kpiCritical"/.test(html), 'O card Críticos ainda está visível na visão geral.');
 assert(!/\?v=(?:800|1200|1300|1400)(?:["'])/.test(html), 'Assets antigos ainda estão referenciados no HTML principal.');
 assert(html.includes('?v=1610'), 'Os assets V16.1 devem usar cache version 1610.');
 
 const app = read('public/app.js');
-for (const token of [
-  'renderDashboardMiniCalendar', 'moveDashboardCalendarMonth', 'dashboardAttentionMeta',
-  'vacancyKpiInterested', 'vacancyKpiInProcess', 'dashboardCalendarSelectedDate',
-]) assert(app.includes(token), `Frontend principal sem ${token}.`);
+for (const token of ['vacancyKpiInterested', 'vacancyKpiInProcess']) assert(app.includes(token), `Frontend principal sem ${token}.`);
+for (const removed of ['renderDashboardMiniCalendar', 'moveDashboardCalendarMonth', 'dashboardAttentionMeta', 'dashboardCalendarSelectedDate']) {
+  assert(!app.includes(removed), `Código morto da Visão geral ainda existe: ${removed}.`);
+}
 
 const admin = read('public/admin.js');
 for (const token of ['renderLeadFilters', 'has-active-filter', 'clearProspectFiltersButton']) {

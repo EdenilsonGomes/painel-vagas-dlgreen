@@ -12,11 +12,11 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
-const conversationButton = html.match(/<button[^>]*data-drawer-tab="conversation"[^>]*>/)?.[0] || '';
-const documentsButton = html.match(/<button[^>]*data-drawer-tab="documents"[^>]*>/)?.[0] || '';
+const conversationButton = html.match(/<button[^>]*data-drawer-quick-tab="conversation"[^>]*>/)?.[0] || '';
+const documentsButton = html.match(/<button[^>]*data-drawer-quick-tab="documents"[^>]*>/)?.[0] || '';
 const documentsSection = html.match(/<section[^>]*id="drawer-tab-documents"[^>]*>/)?.[0] || '';
-const timelineButton = html.match(/<button[^>]*data-drawer-tab="timeline"[^>]*>/)?.[0] || '';
-const adminButton = html.match(/<button[^>]*data-drawer-tab="admin"[^>]*>/)?.[0] || '';
+const timelineButton = html.match(/<button[^>]*data-drawer-quick-tab="timeline"[^>]*>/)?.[0] || '';
+const adminButton = html.match(/<button[^>]*data-drawer-quick-tab="admin"[^>]*>/)?.[0] || '';
 
 assert(conversationButton && !conversationButton.includes('data-admin-only'), 'Conversa deve ficar disponível para RECRUTADOR.');
 assert(documentsButton && !documentsButton.includes('data-admin-only') && !documentsButton.includes('class="hidden"'), 'A aba Documentos deve ficar disponível para RECRUTADOR.');

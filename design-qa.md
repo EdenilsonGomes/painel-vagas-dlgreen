@@ -69,4 +69,18 @@ As capturas foram feitas com a página de produção e comparadas lado a lado co
 
 Nenhuma divergência P0, P1 ou P2 restante. A densidade, os espaçamentos, as superfícies, os estados e as funções principais estão coerentes com o preview e adequados para desktop, tablet e mobile.
 
+## Mobile transversal V28 — 21/08/2026
+
+- Escopo combinado de UX e acessibilidade responsiva: Visão geral, Vagas, Candidatos, Agenda, Documentos, Conversas, Revisões, Sales, Divulgação, Portal de Vagas, Empresas e marcas, Monitoramento, Auditoria, Equipe e acessos, drawers e modais.
+- Viewport visual: 390 × 844, tema dark, componentes e folhas de estilo reais do painel com dados representativos.
+- Evidências: `..\work\qa-v28\{dashboard,vacancies,candidates,agenda,documents,audit,sales,modal}-final.png`.
+- A Visão geral ficou somente com KPIs e Movimento do dia; Agenda, Funil atual e Ações pendentes foram removidos do HTML, estado, carregamento, renderização e eventos.
+- Agenda inicia em Lista no celular e mantém Mês/Dia/Semana disponíveis.
+- KPIs, abas, Kanbans e grupos de filtros usam rolagem horizontal local; a página não cria overflow horizontal global.
+- Modais longos e drawer do candidato ocupam o viewport, mantêm cabeçalho/rodapé controlados e rolam somente o conteúdo central.
+- Conversas e Revisões preservam a altura útil e a rolagem interna de cada workspace.
+- Formulários, ações, filtros e áreas administrativas refluem para uma coluna; alvos principais têm pelo menos 44 px.
+- Medição automatizada das oito telas representativas: `scrollWidth === clientWidth` no documento e no conteúdo principal.
+- Limite de evidência: APIs foram simuladas somente na prévia visual; contratos e fluxos reais foram cobertos pelos testes de regressão existentes.
+
 final result: passed

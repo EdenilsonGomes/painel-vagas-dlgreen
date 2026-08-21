@@ -4,9 +4,6 @@ const state = {
   activeView: 'dashboard',
   dashboard: null,
   dashboardPeriod: '1D',
-  dashboardInterviews: [],
-  dashboardCalendarCursor: new Date(),
-  dashboardCalendarSelectedDate: null,
   vacancies: [],
   vacancyTemplates: [],
   selectedVacancyTemplateId: null,
@@ -214,8 +211,7 @@ const el = Object.fromEntries([
   'reviewDetailPane', 'reviewDetailContent', 'reviewDecisionPane', 'reviewDecisionContent',
   'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar', 'calendarViewMode',
   'dashboardUpdatedAt', 'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
-  'dashboardAttention', 'dashboardFunnel', 'dashboardJourneyStarted', 'dashboardJourneyCtps', 'dashboardJourneyApproved', 'dashboardJourneyScheduled',
-  'dashboardCalendarPrevButton', 'dashboardCalendarTodayButton', 'dashboardCalendarNextButton', 'dashboardCalendarMonthLabel', 'dashboardInterviewCalendar', 'dashboardCalendarDaySummary',
+  'dashboardJourneyStarted', 'dashboardJourneyCtps', 'dashboardJourneyApproved', 'dashboardJourneyScheduled',
   'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancyStatusSelect', 'vacancyPeriodSelect', 'vacancyTableMode', 'vacancyKanbanMode', 'vacanciesKanbanContainer', 'vacancyActiveKpiCard', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
   'vacancyKpiInProcess', 'vacancyKpiApproved', 'vacancyKpiTop', 'vacancyKpiTopCount', 'vacanciesLoading', 'vacanciesEmpty',
   'vacanciesTableWrapper', 'vacanciesTableBody', 'candidateStatusSegments', 'candidatePeriodSegments', 'candidatePeriodSelect', 'candidateActivitySortButton', 'candidateSearchInput',
@@ -496,23 +492,9 @@ async function loadCurrentView(force = false) {
 }
 
 async function loadDashboard() {
-  const [data, agenda] = await Promise.all([
-    api('/api/dashboard?periodo=1D'),
-    api('/api/entrevistas?periodo=TODAS&status=TODAS'),
-  ]);
+  const data = await api('/api/dashboard?periodo=1D');
   state.dashboard = data;
-  state.dashboardInterviews = agenda.entrevistas || [];
-  if (!state.dashboardCalendarSelectedDate) state.dashboardCalendarSelectedDate = localDateKey(new Date());
   renderDashboard();
-}
-
-function dashboardAttentionMeta(item) {
-  const type = String(item.tipo || '').toUpperCase();
-  if (type === 'DOCUMENTOS_FALHA') return { icon: '!', tone: 'critical', title: `${Number(item.quantidade || 0)} documento(s) com falha`, description: 'Ação: abra Documentos, confira o arquivo e escolha revisar ou reprocessar.', action: 'Abrir documentos', view: 'documents' };
-  if (type === 'REVISOES_PENDENTES') return { icon: '◇', tone: 'warning', title: `${Number(item.quantidade || 0)} decisão(ões) aguardando recrutador`, description: 'Ação: confirme se o candidato continua ou não nesta vaga.', action: 'Tomar decisão', view: 'reviews' };
-  if (type === 'APROVADOS_SEM_HORARIO') return { icon: '◷', tone: '', title: `${Number(item.quantidade || 0)} aprovado(s) ainda sem entrevista`, description: 'Ação: abra o candidato e ajude na escolha de um horário de entrevista.', action: 'Agendar', candidateId: item.candidato_id };
-  if (type === 'SEM_RESPOSTA') return { icon: '↻', tone: '', title: `${Number(item.quantidade || 0)} conversa(s) sem resposta há mais de 2 horas`, description: 'Ação: abra a conversa e verifique por que o atendimento não avançou.', action: 'Ver conversa', candidateId: item.candidato_id };
-  return { icon: '✓', tone: 'success', title: 'Operação estável', description: 'Nenhuma ação do recrutador foi identificada neste momento.', action: 'Ver operação', view: 'monitoring' };
 }
 
 function renderDashboard() {
@@ -529,90 +511,10 @@ function renderDashboard() {
   if (el.kpiStaleCandidates) el.kpiStaleCandidates.textContent = Number(metrics.sem_resposta_2h || 0);
   if (el.kpiCritical) el.kpiCritical.textContent = Number(metrics.documentos_falha || 0) + Number(metrics.sem_resposta_2h || 0);
 
-  const attention = data.atencao || [];
-  const rows = attention.length ? attention : [{ tipo: 'OPERACAO_ESTAVEL', quantidade: 0 }];
-  el.dashboardAttention.innerHTML = rows.slice(0, 5).map((item) => {
-    const meta = dashboardAttentionMeta(item);
-    const actionAttrs = meta.candidateId
-      ? `data-action="open-candidate" data-id="${meta.candidateId}"`
-      : `data-go-view="${meta.view || 'monitoring'}"`;
-    const subject = [item.candidato_nome, item.vaga_nome].filter(Boolean).join(' · ');
-    const time = item.referencia ? formatRelativeTime(item.referencia) : '';
-    return `<article class="dashboard-attention-row ${meta.tone}">
-      <span class="dashboard-attention-icon">${escapeHtml(meta.icon)}</span>
-      <div><strong>${escapeHtml(meta.title)}</strong><span>${escapeHtml(meta.description)}</span>${subject || time ? `<small>${escapeHtml([subject, time].filter(Boolean).join(' · '))}</small>` : ''}</div>
-      <button class="dashboard-attention-action" ${actionAttrs} type="button">${escapeHtml(meta.action)}</button>
-    </article>`;
-  }).join('');
-
-
-  const funnel = (data.funil || []).filter((item) => Number(item.quantidade || 0) > 0).slice(0, 6);
-  const funnelMax = Math.max(1, ...funnel.map((item) => Number(item.quantidade || 0)));
-  el.dashboardFunnel.innerHTML = funnel.length ? funnel.map((item) => {
-    const quantity = Number(item.quantidade || 0);
-    const ratio = quantity / funnelMax;
-    const width = Math.round(54 + ratio * 46);
-    const label = stageLabels[item.etapa] || String(item.etapa || '').replaceAll('_', ' ');
-    return `<button class="dashboard-funnel-stage" style="--funnel-width:${width}%" data-go-view="candidates" type="button" title="${escapeHtml(label)}: ${quantity} candidato(s)"><span>${escapeHtml(label)}</span><strong>${quantity}</strong></button>`;
-  }).join('') : emptyState('Funil sem movimentação', 'Os candidatos ativos aparecerão aqui.');
-
   el.dashboardJourneyStarted.textContent = Number(movement.iniciaram || 0);
   el.dashboardJourneyCtps.textContent = Number(movement.ctps_recebidas || 0);
   el.dashboardJourneyApproved.textContent = Number(movement.aprovados || 0);
   el.dashboardJourneyScheduled.textContent = Number(movement.agendados || 0);
-  renderDashboardMiniCalendar();
-}
-
-function dashboardInterviewItemsForDate(dateKey) {
-  return state.dashboardInterviews
-    .filter((item) => localDateKey(item.inicio) === dateKey)
-    .sort((a, b) => new Date(a.inicio) - new Date(b.inicio));
-}
-
-function renderDashboardCalendarDay(dateKey) {
-  if (!el.dashboardCalendarDaySummary) return;
-  const items = dashboardInterviewItemsForDate(dateKey);
-  const date = new Date(`${dateKey}T12:00:00`);
-  const label = Number.isNaN(date.getTime()) ? 'Dia selecionado' : new Intl.DateTimeFormat('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' }).format(date);
-  el.dashboardCalendarDaySummary.innerHTML = `<div class="dashboard-calendar-day-title"><strong>${escapeHtml(label)}</strong><span>${items.length} entrevista${items.length === 1 ? '' : 's'}</span></div>` + (items.length ? items.slice(0, 2).map((item) => `
-    <button class="dashboard-calendar-interview" data-action="open-candidate" data-id="${item.candidato_id}" type="button"><time>${escapeHtml(formatTime(item.inicio))}</time><span><strong>${escapeHtml(item.candidato_nome || 'Candidato')}</strong><small>${escapeHtml(item.vaga_nome || 'Vaga não informada')}</small></span></button>`).join('') : '<span class="dashboard-calendar-empty">Nenhuma entrevista neste dia.</span>');
-}
-
-function renderDashboardMiniCalendar() {
-  if (!el.dashboardInterviewCalendar || !el.dashboardCalendarMonthLabel) return;
-  const cursor = new Date(state.dashboardCalendarCursor);
-  cursor.setHours(12, 0, 0, 0);
-  const year = cursor.getFullYear();
-  const month = cursor.getMonth();
-  el.dashboardCalendarMonthLabel.textContent = calendarMonthTitle(cursor);
-  const first = new Date(year, month, 1, 12);
-  const last = new Date(year, month + 1, 0, 12);
-  const start = new Date(first); start.setDate(first.getDate() - first.getDay());
-  const end = new Date(last); end.setDate(last.getDate() + (6 - last.getDay()));
-  const todayKey = localDateKey(new Date());
-  const cells = [];
-  for (let day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
-    const key = localDateKey(day);
-    const quantity = dashboardInterviewItemsForDate(key).length;
-    const classes = ['dashboard-mini-day'];
-    if (day.getMonth() !== month) classes.push('outside');
-    if (key === todayKey) classes.push('today');
-    if (key === state.dashboardCalendarSelectedDate) classes.push('selected');
-    if (quantity) classes.push('has-events');
-    cells.push(`<button class="${classes.join(' ')}" data-dashboard-calendar-date="${key}" type="button"><span>${day.getDate()}</span>${quantity ? `<b>${quantity}</b>` : ''}</button>`);
-  }
-  el.dashboardInterviewCalendar.innerHTML = cells.join('');
-  renderDashboardCalendarDay(state.dashboardCalendarSelectedDate || todayKey);
-}
-
-function moveDashboardCalendarMonth(offset) {
-  const date = new Date(state.dashboardCalendarCursor);
-  date.setDate(1);
-  date.setMonth(date.getMonth() + offset);
-  state.dashboardCalendarCursor = date;
-  const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-  if (!String(state.dashboardCalendarSelectedDate || '').startsWith(monthKey)) state.dashboardCalendarSelectedDate = localDateKey(date);
-  renderDashboardMiniCalendar();
 }
 
 async function resolveAlert(key) {
@@ -2766,7 +2668,6 @@ function handleDelegatedAction(event) {
   if (target.hasAttribute('data-review-confirm')) return confirmSelectedReviewDecision();
   if (target.dataset.reviewDecision) return decideReview(target.dataset.id, target.dataset.reviewDecision);
   if (target.dataset.calendarDate) { state.calendarSelectedDate=target.dataset.calendarDate; renderInterviews(); return; }
-  if (target.dataset.dashboardCalendarDate) { state.dashboardCalendarSelectedDate=target.dataset.dashboardCalendarDate; renderDashboardMiniCalendar(); return; }
   if (target.dataset.auditOpen) return openAuditProblem(target.dataset.auditOpen);
   if (target.dataset.templateApply) { applyTemplateById(target.dataset.templateApply); el.templateManagerDialog?.close(); return; }
   if (target.dataset.templateEdit) return editVacancyTemplate(target.dataset.templateEdit);
@@ -2977,9 +2878,6 @@ function bindEvents() {
   el.auditSearchInput?.addEventListener('input', () => { clearTimeout(state.auditSearchTimer); state.auditSearchTimer = setTimeout(() => loadAudit(true), 300); });
   el.closeAuditProblemButton?.addEventListener('click', () => el.auditProblemDialog.close());
   el.sendAuditCandidateToRescueButton?.addEventListener('click', () => { const problem=state.selectedAuditProblem; if(problem) sendCandidateToRescue(problem.candidato_id, problem.id); });
-  el.dashboardCalendarPrevButton?.addEventListener('click', () => moveDashboardCalendarMonth(-1));
-  el.dashboardCalendarNextButton?.addEventListener('click', () => moveDashboardCalendarMonth(1));
-  el.dashboardCalendarTodayButton?.addEventListener('click', () => { state.dashboardCalendarCursor = new Date(); state.dashboardCalendarSelectedDate = localDateKey(new Date()); renderDashboardMiniCalendar(); });
   el.calendarPrevButton?.addEventListener('click', () => moveCalendarMonth(-1));
   el.calendarNextButton?.addEventListener('click', () => moveCalendarMonth(1));
   el.calendarTodayButton?.addEventListener('click', () => { state.calendarCursor=new Date(); state.calendarSelectedDate=localDateKey(new Date()); renderInterviews(); });
@@ -3127,6 +3025,10 @@ function bindEvents() {
 window.GenesisApp = { api, showToast, escapeHtml, formatMoney, formatDate, formatPhone, badgeClass, emptyState, currentUserIsAdmin, state, setView, loadCurrentView };
 
 async function init() {
+  if (window.matchMedia('(max-width: 760px)').matches) {
+    state.calendarMode = 'LIST';
+    el.calendarViewMode?.querySelectorAll('[data-calendar-mode]').forEach((button) => button.classList.toggle('active', button.dataset.calendarMode === 'LIST'));
+  }
   bindEvents();
   syncThemeUi();
   await loadCurrentUser();
