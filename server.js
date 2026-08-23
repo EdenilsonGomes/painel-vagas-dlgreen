@@ -1961,7 +1961,12 @@ app.get('/api/dashboard', async (req, res, next) => {
           GROUP BY candidato_id
         ),
         analise AS (
-          SELECT COALESCE(ROUND(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (pr.analisado_em - c.created_at)) / 60)::NUMERIC), 0)::INTEGER, 0) AS primeira_analise_minutos
+          SELECT COALESCE(
+            ROUND((PERCENTILE_CONT(0.5) WITHIN GROUP (
+              ORDER BY EXTRACT(EPOCH FROM (pr.analisado_em - c.created_at)) / 60
+            ))::NUMERIC, 0),
+            0
+          )::INTEGER AS primeira_analise_minutos
           FROM candidatos c
           JOIN primeira_revisao pr ON pr.candidato_id = c.id AND pr.analisado_em >= c.created_at
           CROSS JOIN limites l

@@ -22,6 +22,8 @@ ok(html.includes('id="dashboardPerformanceChart"') && html.includes('id="dashboa
 ok(html.includes('data-dashboard-period="7D"') && html.includes('data-dashboard-period="30D"'), 'Alternância de período da Visão geral ausente.');
 ok(app.includes("dashboardPeriod: '30D'") && app.includes('drawDashboardPerformanceChart'), 'Comportamento analítico da Visão geral ausente.');
 ok(server.includes('vagas_atencao:') && server.includes('candidaturas_periodo_anterior'), 'API da Visão geral não entrega análises e saúde das vagas.');
+ok(server.includes(')::INTEGER AS primeira_analise_minutos'), 'Conversão da mediana de primeira análise ausente.');
+ok(!/\)::INTEGER,\s*0\)\s+AS primeira_analise_minutos/.test(server), 'COALESCE da primeira análise contém cast/argumento em posição inválida.');
 ok(app.includes("const legacyViewRedirects = { crm: 'sales'") && app.includes("divulgacao: 'vacancies'"), 'Links antigos devem redirecionar com segurança.');
 ok(!/Genesis(?:Demos|CRM|Divulgacao|Prospecting)|loadCommercialChats/.test(app), 'Carregadores legados continuam ativos.');
 ok(!/waha|qrcode|session\/qr|outreach|prospeccao/i.test(operations), 'Automação comercial WAHA continua no módulo operacional.');
