@@ -20,6 +20,8 @@ ok(html.includes('id="candidateBulkExport"') && html.includes('data-admin-only')
 ['conversation', 'documents', 'timeline'].forEach((tab) => ok(html.includes(`data-drawer-quick-tab="${tab}"`), `Atalho ${tab} ausente no drawer.`));
 ok(html.includes('data-go-view="interviews"'), 'Atalho Agendar deve abrir a agenda existente.');
 ok(app.includes('selectedCandidateIds: new Set()'), 'Seleção deve usar estado único e persistente entre renders.');
+ok(app.includes('baseCandidates.filter((candidate) => candidateMatches(candidate))'), 'Cards de status devem filtrar cada candidato sem repassar o índice como ignoreStatus.');
+ok(!app.includes('baseCandidates.filter(candidateMatches)'), 'Filtro de status não pode receber o índice do Array.filter como ignoreStatus.');
 ok(app.includes('enviar_mensagem: Boolean(options.enviarMensagem)'), 'Decisão deve enviar explicitamente a preferência de comunicação.');
 ok(app.includes('id="reviewSendMessage" type="checkbox"') && !app.includes('id="reviewSendMessage" type="checkbox" checked'), 'Enviar mensagem deve iniciar desmarcado.');
 ok(app.includes("'Salvar e enviar mensagem' : 'Salvar decisão'"), 'CTA deve refletir o estado da comunicação.');

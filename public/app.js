@@ -1592,7 +1592,7 @@ function candidateMatches(candidate, ignoreStatus = false) {
 
 function renderCandidates() {
   const baseCandidates = state.candidates.filter((candidate) => candidateMatches(candidate, true));
-  const candidates = baseCandidates.filter(candidateMatches);
+  const candidates = baseCandidates.filter((candidate) => candidateMatches(candidate));
   if (state.candidateDistanceSort === 'PROXIMIDADE') {
     candidates.sort((a, b) => {
       const va = a.distancia_km !== null && a.distancia_km !== undefined && a.distancia_km !== '' && Number.isFinite(Number(a.distancia_km));
