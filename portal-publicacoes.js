@@ -2,14 +2,6 @@
 
 const { z } = require('zod');
 
-const groupModerationSchema = z.object({
-  status: z.enum(['pending', 'approved', 'rejected', 'suspended', 'expired']),
-  verified: z.boolean().optional().default(false),
-  featured: z.boolean().optional().default(false),
-  official: z.boolean().optional().default(false),
-  rejection_reason: z.string().trim().max(2000).optional().default(''),
-  moderation_note: z.string().trim().max(3000).optional().default(''),
-});
 const accountUpdateSchema = z.object({
   lead_status: z.enum(['NOVO', 'CONTATADO', 'QUALIFICADO', 'CLIENTE', 'SEM_INTERESSE']),
   status: z.enum(['ATIVA', 'BLOQUEADA', 'EXCLUIDA']),
@@ -26,10 +18,6 @@ function toInt(value, fallback, min = 1, max = 200) {
   if (!Number.isInteger(number)) return fallback;
   return Math.min(max, Math.max(min, number));
 }
-function positiveId(value) {
-  const number = Number(value);
-  return Number.isSafeInteger(number) && number > 0 ? number : null;
-}
 function statusClause(value, allowed) {
   const status = String(value || '').trim();
   return allowed.includes(status) ? status : '';
@@ -38,85 +26,16 @@ function validationMessage(error) {
   return error?.issues?.map((item) => item.message).join(' ') || 'Dados inválidos.';
 }
 
-function registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl = '', groupsEnabled = false }) {
+function registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl = '' }) {
   app.get('/api/portal-publicacoes/resumo', requireAdmin, async (_req, res, next) => {
     try {
       const result = await pool.query(`
         SELECT
           (SELECT COUNT(*)::INTEGER FROM portal_contas) AS contas_total,
           (SELECT COUNT(*)::INTEGER FROM portal_contas WHERE lead_status='NOVO') AS leads_novos,
-          (SELECT COUNT(*)::INTEGER FROM gg_groups WHERE status='pending') AS grupos_pendentes,
-          (SELECT COUNT(*)::INTEGER FROM gg_groups WHERE status='approved') AS grupos_publicados,
-          (SELECT COUNT(*)::INTEGER FROM gg_group_reports WHERE status='pending') AS denuncias_pendentes,
-          (SELECT COUNT(*)::INTEGER FROM portal_vagas_submissoes WHERE status IN ('PENDENTE','EM_REVISAO','APROVADA')) AS vagas_pendentes,
-          (SELECT COALESCE(SUM(1),0)::INTEGER FROM gg_group_clicks WHERE created_at >= NOW() - INTERVAL '30 days') AS acessos_grupos_30d,
-          (SELECT COALESCE(SUM(1),0)::INTEGER FROM gg_group_views WHERE created_at >= NOW() - INTERVAL '30 days') AS visualizacoes_grupos_30d
+          (SELECT COUNT(*)::INTEGER FROM portal_vagas_submissoes WHERE status IN ('PENDENTE','EM_REVISAO','APROVADA')) AS vagas_pendentes
       `);
       return res.json({ sucesso: true, resumo: result.rows[0], portal_base_url: portalBaseUrl });
-    } catch (error) { return next(error); }
-  });
-
-  if (groupsEnabled) app.get('/api/portal-publicacoes/grupos', requireAdmin, async (req, res, next) => {
-    try {
-      const page = toInt(req.query.pagina, 1, 1, 100000);
-      const limit = toInt(req.query.limite, 30, 1, 100);
-      const offset = (page - 1) * limit;
-      const status = statusClause(req.query.status, ['pending', 'approved', 'rejected', 'suspended', 'expired']);
-      const q = String(req.query.q || '').trim().slice(0, 150);
-      const values = [];
-      const clauses = [];
-      if (status) { values.push(status); clauses.push(`g.status=$${values.length}`); }
-      if (q) { values.push(`%${q}%`); clauses.push(`(g.name ILIKE $${values.length} OR g.city ILIKE $${values.length} OR g.category ILIKE $${values.length} OR c.nome ILIKE $${values.length} OR c.empresa_nome ILIKE $${values.length})`); }
-      const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
-      const count = await pool.query(`SELECT COUNT(*)::INTEGER total FROM gg_groups g LEFT JOIN portal_contas c ON c.id=g.owner_account_id ${where}`, values);
-      values.push(limit, offset);
-      const rows = await pool.query(`
-        SELECT g.*,
-          c.tipo AS conta_tipo,c.nome AS conta_nome,c.email AS conta_email,c.whatsapp AS conta_whatsapp,c.empresa_nome AS conta_empresa,
-          EXISTS(SELECT 1 FROM portal_grupo_imagens i WHERE i.grupo_id=g.id) AS has_image,
-          (SELECT COUNT(*)::INTEGER FROM gg_group_views v WHERE v.group_id=g.id) AS view_count,
-          (SELECT COUNT(*)::INTEGER FROM gg_group_clicks x WHERE x.group_id=g.id) AS click_count,
-          (SELECT COUNT(*)::INTEGER FROM gg_group_reports r WHERE r.group_id=g.id AND r.status='pending') AS report_count
-        FROM gg_groups g
-        LEFT JOIN portal_contas c ON c.id=g.owner_account_id
-        ${where}
-        ORDER BY (g.status='pending') DESC, g.submitted_at DESC, g.id DESC
-        LIMIT $${values.length-1} OFFSET $${values.length}
-      `, values);
-      return res.json({ sucesso: true, total: count.rows[0]?.total || 0, pagina: page, limite: limit, grupos: rows.rows });
-    } catch (error) { return next(error); }
-  });
-
-  if (groupsEnabled) app.patch('/api/portal-publicacoes/grupos/:id', requireAdmin, async (req, res, next) => {
-    try {
-      const groupId = positiveId(req.params.id);
-      if (!groupId) return res.status(400).json({ sucesso: false, erro: 'ID de grupo inválido.' });
-      const parsed = groupModerationSchema.safeParse(req.body);
-      if (!parsed.success) return res.status(400).json({ sucesso: false, erro: validationMessage(parsed.error) });
-      if (parsed.data.status === 'rejected' && parsed.data.rejection_reason.length < 5) {
-        return res.status(400).json({ sucesso: false, erro: 'Informe o motivo da rejeição para orientar o publicador.' });
-      }
-      const verified = parsed.data.status === 'approved' ? true : parsed.data.verified;
-      const result = await pool.query(`
-        UPDATE gg_groups SET
-          status=$1::VARCHAR(30),verified=$2::BOOLEAN,featured=$3::BOOLEAN,official=$4::BOOLEAN,
-          rejection_reason=CASE WHEN $1::VARCHAR(30)='rejected' THEN NULLIF($5::TEXT,'') ELSE NULL END,
-          moderation_note=NULLIF($6,''),
-          approved_at=CASE WHEN $1::VARCHAR(30)='approved' THEN COALESCE(approved_at,NOW()) ELSE approved_at END,
-          last_verified_at=CASE WHEN $2::BOOLEAN IS TRUE THEN NOW() ELSE last_verified_at END,
-          updated_at=NOW()
-        WHERE id=$7 RETURNING *
-      `, [parsed.data.status, verified, parsed.data.featured, parsed.data.official, parsed.data.rejection_reason, parsed.data.moderation_note, groupId]);
-      if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Grupo não encontrado.' });
-      return res.json({ sucesso: true, grupo: result.rows[0], moderado_por: currentUserName(req) });
-    } catch (error) { return next(error); }
-  });
-
-  app.patch('/api/portal-publicacoes/denuncias/:id/resolver', requireAdmin, async (req, res, next) => {
-    try {
-      const result = await pool.query(`UPDATE gg_group_reports SET status='resolved',resolved_at=NOW(),resolved_by=$2 WHERE id=$1 RETURNING *`, [Number(req.params.id), req.user?.id || null]);
-      if (!result.rowCount) return res.status(404).json({ sucesso: false, erro: 'Denúncia não encontrada.' });
-      return res.json({ sucesso: true, denuncia: result.rows[0] });
     } catch (error) { return next(error); }
   });
 
@@ -136,7 +55,6 @@ function registerPortalPublications({ app, pool, requireAdmin, currentUserName, 
       values.push(limit, offset);
       const rows = await pool.query(`
         SELECT c.*,
-          (SELECT COUNT(*)::INTEGER FROM gg_groups g WHERE g.owner_account_id=c.id) AS grupos_total,
           (SELECT COUNT(*)::INTEGER FROM portal_vagas_submissoes v WHERE v.conta_id=c.id) AS vagas_total
         FROM portal_contas c ${where}
         ORDER BY (c.lead_status='NOVO') DESC,c.created_at DESC

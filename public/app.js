@@ -3,7 +3,7 @@
 const state = {
   activeView: 'dashboard',
   dashboard: null,
-  dashboardPeriod: '1D',
+  dashboardPeriod: '30D',
   vacancies: [],
   vacancyTemplates: [],
   selectedVacancyTemplateId: null,
@@ -190,18 +190,13 @@ const viewMeta = {
   atendimentos: ['CONVERSAS', 'Chats', 'Todas as conversas em ordem de atividade, com leitura e atendimento no mesmo lugar.', 'Atualizar chats'],
   interviews: ['AGENDA', 'Entrevistas', 'Compromissos do processo seletivo sincronizados com o Google Calendar.', 'Atualizar agenda'],
   reviews: ['ATENDIMENTO', 'Revisões', 'Resolva exceções humanas com clareza sobre mensagens e estado da IA.', ''],
-  documents: ['ARQUIVOS', 'Documentos', 'CTPS, currículos e PDFs que precisam de revisão.', 'Atualizar arquivos'],
-  divulgacao: ['AQUISIÇÃO', 'Central de Divulgação', 'Facebook assistido e WhatsApp controlado, vinculados às vagas oficiais.', '+ Nova campanha'],
-  monitoring: ['ADMINISTRAÇÃO', 'Monitoramento', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
+  documents: ['ADMINISTRAÇÃO', 'Saúde do sistema', 'Documentos técnicos e falhas que precisam de revisão.', 'Atualizar arquivos'],
+  monitoring: ['ADMINISTRAÇÃO', 'Saúde do sistema', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
   audit: ['ADMINISTRAÇÃO', 'Auditoria da IA', 'Valide estados, documentos, resgates e agendamentos do fluxo determinístico.', 'Sincronizar'],
-  prospecting: ['COMERCIAL', 'Prospecção', 'Encontre, enriqueça e prepare empresas para uma abordagem comercial controlada.', 'Nova busca'],
   sales: ['COMERCIAL', 'Sales', 'Prospecção manual organizada, sem disparos automáticos.', ''],
-  commercialChats: ['COMERCIAL', 'Conversas comerciais', 'Respostas e negociações do número dedicado de prospecção.', 'Atualizar conversas'],
-  brands: ['WHITE-LABEL', 'Empresas e marcas', 'Configure a identidade que será aplicada às artes e canais de cada cliente.', ''],
-  publications: ['CONTEÚDO', 'Portal e comunidades', 'Modere grupos e vagas recebidas e acompanhe as contas públicas.', ''],
-  demos: ['COMERCIAL', 'Demonstrações', 'Crie testes isolados de 7 dias e acompanhe a ativação pelo WhatsApp.', '+ Nova demonstração'],
-  crm: ['COMERCIAL', 'Comercial', 'Pipeline, empresas, demonstrações e follow-ups da Gênesis em uma única rotina.', '+ Nova oportunidade'],
-  users: ['ADMINISTRAÇÃO', 'Equipe e acessos', 'Gerencie logins e permissões do time interno.', '+ Criar login'],
+  brands: ['ADMINISTRAÇÃO', 'Configurações', 'Identidade das empresas e preferências operacionais.', ''],
+  publications: ['ADMINISTRAÇÃO', 'Portal de Vagas', 'Revise vagas recebidas e acompanhe as contas públicas.', ''],
+  users: ['ADMINISTRAÇÃO', 'Configurações', 'Gerencie logins e permissões do time interno.', '+ Criar login'],
 };
 
 const el = Object.fromEntries([
@@ -211,7 +206,7 @@ const el = Object.fromEntries([
   'reviewDetailPane', 'reviewDetailContent', 'reviewDecisionPane', 'reviewDecisionContent',
   'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar', 'calendarViewMode',
   'dashboardUpdatedAt', 'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
-  'dashboardJourneyStarted', 'dashboardJourneyCtps', 'dashboardJourneyApproved', 'dashboardJourneyScheduled',
+  'dashboardPerformanceMetrics', 'dashboardPerformanceChart', 'dashboardVacancyAttentionList',
   'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancyStatusSelect', 'vacancyPeriodSelect', 'vacancyTableMode', 'vacancyKanbanMode', 'vacanciesKanbanContainer', 'vacancyActiveKpiCard', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
   'vacancyKpiInProcess', 'vacancyKpiApproved', 'vacancyKpiTop', 'vacancyKpiTopCount', 'vacanciesLoading', 'vacanciesEmpty',
   'vacanciesTableWrapper', 'vacanciesTableBody', 'candidateStatusSegments', 'candidatePeriodSegments', 'candidatePeriodSelect', 'candidateActivitySortButton', 'candidateSearchInput',
@@ -438,15 +433,17 @@ function badgeClass(status) {
 }
 
 function setView(name) {
-  if (!currentUserIsAdmin() && ['audit', 'sales', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(name)) name = 'dashboard';
+  const legacyViewRedirects = { crm: 'sales', prospecting: 'sales', commercialChats: 'sales', demos: 'sales', divulgacao: 'vacancies' };
+  name = legacyViewRedirects[name] || name;
+  if (!currentUserIsAdmin() && ['audit', 'sales', 'publications', 'monitoring', 'documents', 'brands', 'users'].includes(name)) name = 'dashboard';
   state.activeView = name;
   document.body.dataset.activeView = name;
   const groupByView = {
     dashboard: 'recruitmentNavGroup', vacancies: 'recruitmentNavGroup', candidates: 'recruitmentNavGroup',
-    interviews: 'recruitmentNavGroup', documents: 'recruitmentNavGroup', divulgacao: 'recruitmentNavGroup',
+    interviews: 'recruitmentNavGroup',
     atendimentos: 'conversationsNavGroup', reviews: 'conversationsNavGroup',
-    crm: 'commercialNavGroup', sales: 'commercialNavGroup', prospecting: 'commercialNavGroup', commercialChats: 'commercialNavGroup', demos: 'commercialNavGroup',
-    publications: 'administrationNavGroup', brands: 'administrationNavGroup', monitoring: 'administrationNavGroup', audit: 'administrationNavGroup', users: 'administrationNavGroup',
+    sales: 'commercialNavGroup',
+    publications: 'administrationNavGroup', brands: 'administrationNavGroup', monitoring: 'administrationNavGroup', documents: 'administrationNavGroup', audit: 'administrationNavGroup', users: 'administrationNavGroup',
   };
   const activeGroup = document.getElementById(groupByView[name]);
   if (activeGroup) activeGroup.open = true;
@@ -476,15 +473,10 @@ async function loadCurrentView(force = false) {
     if (state.activeView === 'interviews') await loadInterviews(force);
     if (state.activeView === 'reviews') await loadReviews(force);
     if (state.activeView === 'documents') await loadDocuments(force);
-    if (state.activeView === 'divulgacao') await window.GenesisDivulgacaoV1?.load(force);
     if (state.activeView === 'monitoring') await loadMonitoring(force);
     if (state.activeView === 'audit') await loadAudit(force);
-    if (state.activeView === 'prospecting') await Promise.all([window.GenesisAdmin?.loadProspecting(force), window.GenesisOperationsV14?.loadProspectingSafety(force), window.GenesisProspectingV20?.loadProspectingExtras(force)]);
-    if (state.activeView === 'commercialChats') await window.GenesisProspectingV20?.loadCommercialChats(force);
     if (state.activeView === 'brands') await window.GenesisOperationsV14?.loadBrands(force);
     if (state.activeView === 'publications') await window.GenesisPortalPublicacoes?.load(force);
-    if (state.activeView === 'demos') await window.GenesisDemos?.load(force);
-    if (state.activeView === 'crm') await window.GenesisCRM?.load(force);
     if (state.activeView === 'users') await window.GenesisAdmin?.loadUsers(force);
   } catch (error) {
     showToast(error.message, 'error');
@@ -492,15 +484,138 @@ async function loadCurrentView(force = false) {
 }
 
 async function loadDashboard() {
-  const data = await api('/api/dashboard?periodo=1D');
+  const data = await api(`/api/dashboard?periodo=${encodeURIComponent(state.dashboardPeriod)}`);
   state.dashboard = data;
   renderDashboard();
+}
+
+function dashboardComparison(current, previous, inverse = false) {
+  const value = Number(current || 0);
+  const baseline = Number(previous || 0);
+  if (!baseline) return { label: 'Sem base anterior', tone: 'neutral' };
+  const variation = Math.round(((value - baseline) / baseline) * 100);
+  const beneficial = inverse ? variation <= 0 : variation >= 0;
+  return {
+    label: `${variation > 0 ? '+' : ''}${variation}% vs. período anterior`,
+    tone: beneficial ? 'positive' : 'negative',
+  };
+}
+
+function renderDashboardPerformance(summary = {}) {
+  if (!el.dashboardPerformanceMetrics) return;
+  const metrics = [
+    { value: Number(summary.novos || 0), label: 'novos candidatos', comparison: dashboardComparison(summary.novos, summary.novos_anterior) },
+    { value: Number(summary.aprovados || 0), label: 'aprovados na triagem', comparison: dashboardComparison(summary.aprovados, summary.aprovados_anterior) },
+    { value: Number(summary.entrevistas || 0), label: 'entrevistas', comparison: dashboardComparison(summary.entrevistas, summary.entrevistas_anterior) },
+    { value: Number(summary.contratacoes || 0), label: 'contratações', comparison: dashboardComparison(summary.contratacoes, summary.contratacoes_anterior) },
+    { value: `${Number(summary.primeira_analise_minutos || 0)} min`, label: 'primeira análise', comparison: { label: 'mediana do período', tone: 'neutral' } },
+    { value: `${Number(summary.comparecimento || 0)}%`, label: 'comparecimento', comparison: { label: 'entrevistas realizadas', tone: 'neutral' } },
+  ];
+  el.dashboardPerformanceMetrics.innerHTML = metrics.map((item) => `<article><strong>${escapeHtml(item.value)}</strong><span>${escapeHtml(item.label)}</span><small class="${item.comparison.tone}">${escapeHtml(item.comparison.label)}</small></article>`).join('');
+}
+
+function renderDashboardVacancies(items = []) {
+  if (!el.dashboardVacancyAttentionList) return;
+  if (!items.length) {
+    el.dashboardVacancyAttentionList.innerHTML = emptyState('Nenhuma vaga ativa', 'As vagas que precisarem de atenção aparecerão aqui.');
+    return;
+  }
+  el.dashboardVacancyAttentionList.innerHTML = items.map((item) => {
+    const reviews = Number(item.revisoes_pendentes || 0);
+    const unanswered = Number(item.sem_retorno || 0);
+    const analysis = Number(item.em_analise || 0);
+    const interviews = Number(item.entrevistas || 0);
+    const stalledDays = Number(item.dias_sem_avanco || 0);
+    const attention = reviews > 0 || unanswered > 0 || stalledDays >= 2 || analysis >= 15;
+    const reason = reviews > 0
+      ? `${reviews} aguardando análise`
+      : unanswered > 0
+        ? `${unanswered} sem retorno`
+      : stalledDays >= 2
+        ? `${stalledDays} dias sem avanço`
+        : analysis > 0
+          ? `${analysis} em análise`
+          : interviews > 0 ? `${interviews} entrevistas agendadas` : 'Fluxo dentro do esperado';
+    const lastAdvance = item.ultimo_avanco ? (stalledDays === 0 ? 'Hoje' : stalledDays === 1 ? 'Há 1 dia' : `Há ${stalledDays} dias`) : 'Sem avanço';
+    return `<article class="dashboard-vacancy-attention-row ${attention ? 'attention' : 'healthy'}">
+      <strong>${escapeHtml(item.vaga_nome || 'Vaga sem título')}</strong>
+      <span class="dashboard-vacancy-reason"><i aria-hidden="true"></i>${escapeHtml(reason)}</span>
+      <span data-label="Último avanço">${escapeHtml(lastAdvance)}</span>
+      <span data-label="Responsável">${escapeHtml(item.responsavel || state.currentUser?.nome || 'Recrutamento')}</span>
+      <button data-vacancy-action="view" data-id="${escapeHtml(item.id)}" type="button">Ver vaga</button>
+    </article>`;
+  }).join('');
+}
+
+function drawDashboardPerformanceChart(points = []) {
+  const canvas = el.dashboardPerformanceChart;
+  if (!canvas || !points.length) return;
+  const wrapper = canvas.parentElement;
+  const width = Math.max(280, Math.floor(wrapper.clientWidth || 900));
+  const height = window.matchMedia('(max-width: 720px)').matches ? 210 : 250;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = Math.round(width * ratio);
+  canvas.height = Math.round(height * ratio);
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  const context = canvas.getContext('2d');
+  context.scale(ratio, ratio);
+  const dark = document.documentElement.dataset.theme === 'dark';
+  const colors = { grid: dark ? '#24414a' : '#dce6e8', text: dark ? '#9eb0ba' : '#64748b', candidates: '#0ea89a', interviews: dark ? '#80a7c8' : '#173e67', hires: '#95a1aa', previous: dark ? '#5d7f88' : '#93a6ad' };
+  const padding = { top: 18, right: 12, bottom: 30, left: 34 };
+  const chartWidth = width - padding.left - padding.right;
+  const chartHeight = height - padding.top - padding.bottom;
+  const maximum = Math.max(5, ...points.flatMap((point) => [Number(point.candidaturas || 0), Number(point.entrevistas || 0), Number(point.contratacoes || 0), Number(point.candidaturas_periodo_anterior || 0)]));
+  const roundedMaximum = Math.ceil(maximum / 5) * 5;
+  context.clearRect(0, 0, width, height);
+  context.font = '10px Inter, system-ui, sans-serif';
+  context.fillStyle = colors.text;
+  context.textAlign = 'right';
+  context.textBaseline = 'middle';
+  for (let step = 0; step <= 4; step += 1) {
+    const value = Math.round((roundedMaximum / 4) * step);
+    const y = padding.top + chartHeight - (chartHeight * step / 4);
+    context.beginPath();
+    context.strokeStyle = colors.grid;
+    context.lineWidth = 1;
+    context.setLineDash([4, 4]);
+    context.moveTo(padding.left, y);
+    context.lineTo(width - padding.right, y);
+    context.stroke();
+    context.fillText(String(value), padding.left - 8, y);
+  }
+  const xAt = (index) => padding.left + (points.length === 1 ? chartWidth / 2 : (chartWidth * index / (points.length - 1)));
+  const yAt = (value) => padding.top + chartHeight - (Number(value || 0) / roundedMaximum) * chartHeight;
+  const line = (key, color, dashed = false) => {
+    context.beginPath();
+    context.strokeStyle = color;
+    context.lineWidth = key === 'candidaturas' ? 2.4 : 2;
+    context.lineJoin = 'round';
+    context.lineCap = 'round';
+    context.setLineDash(dashed ? [5, 5] : []);
+    points.forEach((point, index) => {
+      const x = xAt(index); const y = yAt(point[key]);
+      if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+    });
+    context.stroke();
+  };
+  line('candidaturas_periodo_anterior', colors.previous, true);
+  line('candidaturas', colors.candidates);
+  line('entrevistas', colors.interviews);
+  line('contratacoes', colors.hires);
+  context.setLineDash([]);
+  context.textAlign = 'center';
+  context.textBaseline = 'top';
+  const labelIndexes = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])];
+  labelIndexes.forEach((index) => {
+    const date = new Date(`${String(points[index].dia).slice(0, 10)}T12:00:00`);
+    context.fillText(new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' }).format(date), xAt(index), height - 19);
+  });
 }
 
 function renderDashboard() {
   const data = state.dashboard || {};
   const metrics = data.metricas || {};
-  const movement = data.movimento_dia || {};
 
   if (el.dashboardUpdatedAt) el.dashboardUpdatedAt.textContent = `Atualizado ${formatRelativeTime(data.atualizado_em)}`;
   if (el.kpiCandidatesActive) el.kpiCandidatesActive.textContent = Number(metrics.total_candidatos || 0);
@@ -511,10 +626,10 @@ function renderDashboard() {
   if (el.kpiStaleCandidates) el.kpiStaleCandidates.textContent = Number(metrics.sem_resposta_2h || 0);
   if (el.kpiCritical) el.kpiCritical.textContent = Number(metrics.documentos_falha || 0) + Number(metrics.sem_resposta_2h || 0);
 
-  el.dashboardJourneyStarted.textContent = Number(movement.iniciaram || 0);
-  el.dashboardJourneyCtps.textContent = Number(movement.ctps_recebidas || 0);
-  el.dashboardJourneyApproved.textContent = Number(movement.aprovados || 0);
-  el.dashboardJourneyScheduled.textContent = Number(movement.agendados || 0);
+  document.querySelectorAll('[data-dashboard-period]').forEach((button) => button.classList.toggle('active', button.dataset.dashboardPeriod === state.dashboardPeriod));
+  renderDashboardPerformance(data.desempenho?.resumo || {});
+  renderDashboardVacancies(data.vagas_atencao || []);
+  requestAnimationFrame(() => drawDashboardPerformanceChart(data.desempenho?.tendencia || []));
 }
 
 async function resolveAlert(key) {
@@ -2628,8 +2743,15 @@ function handleDelegatedAction(event) {
     renderCandidates();
     return;
   }
-  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open], [data-review-open-candidate], [data-review-start-service], [data-review-mobile-pane], [data-review-confirm], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
+  const target = event.target.closest('[data-action], [data-vacancy-action], [data-candidate-action], [data-monitor-action], [data-go-view], [data-dashboard-period], [data-audit-open], [data-audit-candidate-profile], [data-template-apply], [data-template-edit], [data-template-duplicate], [data-template-delete], [data-audit-toggle], [data-audit-rescue-candidate], [data-review-decision], [data-review-open], [data-review-open-candidate], [data-review-start-service], [data-review-mobile-pane], [data-review-confirm], [data-calendar-date], [data-dashboard-calendar-date], [data-document-toggle], [data-document-reprocess], [data-document-mark-reviewed]');
   if (!target) return;
+  if (target.dataset.dashboardPeriod) {
+    if (target.dataset.dashboardPeriod === state.dashboardPeriod) return;
+    state.dashboardPeriod = target.dataset.dashboardPeriod;
+    document.querySelectorAll('[data-dashboard-period]').forEach((button) => button.classList.toggle('active', button === target));
+    loadDashboard(true).catch((error) => showToast(error.message, 'error'));
+    return;
+  }
   if (target.dataset.goView) {
     if (target.closest('#candidateDrawer')) el.candidateDrawer?.close();
     return setView(target.dataset.goView);
@@ -2720,13 +2842,8 @@ function handlePrimaryAction() {
   if (state.activeView === 'candidates') return openNewCandidateDialog();
   if (state.activeView === 'atendimentos') return window.GenesisConversationsV164?.load(true);
   if (state.activeView === 'audit') return syncAudit();
-  if (state.activeView === 'divulgacao') return window.GenesisDivulgacaoV1?.focusCreate();
   if (state.activeView === 'reviews') return loadReviews(true);
-  if (state.activeView === 'prospecting') return window.GenesisAdmin?.focusNewProspecting();
-  if (state.activeView === 'commercialChats') return window.GenesisProspectingV20?.loadCommercialChats(true);
   if (state.activeView === 'brands') return window.GenesisOperationsV14?.loadBrands(true);
-  if (state.activeView === 'demos') return window.GenesisDemos?.focusCreate();
-  if (state.activeView === 'crm') return window.GenesisCRM?.focusCreate();
   if (state.activeView === 'users') return window.GenesisAdmin?.focusNewUser();
   return loadCurrentView(true);
 }
@@ -2751,7 +2868,7 @@ async function loadCurrentUser() {
     }
     item.classList.toggle('hidden', role !== 'ADMIN');
   });
-  if (role !== 'ADMIN' && ['audit', 'prospecting', 'commercialChats', 'publications', 'monitoring', 'demos', 'brands', 'users', 'crm'].includes(state.activeView)) setView('dashboard');
+  if (role !== 'ADMIN' && ['audit', 'sales', 'publications', 'monitoring', 'documents', 'brands', 'users'].includes(state.activeView)) setView('dashboard');
 }
 
 async function logout() {
@@ -2779,6 +2896,7 @@ function toggleTheme() {
   document.documentElement.style.colorScheme = next;
   localStorage.setItem('genesis_theme', next);
   syncThemeUi();
+  if (state.activeView === 'dashboard') requestAnimationFrame(() => drawDashboardPerformanceChart(state.dashboard?.desempenho?.tendencia || []));
 }
 function closeMobileSidebar() { el.sidebar.classList.remove('open'); }
 
@@ -2791,6 +2909,13 @@ function bindEvents() {
   document.querySelectorAll('[data-mobile-view]').forEach((button) => button.addEventListener('click', () => setView(button.dataset.mobileView)));
   el.themeToggleButton?.addEventListener('click', toggleTheme);
   window.addEventListener('genesis:geo-distances-updated', () => { if (state.activeView === 'candidates') renderCandidates(); if (state.selectedCandidate && el.candidateDrawer?.open) updateCandidateDistanceSummary(state.selectedCandidate); });
+  let dashboardResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(dashboardResizeTimer);
+    dashboardResizeTimer = setTimeout(() => {
+      if (state.activeView === 'dashboard') drawDashboardPerformanceChart(state.dashboard?.desempenho?.tendencia || []);
+    }, 120);
+  });
   el.logoutButton.addEventListener('click', logout);
   el.sidebarLogoutButton?.addEventListener('click', logout);
   el.refreshCurrentViewButton.addEventListener('click', () => loadCurrentView(true));
@@ -2808,7 +2933,7 @@ function bindEvents() {
     el.globalSearchDialog.close();
     if (button.dataset.searchType === 'CANDIDATO') { setView('candidates'); openCandidate(button.dataset.id); }
     else if (button.dataset.searchType === 'VAGA') { setView('vacancies'); openVacancyById(button.dataset.id).catch((error) => showToast(error.message, 'error')); }
-    else if (button.dataset.searchType === 'DOCUMENTO') { setView('documents'); if (button.dataset.candidateId) openCandidate(button.dataset.candidateId); }
+    else if (button.dataset.searchType === 'DOCUMENTO') { setView('candidates'); if (button.dataset.candidateId) openCandidate(button.dataset.candidateId); }
   });
 
   el.vacancyPeriodSegments?.addEventListener('click', (event) => {

@@ -11,10 +11,6 @@
     recruiters: [],
     wizardStep: 1,
     promotionVacancyId: null,
-    prospectingConfig: null,
-    outreachModels: [],
-    selectedLead: null,
-    qrUrl: null,
     bound: false,
   };
 
@@ -22,12 +18,6 @@
   function toast(message, type = 'success') { app().showToast(message, type); }
   function isAdmin() { return String(app().state.currentUser?.perfil || '').toUpperCase() === 'ADMIN'; }
   function color(value, fallback) { return /^#[0-9A-Fa-f]{6}$/.test(String(value || '')) ? String(value).toUpperCase() : fallback; }
-  function localDateTime(value = Date.now()) {
-    const date = new Date(value);
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-    return date.toISOString().slice(0, 16);
-  }
-
   function wizardCards() {
     return [...document.querySelectorAll('#vacancyForm .form-card')];
   }
@@ -301,92 +291,6 @@
     }
   }
 
-  async function loadProspectingSafety() {
-    if (!isAdmin()) return;
-    const data = await app().api('/api/admin/prospeccao/contato/config');
-    state.prospectingConfig = data.configuracao || {};
-    state.outreachModels = data.modelos || [];
-    const config = state.prospectingConfig;
-    $('prospectingSessionStatus').textContent = config.status === 'WORKING' ? 'Conectada' : config.status || 'Parada';
-    $('prospectingQueueCount').textContent = Number(config.agendados || 0);
-    $('prospectingSentToday').textContent = `${Number(config.enviados_hoje || 0)} / ${Number(config.limite_diario || 0)}`;
-    $('prospectingSafetyStatus').textContent = config.habilitado ? `Ativo · ${config.intervalo_segundos}s` : 'Envio desligado';
-    $('prospectingContactNotice')?.classList.toggle('warning', !config.habilitado);
-    return data;
-  }
-
-  async function openProspectingConnection() {
-    await loadProspectingSafety();
-    const c = state.prospectingConfig || {};
-    $('prospectingConnectionDetails').innerHTML = `<div class="summary-grid"><article><span>Sessão</span><strong>${safe(c.session_name || '—')}</strong></article><article><span>Status</span><strong>${safe(c.status || 'STOPPED')}</strong></article><article><span>Número</span><strong>${safe(c.telefone_conectado || 'Ainda não conectado')}</strong></article><article><span>Limite diário</span><strong>${Number(c.limite_diario || 0)}</strong></article></div>${c.erro_sessao ? `<div class="inline-error">${safe(c.erro_sessao)}</div>` : ''}`;
-    $('prospectingQrImage').classList.add('hidden');
-    $('prospectingQrPlaceholder').classList.remove('hidden');
-    $('prospectingConnectionDialog').showModal();
-  }
-
-  async function refreshProspectingQr() {
-    const response = await fetch(`/api/admin/prospeccao/contato/session/qr?v=${Date.now()}`);
-    if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
-      throw new Error(body.erro || 'O QR Code ainda não está disponível. Aguarde alguns segundos.');
-    }
-    const blob = await response.blob();
-    if (state.qrUrl) URL.revokeObjectURL(state.qrUrl);
-    state.qrUrl = URL.createObjectURL(blob);
-    $('prospectingQrImage').src = state.qrUrl;
-    $('prospectingQrImage').classList.remove('hidden');
-    $('prospectingQrPlaceholder').classList.add('hidden');
-  }
-
-  async function startProspectingSessionUi() {
-    const button = $('startProspectingSessionButton');
-    button.disabled = true;
-    try {
-      const data = await app().api('/api/admin/prospeccao/contato/session/start', { method: 'POST', body: '{}' });
-      toast(data.mensagem || 'Sessão iniciada.');
-      await new Promise((resolve) => setTimeout(resolve, 1400));
-      await refreshProspectingQr();
-      await loadProspectingSafety();
-    } catch (error) { toast(error.message, 'error'); }
-    finally { button.disabled = false; }
-  }
-
-  async function openOutreach(lead) {
-    state.selectedLead = lead;
-    if (!state.outreachModels.length) await loadProspectingSafety();
-    $('outreachLeadId').value = lead.id;
-    $('outreachDialogTitle').textContent = `Contato com ${lead.empresa_nome}`;
-    $('outreachLeadSubtitle').textContent = `${lead.telefone || 'Sem telefone'} · ${[lead.cidade,lead.estado].filter(Boolean).join(' - ') || 'Local não informado'}`;
-    $('outreachModelSelect').innerHTML = state.outreachModels.map((model) => `<option value="${model.id}">${safe(model.nome)}</option>`).join('');
-    $('outreachAuthorizationSource').value = lead.contato_autorizado_origem || '';
-    $('outreachAuthorizationConfirm').checked = Boolean(lead.contato_autorizado);
-    $('outreachScheduledAt').value = localDateTime();
-    $('outreachError').classList.add('hidden');
-    $('outreachDialog').showModal();
-  }
-
-  async function scheduleOutreach(event) {
-    event.preventDefault();
-    const id = Number($('outreachLeadId').value);
-    const button = $('scheduleOutreachButton');
-    button.disabled = true;
-    $('outreachError').classList.add('hidden');
-    try {
-      const data = await app().api(`/api/admin/prospeccao/leads/${id}/agendar-contato`, { method: 'POST', body: JSON.stringify({
-        modelo_id: Number($('outreachModelSelect').value),
-        autorizacao_origem: $('outreachAuthorizationSource').value.trim(),
-        confirmar_autorizacao: $('outreachAuthorizationConfirm').checked,
-        agendado_para: new Date($('outreachScheduledAt').value || Date.now()).toISOString(),
-      }) });
-      $('outreachDialog').close();
-      toast(data.mensagem || 'Contato adicionado à fila.');
-      await Promise.allSettled([window.GenesisAdmin?.loadProspecting(true), loadProspectingSafety()]);
-    } catch (error) {
-      $('outreachError').textContent = error.message;
-      $('outreachError').classList.remove('hidden');
-    } finally { button.disabled = false; }
-  }
-
   function selectedReviewIds() {
     return [...document.querySelectorAll('[data-review-select]:checked')].map((input) => Number(input.value)).filter(Boolean);
   }
@@ -432,13 +336,6 @@
     $('cancelAgendaSettingsButton')?.addEventListener('click', () => $('agendaSettingsDialog').close());
 
     $('generatePromotionAiButton')?.addEventListener('click', generatePromotionPhoto);
-    $('openProspectingConnectionButton')?.addEventListener('click', () => openProspectingConnection().catch((error) => toast(error.message, 'error')));
-    $('closeProspectingConnectionButton')?.addEventListener('click', () => $('prospectingConnectionDialog').close());
-    $('startProspectingSessionButton')?.addEventListener('click', startProspectingSessionUi);
-    $('refreshProspectingQrButton')?.addEventListener('click', () => refreshProspectingQr().catch((error) => toast(error.message, 'error')));
-    $('outreachForm')?.addEventListener('submit', scheduleOutreach);
-    $('closeOutreachButton')?.addEventListener('click', () => $('outreachDialog').close());
-    $('cancelOutreachButton')?.addEventListener('click', () => $('outreachDialog').close());
     $('reviewBatchApproveButton')?.addEventListener('click', () => decideReviewBatch('APROVAR').catch((error) => toast(error.message, 'error')));
     $('reviewBatchRejectButton')?.addEventListener('click', () => decideReviewBatch('NAO_APROVAR').catch((error) => toast(error.message, 'error')));
 
@@ -453,9 +350,7 @@
 
   window.GenesisOperationsV14 = {
     loadBrands,
-    loadProspectingSafety,
     openAgendaSettings,
-    openOutreach,
     prepareVacancyDialog,
     setPromotionContext,
     updateReviewBatchToolbar,

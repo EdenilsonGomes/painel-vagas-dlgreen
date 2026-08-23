@@ -1,0 +1,791 @@
+/* Gênesis V31 — consolidação visual e base responsiva */
+:root {
+  --v31-page-gap: clamp(12px, 1.5vw, 22px);
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.app-shell,
+.workspace,
+.main-content,
+.view,
+.panel,
+.section-toolbar,
+.form-grid,
+.data-table-wrapper,
+.conversation-center,
+.conversation-center-main,
+.review-workspace,
+.sales-shell,
+.sales-board,
+.sales-stage {
+  min-width: 0;
+}
+
+.main-content {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-x: none;
+}
+
+.dashboard-command-center {
+  align-content: start;
+}
+
+.dashboard-primary-kpis {
+  margin-bottom: 0;
+}
+
+.dashboard-performance-panel,
+.dashboard-vacancy-attention-panel {
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: none;
+}
+
+.dashboard-performance-header,
+.dashboard-vacancy-attention-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.dashboard-performance-header h3,
+.dashboard-vacancy-attention-header h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: -.025em;
+}
+
+.dashboard-performance-header p,
+.dashboard-vacancy-attention-header p {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.dashboard-period-control {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 156px;
+}
+
+.dashboard-period-control button {
+  min-width: 74px;
+}
+
+.dashboard-performance-metrics {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  padding: 16px 18px 12px;
+}
+
+.dashboard-performance-metrics article {
+  min-width: 0;
+  padding: 0 14px;
+  border-right: 1px solid var(--line);
+}
+
+.dashboard-performance-metrics article:first-child { padding-left: 0; }
+.dashboard-performance-metrics article:last-child { padding-right: 0; border-right: 0; }
+
+.dashboard-performance-metrics strong,
+.dashboard-performance-metrics span,
+.dashboard-performance-metrics small {
+  display: block;
+}
+
+.dashboard-performance-metrics strong {
+  color: var(--text);
+  font-size: 1.42rem;
+  line-height: 1.05;
+  letter-spacing: -.04em;
+}
+
+.dashboard-performance-metrics span {
+  margin-top: 7px;
+  color: var(--text);
+  font-size: .7rem;
+  font-weight: 700;
+}
+
+.dashboard-performance-metrics small {
+  margin-top: 6px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .62rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-performance-metrics small.positive { color: var(--primary); }
+.dashboard-performance-metrics small.negative { color: var(--danger); }
+
+.dashboard-chart-shell {
+  padding: 4px 18px 16px;
+}
+
+.dashboard-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 28px;
+  color: var(--muted);
+  font-size: .68rem;
+}
+
+.dashboard-chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dashboard-chart-legend span::before {
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: #95a1aa;
+  content: '';
+}
+
+.dashboard-chart-legend .candidates::before { background: #0ea89a; }
+.dashboard-chart-legend .interviews::before { background: #173e67; }
+.dashboard-chart-legend .previous { margin-left: auto; }
+.dashboard-chart-legend .previous::before { height: 0; border-top: 2px dashed #93a6ad; background: none; }
+
+.dashboard-chart-canvas-wrap {
+  width: 100%;
+  min-width: 0;
+  min-height: 250px;
+}
+
+.dashboard-chart-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+}
+
+.dashboard-vacancy-attention-header .button {
+  width: auto;
+  min-height: 36px;
+  padding-inline: 12px;
+}
+
+.dashboard-vacancy-attention-columns,
+.dashboard-vacancy-attention-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 1.25fr) minmax(210px, 1.35fr) minmax(105px, .65fr) minmax(120px, .75fr) 72px;
+  gap: 16px;
+  align-items: center;
+}
+
+.dashboard-vacancy-attention-columns {
+  padding: 10px 18px;
+  color: var(--muted);
+  background: var(--surface-2);
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .035em;
+  text-transform: uppercase;
+}
+
+.dashboard-vacancy-attention-row {
+  min-height: 54px;
+  padding: 10px 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.dashboard-vacancy-attention-list .dashboard-vacancy-attention-row:first-child { border-top: 0; }
+
+.dashboard-vacancy-attention-row strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: .76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-vacancy-reason {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-vacancy-reason i {
+  width: 7px;
+  min-width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+}
+
+.dashboard-vacancy-attention-row.attention .dashboard-vacancy-reason i { background: var(--warning); }
+
+.dashboard-vacancy-attention-row button {
+  justify-self: end;
+  padding: 4px 0;
+  border: 0;
+  color: var(--primary);
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dashboard-vacancy-attention-row button:hover,
+.dashboard-vacancy-attention-row button:focus-visible {
+  color: var(--primary-strong);
+  text-decoration: underline;
+}
+
+html[data-theme="dark"] .dashboard-chart-legend .interviews::before { background: #80a7c8; }
+
+.admin-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.admin-section-header h2 {
+  margin: 3px 0 4px;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  line-height: 1.15;
+}
+
+.admin-section-header span {
+  color: var(--text-muted, #9eb0ba);
+  font-size: .86rem;
+}
+
+.admin-section-header-actions {
+  align-items: center;
+}
+
+.admin-section-tabs {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  max-width: 100%;
+  margin-bottom: 18px;
+  padding: 4px;
+  overflow-x: auto;
+  border: 1px solid var(--border, rgba(148, 163, 184, .18));
+  border-radius: 10px;
+  background: var(--surface, rgba(10, 31, 42, .7));
+  scrollbar-width: thin;
+}
+
+.admin-section-tabs button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 13px;
+  border: 0;
+  border-radius: 7px;
+  color: var(--text-muted, #9eb0ba);
+  background: transparent;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.admin-section-tabs button.active {
+  color: var(--text-primary, #eff9f8);
+  background: color-mix(in srgb, var(--accent, #15a99b) 18%, transparent);
+}
+
+.admin-section-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: -54px 0 18px;
+}
+
+.portal-publications-kpis {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+dialog.modal,
+dialog.drawer-dialog,
+dialog.search-dialog {
+  max-width: calc(100vw - 32px);
+  max-height: calc(100dvh - 32px);
+}
+
+dialog.modal > form,
+dialog.drawer-dialog > form {
+  display: flex;
+  min-height: 0;
+  max-height: inherit;
+  flex-direction: column;
+}
+
+dialog.modal .modal-header,
+dialog.modal .modal-footer,
+dialog.drawer-dialog .drawer-header,
+dialog.drawer-dialog .drawer-footer {
+  flex: 0 0 auto;
+}
+
+dialog.modal .modal-body,
+dialog.modal form > .vacancy-wizard-body,
+dialog.drawer-dialog .drawer-body,
+.document-preview-body {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-header > div,
+.modal-header-actions,
+.drawer-header > div,
+.panel-header > div {
+  min-width: 0;
+}
+
+img,
+video,
+iframe,
+canvas {
+  max-width: 100%;
+}
+
+input,
+select,
+textarea,
+button,
+.button {
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 14px;
+  }
+
+  .main-content {
+    padding-right: 12px;
+    padding-left: 12px;
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+  }
+
+  body.genesis-rebrand .main-content > .view {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .topbar {
+    min-width: 0;
+  }
+
+  .topbar .page-context,
+  .topbar .page-context > div {
+    min-width: 0;
+  }
+
+  .topbar h1,
+  .topbar h2,
+  .page-context h1 {
+    overflow: hidden;
+    font-size: 1.08rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  body.genesis-rebrand .dashboard-primary-kpis,
+  body.genesis-rebrand .candidate-kpis,
+  body.genesis-rebrand .vacancy-period-kpis,
+  body.genesis-rebrand .documents-summary-grid,
+  body.genesis-rebrand .portal-publications-kpis,
+  body.genesis-rebrand .monitoring-kpis,
+  body.genesis-rebrand .audit-kpis {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+  }
+
+  #view-dashboard .dashboard-primary-kpis,
+  #view-candidates .candidate-kpis,
+  #view-vacancies .vacancy-period-kpis,
+  #view-documents .documents-summary-grid,
+  #view-publications .portal-publications-kpis,
+  #view-monitoring .monitoring-kpis,
+  #view-audit .audit-kpis {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  body.genesis-rebrand .dashboard-command-kpi,
+  body.genesis-rebrand .kpi-card,
+  body.genesis-rebrand .documents-summary-card {
+    flex: initial !important;
+    width: auto !important;
+    min-width: 0;
+    min-height: 92px;
+    padding: 12px;
+  }
+
+  .dashboard-command-center { gap: 10px; }
+
+  .dashboard-performance-panel,
+  .dashboard-vacancy-attention-panel { border-radius: 13px; }
+
+  .dashboard-performance-header,
+  .dashboard-vacancy-attention-header {
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .dashboard-performance-header p,
+  .dashboard-vacancy-attention-header p { display: none; }
+
+  .dashboard-performance-header h3,
+  .dashboard-vacancy-attention-header h3 { font-size: .9rem; }
+
+  .dashboard-period-control {
+    width: auto;
+    min-width: 126px;
+  }
+
+  .dashboard-period-control button {
+    min-width: 60px;
+    min-height: 34px;
+    padding-inline: 8px;
+    font-size: .7rem;
+  }
+
+  .dashboard-performance-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 4px 12px 8px;
+  }
+
+  .dashboard-performance-metrics article {
+    min-height: 70px;
+    padding: 11px 10px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .dashboard-performance-metrics article:nth-child(2n) { border-right: 0; }
+  .dashboard-performance-metrics article:nth-last-child(-n + 2) { border-bottom: 0; }
+  .dashboard-performance-metrics article:first-child { padding-left: 10px; }
+  .dashboard-performance-metrics article:last-child { padding-right: 10px; }
+  .dashboard-performance-metrics strong { font-size: 1.18rem; }
+  .dashboard-performance-metrics span { margin-top: 4px; font-size: .64rem; }
+  .dashboard-performance-metrics small { margin-top: 4px; font-size: .57rem; }
+
+  .dashboard-chart-shell { padding: 0 8px 10px; }
+
+  .dashboard-chart-legend {
+    gap: 10px;
+    padding: 4px;
+    overflow: hidden;
+    font-size: .58rem;
+  }
+
+  .dashboard-chart-legend span { gap: 4px; }
+  .dashboard-chart-legend span::before { width: 12px; }
+  .dashboard-chart-legend .previous { margin-left: 0; }
+  .dashboard-chart-canvas-wrap { min-height: 210px; }
+
+  .dashboard-vacancy-attention-header .button {
+    min-height: 34px;
+    padding-inline: 9px;
+    font-size: .68rem;
+  }
+
+  .dashboard-vacancy-attention-columns { display: none; }
+
+  .dashboard-vacancy-attention-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 10px;
+    min-height: 0;
+    padding: 12px;
+  }
+
+  .dashboard-vacancy-attention-row strong {
+    grid-column: 1;
+    font-size: .76rem;
+  }
+
+  .dashboard-vacancy-reason {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: .67rem;
+  }
+
+  .dashboard-vacancy-attention-row > span[data-label] {
+    grid-column: 1;
+    color: var(--muted);
+    font-size: .62rem;
+  }
+
+  .dashboard-vacancy-attention-row > span[data-label]::before {
+    margin-right: 4px;
+    content: attr(data-label) ': ';
+    font-weight: 750;
+  }
+
+  .dashboard-vacancy-attention-row > span[data-label="Responsável"] { display: none; }
+
+  .dashboard-vacancy-attention-row button {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    min-height: 34px;
+    padding: 0 3px;
+    font-size: .68rem;
+  }
+
+  .dashboard-command-kpi strong,
+  .kpi-card strong,
+  .documents-summary-card strong {
+    font-size: 1.45rem;
+  }
+
+  .dashboard-command-kpi small,
+  .kpi-card small,
+  .documents-summary-card small {
+    font-size: .7rem;
+    line-height: 1.25;
+  }
+
+  .section-toolbar,
+  .section-toolbar.stack-mobile,
+  .vacancy-filter-bar,
+  .toolbar-right,
+  .audit-list-head,
+  .audit-filters,
+  .panel-header,
+  .admin-section-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .section-toolbar > *,
+  .toolbar-right > *,
+  .audit-filters > *,
+  .compact-field,
+  .inline-search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .segmented,
+  .portal-publications-tabs,
+  .admin-section-tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .segmented::-webkit-scrollbar,
+  .portal-publications-tabs::-webkit-scrollbar,
+  .admin-section-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-section-header-actions .button {
+    width: 100%;
+  }
+
+  .admin-section-actions {
+    margin: 0 0 12px;
+  }
+
+  .admin-section-actions .button {
+    width: 100%;
+  }
+
+  .admin-two-column,
+  .brand-onboarding-grid,
+  .monitor-grid,
+  .audit-overview-grid,
+  .users-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-grid > *,
+  .form-grid .span-2,
+  .form-grid .span-full {
+    grid-column: 1 / -1;
+  }
+
+  .data-table-wrapper,
+  .table-scroll,
+  .portal-publication-list {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  dialog.modal,
+  dialog.drawer-dialog {
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  dialog.modal > form,
+  dialog.drawer-dialog > form {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+  }
+
+  dialog.modal .modal-header,
+  dialog.drawer-dialog .drawer-header {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .modal-header h2,
+  .drawer-header h2 {
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+
+  .modal-header p,
+  .modal-header span,
+  .drawer-header p,
+  .drawer-header span {
+    font-size: .72rem;
+  }
+
+  .modal-header-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .modal-header-actions .button {
+    width: auto;
+    min-height: 38px;
+    padding-inline: 10px;
+    font-size: .72rem;
+  }
+
+  .modal-header .icon-button,
+  .drawer-header .icon-button,
+  .candidate-select-column input,
+  [data-review-select] {
+    width: 38px;
+    min-width: 38px;
+    height: 38px;
+  }
+
+  dialog.modal .modal-body,
+  dialog.modal form > .vacancy-wizard-body,
+  dialog.drawer-dialog .drawer-body {
+    flex: 1 1 auto;
+    padding: 12px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+
+  dialog.modal .modal-footer,
+  dialog.drawer-dialog .drawer-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  dialog.modal .modal-footer .button,
+  dialog.drawer-dialog .drawer-footer .button {
+    flex: 1 1 132px;
+  }
+
+  .candidate-data-table,
+  .vacancy-operational-list {
+    max-width: 100%;
+  }
+
+  .mobile-bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  html body.genesis-rebrand .topbar .notification-center .notification-center-panel {
+    position: fixed !important;
+    inset: 62px 8px auto 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: calc(100dvh - 148px) !important;
+    overflow: hidden;
+  }
+
+  html body.genesis-rebrand .topbar .notification-center .notification-center-list {
+    max-height: calc(100dvh - 216px) !important;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .main-content {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .dashboard-command-kpi,
+  .kpi-card,
+  .documents-summary-card {
+    padding: 10px;
+  }
+
+  .admin-section-tabs button,
+  .segmented button {
+    padding-inline: 10px;
+    font-size: .75rem;
+  }
+
+  .dashboard-performance-header,
+  .dashboard-vacancy-attention-header { padding: 10px; }
+
+  .dashboard-performance-header h3,
+  .dashboard-vacancy-attention-header h3 { font-size: .82rem; }
+
+  .dashboard-period-control { min-width: 116px; }
+  .dashboard-period-control button { min-width: 55px; font-size: .66rem; }
+  .dashboard-chart-legend .hires { display: none; }
+}

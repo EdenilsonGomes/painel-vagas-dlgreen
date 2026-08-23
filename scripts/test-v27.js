@@ -13,9 +13,9 @@ ok(ui.includes('?text=${encodeURIComponent')&&!/contato_nome\|\|l\.telefone/.tes
 ok(talent.includes('alreadyDecided')&&talent.includes('TALENT_WEBHOOK_TOKEN'),'Opt-in deve ser idempotente e autenticado.');
 ok(talent.includes('WHATSAPP_FLOW_LAB_ENABLED')&&talent.includes('WHATSAPP_FLOW_TEST_ID'),'Flow deve ficar atrás de feature flag e ID externo.');
 ok(sql.includes('ADD COLUMN IF NOT EXISTS')&&sql.includes('candidato_talento_auditoria'),'Migração deve ser aditiva e auditável.');
-ok(operations.includes('legacyWahaEnabled = false')&&operations.includes("if (legacyWahaEnabled) app.get('/api/admin/prospeccao/contato/session/qr'"),'QR WAHA deve permanecer sem registro por padrão.');
-ok(portal.includes('groupsEnabled = false')&&portal.includes("if (groupsEnabled) app.get('/api/portal-publicacoes/grupos'"),'Rotas do Portal de Grupos devem permanecer sem registro por padrão.');
+ok(!/waha|session\/qr|outreach|prospeccao/i.test(operations),'Runtime comercial WAHA deve estar removido.');
+ok(!/portal-publicacoes\/grupos|groupsEnabled/i.test(portal),'Rotas do Portal de Grupos devem estar removidas.');
 ok(css.includes('@media(max-width:760px)')&&!/#[0-9a-f]{3,8}\b/i.test(css),'V27 deve reutilizar tokens e ser responsiva.');
 ok(salesCss.includes('grid-template-columns:repeat(8,300px)')&&salesCss.includes('.sales-stage-nav')&&salesCss.includes('overflow-y:auto!important'),'Kanban profissional e experiência mobile por estágio devem ser preservados.');
 ok(app.includes("candidateTalent: 'TODOS'")&&app.includes('talentMatch'),'Filtro Talent não integrado.');
-console.log('V27: Sales manual, Talent embutido, Flow isolado e WAHA legado desativado validados.');
+console.log('V27: Sales manual, Talent embutido, Flow isolado e legado comercial removido validados.');

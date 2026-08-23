@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="/modern-v12.css?v=1510">
   <link rel="stylesheet" href="/modern-v13.css?v=1510">
   <link rel="stylesheet" href="/modern-v14.css?v=1410">
-  <link rel="stylesheet" href="/divulgacao-v1.css?v=1430">
   <link rel="stylesheet" href="/atendimento-v15.css?v=2111">
   <link rel="stylesheet" href="/atendimentos-v16.css?v=2111">
   <link rel="stylesheet" href="/v16-3.css?v=2111">
@@ -20,8 +19,6 @@
   <link rel="stylesheet" href="/v17-redesign.css?v=1700">
   <link rel="stylesheet" href="/v18-ui.css?v=1800">
   <link rel="stylesheet" href="/geo-v1.css?v=1900">
-  <link rel="stylesheet" href="/crm-v1.css?v=1900">
-  <link rel="stylesheet" href="/prospecting-v20.css?v=2000">
   <link rel="stylesheet" href="/mobile-v20.css?v=2000">
   <link rel="stylesheet" href="/v21-workspace.css?v=2100">
   <link rel="stylesheet" href="/genesis-rebrand.css?v=2200">
@@ -30,19 +27,14 @@
   <link rel="stylesheet" href="/genesis-v25-admin.css?v=2500">
   <link rel="stylesheet" href="/genesis-v26.css?v=2600">
   <script src="/screening-v13.js?v=1510" defer></script>
-  <script src="/demos-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=3000" defer></script>
   <script src="/geo-v1.js?v=1900" defer></script>
-  <script src="/crm-v1.js?v=2000" defer></script>
-  <script src="/prospecting-v20.js?v=2000" defer></script>
-  <script src="/app.js?v=2100" defer></script>
+  <script src="/app.js?v=3107" defer></script>
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
-  <script src="/floating-chat-v16-3.js?v=2111" defer></script>
   <script src="/admin.js?v=1410" defer></script>
   <script src="/portal-publicacoes.js?v=1510" defer></script>
   <script src="/operations-v14.js?v=1610" defer></script>
-  <script src="/divulgacao-v1.js?v=1430" defer></script>
   <script src="/experience-v23.js?v=2300" defer></script>
 <script src="/genesis-v24.js?v=2400" defer></script>
   <script src="/genesis-v25-admin.js?v=2501" defer></script>
@@ -52,6 +44,7 @@
   <link rel="stylesheet" href="/genesis-v28-mobile.css?v=2800">
   <link rel="stylesheet" href="/genesis-v29-mobile.css?v=2900">
   <link rel="stylesheet" href="/genesis-v30-sales.css?v=3000">
+  <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3107">
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -72,8 +65,6 @@
             <button class="nav-item" data-view="vacancies" type="button"><span class="nav-icon" data-icon="briefcase"></span><b>Vagas</b></button>
             <button class="nav-item" data-view="candidates" type="button"><span class="nav-icon" data-icon="users"></span><b>Candidatos</b></button>
             <button class="nav-item" data-view="interviews" type="button"><span class="nav-icon" data-icon="calendar"></span><b>Agenda</b></button>
-            <button class="nav-item" data-view="documents" type="button"><span class="nav-icon" data-icon="file"></span><b>Documentos</b></button>
-            <button class="nav-item" data-view="divulgacao" type="button"><span class="nav-icon" data-icon="send"></span><b>Divulgação</b></button>
           </div>
         </details>
 
@@ -96,10 +87,8 @@
           <summary><span class="nav-icon" data-icon="user-cog"></span><b>Administração</b><i class="nav-chevron" data-icon="chevron-down"></i></summary>
           <div class="nav-context-items">
             <button class="nav-item" data-view="publications" type="button"><span class="nav-icon" data-icon="globe"></span><b>Portal de Vagas</b></button>
-            <button class="nav-item" data-view="brands" type="button"><span class="nav-icon" data-icon="building"></span><b>Empresas e marcas</b></button>
-            <button class="nav-item" data-view="monitoring" type="button"><span class="nav-icon" data-icon="activity"></span><b>Monitoramento</b></button>
-            <button class="nav-item" data-view="audit" type="button"><span class="nav-icon" data-icon="shield-check"></span><b>Auditoria da IA</b></button>
-            <button class="nav-item" data-view="users" type="button"><span class="nav-icon" data-icon="user-cog"></span><b>Equipe e acessos</b></button>
+            <button class="nav-item" data-view="brands" type="button"><span class="nav-icon" data-icon="settings"></span><b>Configurações</b></button>
+            <button class="nav-item" data-view="monitoring" type="button"><span class="nav-icon" data-icon="activity"></span><b>Saúde do sistema</b></button>
           </div>
         </details>
       </nav>
@@ -162,21 +151,27 @@
             <article class="dashboard-command-kpi warning actionable-card" data-go-view="reviews" tabindex="0"><span>Aguardando sua ação</span><strong id="kpiHumanPending">0</strong><small>revisões e atendimentos humanos</small></article>
           </section>
 
-          <section class="dashboard-command-layout dashboard-command-layout-compact">
-            <article class="panel dashboard-journey-panel">
-              <div class="panel-header dashboard-compact-header">
-                <div><p class="eyebrow">MOVIMENTO DO DIA</p><h3>O que avançou hoje</h3></div>
-                <span class="dashboard-today-label">Hoje</span>
+          <section class="panel dashboard-performance-panel" aria-labelledby="dashboardPerformanceTitle">
+            <header class="dashboard-performance-header">
+              <div><h3 id="dashboardPerformanceTitle">Desempenho do período</h3><p>Conversão e velocidade da operação de recrutamento.</p></div>
+              <div class="segmented dashboard-period-control" aria-label="Período do desempenho">
+                <button data-dashboard-period="7D" type="button">7 dias</button>
+                <button class="active" data-dashboard-period="30D" type="button">30 dias</button>
               </div>
-              <div class="dashboard-journey-grid">
-                <div><span>Iniciaram</span><strong id="dashboardJourneyStarted">0</strong><small>candidaturas</small></div>
-                <div><span>CTPS recebidas</span><strong id="dashboardJourneyCtps">0</strong><small>documentos</small></div>
-                <div><span>Aprovados</span><strong id="dashboardJourneyApproved">0</strong><small>triagem concluída</small></div>
-                <div><span>Agendados</span><strong id="dashboardJourneyScheduled">0</strong><small>entrevistas</small></div>
-              </div>
-            </article>
-
+            </header>
+            <div id="dashboardPerformanceMetrics" class="dashboard-performance-metrics" aria-live="polite"></div>
+            <div class="dashboard-chart-shell">
+              <div class="dashboard-chart-legend" aria-hidden="true"><span class="candidates">Candidaturas</span><span class="interviews">Entrevistas</span><span class="hires">Contratações</span><span class="previous">Período anterior</span></div>
+              <div class="dashboard-chart-canvas-wrap"><canvas id="dashboardPerformanceChart" role="img" aria-label="Tendência de candidaturas, entrevistas e contratações no período selecionado"></canvas></div>
+            </div>
           </section>
+
+          <section class="panel dashboard-vacancy-attention-panel" aria-labelledby="dashboardVacancyAttentionTitle">
+            <header class="dashboard-vacancy-attention-header"><div><h3 id="dashboardVacancyAttentionTitle">Vagas que pedem atenção</h3><p>Oportunidades ordenadas pelos sinais que merecem análise.</p></div><button class="button button-ghost" data-go-view="vacancies" type="button">Ver todas</button></header>
+            <div class="dashboard-vacancy-attention-columns" aria-hidden="true"><span>Vaga</span><span>Motivo</span><span>Último avanço</span><span>Responsável</span><span>Ação</span></div>
+            <div id="dashboardVacancyAttentionList" class="dashboard-vacancy-attention-list"><div class="empty-state compact">Carregando saúde das vagas...</div></div>
+          </section>
+
         </section>
 
         <section id="view-vacancies" class="view hidden">
@@ -260,22 +255,6 @@
           </section>
         </section>
 
-        <section id="view-crm" class="view hidden admin-view crm-view" data-admin-only>
-          <section class="panel crm-command">
-            <div class="crm-command-copy"><span class="crm-command-icon" data-icon="chart"></span><div><p class="eyebrow">COMERCIAL · ADMIN</p><h2>Pipeline comercial da Gênesis</h2><p>Prospecção, demonstrações, oportunidades e follow-ups organizados sem alterar as ferramentas que já funcionam.</p></div></div>
-            <div class="crm-command-actions"><button class="button button-ghost" data-go-view="prospecting" type="button">Abrir prospecção</button><button class="button button-ghost" data-go-view="demos" type="button">Abrir demonstrações</button><button id="crmSyncButton" class="button button-ghost" type="button">Sincronizar fontes</button><button id="crmNewOpportunityButton" class="button button-primary" type="button">+ Nova oportunidade</button></div>
-          </section>
-          <section class="kpi-grid crm-kpis">
-            <article class="kpi-card"><span>Pipeline aberto</span><strong id="crmKpiOpen">0</strong><small>oportunidades ativas</small></article>
-            <article class="kpi-card"><span>Demonstrações</span><strong id="crmKpiDemos">0</strong><small>oportunidades em demo</small></article>
-            <article class="kpi-card"><span>Propostas</span><strong id="crmKpiProposals">0</strong><small>em proposta/negociação</small></article>
-            <article class="kpi-card success"><span>Ganhos</span><strong id="crmKpiWins">0</strong><small>clientes convertidos</small></article>
-            <article class="kpi-card"><span>Valor em aberto</span><strong id="crmKpiValue">R$ 0</strong><small>valor estimado</small></article>
-          </section>
-          <div id="crmTabs" class="crm-tabs" role="tablist" aria-label="Áreas do comercial"><button class="active" data-crm-tab="overview" type="button">Visão geral</button><button data-crm-tab="pipeline" type="button">Pipeline</button><button data-crm-tab="companies" type="button">Empresas</button><button data-crm-tab="followups" type="button">Follow-ups</button></div>
-          <section id="crmRoot"><div id="crmTabContent" class="crm-tab-content"><div class="empty-state">Carregando CRM...</div></div></section>
-        </section>
-
         <section id="view-atendimentos" class="view hidden">
           <section class="conversation-center panel" aria-label="Central de conversas">
             <aside class="conversation-center-list">
@@ -333,7 +312,9 @@
           </section>
         </section>
 
-        <section id="view-documents" class="view hidden">
+        <section id="view-documents" class="view hidden admin-view" data-admin-only>
+          <header class="admin-section-header"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Saúde do sistema</h2><span>Operação, qualidade da Evelyn e documentos técnicos em um só lugar.</span></div></header>
+          <nav class="admin-section-tabs" aria-label="Seções de saúde do sistema"><button class="" data-go-view="monitoring" type="button">Visão geral</button><button class="" data-go-view="audit" type="button">Auditoria da IA</button><button class="active" data-go-view="documents" type="button">Documentos técnicos</button></nav>
           <section class="section-toolbar stack-mobile documents-toolbar">
             <div class="segmented" id="documentTypeSegments">
               <button class="active" data-document-type="TODOS" type="button">Todos</button>
@@ -358,7 +339,9 @@
           </section>
         </section>
 
-        <section id="view-monitoring" class="view hidden">
+        <section id="view-monitoring" class="view hidden admin-view" data-admin-only>
+          <header class="admin-section-header"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Saúde do sistema</h2><span>Operação, qualidade da Evelyn e documentos técnicos em um só lugar.</span></div></header>
+          <nav class="admin-section-tabs" aria-label="Seções de saúde do sistema"><button class="active" data-go-view="monitoring" type="button">Visão geral</button><button class="" data-go-view="audit" type="button">Auditoria da IA</button><button class="" data-go-view="documents" type="button">Documentos técnicos</button></nav>
           <section class="kpi-grid compact-kpis monitoring-kpis">
             <article class="kpi-card warning"><span>Erros pendentes</span><strong id="monitorKpiErrors">0</strong><small>Falhas técnicas abertas</small></article>
             <article class="kpi-card"><span>Documentos pendentes</span><strong id="monitorKpiDocs">0</strong><small>Processamento ou revisão</small></article>
@@ -372,6 +355,8 @@
         </section>
 
         <section id="view-audit" class="view hidden admin-view" data-admin-only>
+          <header class="admin-section-header"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Saúde do sistema</h2><span>Operação, qualidade da Evelyn e documentos técnicos em um só lugar.</span></div></header>
+          <nav class="admin-section-tabs" aria-label="Seções de saúde do sistema"><button class="" data-go-view="monitoring" type="button">Visão geral</button><button class="active" data-go-view="audit" type="button">Auditoria da IA</button><button class="" data-go-view="documents" type="button">Documentos técnicos</button></nav>
           <div class="audit-command-bar panel">
             <div>
               <span class="eyebrow">QUALIDADE DA EVELYN</span>
@@ -417,136 +402,22 @@
           </section>
         </section>
 
-        <section id="view-commercialChats" class="view hidden admin-view commercial-chats-view" data-admin-only>
-          <section class="commercial-chat-shell panel">
-            <aside class="commercial-chat-list">
-              <header class="commercial-chat-list-head"><div><p class="eyebrow">COMERCIAL</p><h2>Conversas comerciais</h2><small id="commercialChatReport" class="commercial-chat-report">Carregando indicadores...</small></div><button id="commercialChatsRefresh" class="icon-button" type="button" aria-label="Atualizar"><span data-icon="refresh"></span></button></header>
-              <div class="commercial-chat-filters"><label class="inline-search"><span data-icon="search"></span><input id="commercialChatSearch" type="search" placeholder="Empresa, telefone ou site"></label><div class="segmented commercial-chat-segments"><button class="active" data-commercial-filter="TODOS" type="button">Todos</button><button data-commercial-filter="NAO_LIDAS" type="button">Não lidas</button><button data-commercial-filter="RESPONDEU" type="button">Responderam</button><button data-commercial-filter="ASSUMIDAS" type="button">Assumidas</button></div></div>
-              <div id="commercialChatList" class="commercial-chat-items"><div class="empty-state compact">Carregando conversas...</div></div>
-            </aside>
-            <section class="commercial-chat-main">
-              <div id="commercialChatEmpty" class="commercial-chat-empty"><span data-icon="messages"></span><strong>Selecione uma empresa</strong><p>Respostas do número de prospecção aparecem aqui, separadas das conversas dos candidatos.</p></div>
-              <div id="commercialChatWorkspace" class="commercial-chat-workspace hidden">
-                <header class="commercial-chat-header"><button id="commercialChatBack" class="icon-button mobile-only" type="button" aria-label="Voltar"><span data-icon="chevron-left"></span></button><div class="commercial-chat-person"><span id="commercialChatAvatar" class="commercial-chat-avatar">E</span><span><strong id="commercialChatName">Empresa</strong><small id="commercialChatMeta">Lead comercial</small></span></div><div class="commercial-chat-actions"><span id="commercialChatStage" class="badge badge-neutral">Lead</span><button id="commercialChatAssume" class="button button-primary compact" type="button">Assumir conversa</button></div></header>
-                <div id="commercialChatMessages" class="commercial-chat-messages"></div>
-                <form id="commercialChatComposer" class="commercial-chat-composer"><textarea id="commercialChatInput" maxlength="4000" rows="2" placeholder="Assuma a conversa para responder..." disabled></textarea><button id="commercialChatSend" class="button button-primary" type="submit" disabled>Enviar</button></form>
-              </div>
-            </section>
-            <aside id="commercialChatContext" class="commercial-chat-context"><div class="empty-state compact">Contexto comercial do lead.</div></aside>
-          </section>
-        </section>
-
         <section id="view-sales" class="view hidden admin-view" data-admin-only></section>
-        <section id="view-prospecting" class="view hidden admin-view" data-admin-only>
-          <section class="admin-hero">
-            <div><p class="eyebrow light">ADMIN · APIFY</p><h2>Prospecção de empresas com orçamento controlado</h2><p>Busque empresas no Google Maps, importe os resultados e trabalhe os leads em um funil comercial sem ultrapassar o limite mensal definido.</p></div>
-            <div class="admin-hero-badge"><span>Plano atual</span><strong>US$ 5/mês</strong><small>Controle local preventivo</small></div>
-          </section>
-
-          <section class="kpi-grid compact-kpis">
-            <article class="kpi-card info"><span>Orçamento mensal</span><strong id="prospectingBudget">US$ 0,00</strong><small>Limite configurado</small></article>
-            <article class="kpi-card warning"><span>Uso estimado no mês</span><strong id="prospectingUsed">US$ 0,00</strong><small id="prospectingRunsMonth">0 execuções</small></article>
-            <article class="kpi-card success"><span>Saldo preventivo</span><strong id="prospectingBalance">US$ 0,00</strong><small>Antes de novas buscas</small></article>
-            <article class="kpi-card"><span>Leads importados</span><strong id="prospectingImported">0</strong><small>No mês atual</small></article>
-          </section>
-
-          <section class="admin-two-column">
-            <article class="panel panel-large">
-              <div class="panel-header"><div><p class="eyebrow">NOVA BUSCA</p><h3>Encontrar empresas</h3></div><span id="apifyConnectionBadge" class="badge">Verificando</span></div>
-              <form id="prospectingRunForm" class="form-grid admin-form">
-                <label class="field span-2"><span>Segmento ou palavra-chave *</span><input id="prospectingTerm" type="text" required maxlength="200" placeholder="Ex.: empresa de facilities, terceirização de limpeza"></label>
-                <label class="field span-2"><span>Localização *</span><input id="prospectingLocation" type="text" required maxlength="250" value="São Paulo, SP, Brasil"></label>
-                <div class="field span-full"><span>Quantidade máxima por busca</span><div id="prospectingQuantityButtons" class="quantity-buttons"><button type="button" data-prospect-quantity="10">10</button><button type="button" data-prospect-quantity="25" class="active">25</button><button type="button" data-prospect-quantity="50">50</button><button type="button" data-prospect-quantity="100">100</button></div><small>Comece com 10 ou 25. Enriquecimentos, avaliações e redes sociais permanecem desativados para economizar.</small></div>
-                <div class="cost-preview span-full"><div><span>Custo preventivo estimado</span><strong id="prospectingEstimate">US$ 0,00</strong></div><p id="prospectingEstimateHelp">Estimativa local; o valor real é calculado pela Apify.</p></div>
-                <button id="startProspectingButton" class="button button-primary span-full" type="submit">Iniciar busca controlada</button>
-              </form>
-            </article>
-
-            <article class="panel">
-              <div class="panel-header"><div><p class="eyebrow">LIMITES</p><h3>Proteção do orçamento</h3></div></div>
-              <form id="prospectingConfigForm" class="stack-form">
-                <label class="field"><span>Orçamento mensal em dólar</span><input id="prospectingMonthlyBudgetInput" type="number" min="0" max="10000" step="0.01"></label>
-                <label class="field"><span>Custo estimado por 1.000 resultados</span><input id="prospectingCostPerThousandInput" type="number" min="0" step="0.01"></label>
-                <label class="field"><span>Limite padrão</span><select id="prospectingDefaultLimit"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label>
-                <label class="field"><span>Limite máximo por execução</span><select id="prospectingMaxLimit"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select></label>
-                <label class="toggle-field"><input id="prospectingEnabled" type="checkbox"><span><strong>Prospecção habilitada</strong><small>Desative para bloquear novas execuções.</small></span></label>
-                <button class="button button-ghost" type="submit">Salvar limites</button>
-              </form>
-            </article>
-          </section>
-
-          <section class="panel table-panel">
-            <div class="panel-header"><div><p class="eyebrow">EXECUÇÕES</p><h3>Buscas na Apify</h3></div><button id="refreshProspectingRuns" class="button button-ghost" type="button">Atualizar execuções</button></div>
-            <div id="prospectingRunsList" class="admin-run-list"><div class="empty-state">Nenhuma execução carregada.</div></div>
-          </section>
-
-          <section class="kpi-grid compact-kpis">
-            <article class="kpi-card"><span>Leads totais</span><strong id="prospectLeadTotal">0</strong></article>
-            <article class="kpi-card info"><span>Novos</span><strong id="prospectLeadNew">0</strong></article>
-            <article class="kpi-card success"><span>Aprovados para contato</span><strong id="prospectLeadApproved">0</strong></article>
-            <article class="kpi-card warning"><span>Oportunidades</span><strong id="prospectLeadOpportunities">0</strong></article>
-            <article class="kpi-card success"><span>Clientes</span><strong id="prospectLeadClients">0</strong></article>
-          </section>
-
-          <section class="panel prospecting-contact-center">
-            <div class="panel-header"><div><p class="eyebrow">CONTATO ASSISTIDO</p><h3>Número dedicado e passagem para o SDR</h3><span>Somente contatos com autorização registrada entram na fila. Respostas automáticas são separadas de respostas humanas.</span></div><button id="openProspectingConnectionButton" class="button button-primary" type="button">Conectar WhatsApp dedicado</button></div>
-            <div class="prospecting-safety-grid"><article><span>Status da sessão</span><strong id="prospectingSessionStatus">Verificando</strong></article><article><span>Fila autorizada</span><strong id="prospectingQueueCount">0</strong></article><article><span>Enviados hoje</span><strong id="prospectingSentToday">0</strong></article><article><span>Proteção</span><strong id="prospectingSafetyStatus">Envio desligado</strong></article></div>
-            <div id="prospectingContactNotice" class="information-callout"><strong>Operação responsável</strong><span>O sistema não dispara mensagens frias em massa. Cada envio exige base legítima de contato, aprovação humana, intervalo, limite diário e descadastro imediato.</span></div>
-          </section>
-
-          <section class="panel table-panel">
-            <div class="prospecting-view-switch" role="group" aria-label="Modo de visualização da prospecção"><button id="prospectingQueueMode" class="active" type="button">Enfileirado</button><button id="prospectingKanbanMode" type="button">Kanban</button></div>
-            <div class="section-toolbar stack-mobile">
-              <div class="segmented" id="prospectLeadStatusSegments"><button class="active" data-prospect-status="TODOS" type="button">Todos</button><button data-prospect-status="NOVO" type="button">Novos</button><button data-prospect-status="APROVADO_CONTATO" type="button">Aprovados</button><button data-prospect-status="RESPONDEU" type="button">Responderam</button><button data-prospect-status="REUNIAO" type="button">Reunião</button><button data-prospect-status="CLIENTE" type="button">Clientes</button><button data-prospect-status="NAO_CONTATAR" type="button">Não contatar</button></div>
-              <div class="toolbar-right"><label class="inline-search"><span>⌕</span><input id="prospectLeadSearch" type="search" placeholder="Empresa, cidade, telefone ou site"></label><a class="button button-ghost" href="/api/admin/prospeccao/exportar.csv">Exportar CSV</a></div>
-            </div>
-            <div id="prospectingBulkToolbar" class="prospecting-bulk-toolbar"><label class="mini-check"><input id="prospectingSelectAll" type="checkbox"> Selecionar visíveis</label><span><strong id="prospectingSelectedCount">0</strong> selecionado(s)</span><div><button id="prospectingEnrichSelected" class="button button-ghost compact" type="button" disabled>Enriquecer</button><button id="prospectingQueueSelected" class="button button-primary compact" type="button" disabled>Preparar disparo</button><button id="prospectingClearSelection" class="button button-ghost compact" type="button" disabled>Limpar</button></div></div>
-            <div id="prospectingEnrichmentProgress" class="information-callout compact hidden"></div>
-            <div id="prospectingQueueView" class="data-table-wrapper"><table class="data-table filterable-table prospect-data-table"><thead><tr>
-              <th class="prospect-select-col" aria-label="Selecionar"></th>
-              <th><details class="table-filter-menu"><summary>Empresa <span>⌄</span></summary><div class="table-filter-popover wide"><label>Segmento<select id="prospectCategoryFilter"><option value="">Todos</option></select></label><label>Responsável<select id="prospectOwnerFilter"><option value="">Todos</option></select></label></div></details></th>
-              <th><details class="table-filter-menu"><summary>Contato <span>⌄</span></summary><div class="table-filter-popover wide"><label>Disponibilidade<select id="prospectContactFilter"><option value="">Todos</option><option value="COM_WHATSAPP">Com WhatsApp</option><option value="AUTORIZADO">Autorizado</option><option value="NAO_AUTORIZADO">Sem autorização</option><option value="SEM_WHATSAPP">Sem WhatsApp</option></select></label><label>Resposta<select id="prospectReplyFilter"><option value="">Todas</option><option value="HUMANA">Humana</option><option value="AUTOMATICA">Automática</option><option value="DESCADASTRO">Descadastro</option></select></label></div></details></th>
-              <th><details class="table-filter-menu"><summary>Local <span>⌄</span></summary><div class="table-filter-popover wide"><label>Estado<select id="prospectStateFilter"><option value="">Todos</option></select></label><label>Cidade<select id="prospectCityFilter"><option value="">Todas</option></select></label></div></details></th>
-              <th><details class="table-filter-menu"><summary>Qualidade <span>⌄</span></summary><div class="table-filter-popover wide"><label>Prioridade<select id="prospectPriorityFilter"><option value="">Todas</option><option value="ALTA">Alta</option><option value="MEDIA">Média</option><option value="BAIXA">Baixa</option></select></label><label>Score mínimo<select id="prospectScoreFilter"><option value="">Qualquer</option><option value="80">80+</option><option value="60">60+</option><option value="40">40+</option></select></label></div></details></th>
-              <th>Funil</th>
-              <th><details class="table-filter-menu align-right"><summary>Ações <span>⌄</span></summary><div class="table-filter-popover right"><button id="clearProspectFiltersButton" class="button button-ghost compact" type="button">Limpar filtros da tabela</button></div></details></th>
-            </tr></thead><tbody id="prospectLeadsTableBody"></tbody></table></div>
-            <div id="prospectingKanbanView" class="prospecting-kanban hidden" aria-label="Kanban de prospecção"></div>
-          </section>
-        </section>
-
-
-        <section id="view-divulgacao" class="view hidden divulgacao-view">
-          <div id="divulgacaoRoot"><div class="empty-state">Carregando Central de Divulgação...</div></div>
-        </section>
-
         <section id="view-publications" class="view hidden admin-view portal-publications-view" data-admin-only>
-          <section class="admin-hero portal-publications-hero">
-            <div><p class="eyebrow light">CONTEÚDO · PORTAL</p><h2>Portal de Vagas</h2><p>Revise vagas enviadas pelo público, acompanhe contas e publique somente o conteúdo aprovado pela equipe.</p></div>
-            <a id="openPublicPortalButton" class="button button-ghost" href="#" target="_blank" rel="noopener">Abrir portal público ↗</a>
-          </section>
+          <header class="admin-section-header admin-section-header-actions"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Portal de Vagas</h2><span>Revise vagas recebidas e acompanhe contas do portal.</span></div><a id="openPublicPortalButton" class="button button-ghost" href="#" target="_blank" rel="noopener">Abrir portal público ↗</a></header>
 
           <section class="kpi-grid compact-kpis portal-publications-kpis">
-            <article class="kpi-card warning hidden"><span>Grupos pendentes</span><strong id="portalKpiPendingGroups">0</strong><small>Aguardando moderação</small></article>
             <article class="kpi-card info"><span>Vagas recebidas</span><strong id="portalKpiPendingJobs">0</strong><small>Submissões não convertidas</small></article>
+
             <article class="kpi-card"><span>Novos leads</span><strong id="portalKpiNewLeads">0</strong><small>Recrutadores e empresas</small></article>
-            <article class="kpi-card danger"><span>Denúncias</span><strong id="portalKpiReports">0</strong><small>Precisam de revisão</small></article>
-            <article class="kpi-card success hidden"><span>Acessos em grupos</span><strong id="portalKpiClicks">0</strong><small>Últimos 30 dias</small></article>
           </section>
+
 
           <section class="panel portal-publications-panel">
             <div class="portal-publications-tabs" role="tablist" aria-label="Conteúdo do portal">
               <button class="active" data-portal-tab="jobs" type="button">Vagas enviadas</button>
               <button data-portal-tab="accounts" type="button">Contas e leads</button>
             </div>
-
-            <section id="portalPublicationsGroups" class="portal-publications-tab hidden">
-              <div class="section-toolbar stack-mobile">
-                <div class="segmented" id="portalGroupStatusFilter"><button class="active" data-portal-group-status="pending" type="button">Pendentes</button><button data-portal-group-status="approved" type="button">Publicados</button><button data-portal-group-status="rejected" type="button">Rejeitados</button><button data-portal-group-status="" type="button">Todos</button></div>
-                <label class="inline-search"><span>⌕</span><input id="portalGroupSearch" type="search" placeholder="Grupo, cidade, categoria ou responsável"></label>
-              </div>
-              <div id="portalGroupsList" class="portal-publication-list"><div class="empty-state">Carregando grupos...</div></div>
-            </section>
 
             <section id="portalPublicationsJobs" class="portal-publications-tab active">
               <div class="section-toolbar stack-mobile">
@@ -567,12 +438,15 @@
         </section>
 
         <section id="view-brands" class="view hidden admin-view brands-view" data-admin-only>
-          <section class="admin-hero brands-hero"><div><p class="eyebrow light">WHITE-LABEL · MARCA</p><h2>A identidade de cada empresa em todo o processo</h2><p>Logo, cores, tom e canais de candidatura são aplicados nas artes de vagas sem misturar a marca Genesis com a marca do cliente.</p></div><button id="refreshBrandsButton" class="button button-light" type="button">Atualizar empresas</button></section>
+          <header class="admin-section-header"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Configurações</h2><span>Identidade das empresas e acessos da equipe.</span></div></header>
+          <nav class="admin-section-tabs" aria-label="Seções de configuração"><button class="active" data-go-view="brands" type="button">Empresas e marcas</button><button class="" data-go-view="users" type="button">Equipe e acessos</button></nav>
+          <div class="admin-section-actions"><button id="refreshBrandsButton" class="button button-ghost" type="button">Atualizar empresas</button></div>
           <section class="brand-onboarding-grid"><article class="panel brand-guide-card"><p class="eyebrow">ONBOARDING</p><h3>Configuração em poucos minutos</h3><ol><li><span>1</span><div><strong>Envie a logo</strong><p>PNG, JPG, WebP ou SVG; o painel padroniza o arquivo.</p></div></li><li><span>2</span><div><strong>Defina a identidade</strong><p>Cores, estilo visual e tom de comunicação.</p></div></li><li><span>3</span><div><strong>Gere a arte da vaga</strong><p>A IA cria a fotografia e o painel compõe logo e texto exatos.</p></div></li></ol></article><section id="brandsList" class="brand-company-list"><div class="empty-state">Carregando marcas...</div></section></section>
         </section>
 
         <section id="view-users" class="view hidden admin-view" data-admin-only>
-          <section class="admin-hero users-hero"><div><p class="eyebrow light">ADMIN · ACESSOS</p><h2>Equipe e permissões</h2><p>Somente administradores criam logins internos e definem o nível de acesso de cada pessoa.</p></div><div class="admin-hero-badge"><span>Perfis</span><strong>Admin + Recrutador</strong><small>Acesso protegido no backend</small></div></section>
+          <header class="admin-section-header"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Configurações</h2><span>Identidade das empresas e acessos da equipe.</span></div></header>
+          <nav class="admin-section-tabs" aria-label="Seções de configuração"><button class="" data-go-view="brands" type="button">Empresas e marcas</button><button class="active" data-go-view="users" type="button">Equipe e acessos</button></nav>
           <section class="admin-two-column users-layout">
             <article class="panel">
               <div class="panel-header"><div><p class="eyebrow">NOVO LOGIN</p><h3>Criar usuário</h3></div></div>
@@ -596,46 +470,6 @@
           </section>
         </section>
 
-        <section id="view-demos" class="view hidden admin-view demo-admin-view" data-admin-only>
-          <section class="admin-hero demo-admin-hero">
-            <div><p class="eyebrow light">COMERCIAL · DEMONSTRAÇÃO</p><h2>Teste assistido por 7 dias</h2><p>Crie um ambiente isolado, entregue o link ao cliente e deixe que ele conecte o próprio WhatsApp pelo QR Code — sem acesso ao painel ou aos candidatos reais.</p></div>
-            <div class="admin-hero-badge"><span>Ambiente</span><strong>Isolado</strong><small>Sessão WAHA por cliente</small></div>
-          </section>
-
-          <section id="demoConfigAlert" class="demo-config-alert hidden" role="alert"></section>
-
-          <section class="demo-admin-grid">
-            <article class="panel demo-create-panel">
-              <div class="panel-header"><div><p class="eyebrow">NOVA DEMONSTRAÇÃO</p><h3>Preparar acesso do cliente</h3><span>O prazo começa na criação e termina automaticamente.</span></div><span class="badge badge-process">7 dias</span></div>
-              <form id="demoCreateForm" class="form-grid admin-form">
-                <label class="field span-2"><span>Empresa *</span><input id="demoCompanyName" name="empresa_nome" type="text" required maxlength="180" autocomplete="organization" placeholder="Empresa do cliente"></label>
-                <label class="field span-2"><span>Contato responsável *</span><input id="demoContactName" name="contato_nome" type="text" required maxlength="150" autocomplete="name" placeholder="Nome do responsável"></label>
-                <label class="field span-2"><span>E-mail</span><input name="contato_email" type="email" maxlength="254" autocomplete="email" placeholder="contato@empresa.com"></label>
-                <label class="field span-2"><span>WhatsApp comercial</span><input name="contato_whatsapp" type="tel" maxlength="30" autocomplete="tel" placeholder="5511999999999"></label>
-                <label class="field span-full"><span>Vaga para a simulação</span><select id="demoVacancySelect" name="vaga_origem_id"><option value="">Usar roteiro demonstrativo padrão</option></select><small>Se a vaga tiver perguntas de triagem, uma cópia será usada na demo. Os dados reais da vaga não serão alterados.</small></label>
-                <label class="field span-full"><span>Título exibido na simulação</span><input name="vaga_titulo" type="text" maxlength="180" placeholder="Opcional — usa o título da vaga selecionada"></label>
-                <button id="createDemoButton" class="button button-primary span-full" type="submit">Criar link seguro de demonstração</button>
-              </form>
-              <div id="demoCreatedLink" class="demo-created-link hidden" aria-live="polite"></div>
-            </article>
-
-            <article class="panel demo-guide-panel">
-              <div class="panel-header"><div><p class="eyebrow">COMO FUNCIONA</p><h3>Onboarding sem configuração técnica</h3></div></div>
-              <ol class="demo-guide-list">
-                <li><span>1</span><div><strong>Envie o link seguro</strong><p>O cliente abre uma página exclusiva, sem login no painel.</p></div></li>
-                <li><span>2</span><div><strong>Ele lê o QR Code</strong><p>No WhatsApp: Aparelhos conectados → Conectar aparelho.</p></div></li>
-                <li><span>3</span><div><strong>A automação fica ativa</strong><p>A sessão recebe textos e áudios em um processo apenas demonstrativo.</p></div></li>
-                <li><span>4</span><div><strong>O acesso expira sozinho</strong><p>Ao fim de 7 dias, a sessão é desconectada e removida do WAHA.</p></div></li>
-              </ol>
-              <div class="privacy-note"><strong>Proteção operacional</strong><span>CTPS e currículo continuam aceitos apenas em PDF no processo real. Imagens não são interpretadas e a demonstração não grava candidatos no funil oficial.</span></div>
-            </article>
-          </section>
-
-          <section class="panel demo-list-panel">
-            <div class="panel-header"><div><p class="eyebrow">ACOMPANHAMENTO</p><h3>Demonstrações criadas</h3></div><button id="refreshDemosButton" class="button button-ghost" type="button">Atualizar</button></div>
-            <div id="demosList" class="demo-list"><div class="empty-state">Carregando demonstrações...</div></div>
-          </section>
-        </section>
       </main>
     </div>
   </div>
@@ -981,11 +815,6 @@
     <footer class="modal-footer"><span class="helper-text">O arquivo continua armazenado como antes; esta tela apenas evita downloads desnecessários.</span><a id="documentPreviewDownload" class="button button-primary" href="#">⬇ Baixar arquivo</a></footer>
   </dialog>
 
-  <dialog id="demoDetailsDialog" class="modal demo-details-dialog" aria-labelledby="demoDetailsTitle">
-    <header class="modal-header"><div><p class="eyebrow">RESULTADOS DA DEMONSTRAÇÃO</p><h2 id="demoDetailsTitle">Demonstração</h2><span id="demoDetailsSubtitle">Respostas registradas no ambiente isolado.</span></div><button id="closeDemoDetailsButton" class="icon-button" type="button" aria-label="Fechar resultados">×</button></header>
-    <div class="modal-body"><div id="demoDetailsContent" class="demo-details-content"><div class="empty-state">Carregando resultados...</div></div></div>
-  </dialog>
-
   <dialog id="documentAuditExportDialog" class="modal audit-export-dialog" aria-labelledby="documentAuditExportDialogTitle" data-admin-only>
     <header class="modal-header"><div><p class="eyebrow">AUDITORIA DOCUMENTAL</p><h2 id="documentAuditExportDialogTitle">Exportar CTPS históricas</h2><span>Baixe uma amostra dos aprovados e reprovados para revisar a qualidade da triagem.</span></div><button id="closeDocumentAuditExportButton" class="icon-button" type="button" aria-label="Fechar exportação de CTPS">×</button></header>
     <div class="modal-body">
@@ -1042,40 +871,6 @@
     </form>
   </dialog>
 
-  <dialog id="prospectingBatchDialog" class="modal prospecting-batch-dialog" aria-labelledby="prospectingBatchTitle">
-    <form id="prospectingBatchForm">
-      <header class="modal-header"><div><p class="eyebrow">PROSPECÇÃO CONTROLADA</p><h2 id="prospectingBatchTitle">Preparar contatos</h2><span id="prospectingBatchSubtitle">Selecione como a Gênesis deve abordar os leads escolhidos.</span></div><button id="closeProspectingBatchDialog" class="icon-button" type="button" aria-label="Fechar"><span data-icon="close"></span></button></header>
-      <div class="modal-body form-grid">
-        <label class="field span-2"><span>Mensagem</span><select id="prospectingBatchModel"><option value="AUTO">Usar oferta sugerida de cada lead</option></select><small>No modo automático, portal grátis, aquisição de candidatos ou automação são escolhidos conforme o enriquecimento.</small></label>
-        <label class="field span-2"><span>Origem/base legítima do contato *</span><input id="prospectingBatchSource" maxlength="200" required value="Contato comercial público da empresa" placeholder="Ex.: telefone comercial publicado no Google/site"></label>
-        <label class="toggle-field span-2"><input id="prospectingBatchConfirm" type="checkbox"><span><strong>Confirmo a origem do contato</strong><small>Os envios respeitam horário comercial, limite diário, espaçamento, respostas automáticas e descadastro.</small></span></label>
-        <div class="information-callout span-2"><strong id="prospectingBatchCount">0 leads selecionados</strong><span>Leads sem WhatsApp, já contatados ou marcados como não contatar serão ignorados.</span></div>
-      </div>
-      <footer class="modal-footer"><button id="cancelProspectingBatchDialog" class="button button-ghost" type="button">Cancelar</button><button id="confirmProspectingBatch" class="button button-primary" type="submit">Preparar disparos</button></footer>
-    </form>
-  </dialog>
-
-  <dialog id="prospectingLeadDialog" class="modal prospecting-lead-dialog" aria-labelledby="prospectingLeadTitle">
-    <form id="prospectingLeadForm">
-      <header class="modal-header"><div><p class="eyebrow">LEAD ENRIQUECIDO</p><h2 id="prospectingLeadTitle">Detalhes do lead</h2><span id="prospectingLeadSubtitle"></span></div><button id="closeProspectingLeadDialog" class="icon-button" type="button" aria-label="Fechar">×</button></header>
-      <div id="prospectingLeadBody" class="modal-body"></div>
-      <footer class="modal-footer prospecting-lead-actions"><button id="prospectingLeadCopy" class="button button-ghost" type="button">Copiar</button><button id="prospectingLeadEdit" class="button button-ghost" type="button">Editar</button><button id="prospectingLeadQueue" class="button button-ghost" type="button">Preparar para fila</button><button id="prospectingLeadSend" class="button button-primary" type="button">Enviar agora</button></footer>
-    </form>
-  </dialog>
-
-  <dialog id="prospectingConnectionDialog" class="modal prospecting-connection-dialog" aria-labelledby="prospectingConnectionTitle">
-    <header class="modal-header"><div><p class="eyebrow">WHATSAPP DEDICADO</p><h2 id="prospectingConnectionTitle">Conectar número de prospecção</h2><span>Use um número comercial separado e permanente para preservar histórico, opt-out e passagem ao SDR.</span></div><button id="closeProspectingConnectionButton" class="icon-button" type="button" aria-label="Fechar">×</button></header>
-    <div class="modal-body"><div class="prospecting-qr-layout"><div class="prospecting-qr-frame"><img id="prospectingQrImage" class="hidden" alt="QR Code da sessão de prospecção"><span id="prospectingQrPlaceholder">Inicie a sessão para gerar o QR Code.</span></div><div><div id="prospectingConnectionDetails" class="stack-form"></div><button id="startProspectingSessionButton" class="button button-primary" type="button">Iniciar sessão e mostrar QR</button><button id="refreshProspectingQrButton" class="button button-ghost" type="button">Atualizar QR Code</button></div></div></div>
-  </dialog>
-
-  <dialog id="outreachDialog" class="modal outreach-dialog" aria-labelledby="outreachDialogTitle">
-    <form id="outreachForm" method="dialog">
-      <header class="modal-header"><div><p class="eyebrow">PRIMEIRO CONTATO ASSISTIDO</p><h2 id="outreachDialogTitle">Preparar contato</h2><span id="outreachLeadSubtitle">Revise o modelo e registre a base legítima antes de colocar na fila.</span></div><button id="closeOutreachButton" class="icon-button" type="button" aria-label="Fechar">×</button></header>
-      <div class="modal-body"><input id="outreachLeadId" type="hidden"><div class="form-grid"><label class="field span-full"><span>Modelo aprovado</span><select id="outreachModelSelect"></select></label><label class="field span-full"><span>Origem da autorização ou relação prévia *</span><input id="outreachAuthorizationSource" type="text" maxlength="200" placeholder="Ex.: formulário no site, cliente anterior, indicação com autorização"></label><label class="field"><span>Enviar a partir de</span><input id="outreachScheduledAt" type="datetime-local"></label><label class="toggle-field span-full"><input id="outreachAuthorizationConfirm" type="checkbox"><span><strong>Confirmo que há autorização ou relação legítima para este contato</strong><small>Leads sem esta confirmação não podem entrar na fila.</small></span></label></div><div class="privacy-note"><strong>Passagem ao SDR</strong><span>Respostas automáticas ficam registradas sem alterar o funil. Uma resposta humana muda o lead para “Respondeu” e interrompe a automação.</span></div><div id="outreachError" class="form-error hidden"></div></div>
-      <footer class="modal-footer"><button id="cancelOutreachButton" class="button button-ghost" type="button">Cancelar</button><button id="scheduleOutreachButton" class="button button-primary" type="submit">Adicionar à fila segura</button></footer>
-    </form>
-  </dialog>
-
   <dialog id="newCandidateDialog" class="modal" aria-labelledby="newCandidateDialogTitle">
     <form id="newCandidateForm" method="dialog">
       <header class="modal-header" aria-label="Cabeçalho do cadastro de candidato"><div><p class="eyebrow">CADASTRO MANUAL</p><h2 id="newCandidateDialogTitle">Novo candidato</h2><span>Use para testes ou cadastros feitos pelo recrutador.</span></div><button id="closeNewCandidateButton" class="icon-button" type="button" aria-label="Fechar cadastro de candidato">×</button></header>
@@ -1084,31 +879,6 @@
     </form>
   </dialog>
 
-
-  <dialog id="crmOpportunityDialog" class="modal crm-detail-dialog" aria-labelledby="crmOpportunityTitle">
-    <header class="modal-header"><div><p class="eyebrow">OPORTUNIDADE COMERCIAL</p><h2 id="crmOpportunityTitle">Oportunidade</h2><span id="crmOpportunitySubtitle">Detalhes e próximos passos</span></div><button id="crmCloseOpportunityButton" class="icon-button" type="button" aria-label="Fechar"><span data-icon="close"></span></button></header>
-    <div id="crmOpportunityBody" class="modal-body"><div class="empty-state">Carregando...</div></div>
-  </dialog>
-
-  <dialog id="crmNewOpportunityDialog" class="modal" aria-labelledby="crmNewOpportunityTitle">
-    <form id="crmNewOpportunityForm">
-      <header class="modal-header"><div><p class="eyebrow">COMERCIAL</p><h2 id="crmNewOpportunityTitle">Nova oportunidade</h2><span>Cadastre uma oportunidade manual sem interferir na Prospecção ou nas Demonstrações existentes.</span></div><button id="crmCloseNewButton" class="icon-button" type="button" aria-label="Fechar"><span data-icon="close"></span></button></header>
-      <div class="modal-body"><div class="form-grid">
-        <label class="field span-2"><span>Empresa *</span><input id="crmNewCompanyName" required maxlength="180" placeholder="Nome da empresa"></label>
-        <label class="field"><span>Segmento</span><input id="crmNewSegment" maxlength="160" placeholder="Facilities, RH..."></label>
-        <label class="field"><span>Cidade</span><input id="crmNewCity" maxlength="160" placeholder="São Paulo"></label>
-        <label class="field"><span>UF</span><input id="crmNewState" maxlength="2" value="SP"></label>
-        <label class="field"><span>Contato</span><input id="crmNewContactName" maxlength="160" placeholder="Nome do decisor"></label>
-        <label class="field"><span>WhatsApp</span><input id="crmNewContactWhatsapp" maxlength="30" placeholder="5511999999999"></label>
-        <label class="field span-2"><span>E-mail</span><input id="crmNewContactEmail" type="email" maxlength="254" placeholder="contato@empresa.com"></label>
-        <label class="field"><span>Etapa inicial</span><select id="crmNewStage"><option value="NOVO_LEAD">Novo lead</option><option value="CONTATADO">Contatado</option><option value="RESPONDEU">Respondeu</option><option value="QUALIFICADO">Qualificado</option><option value="DEMONSTRACAO">Demonstração</option><option value="PROPOSTA">Proposta</option><option value="NEGOCIACAO">Negociação</option></select></label>
-        <label class="field"><span>Valor estimado</span><input id="crmNewValue" type="number" min="0" step="0.01" placeholder="0,00"></label>
-        <label class="field span-2"><span>Próxima ação</span><input id="crmNewNextAction" maxlength="240" placeholder="Ex.: agendar demonstração"></label>
-        <label class="field"><span>Quando</span><input id="crmNewNextAt" type="datetime-local"></label>
-      </div></div>
-      <footer class="modal-footer"><button id="crmCancelNewButton" class="button button-ghost" type="button">Cancelar</button><button class="button button-primary" type="submit">Criar oportunidade</button></footer>
-    </form>
-  </dialog>
 
   <dialog id="profileDialog" class="modal profile-dialog" aria-labelledby="profileDialogTitle">
     <div class="profile-dialog-shell">

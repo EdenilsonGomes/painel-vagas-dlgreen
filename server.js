@@ -14,9 +14,7 @@ const { hashPassword, verifyPassword, normalizeUsername } = require('./lib/secur
 const { registerAdminV6 } = require('./admin-v6');
 const { registerPortalPublications } = require('./portal-publicacoes');
 const { registerScreeningV13 } = require('./lib/screening-v13');
-const { registerDemosV13 } = require('./lib/demos-v13');
 const { registerOperationsV14 } = require('./lib/operations-v14');
-const { registerDivulgacaoV1 } = require('./lib/divulgacao-v1');
 const { registerAtendimentoV15 } = require('./lib/atendimento-v15');
 const { registerAtendimentosV16 } = require('./lib/atendimentos-v16');
 const { registerNotificationsV23 } = require('./lib/notifications-v23');
@@ -77,15 +75,12 @@ const CHATBOT_WAHA_SESSION = String(process.env.CHATBOT_WAHA_SESSION || 'whats_j
 const PANEL_RATE_LIMIT_MAX = Math.min(Math.max(Number(process.env.PANEL_RATE_LIMIT_MAX || 2400), 500), 10000);
 const WAHA_BASE_URL = String(process.env.WAHA_BASE_URL || '').trim();
 const WAHA_API_KEY = String(process.env.WAHA_API_KEY || '').trim();
-const DIVULGACAO_WAHA_SESSION = String(process.env.DIVULGACAO_WAHA_SESSION || '').trim();
-const DIVULGACAO_WHATSAPP_AUTOMATICO = String(process.env.DIVULGACAO_WHATSAPP_AUTOMATICO || 'false').toLowerCase() === 'true';
 const ENTREVISTA_GESTAO_WEBHOOK_URL = String(process.env.ENTREVISTA_GESTAO_WEBHOOK_URL || '').trim();
 const ENTREVISTA_GESTAO_WEBHOOK_TOKEN = String(process.env.ENTREVISTA_GESTAO_WEBHOOK_TOKEN || '').trim();
 const ALERTAS_ADMIN_ENABLED = String(process.env.ALERTAS_ADMIN_ENABLED || 'false').toLowerCase() === 'true';
 const HANDOFF_ANALYSIS_WEBHOOK_URL = String(process.env.HANDOFF_ANALYSIS_WEBHOOK_URL || '').trim();
 const HANDOFF_ANALYSIS_WEBHOOK_TOKEN = String(process.env.HANDOFF_ANALYSIS_WEBHOOK_TOKEN || '').trim();
 const HANDOFF_ANALYSIS_TIMEOUT_MS = Math.min(Math.max(Number(process.env.HANDOFF_ANALYSIS_TIMEOUT_MS || 20_000), 3_000), 60_000);
-const DEMO_CHATBOT_WEBHOOK_URL = String(process.env.DEMO_CHATBOT_WEBHOOK_URL || CHATBOT_WEBHOOK_URL || '').trim();
 function normalizePublicHttpUrl(value) {
   const raw = String(value ?? '').trim();
   if (!raw || /^(undefined|null|false)$/i.test(raw)) return '';
@@ -99,9 +94,6 @@ function normalizePublicHttpUrl(value) {
 }
 const PANEL_URL_ENV = normalizePublicHttpUrl(process.env.PANEL_URL);
 const PANEL_URL = PANEL_URL_ENV || normalizePublicHttpUrl(PUBLIC_BASE_URL);
-const DEMO_TRIAL_DAYS = Math.min(Math.max(Number(process.env.DEMO_TRIAL_DAYS || 7), 1), 30);
-const DEMO_MAX_ACTIVE = Math.min(Math.max(Number(process.env.DEMO_MAX_ACTIVE || 5), 1), 100);
-const DEMO_EXPIRY_CHECK_MINUTES = Math.min(Math.max(Number(process.env.DEMO_EXPIRY_CHECK_MINUTES || 15), 1), 120);
 const CHATBOT_REPROCESS_TIMEOUT_MS = Math.min(
   Math.max(Number(process.env.CHATBOT_REPROCESS_TIMEOUT_MS || 20_000), 3_000),
   60_000,
@@ -1642,32 +1634,12 @@ app.get('/api/public/documentos/:id/reprocessar.pdf', async (req, res, next) => 
   }
 });
 
-registerDemosV13({
-  app,
-  pool,
-  z,
-  requireLogin,
-  requireAdmin,
-  currentUserName,
-  publicDir: path.join(__dirname, 'public'),
-  wahaBaseUrl: WAHA_BASE_URL,
-  wahaApiKey: WAHA_API_KEY,
-  chatbotWebhookUrl: DEMO_CHATBOT_WEBHOOK_URL,
-  panelBaseUrl: PANEL_URL,
-  trialDays: DEMO_TRIAL_DAYS,
-  maxActive: DEMO_MAX_ACTIVE,
-  expiryCheckMinutes: DEMO_EXPIRY_CHECK_MINUTES,
-});
-
 registerOperationsV14({
   app,
   pool,
   requireLogin,
   requireAdmin,
   currentUserName,
-  wahaBaseUrl: WAHA_BASE_URL,
-  wahaApiKey: WAHA_API_KEY,
-  panelBaseUrl: PANEL_URL,
 });
 
 registerAtendimentoV15({
@@ -1822,25 +1794,13 @@ app.get('/api/auth/me', (req, res) => res.json({
 
 registerAdminV6({ app, pool, requireAdmin, currentUserName });
 registerPortalPublications({ app, pool, requireAdmin, currentUserName, portalBaseUrl: PORTAL_BASE_URL });
-registerDivulgacaoV1({
-  app,
-  pool,
-  currentUserName,
-  wahaBaseUrl: WAHA_BASE_URL,
-  wahaApiKey: WAHA_API_KEY,
-  divulgacaoSession: DIVULGACAO_WAHA_SESSION,
-  portalBaseUrl: PORTAL_BASE_URL,
-  automaticEnabled: DIVULGACAO_WHATSAPP_AUTOMATICO,
-  loadVacancyForPromotion,
-  promotionPng,
-});
 registerScreeningV13({ app, pool, z, currentUserName });
 
 
 app.get('/api/dashboard', async (req, res, next) => {
   try {
     const period = normalizeAnalyticsPeriod(req.query.periodo);
-    const [metricas, funil, entrevistas, atencao, saude] = await Promise.all([
+    const [metricas, funil, entrevistas, atencao, saude, tendencia, resumoPeriodo, vagasAtencao] = await Promise.all([
       pool.query(`
         WITH periodo AS (
           SELECT (
@@ -1971,6 +1931,128 @@ app.get('/api/dashboard', async (req, res, next) => {
           (SELECT COUNT(*) FROM workflow_erros WHERE resolvido IS FALSE
             AND (COALESCE(workflow_nome, '') ILIKE '%calendar%' OR COALESCE(node_nome, '') ILIKE '%calendar%' OR COALESCE(erro_mensagem, '') ILIKE '%calendar%'))::INTEGER AS erros_calendar
       `),
+      pool.query(`
+        WITH serie AS (
+          SELECT indice,
+            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER - 1) - indice))::DATE AS dia,
+            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER * 2 - 1) - indice))::DATE AS dia_anterior
+          FROM GENERATE_SERIES(0, $1::INTEGER - 1) AS indice
+        )
+        SELECT
+          s.indice::INTEGER,
+          s.dia,
+          (SELECT COUNT(*) FROM candidatos c WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS candidaturas,
+          (SELECT COUNT(*) FROM entrevistas e WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS entrevistas,
+          (SELECT COUNT(*) FROM candidatos c WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS contratacoes,
+          (SELECT COUNT(*) FROM candidatos c WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia_anterior)::INTEGER AS candidaturas_periodo_anterior
+        FROM serie s
+        ORDER BY s.indice
+      `, [period.days]),
+      pool.query(`
+        WITH limites AS (
+          SELECT
+            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - ($1::INTEGER - 1))::DATE AS atual_inicio,
+            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE + 1)::DATE AS atual_fim,
+            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER * 2) - 1))::DATE AS anterior_inicio
+        ),
+        primeira_revisao AS (
+          SELECT candidato_id, MIN(created_at) AS analisado_em
+          FROM candidato_revisoes
+          GROUP BY candidato_id
+        ),
+        analise AS (
+          SELECT COALESCE(ROUND(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY EXTRACT(EPOCH FROM (pr.analisado_em - c.created_at)) / 60)::NUMERIC), 0)::INTEGER, 0) AS primeira_analise_minutos
+          FROM candidatos c
+          JOIN primeira_revisao pr ON pr.candidato_id = c.id AND pr.analisado_em >= c.created_at
+          CROSS JOIN limites l
+          WHERE (pr.analisado_em AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio
+            AND (pr.analisado_em AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim
+        ),
+        base AS (
+          SELECT
+            COUNT(*) FILTER (WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS novos,
+            COUNT(*) FILTER (WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS novos_anterior,
+            COUNT(*) FILTER (WHERE (c.aprovado IS TRUE OR UPPER(COALESCE(c.status, '')) IN ('APROVADO','EM_ADMISSAO','CONTRATADO')) AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS aprovados,
+            COUNT(*) FILTER (WHERE (c.aprovado IS TRUE OR UPPER(COALESCE(c.status, '')) IN ('APROVADO','EM_ADMISSAO','CONTRATADO')) AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS aprovados_anterior,
+            COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS contratacoes,
+            COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS contratacoes_anterior
+          FROM candidatos c
+          CROSS JOIN limites l
+        ),
+        entrevista_resumo AS (
+          SELECT
+            COUNT(*) FILTER (WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS entrevistas,
+            COUNT(*) FILTER (WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS entrevistas_anterior,
+            COUNT(*) FILTER (WHERE e.inicio < NOW() AND (e.inicio AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio)::INTEGER AS entrevistas_realizadas,
+            COUNT(*) FILTER (WHERE e.inicio < NOW() AND (e.inicio AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND UPPER(COALESCE(c.motivo_reprovacao_codigo, '')) = 'NAO_COMPARECEU_ENTREVISTA')::INTEGER AS ausencias
+          FROM entrevistas e
+          JOIN candidatos c ON c.id = e.candidato_id
+          CROSS JOIN limites l
+        )
+        SELECT b.*, a.primeira_analise_minutos, er.entrevistas, er.entrevistas_anterior,
+          CASE WHEN er.entrevistas_realizadas > 0 THEN ROUND(((er.entrevistas_realizadas - er.ausencias)::NUMERIC / er.entrevistas_realizadas) * 100)::INTEGER ELSE 0 END AS comparecimento
+        FROM base b CROSS JOIN analise a CROSS JOIN entrevista_resumo er
+      `, [period.days]),
+      pool.query(`
+        WITH candidatos_por_vaga AS (
+          SELECT c.vaga_id,
+            COUNT(*)::INTEGER AS candidatos,
+            COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) IN ('NOVO','EM_PROCESSO'))::INTEGER AS em_analise,
+            MAX(c.updated_at) AS ultimo_avanco
+          FROM candidatos c
+          WHERE c.vaga_id IS NOT NULL
+          GROUP BY c.vaga_id
+        ),
+        entrevistas_por_vaga AS (
+          SELECT c.vaga_id, COUNT(*) FILTER (WHERE UPPER(COALESCE(e.status, '')) = 'AGENDADA')::INTEGER AS entrevistas
+          FROM entrevistas e JOIN candidatos c ON c.id = e.candidato_id
+          WHERE c.vaga_id IS NOT NULL
+          GROUP BY c.vaga_id
+        ),
+        revisoes_por_vaga AS (
+          SELECT COALESCE(r.vaga_id, c.vaga_id) AS vaga_id,
+            COUNT(*) FILTER (WHERE UPPER(COALESCE(r.status, 'PENDENTE')) = 'PENDENTE')::INTEGER AS revisoes_pendentes
+          FROM candidato_revisoes r JOIN candidatos c ON c.id = r.candidato_id
+          WHERE COALESCE(r.vaga_id, c.vaga_id) IS NOT NULL
+          GROUP BY COALESCE(r.vaga_id, c.vaga_id)
+        ),
+        mensagens_por_candidato AS (
+          SELECT c.id AS candidato_id, c.vaga_id,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) IN ('USUARIO','CANDIDATO')) AS ultima_usuario,
+            MAX(m.created_at) FILTER (WHERE UPPER(COALESCE(m.quem, '')) = 'IA') AS ultima_ia
+          FROM candidatos c
+          LEFT JOIN mensagens m ON m.candidato_id = c.id
+          WHERE c.vaga_id IS NOT NULL AND UPPER(COALESCE(c.status, '')) IN ('NOVO','EM_PROCESSO','APROVADO')
+          GROUP BY c.id, c.vaga_id
+        ),
+        sem_retorno_por_vaga AS (
+          SELECT vaga_id, COUNT(*)::INTEGER AS sem_retorno
+          FROM mensagens_por_candidato
+          WHERE ultima_usuario <= NOW() - INTERVAL '2 hours' AND (ultima_ia IS NULL OR ultima_ia < ultima_usuario)
+          GROUP BY vaga_id
+        )
+        SELECT v.id, COALESCE(v.titulo, v.cargo, 'Vaga sem título') AS vaga_nome,
+          COALESCE(cv.candidatos, 0)::INTEGER AS candidatos,
+          COALESCE(cv.em_analise, 0)::INTEGER AS em_analise,
+          COALESCE(ev.entrevistas, 0)::INTEGER AS entrevistas,
+          COALESCE(rv.revisoes_pendentes, 0)::INTEGER AS revisoes_pendentes,
+          COALESCE(sr.sem_retorno, 0)::INTEGER AS sem_retorno,
+          cv.ultimo_avanco,
+          GREATEST(0, FLOOR(EXTRACT(EPOCH FROM (NOW() - COALESCE(cv.ultimo_avanco, v.updated_at, v.created_at))) / 86400))::INTEGER AS dias_sem_avanco
+        FROM vagas v
+        LEFT JOIN candidatos_por_vaga cv ON cv.vaga_id = v.id
+        LEFT JOIN entrevistas_por_vaga ev ON ev.vaga_id = v.id
+        LEFT JOIN revisoes_por_vaga rv ON rv.vaga_id = v.id
+        LEFT JOIN sem_retorno_por_vaga sr ON sr.vaga_id = v.id
+        WHERE UPPER(COALESCE(v.status, '')) = 'ATIVA'
+        ORDER BY
+          (COALESCE(rv.revisoes_pendentes, 0) > 0) DESC,
+          COALESCE(sr.sem_retorno, 0) DESC,
+          GREATEST(0, FLOOR(EXTRACT(EPOCH FROM (NOW() - COALESCE(cv.ultimo_avanco, v.updated_at, v.created_at))) / 86400)) DESC,
+          COALESCE(cv.em_analise, 0) DESC,
+          vaga_nome ASC
+        LIMIT 5
+      `),
     ]);
 
     const metrics = metricas.rows[0] || {};
@@ -1991,6 +2073,14 @@ app.get('/api/dashboard', async (req, res, next) => {
       funil: funil.rows,
       proximas_entrevistas: entrevistas.rows,
       atencao: atencao.rows,
+      desempenho: {
+        resumo: resumoPeriodo.rows[0] || {},
+        tendencia: tendencia.rows,
+      },
+      vagas_atencao: vagasAtencao.rows.map((item) => ({
+        ...item,
+        responsavel: currentUserName(req),
+      })),
       saude: {
         n8n: Number(healthRow.erros_pendentes || 0) > 0 ? 'Atenção' : 'Online',
         waha: recentActivity ? 'Online' : 'Sem atividade',
@@ -6015,7 +6105,6 @@ app.use((error, req, res, _next) => {
     });
   }
 
-  const isGroupModeration = req.path.startsWith('/api/portal-publicacoes/grupos/');
   const isPortalModeration = req.path.startsWith('/api/portal-publicacoes/');
 
   if (isPortalModeration && error?.code === '42P08') {
@@ -6023,22 +6112,6 @@ app.use((error, req, res, _next) => {
       sucesso: false,
       erro: 'A consulta de moderação usa parâmetros incompatíveis com o PostgreSQL. Atualize o painel para a versão 12.0.1 ou superior.',
       codigo: 'MODERACAO_TIPAGEM_PARAMETROS',
-    });
-  }
-
-  if (isGroupModeration && ['23514', '22P02', '42804'].includes(String(error?.code || ''))) {
-    return res.status(409).json({
-      sucesso: false,
-      erro: 'O PostgreSQL ainda usa uma regra legada de status para grupos. Execute npm run migrate:panel no terminal deste serviço e tente novamente.',
-      codigo: 'GRUPOS_STATUS_LEGADO',
-    });
-  }
-
-  if (isGroupModeration && error?.code === '23502') {
-    return res.status(409).json({
-      sucesso: false,
-      erro: 'A tabela de grupos possui uma coluna legada obrigatória sem valor padrão. Execute npm run migrate:panel e tente novamente.',
-      codigo: 'GRUPOS_ESTRUTURA_LEGADA',
     });
   }
 
@@ -6070,9 +6143,7 @@ app.use((error, req, res, _next) => {
   if (error && ['42703', '42P01'].includes(String(error.code || ''))) {
     return res.status(500).json({
       sucesso: false,
-      erro: isGroupModeration
-        ? 'A estrutura de grupos está incompleta. Execute npm run migrate:panel no terminal do painel.'
-        : 'A estrutura do PostgreSQL está incompleta. Execute as migrações anteriores e faça o redeploy.',
+      erro: 'A estrutura do PostgreSQL está incompleta. Execute as migrações anteriores e faça o redeploy.',
     });
   }
 
