@@ -67,6 +67,38 @@ final result: passed
 
 ---
 
+# Design QA — Vagas, correção responsiva do desktop
+
+- Source visual truth: `C:\Users\User\AppData\Local\Temp\codex-clipboard-70af3df1-9e0a-4ef7-ad8c-84e880c63a22.png`
+- Desktop implementation: `C:\Users\User\AppData\Local\Temp\design-qa-vagas-desktop-light.png`
+- Mobile implementation: `C:\Users\User\AppData\Local\Temp\design-qa-vagas-mobile.png`
+- Combined comparison: `C:\Users\User\AppData\Local\Temp\design-qa-vagas-comparison.png`
+- Viewports: desktop 1100 × 800 CSS px; mobile 390 × 844 CSS px; device scale 1.
+- Pixels: source 1389 × 677; desktop 1085 × 789; mobile 375 × 812; combined comparison 1987 × 748.
+- State: Vagas ativas, visualização Tabela, tema claro na comparação principal.
+
+## Evidence and findings
+
+- Full view: the source's tall empty filter region is replaced by one compact desktop row containing Status, Período, Tabela/Lado a lado and Nova vaga.
+- Focused toolbar region: controls share the same bottom alignment, keep readable labels and do not overflow at the former failing width.
+- Top utility region: the desktop topbar no longer draws a full-width background, divider or shadow and its height drops from 72 px to 52 px; notification and profile remain accessible.
+- Mobile: the existing two-column filter arrangement, full-width contextual action, topbar and bottom navigation remain unchanged.
+- Typography and copy: existing family, weights and operational labels were preserved.
+- Spacing and layout rhythm: the filter-to-list gap is 14 px and the filter bar is 55 px high instead of expanding into an empty panel.
+- Colors and tokens: existing light/dark tokens remain intact; no new color or decorative treatment was introduced.
+- Image and asset fidelity: logo and icon system were preserved; no new UI assets were needed.
+- Console: no errors or warnings in desktop or mobile validation.
+
+## Comparison history
+
+- Initial evidence showed the legacy `max-width: 1280px` rule forcing the toolbar into a column and the explicit 72 px topbar retaining a broad strip.
+- Fix: added a desktop-only row override above 900 px and a desktop-only transparent 52 px utility topbar.
+- Post-fix evidence: `C:\Users\User\AppData\Local\Temp\design-qa-vagas-comparison.png` shows the compact row and removed strip; no P0/P1/P2 findings remain.
+
+final result: passed
+
+---
+
 # Design QA — Vagas compactas
 
 - Source visual truth: `C:\Users\User\AppData\Local\Temp\codex-clipboard-90583edd-7195-4050-b594-7f5bc63805b4.png`

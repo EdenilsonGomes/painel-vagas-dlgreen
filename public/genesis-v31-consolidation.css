@@ -890,6 +890,35 @@ body.genesis-rebrand .vacancy-grid-card header > div {
   gap: 6px;
 }
 
+@media (min-width: 901px) {
+  body.genesis-rebrand .topbar {
+    height: 52px;
+    min-height: 52px;
+    padding-block: 5px;
+    border-bottom: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none;
+  }
+
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: end !important;
+    width: 100%;
+    overflow: visible;
+  }
+
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .compact-field {
+    flex: 0 1 170px;
+  }
+
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .view-toggle,
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .contextual-primary-action {
+    flex: 0 0 auto;
+  }
+}
+
 @media (max-width: 1180px) and (min-width: 901px) {
   body.genesis-rebrand .vacancy-list-columns,
   body.genesis-rebrand .vacancy-operational-card {
