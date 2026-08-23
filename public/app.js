@@ -51,7 +51,6 @@ const state = {
   documentExpansionInitialized: false,
   monitoring: null,
   promotion: null,
-  searchTimer: null,
   currentUser: null,
   portalBaseUrl: '',
   theme: document.documentElement.dataset.theme || 'light',
@@ -183,29 +182,23 @@ function sexSourceText(value) {
   return labels[String(value || '').toUpperCase()] || 'Fonte não registrada';
 }
 
-const viewMeta = {
-  dashboard: ['OPERAÇÃO', 'Visão geral', 'O que exige ação agora, sem excesso de informação.', ''],
-  vacancies: ['OPORTUNIDADES', 'Vagas', 'Crie, duplique, divulgue e acompanhe o desempenho das vagas.', '+ Nova vaga'],
-  candidates: ['PESSOAS', 'Candidatos', 'Acompanhe cada candidato em tabela ou pipeline.', '+ Novo candidato'],
-  atendimentos: ['CONVERSAS', 'Chats', 'Todas as conversas em ordem de atividade, com leitura e atendimento no mesmo lugar.', 'Atualizar chats'],
-  interviews: ['AGENDA', 'Entrevistas', 'Compromissos do processo seletivo sincronizados com o Google Calendar.', 'Atualizar agenda'],
-  reviews: ['ATENDIMENTO', 'Revisões', 'Resolva exceções humanas com clareza sobre mensagens e estado da IA.', ''],
-  documents: ['ADMINISTRAÇÃO', 'Saúde do sistema', 'Documentos técnicos e falhas que precisam de revisão.', 'Atualizar arquivos'],
-  monitoring: ['ADMINISTRAÇÃO', 'Saúde do sistema', 'Saúde das integrações, falhas técnicas e recuperação da operação.', 'Atualizar monitoramento'],
-  audit: ['ADMINISTRAÇÃO', 'Auditoria da IA', 'Valide estados, documentos, resgates e agendamentos do fluxo determinístico.', 'Sincronizar'],
-  sales: ['COMERCIAL', 'Sales', 'Prospecção manual organizada, sem disparos automáticos.', ''],
-  brands: ['ADMINISTRAÇÃO', 'Configurações', 'Identidade das empresas e preferências operacionais.', ''],
-  publications: ['ADMINISTRAÇÃO', 'Portal de Vagas', 'Revise vagas recebidas e acompanhe as contas públicas.', ''],
-  users: ['ADMINISTRAÇÃO', 'Configurações', 'Gerencie logins e permissões do time interno.', '+ Criar login'],
+const viewActions = {
+  vacancies: '+ Nova vaga',
+  candidates: '+ Novo candidato',
+  atendimentos: 'Atualizar chats',
+  interviews: 'Atualizar agenda',
+  documents: 'Atualizar arquivos',
+  monitoring: 'Atualizar monitoramento',
+  audit: 'Sincronizar',
+  users: '+ Criar login',
 };
 
 const el = Object.fromEntries([
-  'sidebar', 'sidebarBackdrop', 'mobileMenuButton', 'themeToggleButton', 'mobileMoreButton', 'pageEyebrow', 'pageTitle', 'pageSubtitle',
-  'globalSearchButton', 'refreshCurrentViewButton', 'primaryActionButton',
+  'sidebar', 'sidebarBackdrop', 'mobileMenuButton', 'themeToggleButton', 'mobileMoreButton', 'primaryActionButton',
   'dashboardReviews', 'reviewPendingCount', 'reviewNavBadge', 'reviewTypeSegments', 'reviewSearchInput', 'reviewsList',
   'reviewDetailPane', 'reviewDetailContent', 'reviewDecisionPane', 'reviewDecisionContent',
   'calendarPrevButton', 'calendarTodayButton', 'calendarNextButton', 'calendarMonthLabel', 'calendarSelectedDayLabel', 'interviewCalendar', 'calendarViewMode',
-  'dashboardUpdatedAt', 'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
+  'kpiCandidatesActive', 'kpiActiveVacancies', 'kpiInterviewsToday', 'kpiHumanPending', 'kpiCritical', 'kpiDocumentFailures', 'kpiStaleCandidates',
   'dashboardPerformanceMetrics', 'dashboardPerformanceChart', 'dashboardVacancyAttentionList',
   'vacancyStatusSegments', 'vacancyPeriodSegments', 'vacancyStatusSelect', 'vacancyPeriodSelect', 'vacancyTableMode', 'vacancyKanbanMode', 'vacanciesKanbanContainer', 'vacancyActiveKpiCard', 'vacancySearchInput', 'vacancyCompanyFilter', 'vacancyLocationFilter', 'vacancyKpiActive', 'vacancyKpiInterested',
   'vacancyKpiInProcess', 'vacancyKpiApproved', 'vacancyKpiTop', 'vacancyKpiTopCount', 'vacanciesLoading', 'vacanciesEmpty',
@@ -219,8 +212,7 @@ const el = Object.fromEntries([
   'documentsList', 'documentsKpiCandidates', 'documentsKpiReview', 'documentsKpiFailures', 'documentsKpiToday', 'monitorKpiEntries', 'monitorKpiErrors', 'monitorKpiDocs',
   'monitorKpiFollowups', 'monitorKpiPromotions', 'monitorAlertCount', 'monitorAlerts',
   'monitorErrors', 'monitorHealth', 'monitorLogs', 'monitorRecentCandidates', 'monitorActivity',
-  'monitorFollowups', 'monitorPromotions', 'globalSearchDialog', 'globalSearchInput',
-  'closeGlobalSearchButton', 'globalSearchResults', 'vacancyDialog', 'vacancyForm',
+  'monitorFollowups', 'monitorPromotions', 'vacancyDialog', 'vacancyForm',
   'vacancyDialogTitle', 'vacancyId', 'empresa_id', 'generateVacancyAiButton', 'closeVacancyDialogButton',
   'cancelVacancyButton', 'saveVacancyButton', 'vacancyFormError', 'possui_insalubridade',
   'insalubrityFields', 'aiVacancyDialog', 'closeAiVacancyButton', 'cancelAiVacancyButton',
@@ -432,6 +424,10 @@ function badgeClass(status) {
   return 'badge-neutral';
 }
 
+function vacancySexLabel(value) {
+  return { MASCULINO: 'Masculino', FEMININO: 'Feminino', UNISSEX: 'Unissex' }[String(value || '').toUpperCase()] || '';
+}
+
 function setView(name) {
   const legacyViewRedirects = { crm: 'sales', prospecting: 'sales', commercialChats: 'sales', demos: 'sales', divulgacao: 'vacancies' };
   name = legacyViewRedirects[name] || name;
@@ -451,14 +447,15 @@ function setView(name) {
   document.querySelectorAll('.view').forEach((view) => view.classList.toggle('hidden', view.id !== `view-${name}`));
   document.querySelectorAll('.nav-item').forEach((button) => button.classList.toggle('active', button.dataset.view === name));
   document.querySelectorAll('[data-mobile-view]').forEach((button) => button.classList.toggle('active', button.dataset.mobileView === name));
-  const meta = viewMeta[name] || viewMeta.dashboard;
-  el.pageEyebrow.textContent = meta[0];
-  el.pageTitle.textContent = meta[1];
-  el.pageSubtitle.textContent = meta[2];
-  el.primaryActionButton.textContent = meta[3] || '';
-  el.primaryActionButton.classList.toggle('hidden', !meta[3]);
-  el.refreshCurrentViewButton?.classList.toggle('hidden', name === 'reviews');
-  el.dashboardUpdatedAt?.classList.toggle('hidden', name !== 'dashboard');
+  const actionLabel = viewActions[name] || '';
+  el.primaryActionButton.textContent = actionLabel;
+  el.primaryActionButton.classList.toggle('hidden', !actionLabel);
+  const activeView = document.getElementById(`view-${name}`);
+  const actionHost = name === 'vacancies' ? activeView?.querySelector('.vacancy-filter-bar') : activeView;
+  if (actionHost && el.primaryActionButton.parentElement !== actionHost) {
+    if (name === 'vacancies') actionHost.append(el.primaryActionButton);
+    else actionHost.prepend(el.primaryActionButton);
+  }
   el.sidebar.classList.remove('open');
   window.scrollTo(0, 0);
   loadCurrentView();
@@ -617,7 +614,6 @@ function renderDashboard() {
   const data = state.dashboard || {};
   const metrics = data.metricas || {};
 
-  if (el.dashboardUpdatedAt) el.dashboardUpdatedAt.textContent = `Atualizado ${formatRelativeTime(data.atualizado_em)}`;
   if (el.kpiCandidatesActive) el.kpiCandidatesActive.textContent = Number(metrics.total_candidatos || 0);
   el.kpiActiveVacancies.textContent = Number(metrics.vagas_ativas || 0);
   el.kpiInterviewsToday.textContent = Number(metrics.entrevistas_hoje || 0);
@@ -739,12 +735,14 @@ function renderVacancies() {
     const entrevistas = Number(v.candidatos_entrevista || 0);
     const aprovados = Number(v.candidatos_aprovados || 0);
     const portal = v.publicar_portal ? '<span class="portal-chip">Publicada</span>' : '<span class="portal-chip muted">Interna</span>';
+    const sexLabel = vacancySexLabel(v.sexo);
+    const sexTag = sexLabel ? `<span class="vacancy-sex-chip">${escapeHtml(sexLabel)}</span>` : '';
     const portalLink = v.status === 'ATIVA' && v.publicar_portal && publicVacancyUrl(v) ? `<a class="vacancy-menu-link" href="${escapeHtml(publicVacancyUrl(v))}" target="_blank" rel="noopener">Abrir no portal</a>` : '';
     const primaryAction = op.action === 'status'
       ? `<button class="button button-primary vacancy-primary-action" data-vacancy-action="status" data-status="${op.status}" data-id="${v.id}" type="button">${op.label}</button>`
       : `<button class="button ${op.tone === 'success' ? 'button-ghost' : 'button-primary'} vacancy-primary-action" data-vacancy-action="${op.action}" data-id="${v.id}" type="button">${op.label}</button>`;
     return `<article class="vacancy-operational-card" data-status="${escapeHtml(v.status)}">
-      <div class="vacancy-card-identity"><div class="vacancy-card-title-row"><button class="vacancy-title-button" data-vacancy-action="view" data-id="${v.id}" type="button">${escapeHtml(v.titulo)}</button><span class="badge ${badgeClass(v.status)}">${escapeHtml(vacancyStatusLabels[v.status] || v.status)}</span>${portal}</div><span>${escapeHtml(location)}</span><small>${escapeHtml(v.empresa_nome || v.codigo || 'Empresa não informada')}</small></div>
+      <div class="vacancy-card-identity"><div class="vacancy-card-title-row"><button class="vacancy-title-button" data-vacancy-action="view" data-id="${v.id}" type="button">${escapeHtml(v.titulo)}</button><span class="badge ${badgeClass(v.status)}">${escapeHtml(vacancyStatusLabels[v.status] || v.status)}</span>${portal}${sexTag}</div><span>${escapeHtml(location)}</span><small>${escapeHtml(v.empresa_nome || v.codigo || 'Empresa não informada')}</small></div>
       <div class="vacancy-card-funnel" aria-label="Funil da vaga"><span><b>${novos}</b><small>Novos</small></span><span><b>${analise}</b><small>Análise</small></span><span><b>${entrevistas}</b><small>Entrevistas</small></span><span><b>${aprovados}</b><small>Aprovados</small></span></div>
       <div class="vacancy-card-priority ${op.tone}"><span class="priority-icon">${op.icon}</span><strong>${escapeHtml(op.message)}</strong></div>
       <div class="vacancy-card-actions">${primaryAction}<details class="vacancy-more"><summary aria-label="Mais ações">•••</summary><div class="vacancy-more-menu"><button data-vacancy-action="view" data-id="${v.id}" type="button">Resumo da vaga</button><button data-vacancy-action="edit" data-id="${v.id}" type="button">Editar</button><button data-vacancy-action="promote" data-id="${v.id}" type="button">Divulgar</button>${portalLink}<button data-vacancy-action="duplicate" data-id="${v.id}" type="button">Duplicar</button>${v.status === 'ATIVA' ? `<button data-vacancy-action="status" data-status="PAUSADA" data-id="${v.id}" type="button">Pausar</button>` : ''}<button class="danger" data-vacancy-action="delete" data-id="${v.id}" type="button">Excluir</button></div></details></div>
@@ -759,8 +757,9 @@ function renderVacancyKanban(vacancies) {
   el.vacanciesKanbanContainer.innerHTML = vacancies.map((item) => {
     const op = vacancyOperationalData(item);
     const location = [item.bairro, item.cidade, item.estado].filter(Boolean).join(' · ') || 'Local não informado';
+    const sexLabel = vacancySexLabel(item.sexo);
     return `<article class="vacancy-grid-card">
-      <header><div><span class="badge ${badgeClass(item.status)}">${escapeHtml(vacancyStatusLabels[item.status] || item.status)}</span><small>${escapeHtml(item.codigo || '')}</small></div><button class="icon-button compact" data-vacancy-action="view" data-id="${item.id}" type="button" aria-label="Abrir ${escapeHtml(item.titulo || item.cargo)}"><span data-icon="chevron-right"></span></button></header>
+      <header><div><span class="badge ${badgeClass(item.status)}">${escapeHtml(vacancyStatusLabels[item.status] || item.status)}</span>${sexLabel ? `<span class="vacancy-sex-chip">${escapeHtml(sexLabel)}</span>` : ''}<small>${escapeHtml(item.codigo || '')}</small></div><button class="icon-button compact" data-vacancy-action="view" data-id="${item.id}" type="button" aria-label="Abrir ${escapeHtml(item.titulo || item.cargo)}"><span data-icon="chevron-right"></span></button></header>
       <button class="vacancy-grid-card-title" data-vacancy-action="view" data-id="${item.id}" type="button">${escapeHtml(item.titulo || item.cargo)}</button>
       <p>${escapeHtml(item.empresa_nome || 'Empresa não informada')}</p><span>${escapeHtml(location)}</span>
       <div class="vacancy-grid-card-metrics"><span><strong>${Number(item.total_interessados || 0)}</strong><small>Candidatos</small></span><span><strong>${Number(item.candidatos_novos || 0)}</strong><small>Novos</small></span><span><strong>${Number(item.candidatos_entrevista || 0)}</strong><small>Entrevistas</small></span></div>
@@ -2707,31 +2706,6 @@ async function resolveWorkflowError(id) {
   await loadMonitoring(true);
 }
 
-function openGlobalSearch() {
-  el.globalSearchDialog.showModal();
-  el.globalSearchInput.value = '';
-  el.globalSearchResults.innerHTML = '<div class="empty-state compact">Comece digitando um nome, telefone, vaga ou arquivo.</div>';
-  setTimeout(() => el.globalSearchInput.focus(), 50);
-}
-
-async function runGlobalSearch() {
-  clearTimeout(state.searchTimer);
-  const q = el.globalSearchInput.value.trim();
-  if (q.length < 2) {
-    el.globalSearchResults.innerHTML = '<div class="empty-state compact">Digite pelo menos 2 caracteres.</div>';
-    return;
-  }
-  state.searchTimer = setTimeout(async () => {
-    try {
-      const data = await api(`/api/busca-global?q=${encodeURIComponent(q)}`);
-      const results = data.resultados || [];
-      el.globalSearchResults.innerHTML = results.length ? results.map((item) => `
-        <button class="search-result" data-search-type="${escapeHtml(item.tipo)}" data-id="${item.id}" data-candidate-id="${item.candidato_id || ''}" type="button"><span class="search-result-icon">${item.tipo === 'CANDIDATO' ? 'C' : item.tipo === 'VAGA' ? 'V' : 'D'}</span><span><strong>${escapeHtml(item.titulo)}</strong><span>${escapeHtml(item.subtitulo || '')}</span></span></button>
-      `).join('') : emptyState('Nenhum resultado encontrado.');
-    } catch (error) { el.globalSearchResults.innerHTML = emptyState('Erro na busca', error.message); }
-  }, 250);
-}
-
 function handleDelegatedAction(event) {
   const quickTab = event.target.closest('[data-drawer-quick-tab]');
   if (quickTab) return setDrawerTab(quickTab.classList.contains('active') ? 'summary' : quickTab.dataset.drawerQuickTab);
@@ -2918,23 +2892,7 @@ function bindEvents() {
   });
   el.logoutButton.addEventListener('click', logout);
   el.sidebarLogoutButton?.addEventListener('click', logout);
-  el.refreshCurrentViewButton.addEventListener('click', () => loadCurrentView(true));
   el.primaryActionButton.addEventListener('click', handlePrimaryAction);
-  el.globalSearchButton.addEventListener('click', openGlobalSearch);
-  el.closeGlobalSearchButton.addEventListener('click', () => el.globalSearchDialog.close());
-  el.globalSearchInput.addEventListener('input', runGlobalSearch);
-  document.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); openGlobalSearch(); }
-    if (event.key === 'Escape' && el.globalSearchDialog.open) el.globalSearchDialog.close();
-  });
-  el.globalSearchResults.addEventListener('click', (event) => {
-    const button = event.target.closest('[data-search-type]');
-    if (!button) return;
-    el.globalSearchDialog.close();
-    if (button.dataset.searchType === 'CANDIDATO') { setView('candidates'); openCandidate(button.dataset.id); }
-    else if (button.dataset.searchType === 'VAGA') { setView('vacancies'); openVacancyById(button.dataset.id).catch((error) => showToast(error.message, 'error')); }
-    else if (button.dataset.searchType === 'DOCUMENTO') { setView('candidates'); if (button.dataset.candidateId) openCandidate(button.dataset.candidateId); }
-  });
 
   el.vacancyPeriodSegments?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-vacancy-period]'); if (!button) return;

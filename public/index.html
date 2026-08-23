@@ -29,7 +29,7 @@
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=3000" defer></script>
   <script src="/geo-v1.js?v=1900" defer></script>
-  <script src="/app.js?v=3107" defer></script>
+  <script src="/app.js?v=3200" defer></script>
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
   <script src="/admin.js?v=1410" defer></script>
@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="/genesis-v28-mobile.css?v=2800">
   <link rel="stylesheet" href="/genesis-v29-mobile.css?v=2900">
   <link rel="stylesheet" href="/genesis-v30-sales.css?v=3000">
-  <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3107">
+  <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3200">
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -102,17 +102,7 @@
     <div class="workspace">
       <header class="topbar" aria-label="Barra superior">
         <button id="mobileMenuButton" class="icon-button mobile-only" type="button" aria-label="Abrir menu"><span data-icon="menu"></span></button>
-        <div class="page-heading">
-          <p id="pageEyebrow">OPERAÇÃO</p>
-          <h1 id="pageTitle">Visão geral</h1>
-          <span id="pageSubtitle">Operação previsível, decisões humanas nas exceções e automação onde realmente importa.</span>
-        </div>
-        <div class="dashboard-topbar-welcome"><p class="dashboard-welcome-eyebrow">VISÃO E CONTROLE</p><h2>Olá, <span id="dashboardGreetingName">Recrutador</span>.</h2><p id="dashboardGreetingText">Aqui está o resumo da sua operação de recrutamento.</p></div>
         <div class="topbar-actions">
-          <button id="themeToggleButton" class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Ativar modo escuro" title="Alternar tema">
-            <span class="theme-switch-track" aria-hidden="true"><span class="theme-switch-symbol light" data-icon="sun"></span><span class="theme-switch-thumb"></span><span class="theme-switch-symbol dark" data-icon="moon"></span></span>
-          </button>
-          <button id="globalSearchButton" class="search-trigger" type="button"><span data-icon="search"></span><span>Buscar candidato, vaga ou documento</span><kbd>Ctrl K</kbd></button>
           <div class="notification-center" id="notificationCenter">
             <button id="notificationCenterButton" class="icon-button notification-center-button" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="notificationCenterPanel" aria-label="Abrir notificações">
               <span data-icon="bell" aria-hidden="true"></span><b id="notificationCenterBadge" class="notification-center-badge hidden">0</b>
@@ -122,9 +112,6 @@
               <div id="notificationCenterList" class="notification-center-list"><div class="notification-center-empty">Carregando notificações...</div></div>
             </section>
           </div>
-          <span id="dashboardUpdatedAt" class="dashboard-updated-at">Atualizando...</span>
-          <button id="refreshCurrentViewButton" class="button button-ghost" type="button">Atualizar</button>
-          <button id="primaryActionButton" class="button button-primary hidden" type="button">+ Nova vaga</button>
           <div class="profile-menu-shell">
             <button id="profileMenuButton" class="profile-menu-button" type="button" aria-haspopup="menu" aria-expanded="false">
               <span id="currentUserAvatar" class="user-avatar">R</span>
@@ -135,6 +122,7 @@
               <div class="profile-menu-head"><span id="profileMenuAvatar" class="user-avatar">R</span><div><strong id="profileMenuName">Recrutadora</strong><small id="profileMenuRole">Recrutador</small></div></div>
               <button id="profileMenuEditButton" type="button" role="menuitem"><span data-icon="user"></span><span><strong>Meu perfil</strong><small>Nome, usuário e notificações</small></span></button>
               <button id="profileMenuPasswordButton" type="button" role="menuitem"><span data-icon="lock"></span><span><strong>Alterar senha</strong><small>Atualize sua credencial de acesso</small></span></button>
+              <button id="themeToggleButton" type="button" role="menuitem" aria-label="Ativar modo escuro" title="Alternar tema"><span data-icon="sun"></span><span><strong>Aparência</strong><small>Alternar tema claro ou escuro</small></span></button>
               <div class="profile-menu-divider"></div>
               <button id="logoutButton" class="profile-menu-logout" type="button" role="menuitem"><span data-icon="logout"></span><span><strong>Sair</strong><small>Encerrar esta sessão</small></span></button>
             </div>
@@ -143,6 +131,7 @@
       </header>
 
       <main class="main-content" aria-label="Conteúdo principal">
+        <button id="primaryActionButton" class="button button-primary contextual-primary-action hidden" type="button">+ Nova vaga</button>
         <section id="view-dashboard" class="view active dashboard-command-center">
           <section class="dashboard-command-kpis dashboard-primary-kpis">
             <article class="dashboard-command-kpi actionable-card" data-go-view="candidates" tabindex="0"><span>Candidatos ativos</span><strong id="kpiCandidatesActive">0</strong><small>pessoas acompanhadas no workspace</small></article>
@@ -175,11 +164,6 @@
         </section>
 
         <section id="view-vacancies" class="view hidden">
-          <section class="section-toolbar vacancy-filter-bar vacancy-filter-single-row">
-            <label class="compact-field"><span>Status</span><select id="vacancyStatusSelect"><option value="TODAS">Todas</option><option value="ATIVA" selected>Ativas</option><option value="RASCUNHO">Rascunhos</option><option value="PAUSADA">Pausadas</option><option value="ENCERRADA">Encerradas</option></select></label>
-            <div class="toolbar-right vacancy-toolbar-right"><label class="compact-field"><span>Período</span><select id="vacancyPeriodSelect"><option value="1D">Hoje</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option></select></label><div class="segmented view-toggle"><button id="vacancyTableMode" class="active" type="button">Tabela</button><button id="vacancyKanbanMode" type="button">Lado a lado</button></div></div>
-          </section>
-
           <section class="kpi-grid compact-kpis vacancy-period-kpis">
             <article class="kpi-card actionable-card" id="vacancyActiveKpiCard" tabindex="0"><span>Total de vagas ativas</span><strong id="vacancyKpiActive">0</strong><small>Filtrar oportunidades ativas</small></article>
             <article class="kpi-card"><span>Total de candidatos</span><strong id="vacancyKpiInterested">0</strong><small>Pessoas vinculadas às vagas</small></article>
@@ -187,8 +171,13 @@
             <article class="kpi-card success"><span>Taxa de conversão</span><strong id="vacancyKpiApproved">0%</strong><small>Aprovados sobre o total</small></article>
           </section>
 
+          <section class="section-toolbar vacancy-filter-bar vacancy-filter-single-row" aria-label="Filtros de vagas">
+            <label class="compact-field"><span>Status</span><select id="vacancyStatusSelect"><option value="TODAS">Todas</option><option value="ATIVA" selected>Ativas</option><option value="RASCUNHO">Rascunhos</option><option value="PAUSADA">Pausadas</option><option value="ENCERRADA">Encerradas</option></select></label>
+            <label class="compact-field"><span>Período</span><select id="vacancyPeriodSelect"><option value="1D">Hoje</option><option value="7D">Últimos 7 dias</option><option value="30D">Últimos 30 dias</option></select></label>
+            <div class="segmented view-toggle" aria-label="Exibição das vagas"><button id="vacancyTableMode" class="active" type="button">Tabela</button><button id="vacancyKanbanMode" type="button">Lado a lado</button></div>
+          </section>
+
           <section class="panel vacancy-list-panel">
-            <header class="vacancy-list-header"><div><strong>Vagas</strong><span>Prioridades, funil e publicação em uma única visão.</span></div></header>
             <div id="vacanciesLoading" class="empty-state">Carregando vagas...</div>
             <div id="vacanciesEmpty" class="empty-state hidden"><strong>Nenhuma vaga encontrada</strong><span>Ajuste os filtros ou crie uma nova oportunidade.</span></div>
             <div class="vacancy-operational-list hidden" id="vacanciesTableWrapper">
@@ -481,11 +470,6 @@
     <button data-mobile-view="reviews" type="button"><span data-icon="clipboard-check" aria-hidden="true"></span><b>Revisões</b></button>
     <button id="mobileMoreButton" type="button"><span aria-hidden="true">•••</span><b>Mais</b></button>
   </nav>
-
-  <dialog id="globalSearchDialog" class="search-dialog" aria-label="Busca global">
-    <div class="search-dialog-head"><span>⌕</span><input id="globalSearchInput" type="search" placeholder="Digite pelo menos 2 caracteres"><button id="closeGlobalSearchButton" type="button">Esc</button></div>
-    <div id="globalSearchResults" class="search-results"><div class="empty-state compact">Comece digitando um nome, telefone, vaga ou arquivo.</div></div>
-  </dialog>
 
   <dialog id="vacancyDialog" class="modal modal-wide" aria-labelledby="vacancyDialogTitle">
     <form id="vacancyForm" method="dialog">

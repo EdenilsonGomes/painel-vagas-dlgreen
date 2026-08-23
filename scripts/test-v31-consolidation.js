@@ -18,6 +18,11 @@ ok(html.includes('>Configurações</b>') && html.includes('>Saúde do sistema</b
 ok(html.includes('data-go-view="users"') && html.includes('data-go-view="audit"') && html.includes('data-go-view="documents"'), 'Subnavegação administrativa ausente.');
 ok(!/view-(crm|prospecting|commercialChats|divulgacao|demos)/.test(html), 'Telas legadas continuam no HTML.');
 ok(!/dashboardJourney|dashboard-command-layout/.test(html), 'Bloco redundante continua na Visão geral.');
+ok(!/globalSearch|Busca global|Ctrl K/.test(html + app) && !server.includes('/api/busca-global'), 'Busca global deve ser removida do frontend e do servidor.');
+ok(!/pageEyebrow|pageTitle|pageSubtitle|dashboard-topbar-welcome/.test(html + app), 'Cabeçalho contextual redundante continua ativo.');
+ok(html.indexOf('vacancy-period-kpis') < html.indexOf('vacancy-filter-bar'), 'Indicadores de vagas devem aparecer antes dos filtros.');
+ok(!html.includes('vacancy-list-header') && !html.includes('Prioridades, funil e publicação'), 'Título redundante da lista de vagas continua no HTML.');
+ok(app.includes('vacancySexLabel') && app.includes('vacancy-sex-chip'), 'Sexo da vaga não foi incorporado aos cards.');
 ok(html.includes('id="dashboardPerformanceChart"') && html.includes('id="dashboardVacancyAttentionList"'), 'Análises da Visão geral ausentes.');
 ok(html.includes('data-dashboard-period="7D"') && html.includes('data-dashboard-period="30D"'), 'Alternância de período da Visão geral ausente.');
 ok(app.includes("dashboardPeriod: '30D'") && app.includes('drawDashboardPerformanceChart'), 'Comportamento analítico da Visão geral ausente.');
@@ -32,6 +37,7 @@ ok(!/portal-publicacoes\/grupos|groupsEnabled/i.test(portal + portalUi), 'Portal
 ok(css.includes('100dvh') && css.includes('overflow-x: hidden') && css.includes('@media (max-width: 720px)'), 'Contrato responsivo global incompleto.');
 ok(css.includes('.admin-section-tabs') && css.includes('dialog.modal'), 'Configurações e modais não receberam cobertura responsiva.');
 ok(css.includes('.dashboard-performance-panel') && css.includes('.dashboard-vacancy-attention-row'), 'Layout responsivo das análises da Visão geral ausente.');
+ok(css.includes('.contextual-primary-action') && css.includes('#view-vacancies .vacancy-filter-bar'), 'Ações contextuais e filtros compactos de vagas ausentes.');
 ok((css.match(/{/g) || []).length === (css.match(/}/g) || []).length, 'CSS V31 desbalanceado.');
 
 console.log('V31: navegação consolidada, legado removido e cobertura responsiva global validados.');

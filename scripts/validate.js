@@ -39,7 +39,7 @@ const html = checkHtmlIds('public/index.html');
 for (const token of [
   'data-view="sales"', 'id="view-sales"', 'id="candidateTalentBlock"', 'id="candidateTalentFilter"',
   'data-view="publications"', 'data-view="brands"', 'data-view="monitoring"',
-  'data-go-view="documents"', 'data-go-view="audit"', 'genesis-v31-consolidation.css?v=3107',
+  'data-go-view="documents"', 'data-go-view="audit"', 'genesis-v31-consolidation.css?v=3200',
   'id="dashboardPerformanceChart"', 'id="dashboardVacancyAttentionList"', 'data-dashboard-period="30D"',
 ]) assert(html.includes(token), `HTML principal sem ${token}.`);
 

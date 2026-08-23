@@ -789,3 +789,151 @@ button,
   .dashboard-period-control button { min-width: 55px; font-size: .66rem; }
   .dashboard-chart-legend .hires { display: none; }
 }
+
+/* V32 — topo utilitário e operação de vagas compactos. */
+body.genesis-rebrand .topbar {
+  min-height: 62px;
+  justify-content: flex-end;
+  padding-block: 9px;
+}
+
+body.genesis-rebrand .topbar-actions {
+  margin-left: auto;
+}
+
+body.genesis-rebrand .contextual-primary-action {
+  width: auto !important;
+  min-width: max-content !important;
+  height: 40px !important;
+  padding-inline: 16px !important;
+  justify-self: end;
+  font-size: .75rem !important;
+}
+
+body.genesis-rebrand .contextual-primary-action::before { content: none !important; }
+
+body.genesis-rebrand #view-vacancies .vacancy-period-kpis {
+  margin-bottom: 0;
+}
+
+body.genesis-rebrand #view-vacancies .vacancy-filter-bar {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body.genesis-rebrand #view-vacancies .vacancy-filter-bar .compact-field {
+  width: 170px;
+  min-width: 0;
+}
+
+body.genesis-rebrand #view-vacancies .vacancy-filter-bar .view-toggle {
+  align-self: end;
+}
+
+body.genesis-rebrand #view-vacancies .vacancy-filter-bar .contextual-primary-action {
+  margin-left: auto;
+}
+
+body.genesis-rebrand .vacancy-list-panel {
+  min-width: 0;
+  overflow: visible;
+}
+
+body.genesis-rebrand .vacancy-operational-list,
+body.genesis-rebrand #vacanciesTableBody,
+body.genesis-rebrand .vacancy-operational-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+body.genesis-rebrand .vacancy-list-columns {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) minmax(0, .8fr) minmax(0, .68fr);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .055em;
+}
+
+body.genesis-rebrand .vacancy-operational-card {
+  grid-template-columns: minmax(210px, 1.25fr) minmax(230px, 1fr) minmax(170px, .8fr) minmax(148px, auto);
+}
+
+body.genesis-rebrand .vacancy-card-actions {
+  min-width: 0;
+}
+
+body.genesis-rebrand .vacancy-sex-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  background: var(--surface-2);
+  font-size: 9px;
+  font-weight: 750;
+  line-height: 1;
+}
+
+body.genesis-rebrand .vacancy-grid-card header > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+@media (max-width: 1180px) and (min-width: 901px) {
+  body.genesis-rebrand .vacancy-list-columns,
+  body.genesis-rebrand .vacancy-operational-card {
+    grid-template-columns: minmax(200px, 1.1fr) minmax(210px, .95fr) minmax(155px, .75fr) minmax(132px, auto);
+    gap: 10px;
+  }
+
+  body.genesis-rebrand .vacancy-primary-action {
+    min-width: 126px;
+    padding-inline: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  body.genesis-rebrand .topbar {
+    grid-template-columns: auto 1fr !important;
+    min-height: 58px;
+  }
+
+  body.genesis-rebrand .topbar-actions {
+    justify-self: end;
+  }
+
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px;
+  }
+
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .compact-field,
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .view-toggle,
+  body.genesis-rebrand #view-vacancies .vacancy-filter-bar .contextual-primary-action {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0;
+  }
+
+  body.genesis-rebrand .vacancy-operational-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+    overflow: visible;
+  }
+
+  body.genesis-rebrand .vacancy-card-actions {
+    display: flex;
+    width: 100%;
+  }
+}

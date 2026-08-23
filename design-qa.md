@@ -64,3 +64,38 @@
 - [x] Regression suite passed.
 
 final result: passed
+
+---
+
+# Design QA — Vagas compactas
+
+- Source visual truth: `C:\Users\User\AppData\Local\Temp\codex-clipboard-90583edd-7195-4050-b594-7f5bc63805b4.png`
+- Desktop implementation: `C:\Users\User\AppData\Local\Temp\genesis-v32-desktop-dark-final.png`
+- Mobile implementation: `C:\Users\User\AppData\Local\Temp\genesis-v32-mobile-final.png`
+- Combined comparison: `C:\Users\User\AppData\Local\Temp\genesis-v32-comparison-final.png`
+- Viewports: desktop 1440 × 1000 CSS px; mobile 390 × 844 CSS px; device scale 1.
+- Pixels: source 1049 × 590; desktop 1440 × 1000; mobile 390 × 1277. Desktop comparison normalized to 1049 px de largura.
+- State: Vagas ativas, visualização Tabela; dark e light verificados.
+
+## Evidence and findings
+
+- Full view: the repeated page header, global search, empty filter panel and repeated list title are gone. KPIs now precede a compact filter row.
+- Focused Vagas region: column labels are more legible, cards stay inside the panel and status, publication and sex tags are grouped.
+- Mobile: controls use two compact columns, cards stack without document overflow and the final card remains reachable above the bottom navigation.
+- Typography: existing family and weights preserved; column hierarchy increased without enlarging card copy.
+- Spacing: unused vertical area removed; rhythm follows existing 8–10 px gaps.
+- Colors: existing light/dark tokens preserved; teal remains limited to active state and primary actions.
+- Assets: existing brand and icon system preserved; no new raster or substitute asset introduced.
+- Copy: redundant headings and search copy removed; operational labels retained.
+- Interactions tested: Tabela/Lado a lado, menu mobile, navigation to Vagas, profile theme toggle and contextual `+ Nova vaga` visibility.
+- Console: no errors or warnings.
+
+No actionable P0, P1 or P2 findings remain. No focused crop was needed because labels and card boundaries are legible in the full-resolution captures.
+
+## Comparison history
+
+- First mobile pass exposed the legacy icon-only treatment on `+ Nova vaga`.
+- Fix: restored the complete label and removed the inherited pseudo-element.
+- Post-fix evidence: `genesis-v32-mobile-final.png` shows the complete CTA with no horizontal overflow.
+
+final result: passed

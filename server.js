@@ -3712,66 +3712,6 @@ app.post('/api/workflow-erros/:id/resolver', requireAdmin, async (req, res, next
   }
 });
 
-app.get('/api/busca-global', async (req, res, next) => {
-  try {
-    const q = String(req.query.q || '').trim();
-    if (q.length < 2) return res.json({ sucesso: true, resultados: [] });
-    const pattern = `%${q}%`;
-
-    const [candidatos, vagas, documentos] = await Promise.all([
-      pool.query(`
-        SELECT
-          'CANDIDATO'::TEXT AS tipo,
-          c.id,
-          COALESCE(c.nome, c.telefone, 'Candidato #' || c.id) AS titulo,
-          CONCAT(COALESCE(c.telefone, ''), ' · ', COALESCE(v.titulo, c.vaga, 'Sem vaga')) AS subtitulo
-        FROM candidatos c
-        LEFT JOIN vagas v ON v.id = c.vaga_id
-        WHERE COALESCE(c.nome, '') ILIKE $1
-           OR COALESCE(c.telefone, '') ILIKE $1
-           OR COALESCE(c.cpf, '') ILIKE $1
-           OR COALESCE(v.titulo, c.vaga, '') ILIKE $1
-        ORDER BY c.updated_at DESC
-        LIMIT 10
-      `, [pattern]),
-      pool.query(`
-        SELECT
-          'VAGA'::TEXT AS tipo,
-          v.id,
-          CONCAT(v.codigo, ' · ', v.titulo) AS titulo,
-          CONCAT_WS(' · ', NULLIF(v.bairro, ''), NULLIF(v.cidade, ''), NULLIF(v.horario, '')) AS subtitulo
-        FROM vagas v
-        WHERE v.codigo ILIKE $1 OR v.titulo ILIKE $1 OR v.cargo ILIKE $1
-           OR COALESCE(v.bairro, '') ILIKE $1 OR COALESCE(v.cidade, '') ILIKE $1
-        ORDER BY v.updated_at DESC
-        LIMIT 10
-      `, [pattern]),
-      pool.query(`
-        SELECT
-          'DOCUMENTO'::TEXT AS tipo,
-          d.id,
-          COALESCE(d.nome_arquivo, d.arquivo, 'Documento') AS titulo,
-          CONCAT(COALESCE(c.nome, c.telefone, 'Candidato'), ' · ', COALESCE(d.tipo, 'OUTRO')) AS subtitulo,
-          d.candidato_id
-        FROM documentos d
-        JOIN candidatos c ON c.id = d.candidato_id
-        WHERE COALESCE(d.nome_arquivo, d.arquivo, '') ILIKE $1
-           OR COALESCE(c.nome, '') ILIKE $1
-           OR COALESCE(c.telefone, '') ILIKE $1
-        ORDER BY d.created_at DESC
-        LIMIT 10
-      `, [pattern]),
-    ]);
-
-    res.json({
-      sucesso: true,
-      resultados: [...candidatos.rows, ...vagas.rows, ...documentos.rows],
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 app.post('/api/admin/candidatos/:id/ctps/decisao-manual', requireAdmin, async (req, res, next) => {
   const client = await pool.connect();
   try {
