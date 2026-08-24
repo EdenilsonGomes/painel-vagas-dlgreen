@@ -15,6 +15,7 @@ ok(server.includes('const adminAccess = [requireLogin, requireAdmin]') && server
 ok(!/wahaRequest|sendText|sendImage|qrcode|session\/qr/i.test(server + client), 'A nova Divulgação não pode reintroduzir automação WAHA.');
 ok(server.includes("app.get('/r/div/:token'") && server.includes('divulgacao_cliques'), 'Rastreamento de origem ausente.');
 ok(server.includes('campanha: campaign') && !server.includes('sucesso: true, campanha, imagem_url'), 'Resposta de detalhe da campanha usa uma variável inexistente.');
+ok((server.match(/\$2::VARCHAR\(30\)/g) || []).length >= 4, 'Atualização dos destinos precisa tipar o status em todos os contextos SQL.');
 ok(client.includes('Abrir grupo') && client.includes('Copiar texto') && client.includes('Foi para aprovação'), 'Fluxo manual por grupo incompleto.');
 ok(css.includes('@media(max-width:760px)') && css.includes('100dvh'), 'Cobertura mobile da Divulgação incompleta.');
 ok((css.match(/{/g) || []).length === (css.match(/}/g) || []).length, 'CSS da Divulgação desbalanceado.');
