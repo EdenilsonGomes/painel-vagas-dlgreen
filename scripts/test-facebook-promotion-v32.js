@@ -14,6 +14,7 @@ ok(server.includes("canal='FACEBOOK'") && server.includes("'ASSISTIDO','EM_EXECU
 ok(server.includes('const adminAccess = [requireLogin, requireAdmin]') && server.includes("app.get('/api/admin/divulgacao-facebook/bootstrap', adminAccess"), 'Autenticação administrativa da Divulgação ausente.');
 ok(!/wahaRequest|sendText|sendImage|qrcode|session\/qr/i.test(server + client), 'A nova Divulgação não pode reintroduzir automação WAHA.');
 ok(server.includes("app.get('/r/div/:token'") && server.includes('divulgacao_cliques'), 'Rastreamento de origem ausente.');
+ok(server.includes('campanha: campaign') && !server.includes('sucesso: true, campanha, imagem_url'), 'Resposta de detalhe da campanha usa uma variável inexistente.');
 ok(client.includes('Abrir grupo') && client.includes('Copiar texto') && client.includes('Foi para aprovação'), 'Fluxo manual por grupo incompleto.');
 ok(css.includes('@media(max-width:760px)') && css.includes('100dvh'), 'Cobertura mobile da Divulgação incompleta.');
 ok((css.match(/{/g) || []).length === (css.match(/}/g) || []).length, 'CSS da Divulgação desbalanceado.');
