@@ -429,16 +429,16 @@ function vacancySexLabel(value) {
 }
 
 function setView(name) {
-  const legacyViewRedirects = { crm: 'sales', prospecting: 'sales', commercialChats: 'sales', demos: 'sales', divulgacao: 'vacancies' };
+  const legacyViewRedirects = { crm: 'sales', prospecting: 'sales', commercialChats: 'sales', demos: 'sales', divulgacao: 'promotion' };
   name = legacyViewRedirects[name] || name;
-  if (!currentUserIsAdmin() && ['audit', 'sales', 'publications', 'monitoring', 'documents', 'brands', 'users'].includes(name)) name = 'dashboard';
+  if (!currentUserIsAdmin() && ['audit', 'sales', 'promotion', 'publications', 'monitoring', 'documents', 'brands', 'users'].includes(name)) name = 'dashboard';
   state.activeView = name;
   document.body.dataset.activeView = name;
   const groupByView = {
     dashboard: 'recruitmentNavGroup', vacancies: 'recruitmentNavGroup', candidates: 'recruitmentNavGroup',
     interviews: 'recruitmentNavGroup',
     atendimentos: 'conversationsNavGroup', reviews: 'conversationsNavGroup',
-    sales: 'commercialNavGroup',
+    sales: 'commercialNavGroup', promotion: 'commercialNavGroup',
     publications: 'administrationNavGroup', brands: 'administrationNavGroup', monitoring: 'administrationNavGroup', documents: 'administrationNavGroup', audit: 'administrationNavGroup', users: 'administrationNavGroup',
   };
   const activeGroup = document.getElementById(groupByView[name]);
@@ -474,6 +474,7 @@ async function loadCurrentView(force = false) {
     if (state.activeView === 'audit') await loadAudit(force);
     if (state.activeView === 'brands') await window.GenesisOperationsV14?.loadBrands(force);
     if (state.activeView === 'publications') await window.GenesisPortalPublicacoes?.load(force);
+    if (state.activeView === 'promotion') await window.GenesisFacebookPromotionV32?.load(force);
     if (state.activeView === 'users') await window.GenesisAdmin?.loadUsers(force);
   } catch (error) {
     showToast(error.message, 'error');

@@ -29,7 +29,8 @@
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=3000" defer></script>
   <script src="/geo-v1.js?v=1900" defer></script>
-  <script src="/app.js?v=3200" defer></script>
+  <script src="/app.js?v=3202" defer></script>
+  <script src="/facebook-promotion-v32.js?v=3202" defer></script>
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
   <script src="/admin.js?v=1410" defer></script>
@@ -45,6 +46,7 @@
   <link rel="stylesheet" href="/genesis-v29-mobile.css?v=2900">
   <link rel="stylesheet" href="/genesis-v30-sales.css?v=3000">
   <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3201">
+  <link rel="stylesheet" href="/facebook-promotion-v32.css?v=3202">
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
   <div class="app-shell">
@@ -80,6 +82,7 @@
           <summary><span class="nav-icon" data-icon="chart"></span><b>Comercial</b><em id="commercialUnreadNavBadge" class="nav-count-badge hidden">0</em><i class="nav-chevron" data-icon="chevron-down"></i></summary>
           <div class="nav-context-items">
             <button class="nav-item" data-view="sales" type="button"><span class="nav-icon" data-icon="target"></span><b>Sales</b></button>
+            <button class="nav-item" data-view="promotion" type="button"><span class="nav-icon" data-icon="globe"></span><b>Divulgação</b></button>
           </div>
         </details>
 
@@ -392,6 +395,9 @@
         </section>
 
         <section id="view-sales" class="view hidden admin-view" data-admin-only></section>
+        <section id="view-promotion" class="view hidden admin-view" data-admin-only>
+          <div id="facebookPromotionRoot" class="facebook-promotion-v32"><div class="empty-state">Carregando Divulgação...</div></div>
+        </section>
         <section id="view-publications" class="view hidden admin-view portal-publications-view" data-admin-only>
           <header class="admin-section-header admin-section-header-actions"><div><p class="eyebrow">ADMINISTRAÇÃO</p><h2>Portal de Vagas</h2><span>Revise vagas recebidas e acompanhe contas do portal.</span></div><a id="openPublicPortalButton" class="button button-ghost" href="#" target="_blank" rel="noopener">Abrir portal público ↗</a></header>
 

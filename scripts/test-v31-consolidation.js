@@ -13,7 +13,8 @@ const operations = read('lib/operations-v14.js');
 const portal = read('portal-publicacoes.js');
 const portalUi = read('public/portal-publicacoes.js');
 
-ok(html.includes('data-view="sales"') && (html.match(/data-view="sales"/g) || []).length === 1, 'Sales deve ser a única entrada comercial.');
+ok(html.includes('data-view="sales"') && (html.match(/data-view="sales"/g) || []).length === 1, 'Sales deve permanecer como entrada comercial única.');
+ok(html.includes('data-view="promotion"') && html.indexOf('data-view="promotion"') > html.indexOf('data-view="sales"'), 'Divulgação deve aparecer depois de Sales em Comercial.');
 ok(html.includes('>Configurações</b>') && html.includes('>Saúde do sistema</b>'), 'Administração consolidada ausente.');
 ok(html.includes('data-go-view="users"') && html.includes('data-go-view="audit"') && html.includes('data-go-view="documents"'), 'Subnavegação administrativa ausente.');
 ok(!/view-(crm|prospecting|commercialChats|divulgacao|demos)/.test(html), 'Telas legadas continuam no HTML.');
@@ -29,7 +30,7 @@ ok(app.includes("dashboardPeriod: '30D'") && app.includes('drawDashboardPerforma
 ok(server.includes('vagas_atencao:') && server.includes('candidaturas_periodo_anterior'), 'API da Visão geral não entrega análises e saúde das vagas.');
 ok(server.includes(')::INTEGER AS primeira_analise_minutos'), 'Conversão da mediana de primeira análise ausente.');
 ok(!/\)::INTEGER,\s*0\)\s+AS primeira_analise_minutos/.test(server), 'COALESCE da primeira análise contém cast/argumento em posição inválida.');
-ok(app.includes("const legacyViewRedirects = { crm: 'sales'") && app.includes("divulgacao: 'vacancies'"), 'Links antigos devem redirecionar com segurança.');
+ok(app.includes("const legacyViewRedirects = { crm: 'sales'") && app.includes("divulgacao: 'promotion'"), 'Links antigos devem redirecionar para a nova Divulgação.');
 ok(!/Genesis(?:Demos|CRM|Divulgacao|Prospecting)|loadCommercialChats/.test(app), 'Carregadores legados continuam ativos.');
 ok(!/waha|qrcode|session\/qr|outreach|prospeccao/i.test(operations), 'Automação comercial WAHA continua no módulo operacional.');
 ok(!/registerDemosV13|registerDivulgacaoV1/.test(server), 'Servidor ainda registra produtos removidos.');

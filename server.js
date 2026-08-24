@@ -21,6 +21,7 @@ const { registerNotificationsV23 } = require('./lib/notifications-v23');
 const { registerGeoV1 } = require('./lib/geo-v1');
 const { registerSalesV27 } = require('./lib/sales-v27');
 const { registerTalentFlowsV27 } = require('./lib/talent-flows-v27');
+const { registerFacebookPromotionV32 } = require('./lib/facebook-promotion-v32');
 
 const PORT = Number(process.env.PORT || 3000);
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -1675,6 +1676,15 @@ registerAtendimentosV16({
 
 registerNotificationsV23({ app, pool, requireLogin });
 registerTalentFlowsV27({ app, pool, requireLogin, requireAdmin, currentUserName });
+registerFacebookPromotionV32({
+  app,
+  pool,
+  requireLogin,
+  requireAdmin,
+  currentUserName,
+  publicBaseUrl: PUBLIC_BASE_URL,
+  portalBaseUrl: PORTAL_BASE_URL,
+});
 
 app.use(requireLogin);
 

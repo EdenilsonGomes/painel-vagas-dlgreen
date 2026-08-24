@@ -9,7 +9,7 @@
     "dev": "node --watch --env-file=.env server.js",
     "migrate:panel": "node scripts/migrate-panel.js",
     "preflight": "node scripts/preflight.js",
-    "test": "node scripts/validate.js && node scripts/test-operations-v14.js && node scripts/test-recruiter-candidate-access-v15_1.js && node scripts/test-v16-review-handoff.js && node scripts/test-v21-review-workspace.js && node scripts/test-ui-v23.js && node scripts/test-ui-v26.js && node scripts/test-v27.js && node scripts/test-sales-v30.js && node scripts/test-mobile-v28.js && node scripts/test-mobile-v29.js && node scripts/test-v31-consolidation.js",
+    "test": "node scripts/validate.js && node scripts/test-operations-v14.js && node scripts/test-recruiter-candidate-access-v15_1.js && node scripts/test-v16-review-handoff.js && node scripts/test-v21-review-workspace.js && node scripts/test-ui-v23.js && node scripts/test-ui-v26.js && node scripts/test-v27.js && node scripts/test-sales-v30.js && node scripts/test-mobile-v28.js && node scripts/test-mobile-v29.js && node scripts/test-v31-consolidation.js && node scripts/test-facebook-promotion-v32.js",
     "test:v21": "node scripts/test-v21-review-workspace.js",
     "migrate:v15": "node scripts/migrate-v15.js",
     "preflight:v15": "node scripts/preflight-v15.js",
