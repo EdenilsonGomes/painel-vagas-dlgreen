@@ -30,6 +30,7 @@ function checkCss(file) {
   'lib/screening-v13.js', 'lib/operations-v14.js', 'lib/atendimento-v15.js',
   'lib/sales-v27.js', 'lib/sales-enrichment.js', 'lib/talent-flows-v27.js',
   'lib/facebook-promotion-v32.js',
+  'lib/dashboard-performance.js',
   'public/app.js', 'public/admin.js', 'public/login.js', 'public/portal-publicacoes.js',
   'public/theme-init.js', 'public/screening-v13.js', 'public/operations-v14.js',
   'public/atendimento-v15.js', 'public/genesis-v27.js',
@@ -41,7 +42,7 @@ const html = checkHtmlIds('public/index.html');
 for (const token of [
   'data-view="sales"', 'id="view-sales"', 'data-view="promotion"', 'id="view-promotion"', 'id="candidateTalentBlock"', 'id="candidateTalentFilter"',
   'data-view="publications"', 'data-view="brands"', 'data-view="monitoring"',
-  'data-go-view="documents"', 'data-go-view="audit"', 'genesis-v31-consolidation.css?v=3201', 'facebook-promotion-v32.css?v=3202',
+  'data-go-view="documents"', 'data-go-view="audit"', 'genesis-v31-consolidation.css?v=3301', 'facebook-promotion-v32.css?v=3202',
   'id="dashboardPerformanceChart"', 'id="dashboardVacancyAttentionList"', 'data-dashboard-period="30D"',
 ]) assert(html.includes(token), `HTML principal sem ${token}.`);
 

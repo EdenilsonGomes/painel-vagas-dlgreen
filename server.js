@@ -22,6 +22,7 @@ const { registerGeoV1 } = require('./lib/geo-v1');
 const { registerSalesV27 } = require('./lib/sales-v27');
 const { registerTalentFlowsV27 } = require('./lib/talent-flows-v27');
 const { registerFacebookPromotionV32 } = require('./lib/facebook-promotion-v32');
+const { loadDashboardPerformance } = require('./lib/dashboard-performance');
 
 const PORT = Number(process.env.PORT || 3000);
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -1512,7 +1513,7 @@ function validationError(res, error) {
 app.get('/health', async (_req, res) => {
   try {
     await pool.query('SELECT 1');
-    res.json({ status: 'ok' });
+    res.json({ status: 'ok', versao_dashboard: 'hoje-v1' });
   } catch (error) {
     console.error('Falha no health check:', error);
     res.status(503).json({ status: 'erro', banco: 'indisponível' });
@@ -1810,7 +1811,7 @@ registerScreeningV13({ app, pool, z, currentUserName });
 app.get('/api/dashboard', async (req, res, next) => {
   try {
     const period = normalizeAnalyticsPeriod(req.query.periodo);
-    const [metricas, funil, entrevistas, atencao, saude, tendencia, resumoPeriodo, vagasAtencao] = await Promise.all([
+    const [metricas, funil, entrevistas, atencao, saude, desempenho, vagasAtencao] = await Promise.all([
       pool.query(`
         WITH periodo AS (
           SELECT (
@@ -1941,73 +1942,7 @@ app.get('/api/dashboard', async (req, res, next) => {
           (SELECT COUNT(*) FROM workflow_erros WHERE resolvido IS FALSE
             AND (COALESCE(workflow_nome, '') ILIKE '%calendar%' OR COALESCE(node_nome, '') ILIKE '%calendar%' OR COALESCE(erro_mensagem, '') ILIKE '%calendar%'))::INTEGER AS erros_calendar
       `),
-      pool.query(`
-        WITH serie AS (
-          SELECT indice,
-            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER - 1) - indice))::DATE AS dia,
-            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER * 2 - 1) - indice))::DATE AS dia_anterior
-          FROM GENERATE_SERIES(0, $1::INTEGER - 1) AS indice
-        )
-        SELECT
-          s.indice::INTEGER,
-          s.dia,
-          (SELECT COUNT(*) FROM candidatos c WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS candidaturas,
-          (SELECT COUNT(*) FROM entrevistas e WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS entrevistas,
-          (SELECT COUNT(*) FROM candidatos c WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia)::INTEGER AS contratacoes,
-          (SELECT COUNT(*) FROM candidatos c WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE = s.dia_anterior)::INTEGER AS candidaturas_periodo_anterior
-        FROM serie s
-        ORDER BY s.indice
-      `, [period.days]),
-      pool.query(`
-        WITH limites AS (
-          SELECT
-            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - ($1::INTEGER - 1))::DATE AS atual_inicio,
-            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE + 1)::DATE AS atual_fim,
-            ((NOW() AT TIME ZONE 'America/Sao_Paulo')::DATE - (($1::INTEGER * 2) - 1))::DATE AS anterior_inicio
-        ),
-        primeira_revisao AS (
-          SELECT candidato_id, MIN(created_at) AS analisado_em
-          FROM candidato_revisoes
-          GROUP BY candidato_id
-        ),
-        analise AS (
-          SELECT COALESCE(
-            ROUND((PERCENTILE_CONT(0.5) WITHIN GROUP (
-              ORDER BY EXTRACT(EPOCH FROM (pr.analisado_em - c.created_at)) / 60
-            ))::NUMERIC, 0),
-            0
-          )::INTEGER AS primeira_analise_minutos
-          FROM candidatos c
-          JOIN primeira_revisao pr ON pr.candidato_id = c.id AND pr.analisado_em >= c.created_at
-          CROSS JOIN limites l
-          WHERE (pr.analisado_em AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio
-            AND (pr.analisado_em AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim
-        ),
-        base AS (
-          SELECT
-            COUNT(*) FILTER (WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS novos,
-            COUNT(*) FILTER (WHERE (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS novos_anterior,
-            COUNT(*) FILTER (WHERE (c.aprovado IS TRUE OR UPPER(COALESCE(c.status, '')) IN ('APROVADO','EM_ADMISSAO','CONTRATADO')) AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS aprovados,
-            COUNT(*) FILTER (WHERE (c.aprovado IS TRUE OR UPPER(COALESCE(c.status, '')) IN ('APROVADO','EM_ADMISSAO','CONTRATADO')) AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS aprovados_anterior,
-            COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS contratacoes,
-            COUNT(*) FILTER (WHERE UPPER(COALESCE(c.status, '')) = 'CONTRATADO' AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (c.updated_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS contratacoes_anterior
-          FROM candidatos c
-          CROSS JOIN limites l
-        ),
-        entrevista_resumo AS (
-          SELECT
-            COUNT(*) FILTER (WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_fim)::INTEGER AS entrevistas,
-            COUNT(*) FILTER (WHERE (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.anterior_inicio AND (e.created_at AT TIME ZONE 'America/Sao_Paulo')::DATE < l.atual_inicio)::INTEGER AS entrevistas_anterior,
-            COUNT(*) FILTER (WHERE e.inicio < NOW() AND (e.inicio AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio)::INTEGER AS entrevistas_realizadas,
-            COUNT(*) FILTER (WHERE e.inicio < NOW() AND (e.inicio AT TIME ZONE 'America/Sao_Paulo')::DATE >= l.atual_inicio AND UPPER(COALESCE(c.motivo_reprovacao_codigo, '')) = 'NAO_COMPARECEU_ENTREVISTA')::INTEGER AS ausencias
-          FROM entrevistas e
-          JOIN candidatos c ON c.id = e.candidato_id
-          CROSS JOIN limites l
-        )
-        SELECT b.*, a.primeira_analise_minutos, er.entrevistas, er.entrevistas_anterior,
-          CASE WHEN er.entrevistas_realizadas > 0 THEN ROUND(((er.entrevistas_realizadas - er.ausencias)::NUMERIC / er.entrevistas_realizadas) * 100)::INTEGER ELSE 0 END AS comparecimento
-        FROM base b CROSS JOIN analise a CROSS JOIN entrevista_resumo er
-      `, [period.days]),
+      loadDashboardPerformance(pool, period.days),
       pool.query(`
         WITH candidatos_por_vaga AS (
           SELECT c.vaga_id,
@@ -2088,10 +2023,7 @@ app.get('/api/dashboard', async (req, res, next) => {
       funil: funil.rows,
       proximas_entrevistas: entrevistas.rows,
       atencao: atencao.rows,
-      desempenho: {
-        resumo: resumoPeriodo.rows[0] || {},
-        tendencia: tendencia.rows,
-      },
+      desempenho,
       vagas_atencao: vagasAtencao.rows.map((item) => ({
         ...item,
         responsavel: currentUserName(req),

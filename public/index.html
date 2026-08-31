@@ -29,7 +29,7 @@
   <script src="/screening-v13.js?v=1510" defer></script>
   <script src="/v18-ui.js?v=3000" defer></script>
   <script src="/geo-v1.js?v=1900" defer></script>
-  <script src="/app.js?v=3202" defer></script>
+  <script src="/app.js?v=3301" defer></script>
   <script src="/facebook-promotion-v32.js?v=3202" defer></script>
   <script src="/atendimento-v15.js?v=2111" defer></script>
   <script src="/conversations-v16-4.js?v=2111" defer></script>
@@ -45,7 +45,7 @@
   <link rel="stylesheet" href="/genesis-v28-mobile.css?v=2800">
   <link rel="stylesheet" href="/genesis-v29-mobile.css?v=2900">
   <link rel="stylesheet" href="/genesis-v30-sales.css?v=3000">
-  <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3201">
+  <link rel="stylesheet" href="/genesis-v31-consolidation.css?v=3301">
   <link rel="stylesheet" href="/facebook-promotion-v32.css?v=3202">
 </head>
 <body class="genesis-v17 genesis-v18 genesis-v19 genesis-v20 genesis-rebrand" data-ui-version="22" data-active-view="dashboard">
@@ -145,15 +145,16 @@
 
           <section class="panel dashboard-performance-panel" aria-labelledby="dashboardPerformanceTitle">
             <header class="dashboard-performance-header">
-              <div><h3 id="dashboardPerformanceTitle">Desempenho do período</h3><p>Conversão e velocidade da operação de recrutamento.</p></div>
-              <div class="segmented dashboard-period-control" aria-label="Período do desempenho">
-                <button data-dashboard-period="7D" type="button">7 dias</button>
-                <button class="active" data-dashboard-period="30D" type="button">30 dias</button>
+              <div><h3 id="dashboardPerformanceTitle">Movimento de hoje</h3><p>Conversão e velocidade da operação · horário de São Paulo.</p></div>
+              <div class="segmented dashboard-period-control" role="group" aria-label="Período do desempenho">
+                <button class="active" data-dashboard-period="1D" aria-pressed="true" type="button">Hoje</button>
+                <button data-dashboard-period="7D" aria-pressed="false" type="button">7 dias</button>
+                <button data-dashboard-period="30D" aria-pressed="false" type="button">30 dias</button>
               </div>
             </header>
             <div id="dashboardPerformanceMetrics" class="dashboard-performance-metrics" aria-live="polite"></div>
             <div class="dashboard-chart-shell">
-              <div class="dashboard-chart-legend" aria-hidden="true"><span class="candidates">Candidaturas</span><span class="interviews">Entrevistas</span><span class="hires">Contratações</span><span class="previous">Período anterior</span></div>
+              <div class="dashboard-chart-legend" aria-hidden="true"><span class="candidates">Candidaturas</span><span class="interviews">Agendamentos</span><span class="hires">Contratações</span><span class="previous">Ontem até este horário</span></div>
               <div class="dashboard-chart-canvas-wrap"><canvas id="dashboardPerformanceChart" role="img" aria-label="Tendência de candidaturas, entrevistas e contratações no período selecionado"></canvas></div>
             </div>
           </section>

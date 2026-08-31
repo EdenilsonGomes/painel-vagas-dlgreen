@@ -3,7 +3,8 @@
 const state = {
   activeView: 'dashboard',
   dashboard: null,
-  dashboardPeriod: '30D',
+  dashboardPeriod: '1D',
+  dashboardRequest: 0,
   vacancies: [],
   vacancyTemplates: [],
   selectedVacancyTemplateId: null,
@@ -482,9 +483,24 @@ async function loadCurrentView(force = false) {
 }
 
 async function loadDashboard() {
-  const data = await api(`/api/dashboard?periodo=${encodeURIComponent(state.dashboardPeriod)}`);
-  state.dashboard = data;
-  renderDashboard();
+  const period = state.dashboardPeriod;
+  const request = ++state.dashboardRequest;
+  const panel = document.querySelector('.dashboard-performance-panel');
+  panel?.setAttribute('aria-busy', 'true');
+  try {
+    const data = await api(`/api/dashboard?periodo=${encodeURIComponent(period)}`);
+    if (request !== state.dashboardRequest || period !== state.dashboardPeriod) return;
+    state.dashboard = data;
+    renderDashboard();
+  } catch (error) {
+    if (request !== state.dashboardRequest) return;
+    // Keep the selected period honest if loading fails; don't label stale totals as Today.
+    state.dashboardPeriod = state.dashboard?.desempenho?.periodo || '1D';
+    renderDashboard();
+    throw error;
+  } finally {
+    if (request === state.dashboardRequest) panel?.setAttribute('aria-busy', 'false');
+  }
 }
 
 function dashboardComparison(current, previous, inverse = false) {
@@ -494,7 +510,7 @@ function dashboardComparison(current, previous, inverse = false) {
   const variation = Math.round(((value - baseline) / baseline) * 100);
   const beneficial = inverse ? variation <= 0 : variation >= 0;
   return {
-    label: `${variation > 0 ? '+' : ''}${variation}% vs. período anterior`,
+    label: `${variation > 0 ? '+' : ''}${variation}% vs. ${state.dashboardPeriod === '1D' ? 'ontem até este horário' : 'período anterior'}`,
     tone: beneficial ? 'positive' : 'negative',
   };
 }
@@ -504,10 +520,10 @@ function renderDashboardPerformance(summary = {}) {
   const metrics = [
     { value: Number(summary.novos || 0), label: 'novos candidatos', comparison: dashboardComparison(summary.novos, summary.novos_anterior) },
     { value: Number(summary.aprovados || 0), label: 'aprovados na triagem', comparison: dashboardComparison(summary.aprovados, summary.aprovados_anterior) },
-    { value: Number(summary.entrevistas || 0), label: 'entrevistas', comparison: dashboardComparison(summary.entrevistas, summary.entrevistas_anterior) },
+    { value: Number(summary.entrevistas || 0), label: 'agendamentos feitos', comparison: dashboardComparison(summary.entrevistas, summary.entrevistas_anterior) },
     { value: Number(summary.contratacoes || 0), label: 'contratações', comparison: dashboardComparison(summary.contratacoes, summary.contratacoes_anterior) },
-    { value: `${Number(summary.primeira_analise_minutos || 0)} min`, label: 'primeira análise', comparison: { label: 'mediana do período', tone: 'neutral' } },
-    { value: `${Number(summary.comparecimento || 0)}%`, label: 'comparecimento', comparison: { label: 'entrevistas realizadas', tone: 'neutral' } },
+    { value: summary.primeira_analise_minutos == null ? '—' : `${Number(summary.primeira_analise_minutos)} min`, label: 'primeira análise', comparison: { label: summary.primeira_analise_minutos == null ? 'Sem dados no período' : 'mediana do período', tone: 'neutral' } },
+    { value: summary.comparecimento == null ? '—' : `${Number(summary.comparecimento)}%`, label: 'comparecimento', comparison: { label: summary.comparecimento == null ? 'Sem resultados registrados' : `${Number(summary.entrevistas_com_resultado)} entrevistas com resultado`, tone: 'neutral' } },
   ];
   el.dashboardPerformanceMetrics.innerHTML = metrics.map((item) => `<article><strong>${escapeHtml(item.value)}</strong><span>${escapeHtml(item.label)}</span><small class="${item.comparison.tone}">${escapeHtml(item.comparison.label)}</small></article>`).join('');
 }
@@ -591,23 +607,35 @@ function drawDashboardPerformanceChart(points = []) {
     context.lineJoin = 'round';
     context.lineCap = 'round';
     context.setLineDash(dashed ? [5, 5] : []);
+    let drawing = false;
     points.forEach((point, index) => {
+      if (point.futuro) { drawing = false; return; }
       const x = xAt(index); const y = yAt(point[key]);
-      if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+      if (!drawing) context.moveTo(x, y); else context.lineTo(x, y);
+      drawing = true;
     });
     context.stroke();
+    // The first hour has only one point, so a line alone would be invisible.
+    if (points.filter((point) => !point.futuro).length === 1) {
+      const index = points.findIndex((point) => !point.futuro);
+      context.beginPath();
+      context.fillStyle = color;
+      context.arc(xAt(index), yAt(points[index][key]), 3, 0, Math.PI * 2);
+      context.fill();
+    }
   };
   line('candidaturas_periodo_anterior', colors.previous, true);
   line('candidaturas', colors.candidates);
   line('entrevistas', colors.interviews);
   line('contratacoes', colors.hires);
   context.setLineDash([]);
+  context.fillStyle = colors.text;
   context.textAlign = 'center';
   context.textBaseline = 'top';
   const labelIndexes = [...new Set([0, Math.floor((points.length - 1) / 2), points.length - 1])];
   labelIndexes.forEach((index) => {
-    const date = new Date(`${String(points[index].dia).slice(0, 10)}T12:00:00`);
-    context.fillText(new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' }).format(date), xAt(index), height - 19);
+    const label = points[index].rotulo || new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' }).format(new Date(`${String(points[index].dia).slice(0, 10)}T12:00:00`));
+    context.fillText(label, xAt(index), height - 19);
   });
 }
 
@@ -623,7 +651,19 @@ function renderDashboard() {
   if (el.kpiStaleCandidates) el.kpiStaleCandidates.textContent = Number(metrics.sem_resposta_2h || 0);
   if (el.kpiCritical) el.kpiCritical.textContent = Number(metrics.documentos_falha || 0) + Number(metrics.sem_resposta_2h || 0);
 
-  document.querySelectorAll('[data-dashboard-period]').forEach((button) => button.classList.toggle('active', button.dataset.dashboardPeriod === state.dashboardPeriod));
+  document.querySelectorAll('[data-dashboard-period]').forEach((button) => {
+    const selected = button.dataset.dashboardPeriod === state.dashboardPeriod;
+    button.classList.toggle('active', selected);
+    button.setAttribute('aria-pressed', String(selected));
+  });
+  const today = state.dashboardPeriod === '1D';
+  const title = document.getElementById('dashboardPerformanceTitle');
+  if (title) title.textContent = today ? 'Movimento de hoje' : 'Desempenho do período';
+  const previous = document.querySelector('.dashboard-chart-legend .previous');
+  if (previous) previous.textContent = today ? 'Ontem até este horário' : 'Período anterior';
+  el.dashboardPerformanceChart?.setAttribute('aria-label', today
+    ? 'Movimento por hora de hoje, no horário de São Paulo. Candidaturas comparadas com ontem até este horário.'
+    : 'Tendência diária de candidaturas, agendamentos e contratações no período selecionado');
   renderDashboardPerformance(data.desempenho?.resumo || {});
   renderDashboardVacancies(data.vagas_atencao || []);
   requestAnimationFrame(() => drawDashboardPerformanceChart(data.desempenho?.tendencia || []));
@@ -2723,7 +2763,6 @@ function handleDelegatedAction(event) {
   if (target.dataset.dashboardPeriod) {
     if (target.dataset.dashboardPeriod === state.dashboardPeriod) return;
     state.dashboardPeriod = target.dataset.dashboardPeriod;
-    document.querySelectorAll('[data-dashboard-period]').forEach((button) => button.classList.toggle('active', button === target));
     loadDashboard(true).catch((error) => showToast(error.message, 'error'));
     return;
   }
